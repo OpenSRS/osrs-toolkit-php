@@ -1,0 +1,400 @@
+/*****************************/
+/*** Core html setup stuff ***/
+/*****************************/
+
+html {
+  height: 100%;
+  margin-bottom: 1px;
+}
+
+form {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+	font-family: Helvetica,Arial,sans-serif;
+	line-height: 1.3em;
+	margin: 0px 0px 0px 0px;
+	font-size: 12px;
+	color: #333;
+}
+
+a:link {
+	color: #3d539c;
+}
+a:link, a:visited {
+	text-decoration: none;
+	font-weight: normal;
+}
+a:hover {
+	text-decoration: underline;
+	font-weight: normal;
+}
+
+input.button { 
+	cursor: pointer;
+}
+
+p {
+	margin-top: 0;
+	margin-bottom: 5px;
+}
+
+img {
+	border: 0 none;
+}
+
+/*****************************************/
+/*** Template specific layout elements ***/
+/*****************************************/
+div#center {
+ 	text-align: center;
+}
+
+div#wrapper {
+	margin-left: auto;
+	margin-right: auto;
+	width: 960px;
+	text-align: left;
+}
+
+/* header */
+.osrs_header_blue {
+	/*background: url(../images/osrs_header_blue.png) top center no-repeat; */
+}
+.header_layer1 {
+	height: 70px;
+	font-size: 30px;
+	padding-left: 20px;
+	font-weight: bold;
+	padding-top: 10px;
+}
+.header_layer2 {
+	height: 44px;
+}
+.header_layer3 {
+	height: 100px;
+}
+.topMenu {
+	color: #FFFFFF;
+}
+.topSearch input{
+	width: 176px;
+}
+
+.headerFieldPadding{
+	padding-top: 20px;
+	padding-left: 30px;
+	width: 540px;
+}
+.headerFieldBack{
+	background-color: #9ccfbd;
+	padding: 8px 16px 8px 8px;
+}
+
+.headerSearchFieldBack {
+	background-color:#9CCFBD;
+	padding:8px 16px 8px 8px;
+}
+
+input.headerbox {
+	width: 100%;
+	font-size: 20px;
+	border: #31564b 1px solid;
+	padding: 2px;
+}
+
+input.headerboxNameSuggest {
+	width: 208px;
+	font-size: 20px;
+	border: #31564b 1px solid;
+	padding: 2px;
+}
+
+#content p#available {
+	font-style: bold;
+	font-size: 20px;
+	padding: 15px;
+}
+
+input.searchButton {
+
+}
+
+/* Main menu  */
+div#global-top-services {
+	/*  padding: 0px 10px 5px 10px;
+	overflow: auto;	/* fix float height */	
+	clear: both;
+}
+
+div#global-top-services a {
+	display: block;
+	float: left;	
+	margin-right: 5px;
+	font-size: 18px;
+	color: black;
+	font-weight: bold;
+}
+
+div#global-top-services a.active,
+div#global-top-nav a.active {
+	color: #d48400;
+}
+
+/* Content */
+#content h1 {
+	font-size: 26px;
+	margin-top: 10px;
+	color: #000;
+	font-weight: bold;
+}
+
+#content h2 {
+	color: #000;
+	font-size: 18px;
+	/* border-bottom: solid 1px #ccc; */
+	padding-bottom: 0px;
+	margin-bottom: 10px;
+	margin-top: 20px;
+	font-weight: normal;
+	/* overflow: hidden; */
+}
+
+#content h3 {
+}
+
+#content p {
+	font-size: 13px;
+}
+
+#content {
+	padding-left: 30px;
+}
+
+
+/* Community bar */
+#communitybar {
+	border: solid 1px #ccc;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	padding: 3px;
+	margin-bottom: 10px;
+	background-color: #eee;
+	font-size: 13px;
+}
+
+#communitybar p {
+	padding: 0;
+	margin: 0;
+	text-align: center;
+}
+
+#communitybar img {
+	vertical-align: text-top;
+}
+
+/* Footer */
+div#footer {
+	border-top: 1px solid #a8a8a8;
+	padding: 10px;
+	font-size: 11px;
+	margin-top: 10px;
+	color: gray;
+	clear: both;
+}
+
+div#footer span.separator {
+	margin: 0px 4px 0px 4px;
+}
+
+div#footer a:link,
+div#footer a:visited,
+div#footer a:active {
+	color: gray;
+}
+
+
+
+/* horizontal menus */
+table.menuArea {
+
+	padding: 0;
+}
+
+/* horizontal top menu */
+td.topmenu_l {
+	width:  1px;
+	height: 29px;
+}
+
+td.topmenu_m {
+	padding: 0;
+	margin: 0;
+	width: auto;
+}
+
+td.topmenu_r {
+	width:  1px;
+	height: 29px;
+}
+
+#topmenu {
+	white-space: nowrap;
+	height: 29px;
+	float: left;
+}
+
+#topmenu ul {
+	margin: 0;
+	padding: 0;
+	list-style:none;
+}
+
+#topmenu li {
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+
+#topmenu a {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	float:left;
+	display:block;
+	height: 29px;
+	line-height: 29px;
+	padding: 0 20px;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+#topmenu a#active_menu-nav {
+	margin-top:2px;
+	height: 29px;
+	line-height: 29px;
+	background-position: 0 0;
+}
+
+
+/* horizontal site menu */
+td.sitemenu_l {
+	width:  1px;
+	height: 44px;
+}
+
+td.sitemenu_m {
+	padding: 0;
+	margin: 0;
+	width: auto;
+}
+
+td.sitemenu_r {
+	width:  1px;
+	height: 44px;
+}
+
+#sitemenu {
+	white-space: nowrap;
+	height: 44px;
+	float: left;
+}
+
+#sitemenu ul {
+	margin: 0;
+	padding: 0;
+	list-style:none;
+}
+
+#sitemenu li {
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+
+#sitemenu a {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	float:left;
+	display:block;
+	height: 44px;
+	line-height: 44px;
+	padding: 5px 20px 0px 20px;
+	color: #000000;
+	text-decoration: none;
+}
+
+#sitemenu a#active_menu-nav {
+	margin-top: 2px;
+	height: 44px;
+	line-height: 44px;
+	background-position: 0 0;
+}
+
+/* header - Menu catalog */
+#menuCatalog, #menuCat0, #menuCat1, #menuCat2, #menuCat3, #menuCat4 {
+	float: left;
+}
+#menuCat0 {
+	width: 20px;
+}
+#menuCat1{
+	width: 175px;
+}
+#menuCat2{
+	width: 160px;
+}
+#menuCat3{
+	width: 180px;
+}
+#menuCat4{
+	width: 200px;
+}
+
+.menuCat ul {
+	margin: 0;
+	padding: 6px 0px 0px 0px;
+	list-style:none;
+}
+.menuCat li {
+	margin: 0px;
+	padding: 2px 0px;
+}
+
+.menuCat a {
+	font-family: Arial, Helvetica, sans-serif;
+	display:block;
+	color: #534213;
+	text-decoration: none;
+}
+
+
+/* Domain List */
+.listHeadline {
+	font-size: 20px;
+	font-weight: bold;
+	padding: 25px 0px 15px 0px;
+	border-bottom: #bbbbbb 1px solid;
+}
+
+.listLine1 td {
+	font-size: 15px;
+	padding: 10px 0px 8px 10px;
+	border-bottom: #bbbbbb 1px solid;
+	background-color: #f8f8f8;
+}
+.listLine2 td {
+	font-size: 15px;
+	padding: 10px 0px 8px 10px;
+	border-bottom: #bbbbbb 1px solid;
+	background-color: #fefefe;
+}
+
+.lineResult{
+	float: right;
+	padding-right: 10px;
+}
+

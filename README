@@ -1,0 +1,4 @@
+The main part of this package is under the "opensrs" directory.  The rest of the
+package are php examples and templates to demonstrate use of the library.
+
+Documentation on the OpenSRS PHP Toolkit is avaliable under docs.

@@ -1,0 +1,164 @@
+	body{
+		font-family: Trebuchet MS, Lucida Sans Unicode, Arial, sans-serif;	/* Font to use */
+		background-color:#E2EBED;
+	}
+	#footer{
+		height:30px;
+		vertical-align:middle;
+		text-align:right;
+		clear:both;
+		padding-right:3px;
+		background-color:#317082;
+		margin-top:2px;
+		width:790px;
+	}
+	#footer form{
+		margin:0px;
+		margin-top:2px;
+	}
+	#dhtmlgoodies_dragDropContainer{	/* Main container for this script */
+		width:790px;
+		height:auto;
+		border:1px solid #317082;
+		background-color:#FFF;
+		-moz-user-select:none;
+	}
+	#dhtmlgoodies_dragDropContainer ul{	/* General rules for all <ul> */
+		margin-top:0px;
+		margin-left:0px;
+		margin-bottom:0px;
+		padding:2px;
+	}
+	
+	#dhtmlgoodies_dragDropContainer li,#dragContent li,li#indicateDestination{	/* Movable items, i.e. <LI> */
+		list-style-type:none;
+		height:20px;
+		background-color:#EEE;
+		border:1px solid #000;
+		padding:2px;
+		margin-bottom:2px;
+		cursor:pointer;
+		font-size:0.9em;
+	}
+	
+	li#indicateDestination{	/* Box indicating where content will be dropped - i.e. the one you use if you don't use arrow */
+		border:1px dotted #600;	
+		background-color:#FFF;
+	}
+
+	
+	/* LEFT COLUMN CSS */
+	div#dhtmlgoodies_listOfItems{	/* Left column "Available students" */
+		float:left;
+		padding-left:10px;
+		padding-right:10px;
+		width: 80px;
+	}
+	#dhtmlgoodies_listOfItems ul{	/* Left(Sources) column <ul> */
+		height: auto:
+	}
+	
+	#dhtmlgoodies_listOfItems li{
+		text-align: center;
+	}
+	
+	#dhtmlgoodies_listOfItems li div.hide {
+		display: none;
+	}
+	
+		
+	div#dhtmlgoodies_listOfItems div{
+		border:1px solid #999;		
+	}
+	div#dhtmlgoodies_listOfItems div ul{	/* Left column <ul> */
+		margin-left:0px;	/* Space at the left of list - the arrow will be positioned there */
+	}
+	#dhtmlgoodies_listOfItems div p{	/* Heading above left column */
+		margin:0px;	
+		font-weight:bold;
+		padding-left:12px;
+		background-color:#317082;	
+		color:#FFF;
+		margin-bottom:5px;
+	}
+	/* END LEFT COLUMN CSS */
+	
+	#dhtmlgoodies_dragDropContainer .mouseover{	/* Mouse over effect DIV box in right column */
+		background-color:#E2EBED;
+		border:1px solid #317082;
+	}
+	
+	
+	/* Start main container CSS */
+	div#dhtmlgoodies_mainContainer{	/* Right column DIV */
+		width:690px;
+		float:left;	
+	}
+	#dhtmlgoodies_mainContainer div{	/* Parent <div> of small boxes */
+		float:left;
+		margin-right: 0px;
+		margin-bottom: 0px;
+		margin-top: 0px;
+		border:1px solid #999;
+		width: 690px;
+	}
+	#dhtmlgoodies_mainContainer div ul{
+		margin-left: 0px;
+	}
+	
+	#dhtmlgoodies_mainContainer div p{	/* Heading above small boxes */
+		margin:0px;
+		padding:0px;
+		padding-left:12px;
+		font-weight:bold;
+		background-color:#317082;	
+		color:#FFF;	
+		margin-bottom:0px;
+	}
+	
+	#dhtmlgoodies_mainContainer ul{	/* Small box in right column ,i.e <ul> */
+		width:686px;
+		height:auto;	
+		border:0px;	
+		margin-bottom:0px;
+		overflow:hidden;
+		
+	}
+	
+	#dragContent{	/* Drag container */
+		position:absolute;
+		width:80px;
+		height:20px;
+		display:none;
+		margin:0px;
+		padding:0px;
+		z-index:2000;
+	}
+
+	#dragDropIndicator{	/* DIV for the small arrow */
+		position:absolute;
+		width:7px;
+		height:10px;
+		display:none;
+		z-index:1000;
+		margin:0px;
+		padding:0px;
+		text-align: center
+	}
+
+	div#dhtmlgoodies_listOfItems{
+		/* display:none; */
+	}
+	body{
+		background-color:#FFF;
+	}
+	img{
+		display:none;
+	}
+	#dhtmlgoodies_dragDropContainer{
+		border:0px;
+		width:100%;
+	}
+	p{
+		margin-bottom:0px;
+	}	

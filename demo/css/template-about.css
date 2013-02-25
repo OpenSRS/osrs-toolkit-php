@@ -1,0 +1,10 @@
+/*****************************/
+/*** Core html setup stuff ***/
+/*****************************/
+
+div#center {
+	background: url(../images/about_us.png) top left repeat-x;
+}
+div#backbanner{
+	background: url(../images/about_us_banner.png) top center no-repeat;
+}

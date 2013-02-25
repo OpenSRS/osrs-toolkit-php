@@ -1,0 +1,9 @@
+To-do v4.0 11/10/2012
+* Add mail functionality for the new email API
+* Testing suite using PHPUnit
+
+To-do v1.0 02/12/2010 [clamATtucowsDOTcom]
+
+* Add in support for all ccTLDs for SW_register
+* All mail functionality
+

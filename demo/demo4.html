@@ -1,0 +1,57 @@
+<html>
+<head>
+	<title>Drag and Drop to the columns</title>
+	
+	<link rel="stylesheet" href="css/main.css" type="text/css">
+	<script src="js/main.js" type="javascript"></script>
+</head>
+
+
+<body>
+
+<div id="dhtmlgoodies_dragDropContainer">
+	<div id="dhtmlgoodies_listOfItems">
+		<!-- domain box -->
+		<div>
+			<ul id="allItems">
+				<li id=".com">.com <div class="hide">Something!!</div></li>
+				<li id=".net">.net</li>
+				<li id=".org">.org</li>
+				<li id=".ca">.ca</li>
+				<li id=".tel">.tel</li>
+				<li id=".mobi">.mobi</li>
+				<li id=".biz">.biz</li>
+				<li id=".me">.me</li>
+				<li id=".asia">.asia</li>
+				<li id=".info">.info</li>
+				<li id=".co.uk">.co.uk</li>
+				<li id=".org.uk">.org.uk</li>
+			</ul>
+		</div>
+	</div>
+
+	<div id="dhtmlgoodies_mainContainer">
+		<div>
+			<!-- p> select box </p -->
+			<ul id="box1"></ul>
+		</div>
+		<!-- div>		
+			<p>Team B</p>
+			<ul id="box2">
+				<li id="node16">Student P</li>
+			</ul>
+		</div -->
+	</div>
+</div>
+
+<div id="footer">
+	<form action="aPage.html" method="post"><input type="button" onclick="saveDragDropNodes()" value="Save"></form>
+</div>
+
+<ul id="dragContent"></ul>
+<div id="dragDropIndicator"><img src="images/insert.gif"></div>
+<div id="saveContent"></div>
+
+
+	</body>
+</html>
