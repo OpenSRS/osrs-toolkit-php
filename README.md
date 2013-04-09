@@ -30,6 +30,7 @@ also being extended to pass data in XML and Array format as well).
 
 The OpenSRS PHP Tookit requires:
 - PHP 5
+- OpenSSL
 - PEAR: http://pear.php.net/
 - mcrypt: http://www.php.net/manual/en/book.mcrypt.php
 - getmypid() enabled
