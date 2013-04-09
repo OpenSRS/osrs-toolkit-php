@@ -64,6 +64,11 @@ define('OSRS_HOST', '');
 define('OSRS_PORT', '55000');
 
 /** 
+* OpenSRS Crypt Type SSL/DES/BLOWFISH
+*/
+define('OSRS_CRYPT_TYPE', 'SSL');
+
+/** 
 * OpenSRS API SSL port
 */
 define('OSRS_SSL_PORT', '55443');
