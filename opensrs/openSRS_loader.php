@@ -54,27 +54,39 @@ function object2array($data){
 
 // Call parsers and functions of openSRS
 function processOpenSRS ($type="", $data="") {
-    if ($type != "" && $data != ""){
-	    if ($type == "array") $dataArray = $data;					// ARRAY
-		if ($type == "json"){										// JSON
-			$json = str_replace("\\\"", "\"", $data);   //  Replace  \"  with " for JSON that comes from Javascript
-			$dataArray = json_decode($json, true);
-		}
-		if ($type == "yaml") $dataArray = Spyc::YAMLLoad($data);	// YAML
 
+    if (empty($data)) {
+        trigger_error("OSRS Error - No data found.");
+        return null;
+    }
+    else {
+        $dataArray = array();
+        switch(strtolower($type)) {
+            case "array":
+                $dataArray = $data;
+                break;
+            case "json":
+                $json = str_replace("\\\"", "\"", $data);   //  Replace  \"  with " for JSON that comes from Javascript
+                $dataArray = json_decode($json, true);
+                break;
+            case "yaml":
+                $dataArray = Spyc::YAMLLoad($data);
+                break;
+            default:
+                $dataArray = $data;
+        }
 		// Convert associative array to object
-		$dataObject = array2object($dataArray);
-	}
-	
-	if (class_exists($dataObject->func)){
-		$classCall = new $dataObject->func($type, $dataObject);
-	} else {
-		$classCall = null;
-    trigger_error("OSRS Error - Unable to find the function passed.  Either the function is misspelled or there are incorrect file paths set in configuration.php.");
-	}
-	return $classCall;
+	    $dataObject = array2object($dataArray);
+        $classCall = null;
+        if (class_exists($dataObject->func)){
+            $classCall = new $dataObject->func($type, $dataObject);
+        } 
+        else {
+            trigger_error("OSRS Error - Unable to find the function $dataObject->func.  Either the function is misspelled or there are incorrect file paths set in openSRS_config.php.");
+        }
+        return $classCall;
+	} 
 }
-
 
 function convertArray2Formated ($type="", $data="") {
 	$resultString = "";
