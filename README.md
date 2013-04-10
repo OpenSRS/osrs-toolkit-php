@@ -17,34 +17,36 @@ Getting Started
 2. In opensrs directory, rename/copy the openSRS_config.php.template to openSRS_config.php
 
 3. Open openSRS_config.php in a text editor and fill in your reseller details:
-```
 
-OSRS_HOST
-> LIVE => rr-n1-tor.opensrs.net, TEST => horizon.opensrs.net
+__OSRS_HOST__
+> LIVE: rr-n1-tor.opensrs.net
+> TEST: horizon.opensrs.net
 
-OSRS_USERNAME
-> OpenSRS reseller name
+__OSRS_USERNAME__
+> OpenSRS Reseller Username
 
-OSRS_KEY
-> OpenSRS private key
+__OSRS_KEY__
+> OpenSRS Private Key
+> To generate a key, login into the RWI by going to the following address,
+>   LIVE:  https://rr-n1-tor.opensrs.net/resellers/
+>   TEST:  https://horizon.opensrs.net/resellers/
+> In RWI, Profile Management > Generate New Private Key
 
-OSRS_DEBUG
-> If set to 1, the Toolkit will spit out the raw XML request/response.
+__OSRS_DEBUG__
+> WHen set to 1, the Toolkit will spit out the raw XML request/response.
 
-MAIL_HOST
-> LIVE => https://admin.hostedemail.com, TEST => https://admin.test.hostedemail.com
+__MAIL_HOST__
+> LIVE: https://admin.hostedemail.com
+> TEST: https://admin.test.hostedemail.com
 
-MAIL_USERNAME
-> Company level username
+__MAIL_USERNAME__
+> Company level email admin username
 
-MAIL_PASSWORD
-> Company level password
+__MAIL_PASSWORD__
+> Company level email admin password
 
-MAIL_ENV
-> OMA environment. LIVE or TEST.
-
-```
-
+__MAIL_ENV__
+> Mail environment - LIVE or TEST
 
 
 
