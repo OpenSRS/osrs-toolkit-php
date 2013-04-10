@@ -39,23 +39,18 @@ define('OPENSRSFASTLOOKUP', OPENSRSURI . DS . 'fastlookup');
 /** 
 * OpenSRS reseller username
 */
-define('OSRS_USERNAME', '');
+define('OSRS_USERNAME', 'opensrs_reseller_username_here');
 
 /** 
 * OpenSRS reseller private Key. Please generate a key if you do not already have one.
 */
-define('OSRS_KEY', '');
-
-/** 
-* OpenSRS domain service Environment. LIVE, TEST or HRS.
-*/
-define('OSRS_ENV', '');
+define('OSRS_KEY', 'opensrs_reseller_private_key_here');
 
 /** 
 * OpenSRS domain service API url.
 * LIVE => rr-n1-tor.opensrs.net, TEST => horizon.opensrs.net
 */
-define('OSRS_HOST', '');
+define('OSRS_HOST', 'opensrs_host_here');
 
 /** 
 * OpenSRS API SSL port
@@ -97,17 +92,17 @@ define('MAIL_HOST', 'https://admin.hostedemail.com');
 /** 
 * Your company level username
 */
-define('MAIL_USERNAME', ''); 
+define('MAIL_USERNAME', 'company_level_username_here'); 
 
 /** 
 * Your company level password
 */
-define('MAIL_PASSWORD', '');
+define('MAIL_PASSWORD', 'company_level_password_here');
 
 /** 
 * OMA environment LIVE or TEST
 */
-define('MAIL_ENV', ''); 
+define('MAIL_ENV', 'LIVE'); 
 
 /** 
 * OMA Client tool info. i.e. OpenSRS PHP Toolkit

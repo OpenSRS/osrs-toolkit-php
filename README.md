@@ -1,9 +1,6 @@
 Official OpenSRS PHP Toolkit
 ============================
 
-Introduction
-------------
-
 The purpose in building out these libraries is to help ease the implementation
 of the OpenSRS API.  Not only does it give a starting point in developing an
 application to allow for quick integration, but also incorporates new
@@ -13,11 +10,48 @@ This documentation is provided to augment the already existing API documentation
  
     http://www.opensrs.com/site/resources/documentation/api
 
+Getting Started
+---------------
+1. Download and install the toolkit
 
-Live Beta Demo
+2. In opensrs directory, rename/copy the openSRS_config.php.template to openSRS_config.php
+
+3. Open openSRS_config.php in a text editor and fill in your reseller details:
+```
+
+OSRS_HOST
+> LIVE => rr-n1-tor.opensrs.net, TEST => horizon.opensrs.net
+
+OSRS_USERNAME
+> OpenSRS reseller name
+
+OSRS_KEY
+> OpenSRS private key
+
+OSRS_DEBUG
+> If set to 1, the Toolkit will spit out the raw XML request/response.
+
+MAIL_HOST
+> LIVE => https://admin.hostedemail.com, TEST => https://admin.test.hostedemail.com
+
+MAIL_USERNAME
+> Company level username
+
+MAIL_PASSWORD
+> Company level password
+
+MAIL_ENV
+> OMA environment. LIVE or TEST.
+
+```
+
+
+
+
+Demo Portal
 --------------
 
-A permanent demo is available at
+Demo is available at
 
     http://opensrsphpdemo.com
         
@@ -29,15 +63,15 @@ This PHP library currently supports data being passed in JSON and YAML (it is
 also being extended to pass data in XML and Array format as well).
 
 The OpenSRS PHP Tookit requires:
+
 - PHP 5
 - OpenSSL
 - PEAR: http://pear.php.net/
-- mcrypt: http://www.php.net/manual/en/book.mcrypt.php
 - getmypid() enabled
 - cURL: required for OMA
 - php-curl: required for OMA - http://www.php.net/manual/en/book.curl.php 
 
-NOTE:  It's best to use the PHP 5.2+ as json_encode and json_decode are standard
+NOTE:  It's best to use the PHP 5.3+ as json_encode and json_decode are standard
 on that version and above. If an earlier version of PHP 5 is needed, the php-json
 libraries at http://pecl.php.net/package/json will be required.
 
@@ -137,8 +171,6 @@ Domain Services
 define('OSRS_HOST', ''); /* LIVE => rr-n1-tor.opensrs.net, TEST => horizon.opensrs.net */
 define('OSRS_USERNAME', ''); /* OpenSRS reseller name */
 define('OSRS_KEY', ''); /* OpenSRS private key */
-define('OSRS_ENV', ''); /* OpenSRS environment. LIVE or TEST. */
-
 define('OSRS_DEBUG', 0); /* If set to 1, the Toolkit will spit out the raw XML request/response. */
 ```
 
@@ -192,9 +224,10 @@ define("OPENSRSCONFINGS", OPENSRSURI . DS . "configurations");
 define("OPENSRSDOMAINS", OPENSRSURI . DS . "domains");
 define("OPENSRSTRUST", OPENSRSURI . DS . "trust");
 define("OPENSRSPUBLISHING", OPENSRSURI . DS . "publishing");
-define("OPENSRSMAIL", OPENSRSURI . DS . "mail");
-define("OPENSRSFASTLOOKUP", OPENSRSURI . DS . "fastlookup");
 define("OPENSRSOMA", OPENSRSURI . DS . "OMA");
+define("OPENSRSFASTLOOKUP", OPENSRSURI . DS . "fastlookup");
+define("OPENSRSMAIL", OPENSRSURI . DS . "mail");
+
 ```
 
 NOTE:  It's recommended to keep these folder names constant as upgrades to the
@@ -471,15 +504,10 @@ key and reseller username are correct
 Reseller username or osrs_key is incorrect, please check the config file.
 * Same as above
 
-Please check the osrs_key value in the config file, it contains a non hexidecimal character.
-* The OpenSRS private key only contains hex characters.  If the config file has
-a key that contains non hex characters during a CBC connection, this error will appear.
-
 Read buffer is empty.  Please make sure IP is whitelisted in RWI and check the osrs_key in the config file.
 * The OpenSRS system did not return any information.  If the application is using
 SSL to connect then there may be a network issue where the data cannot be read.
-Under a CBC connection then it is likely that the osrs_key or reseller username is
-incorrect. This is also caused by not having the machine IP whitelisted for the API.
+This is also caused by not having the machine IP whitelisted for the API.
 Please see section 2.1.1 for information on how to whitelist an IP.
 
 UNEXPECTED READ: Unable to parse HTTP response code.
@@ -491,8 +519,7 @@ UNEXPECTED READ: Error reading HTTP header.
 return.
 
 No Content-Length header returned.
-* Content length header was blank.  Usually this is due to using a CBC connection
-and having an incorrect key or username.  This could also happen if the IP address
+* Content length header was blank.  This could also happen if the IP address
 of the machine is not whitelisted in OpenSRS.  See section 2.1.1 for information
 on whitelisting an IP.
 * This will be the most common case of this error
@@ -535,22 +562,6 @@ document
 Incorrect call
 * At least one required parameter was not passed, the call will not be made to
 the OpenSRS API.  There will be at least one not defined error before this error.
-
-unknown cipher
-* The toolkit only supports CBC connections encrypted with:
-DES
-BLOWFISH
-BLOWFISH-COMPAT
-* This will not display if connecting via SSL.
-
-mcrypt_generic_init failed
-* Check installation of the mycrypt package, could be corrupted
-
-no initialization vector
-* Problem with the CBC connection
-* IV was not returned to the toolkit in the response header, could be caused by
-a corrupted returned messge.
-* This will not display if connecting via SSL.
 
 Mail System Write Error
 * The toolkit was unable to write to the server specified, please check
@@ -1102,11 +1113,6 @@ transRsp2Rsp				RSP2RSP_PUSH_TRANSFER                   DOMAIN			373				388
 transSendPass				SEND_PASSWORD				TRANSFER		377				392
 transTradeDomain			TRADE_DOMAIN				DOMAIN			380				395
 
-CBC Authentication Commands:
-
-authAuthenticateUser                    AUTHENTICATE				USER
-authCheckVersion                        CHECK					VERSION
-cookieQuit				QUIT					SESSION			549				564
 
 ======================================================================
 9.2 - Mail Function list and corresponding Command in OpenSRS Mail APP
