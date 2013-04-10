@@ -16,8 +16,8 @@
 		<li><a href="demo2.php">Demo 2</a></li>
 		<li><a href="demo3.php">Demo 3</a></li>
 		<li><a href="demo4.html">Demo 4</a></li>
-		<li><a href="demo5.php">Demo 5 (Live env only)</a></li>
-		<li><a href="demo6.php">Demo 6 (Live env only)</a></li>
+		<li><a href="demo5.php">Demo 5</a></li>
+		<li><a href="demo6.php">Demo 6 (LIVE Only)</a></li>
 	</ul>
 </div>
 <div class="container">

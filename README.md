@@ -46,6 +46,7 @@ __MAIL_PASSWORD__
 __MAIL_ENV__
 > Mail environment - LIVE or TEST
 
+
 4. Follow the guidelines to start developing your application.
 
 * [OpenSRS API Documentation Page](http://www.opensrs.com/site/resources/documentation/api)
@@ -99,50 +100,8 @@ NOTE:  It's best to use the PHP 5.3+ as json_encode and json_decode are standard
 on that version and above. If an earlier version of PHP 5 is needed, the php-json
 libraries at http://pecl.php.net/package/json will be required.
 
-Why not use the PEAR JSON functions? Well php-json is much faster! There's a great
-comparison that was done a couple of years ago at http://gggeek.altervista.org/sw/article_20061113.html
-		
-NOTE:  While we are using JSON to call the functions, making it more human
-readable, the backend processing is still done in XML and thus the speed of the
-calls will not be affected within the API layer.
 
-To use the Library, an application will require the following lines:
-
-```
-//The loader is the key in including all of the libraries that are supported in the toolkit
-require_once ("opensrs/openSRS_loader.php");
-
-//The callstring specifies the markup to input
-$callstring = json_encode($callArray);
-//$callstring = Spyc::YAMLDump($callArray); // YAML output only
-
-//The handler processes the input
-$osrsHandler = processOpenSRS ("json", $callstring);
-//$osrsHandler = processOpenSRS ("yaml", $callstring); // YAML output only
-
-```
-
-Generating your API Private Key and whitelisting your IP address
-----------------------------------------------------------------
-
-To properly use the API functionality in this toolkit (and anytime you use the
-API), it's necessary to know what your Private Key is as it's the gateway to
-communicating to our API servers.  
-
-If you are using a live key already, you can reuse this key for your purposes.  
-
-If you generate a new key, there is some lag time on the servers for proper communications 
-to occur.  Therefore, it's wise, especially if you're on a live system, to reuse the Private Key
-rather than regenerate it.  
-
-If you are moving to a new server, it is necessary to whitelist the IP address and open up 
-the port for API communications to be
-successful.
-
-If you do not have a key, please follow the steps below.  
-
-
-Generating a private key
+Generating Private Key
 ------------------------
 
 To generate a key, login into the RWI by going to the following address:
@@ -167,8 +126,8 @@ This is essentially the authentication key that you'll be using to working
 with the API.  It's essential to keep this key to yourself!
 
 
-Whitelisting an IP address for API access
------------------------------------------
+Whitelisting IP address
+-----------------------
 
 Once you've generated your key (as above), you'll also need to whitelist your
 IP address.  If this is not done, an error will be received and continuing
@@ -182,31 +141,6 @@ hosted.  A total of 5 addresses can be added by default.
 IMPORTANT NOTE:  Adding a new IP address can take up to 15 minutes to
 propagate into our system.   
 
-
-Setting up the Reseller account
--------------------------------
-
-In the directory /opensrs, copy openSRS_config.php.template to openSRS_config.php, then edit the following required values.
-
-
-Domain Services
----------------
-```PHP
-define('OSRS_HOST', ''); /* LIVE => rr-n1-tor.opensrs.net, TEST => horizon.opensrs.net */
-define('OSRS_USERNAME', ''); /* OpenSRS reseller name */
-define('OSRS_KEY', ''); /* OpenSRS private key */
-define('OSRS_DEBUG', 0); /* If set to 1, the Toolkit will spit out the raw XML request/response. */
-```
-
-OpenSRS Mail API (OMA) Services
--------------------------------
-```PHP
-define('MAIL_HOST', 'https://admin.hostedemail.com'); /* LIVE => https://admin.hostedemail.com, TEST => https://admin.test.hostedemail.com */
-define('MAIL_USERNAME', ''); /* Company level username */
-define('MAIL_PASSWORD', ''); /* Company level password */
-define('MAIL_ENV', '');  /* OMA environment. LIVE or TEST. */
-define('MAIL_CLIENT', 'OpenSRS PHP Toolkit'); /* Optional */
-```
 
 Account Provisioning Protocol (APP) Services
 --------------------------------------------
@@ -259,55 +193,10 @@ library may cause files to be put into the wrong folder thus possibily affecting
 future enhancements.
 
 
-Quick Start Guide
-=================
-
-Additional information below will assist in setting up specific calls made to
-the implementation.  However, all of the information is also included in the
-testcase/ directory within this tarball.  Examples of calls can be seen and interacted
-with by going to index.php on the web server, all the standardized calls have
-been documented in a listed variety categorized by the type of functionality.
-The test-*.php example, will provide a good idea of how everything fits into the new
-implementation.  To get started in 5 minutes or less, after set-up of the connection
-string (see section 2.1), all that is required are the following lines of code:
-
-```PHP
-<?php 
-//The loader is very important here, it loads all of the libraries into the implementation 
-require_once ("opensrs/openSRS_loader.php"); 
-
-$callArray = array ( 
-        //This is for the function calls, they can be found on the above website 
-        "func" => "suggestDomain", 
-		//"func" => "premiumDomain",
-		//"func" => "lookupDomain",
-        "data" => array ( 
-                "domain" => "example.com", 
-                // These are optional 
-                "selected" => ".com;.net", // These are the selected TLDs to search with 
-                "alldomains" => ".com;.net;.org;.ca" // These are the TLDs that the implementation
-							supports
-        ) 
-); 
-
-//This specifies what type of markup to output 
-$callstring = json_encode($callArray); 
-$osrsHandler = processOpenSRS ("json", $callstring); 
-
-// these are optional depending on required output 
-//$callstring = Spyc::YAMLDump($callArray); 
-//$osrsHandler = processOpenSRS ("yaml", $callstring); 
-
-// This is to print out the results 
-echo (" In: ". $callstring ."<br>"); 
-echo ("Out: ". $osrsHandler->resultFormatted); 
-?> 
-```
-
 General Use
 -----------
 
-In the openSRS_Loader there is a processOpenSRS function which will take in the
+In the openSRS_loader there is a processOpenSRS function which will take in the
 JSON data and run the appropriate function.
 
 ```
@@ -401,7 +290,7 @@ The processOpensrs function returns a full stdClass object.  This object has fou
 public variables that contain the returned data
 
 Results Formatted
-----------------
+-----------------
 resultFormatted
 * The result formatted in the data type that is originally passed to the function
 * This only returns the result and no error codes
