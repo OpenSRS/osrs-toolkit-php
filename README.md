@@ -28,8 +28,8 @@ __OSRS_USERNAME__
 __OSRS_KEY__
 > OpenSRS Private Key
 > To generate a key, login into the RWI by going to the following address,
->   *LIVE:  https://rr-n1-tor.opensrs.net/resellers/
->   *TEST:  https://horizon.opensrs.net/resellers/
+>   * LIVE:  https://rr-n1-tor.opensrs.net/resellers/
+>   * TEST:  https://horizon.opensrs.net/resellers/
 > In RWI, Profile Management > Generate New Private Key
 
 __OSRS_DEBUG__
