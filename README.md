@@ -6,8 +6,6 @@ of the OpenSRS API.  Not only does it give a starting point in developing an
 application to allow for quick integration, but also incorporates new
 communication markup languages such as JSON and YAML.  
 
-This documentation is provided to augment the already existing API documentation which is available at   
-http://www.opensrs.com/site/resources/documentation/api
 
 Getting Started
 ---------------
@@ -48,15 +46,20 @@ __MAIL_PASSWORD__
 __MAIL_ENV__
 > Mail environment - LIVE or TEST
 
+4. Follow the guidelines to start developing your application.
 
-Done! 
+* [OpenSRS API Documentation Page](http://www.opensrs.com/site/resources/documentation/api)
+
+
+That's it!
+
 
 Sample API Call
 ---------------
 * Lookup Domain
 
 ```
-require_once ("../opensrs/openSRS_loader.php");
+require_once ("your_root_path/opensrs/openSRS_loader.php");
 
 $callArray = array (
         "func" => "lookupLookupDomain",
@@ -74,13 +77,11 @@ var_dump($osrsHandler);
 Demo Portal
 --------------
 
-Demo is available at
-
-    http://opensrsphpdemo.com
+Demo is available at http://opensrsphpdemo.com
         
 
-Setting up the connection
--------------------------
+Requirements
+------------
 
 This PHP library currently supports data being passed in JSON and YAML (it is
 also being extended to pass data in XML and Array format as well).
