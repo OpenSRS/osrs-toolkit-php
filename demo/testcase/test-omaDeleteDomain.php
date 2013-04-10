@@ -2,7 +2,7 @@
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	
-	// Put the data to the formated array
+	// Put the data to the Formatted array
 	$callArray = array(
 		"domain" => $_POST["domain"],
 	);

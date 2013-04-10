@@ -88,14 +88,14 @@ function processOpenSRS ($type="", $data="") {
     }
 }
 
-function convertArray2Formated ($type="", $data="") {
-    $resultString = "";
-    if ($type == "json") $resultString = json_encode($data);
-	if ($type == "yaml") $resultString = Spyc::YAMLDump($data);
-    return $resultString;
+function convertArray2Formatted ($type="", $data="") {
+  $resultString = "";
+  if ($type == "json") $resultString = json_encode($data);
+  if ($type == "yaml") $resultString = Spyc::YAMLDump($data);
+  return $resultString;
 }
 
-function convertFormated2array ($type="", $data="") {
+function convertFormatted2array ($type="", $data="") {
 	$resultArray = "";
 	if ($type == "json") $resultArray = json_decode($data, true);
 	if ($type == "yaml") $resultArray = Spyc::YAMLLoad($data);;

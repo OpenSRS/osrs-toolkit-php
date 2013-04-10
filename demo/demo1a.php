@@ -21,8 +21,8 @@
 	// $callstring = XML($callArray);
 	// $osrsHandler = processOpenSRS ("xml", $callstring);
 
-	$serverResult = $osrsHandler->resultFullFormated;
-	$serverResShort = $osrsHandler->resultFormated;
+	$serverResult = $osrsHandler->resultFullFormatted;
+	$serverResShort = $osrsHandler->resultFormatted;
 	$serverResArray = $osrsHandler->resultRaw;
 ?>
 

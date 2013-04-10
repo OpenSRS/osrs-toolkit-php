@@ -28,7 +28,7 @@ $osrsHandler = processOpenSRS ("json", $callstring);
 
 echo (" In: ". $callstring ."<br>");
 //echo ("Out Result Full Raw: ". $osrsHandler->resultFullRaw ."<br>");
-//echo ("Out Results Formatted: ". $osrsHandler->resultFormated ."<br>");
+//echo ("Out Results Formatted: ". $osrsHandler->resultFormatted ."<br>");
 
 //Array
 $variable = var_dump($osrsHandler->resultRaw, true);

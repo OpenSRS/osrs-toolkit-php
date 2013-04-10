@@ -39,7 +39,7 @@ if ($formFormat == "yaml") $callstring = Spyc::YAMLDump($callArray);
 // Open SRS Call -> Result
 require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
 $osrsHandler = processOpenSRS ($formFormat, $callstring);
-$capArray = convertFormated2array ($formFormat, $osrsHandler->resultFormated); 
+$capArray = convertFormatted2array ($formFormat, $osrsHandler->resultFormatted); 
 
 $arraLookup  = $capArray['lookup'];
 $arraPrem = $capArray['premium'];
@@ -47,7 +47,7 @@ $arraSugg = $capArray['suggestion'];
 
 // Print out the results
 // echo (" In: ". $callstring ."<br>");
-// echo ("Out: ". $osrsHandler->resultFormated)
+// echo ("Out: ". $osrsHandler->resultFormatted)
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

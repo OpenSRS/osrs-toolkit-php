@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 	// Print out the results
 	echo (" In: ". $callstring ."<br>");
-	echo ("Out: ". $osrsHandler->resultFormated);
+	echo ("Out: ". $osrsHandler->resultFormatted);
 
 
 	} else {

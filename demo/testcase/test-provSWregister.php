@@ -132,7 +132,7 @@ $osrsHandler = processOpenSRS ($formFormat, $callstring);
 
 // Print out the results
 echo (" In: ". $callstring ."<br>");
-echo ("Out: ". $osrsHandler->resultFormated);
+echo ("Out: ". $osrsHandler->resultFormatted);
 
 } else {
 	// Format

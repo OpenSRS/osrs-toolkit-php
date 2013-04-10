@@ -6,4 +6,4 @@ $callstring = json_encode(array("func" => "lookupGetBalance"));
 $osrsHandler = processOpenSRS ("json", $callstring);
 
 print ("In: ". $callstring . "\n");
-print ("Out: ". $osrsHandler->resultFormated . "\n");
+print ("Out: ". $osrsHandler->resultFormatted . "\n");

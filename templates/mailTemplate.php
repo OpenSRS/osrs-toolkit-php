@@ -10,7 +10,7 @@ class xxx extends openSRS_mail {
 	private $_osrsm;
 	
 	public $resultRaw;
-	public $resultFormated;
+	public $resultFormatted;
 	public $resultSuccess;
 
 	public function __construct ($formatString, $dataObject) {
@@ -77,7 +77,7 @@ class xxx extends openSRS_mail {
 		
 		// Results
 		$this->resultRaw = $arrayResult;
-		$this->resultFormated = convertArray2Formated ($this->_formatHolder, $this->resultRaw);
+		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 		$this->resultSuccess = $this->makeCheck ($arrayResult);
 	}
 }

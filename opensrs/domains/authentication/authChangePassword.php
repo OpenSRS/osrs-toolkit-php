@@ -9,8 +9,8 @@ class authChangePassword extends openSRS_base {
 	private $_formatHolder = "";
 	public $resultFullRaw;
 	public $resultRaw;
-	public $resultFullFormated;
-	public $resultFormated;
+	public $resultFullFormatted;
+	public $resultFormatted;
 
 	public function __construct ($formatString, $dataObject) {
 		parent::__construct();
@@ -69,7 +69,7 @@ class authChangePassword extends openSRS_base {
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormated = convertArray2Formated ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormated = convertArray2Formated ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

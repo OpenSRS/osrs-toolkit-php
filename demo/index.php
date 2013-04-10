@@ -46,6 +46,7 @@
 	<a href="testcase/test-lookupGetOrdersByDomain.php?format=json">lookupGetOrdersByDomain</a><br/>
 	<a href="testcase/test-lookupGetPrice.php?format=json">lookupGetPrice</a><br/>
 	<a href="testcase/test-lookupDomain.php?format=json">lookupDomain</a><br/>
+	<a href="testcase/test-lookupLookupDomain.php?format=json">lookupLookupDomain</a><br/>
 	<a href="testcase/test-suggestDomain.php?format=json">suggestDomain</a><br/>
 	<a href="testcase/test-lookupNameSuggest.php?format=json">lookupNameSuggest</a><br/>
 	<a href="testcase/test-allinoneDomain.php?format=json">allinoneDomain</a><br/>

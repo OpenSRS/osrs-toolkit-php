@@ -9,8 +9,8 @@ class lookupGetDomain extends openSRS_base {
 	private $_formatHolder = "";
 	public $resultFullRaw;
 	public $resultRaw;
-	public $resultFullFormated;
-	public $resultFormated;
+	public $resultFullFormatted;
+	public $resultFormatted;
 
 	public function __construct ($formatString, $dataObject) {
 		parent::__construct();
@@ -27,28 +27,28 @@ class lookupGetDomain extends openSRS_base {
 	private function _validateObject (){
 		$allPassed = true;
 		
-		// Command required values
-		if ((!isSet($this->_dataObject->data->cookie) || $this->_dataObject->data->cookie == "") && (!isSet($this->_dataObject->data->bypass) || $this->_dataObject->data->bypass == "")) {
-			trigger_error ("oSRS Error - cookie / bypass is not defined.", E_USER_WARNING);
-			$allPassed = false;
-		}
-		if ( $this->_dataObject->data->cookie != "" && $this->_dataObject->data->bypass != "" ) {
-			trigger_error ("oSRS Error - Both cookie and bypass cannot be set in one call.", E_USER_WARNING);
-			$allPassed = false;
-		}
+		// // Command required values
+		// if ((!isSet($this->_dataObject->data->cookie) || $this->_dataObject->data->cookie == "") && (!isSet($this->_dataObject->data->bypass) || $this->_dataObject->data->bypass == "")) {
+		// 	trigger_error ("oSRS Error - cookie / bypass is not defined.", E_USER_WARNING);
+		// 	$allPassed = false;
+		// }
+		// if ( $this->_dataObject->data->cookie != "" && $this->_dataObject->data->bypass != "" ) {
+		// 	trigger_error ("oSRS Error - Both cookie and bypass cannot be set in one call.", E_USER_WARNING);
+		// 	$allPassed = false;
+		// }
 						
-		if (!isSet($this->_dataObject->data->type) || $this->_dataObject->data->type == "") {
-			trigger_error ("oSRS Error - type is not defined.", E_USER_WARNING);
-			$allPassed = false;
-		}
+		// if (!isSet($this->_dataObject->data->type) || $this->_dataObject->data->type == "") {
+		// 	trigger_error ("oSRS Error - type is not defined.", E_USER_WARNING);
+		// 	$allPassed = false;
+		// }
 				
-		// Run the command
-		if ($allPassed) {
-			// Execute the command
-			$this->_processRequest ();
-		} else {
-			trigger_error ("oSRS Error - Incorrect call.", E_USER_WARNING);
-		}
+		// // Run the command
+		// if ($allPassed) {
+		// 	// Execute the command
+		$this->_processRequest ();
+		// } else {
+		// 	trigger_error ("oSRS Error - Incorrect call.", E_USER_WARNING);
+		// }
 	}
 
 	// Post validation functions
@@ -80,7 +80,7 @@ class lookupGetDomain extends openSRS_base {
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormated = convertArray2Formated ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormated = convertArray2Formated ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

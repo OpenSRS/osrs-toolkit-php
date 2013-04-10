@@ -50,6 +50,27 @@ __MAIL_ENV__
 > Mail environment - LIVE or TEST
 
 
+Done! 
+
+Sample API Call
+---------------
+* Lookup Domain
+
+```
+require_once ("../opensrs/openSRS_loader.php");
+
+$callArray = array (
+        "func" => "lookupLookupDomain",
+        "data" => array (
+                "domain" => "sometest.com",
+        )
+);
+
+$osrsHandler = processOpenSRS ("array", $callArray);
+
+var_dump($osrsHandler);
+```
+
 
 Demo Portal
 --------------
@@ -279,7 +300,7 @@ $osrsHandler = processOpenSRS ("json", $callstring);
 
 // This is to print out the results 
 echo (" In: ". $callstring ."<br>"); 
-echo ("Out: ". $osrsHandler->resultFormated); 
+echo ("Out: ". $osrsHandler->resultFormatted); 
 ?> 
 ```
 
@@ -306,7 +327,7 @@ func:
 
 data
 * This is the information that is being passed to the function
-* Most times this is formated in a similar way to the XML, which is found in the API documentation.
+* Most times this is formatted in a similar way to the XML, which is found in the API documentation.
 
 An example of a call string for looking up the domain "example.com" would be:
 
@@ -343,7 +364,7 @@ $openSRS_results=processOpensrs("json",'
 			"selected": ".com;.net"
 		}
 	}');
-echo $openSRS_results->resultFormated . "\n";
+echo $openSRS_results->resultFormatted . "\n";
 ?>
 ```
 
@@ -365,7 +386,7 @@ $callString["data"]["selected"]=".com;.net";
 $openSRS_results=processOpensrs("json",json_encode($callString));
 
 // Remember to have the "Associative Array" option set to true after passing the json
-$result = json_decode($openSRS_results->resultFormated, true);
+$result = json_decode($openSRS_results->resultFormatted, true);
 
 foreach ($result as $domain_result)
 	echo $domain_result['domain'] . " is " . $domain_result['status'] . "\n";
@@ -379,16 +400,16 @@ Returned Data
 The processOpensrs function returns a full stdClass object.  This object has four
 public variables that contain the returned data
 
-Results Formated
+Results Formatted
 ----------------
-resultFormated
-* The result formated in the data type that is originally passed to the function
+resultFormatted
+* The result formatted in the data type that is originally passed to the function
 * This only returns the result and no error codes
 * This will be referred to as the "condensed" response
 
-resultFullFormated
-* The result in the same data type as resultFormated
-* FullFormated returns the result in the format of the XML returned from OpenSRS,
+resultFullFormatted
+* The result in the same data type as resultFormatted
+* FullFormatted returns the result in the format of the XML returned from OpenSRS,
 including error codes and details
 * This will be referred to as the "full" response
 
@@ -402,7 +423,7 @@ resultFullRaw
 * Includes error messages and full data from the OpenSRS system in the format
 of the XML returned from OpenSRS
 
-In the Full Raw and Full Formated results there are the following:
+In the Full Raw and Full Formatted results there are the following:
 
 	"_OPS_version"
 	"protocol"
@@ -600,7 +621,7 @@ if ($openSRS_result->resultFullRaw['is_success']=="0"){
     echo " The error text is: ";
     echo $openSRS_results->resultFullRaw['response_text'] . "\n";
 } else {
-    echo $openSRS_result->resultFormated;
+    echo $openSRS_result->resultFormatted;
 }
 ```
 

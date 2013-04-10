@@ -13,5 +13,5 @@ $callstring = json_encode($callArray);
 $osrsHandler = processOpenSRS ("json", $callstring);
 
 echo (" In: ". $callstring ."<br>");
-echo ("Out: ". $osrsHandler->resultFormated);
+echo ("Out: ". $osrsHandler->resultFormatted);
 ?>

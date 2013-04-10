@@ -8,8 +8,8 @@ class fastDomainLookup extends openSRS_fastlookup {
 	private $_formatHolder = "";
 	public $resultFullRaw;
 	public $resultRaw;
-	public $resultFullFormated;
-	public $resultFormated;
+	public $resultFullFormatted;
+	public $resultFormatted;
 
 	public function __construct ($formatString, $dataObject) {
 		parent::__construct();
@@ -80,7 +80,7 @@ class fastDomainLookup extends openSRS_fastlookup {
 		// Results
 		$this->resultFullRaw = $result;
 		$this->resultRaw = $result;
-		$this->resultFullFormated = convertArray2Formated ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormated = convertArray2Formated ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

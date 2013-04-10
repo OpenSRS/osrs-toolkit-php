@@ -6,7 +6,7 @@ if (isSet($_POST['function'])) {
 	// Form data capture
 	$formFormat = $_POST["format"];
 
-	// Put the data to the formated array
+	// Put the data to the Formatted array
 	$callstring = "";
 	$callArray = array (
 		"func" => $_POST["function"],
@@ -41,7 +41,7 @@ if (isSet($_POST['function'])) {
 
 	// Print out the results
 	echo (" In: ". $callstring ."<br>");
-	echo ("Out: ". $osrsHandler->resultFormated);
+	echo ("Out: ". $osrsHandler->resultFormatted);
 
 } else {
 	// Format

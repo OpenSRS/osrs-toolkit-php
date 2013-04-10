@@ -18,7 +18,7 @@ if (isSet($_POST['function'])) {
 	// Open SRS Call -> Result
 	require_once ("../opensrs/openSRS_loader.php");
 	$osrsHandler = processOpenSRS ("json", $callstring);
-	$json_out = $osrsHandler->resultFormated;
+	$json_out = $osrsHandler->resultFormatted;
 
 	if (isSet($json_out)){
 		echo '<table>';
