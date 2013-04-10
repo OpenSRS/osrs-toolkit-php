@@ -76,7 +76,7 @@ function processOpenSRS ($type="", $data="") {
                 $dataArray = $data;
         }
 		// Convert associative array to object
-	    $dataObject = array2object($dataArray);
+        $dataObject = array2object($dataArray);
         $classCall = null;
         if (class_exists($dataObject->func)){
             $classCall = new $dataObject->func($type, $dataObject);
@@ -85,14 +85,14 @@ function processOpenSRS ($type="", $data="") {
             trigger_error("OSRS Error - Unable to find the function $dataObject->func.  Either the function is misspelled or there are incorrect file paths set in openSRS_config.php.");
         }
         return $classCall;
-	} 
+    }
 }
 
 function convertArray2Formated ($type="", $data="") {
-	$resultString = "";
-	if ($type == "json") $resultString = json_encode($data);
+    $resultString = "";
+    if ($type == "json") $resultString = json_encode($data);
 	if ($type == "yaml") $resultString = Spyc::YAMLDump($data);
-	return $resultString;
+    return $resultString;
 }
 
 function convertFormated2array ($type="", $data="") {
