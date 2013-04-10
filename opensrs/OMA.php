@@ -1,16 +1,40 @@
 <?php
-// class oma (OpenSRS Mail provisioning API)
-// Using PHP cURL
+
+/**
+ * OpenSRS OMA (OpenSRS Mail provisioning API) class
+ *
+ * @package     OpenSRS
+ * @subpackage  OMA
+ * @since       3.3
+ */
 
 class OMA {
 
 	function __construct($opt=array()){}
 	
+	/**
+	* A wrapper method to send a command to the server
+	*
+	* @param 	string 	$meth  	A name of the OMA method
+	* @param 	hash	$req 	Containing header key/value pairs
+	*  
+	* @return 	hash 	$res 	Containing header key/value pairs
+	* @since   3.3
+	*/	
 	public static function send_cmd($meth, $req){
 		$res = OMA::call($meth, $req);
 		return $res;
 	}
 	
+	/**
+	* Method to send a command to the server using CURL
+	*
+	* @param 	string 	$method  	A name of the OMA method
+	* @param 	hash	$request 	Containing header key/value pairs
+	*  
+	* @return 	hash 	$response 	Containing header key/value pairs
+	* @since   	3.3
+	*/	
 	private static function call($method, $request){
 
 		$data = array(
