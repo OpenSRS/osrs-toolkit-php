@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>OpenSRS PHP Toolkit Verion 3.3 Demo Page</title>
+	<title>OpenSRS PHP Toolkit Verion 3.4 Demo Page</title>
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 </head>
 <body>

@@ -6,9 +6,8 @@ of the OpenSRS API.  Not only does it give a starting point in developing an
 application to allow for quick integration, but also incorporates new
 communication markup languages such as JSON and YAML.  
 
-This documentation is provided to augment the already existing API documentation which is available at:
- 
-    http://www.opensrs.com/site/resources/documentation/api
+This documentation is provided to augment the already existing API documentation which is available at   
+http://www.opensrs.com/site/resources/documentation/api
 
 Getting Started
 ---------------
@@ -19,8 +18,8 @@ Getting Started
 3. Open openSRS_config.php in a text editor and fill in your reseller details:
 
 __OSRS_HOST__
-> LIVE: rr-n1-tor.opensrs.net
-> TEST: horizon.opensrs.net
+> * LIVE: rr-n1-tor.opensrs.net
+> * TEST: horizon.opensrs.net  
 
 __OSRS_USERNAME__
 > OpenSRS Reseller Username
@@ -37,8 +36,8 @@ __OSRS_DEBUG__
 > WHen set to 1, the Toolkit will spit out the raw XML request/response.
 
 __MAIL_HOST__
-> LIVE: https://admin.hostedemail.com
-> TEST: https://admin.test.hostedemail.com
+> * LIVE: https://admin.hostedemail.com
+> * TEST: https://admin.test.hostedemail.com
 
 __MAIL_USERNAME__
 > Company level email admin username
