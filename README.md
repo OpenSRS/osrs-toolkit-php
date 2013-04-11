@@ -26,7 +26,8 @@ That's it!
 
 Set up openSRS_config.php
 -------------------------
-<a id="setup_config"></a>
+<a name="setup_config"></a>
+
 __OSRS_HOST__
 > * LIVE: rr-n1-tor.opensrs.net
 > * TEST: horizon.opensrs.net  
