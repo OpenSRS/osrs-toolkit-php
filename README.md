@@ -14,7 +14,7 @@ Getting Started
 2. In opensrs directory, rename/copy the openSRS_config.php.template to openSRS_config.php
 
 3. Open openSRS_config.php in a text editor and fill in your reseller details
-[Here]](#setup_config)
+[Here](#setup_config)
 
 4. Follow the guidelines to start developing your application.
 
