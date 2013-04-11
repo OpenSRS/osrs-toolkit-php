@@ -1,3 +1,14 @@
+Version v3.4 (Mar 10th, 2013)
+======================================
+* No longer connecting to the port 55000
+* Only SSL will be used to connect to the server host
+* Removed openSRS_crypt.php
+* Added "Getting Started" in README.md and removed the port 55000 and the cryption
+related topics
+* Fixed typos: Formated -> Formatted
+* mcrypt lib no longer required
+
+
 Version v3.3 (Feb 18th, 2013)
 ======================================
 * Support for OpenSRS Mail API(OMA) commands
