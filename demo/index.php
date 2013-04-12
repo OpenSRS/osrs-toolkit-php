@@ -6,7 +6,7 @@
 <body>
 
 <div class="container">
-	<h1>OpenSRS PHP Toolkit Verion 3.3 Demo Page</h1>
+	<h1>OpenSRS PHP Toolkit Verion 3.4 Demo Page</h1>
 </div>
 
 <div class="container">

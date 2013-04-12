@@ -5,7 +5,7 @@ define('DS', DIRECTORY_SEPARATOR);
 define('PS', PATH_SEPARATOR);
 define('CRLF', "\r\n");
 
-// Application core configurations.
+
 define('OPENSRSURI', dirname(__FILE__));
 
 /**
@@ -126,6 +126,11 @@ define('APP_MAIL_HOST', 'ssl://admin.hostedemail.com');
 * OpenSRS APP Username
 */
 define('APP_MAIL_USERNAME', '');
+
+/** 
+* OpenSRS APP Password
+*/
+define('APP_MAIL_PASSWORD', '');
 
 /** 
 * OpenSRS APP domain
