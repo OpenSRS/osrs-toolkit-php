@@ -2,7 +2,6 @@
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	
-
 	// Put the data to the Formatted array
 	$callArray = array(
 		"user" => $_POST["user"],
@@ -20,13 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	echo (" In: ". json_encode($callArray) ."<br>");
 	echo ("Out: ". $response);
 
-} else {
-	// Format
-	if (isSet($_GET['format'])) {
-		$tf = $_GET['format'];
-	} else {
-		$tf = "json";
-	}
+} 
 ?>
 
 <?php include("header.inc") ?>

@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	// Print out the results
 	echo (" In: ". json_encode($callArray) ."<br>");
 	echo ("Out: ". $response);
+        
 
 } else {
 	// Format
