@@ -31,19 +31,26 @@ final class Autoloader
 spl_autoload_register( array( 'Autoloader', 'load') );
 spl_autoload_register( array( 'Autoloader', 'load_domains') );
 
-// Array -> Object -> Array conversion
+/**
+* Method to convert Array -> Object -> Array
+*
+* @param  hash  $data  Containing array object
+* 
+* @return   stdClass Object $object   Containing stdClass object
+* @since    3.4
+*/
+
 function array2object($data) {
-   if(!is_array($data)) return $data;
-   $object = new stdClass();
-   if (is_array($data) && count($data) > 0) {
-      foreach ($data as $name=>$value) {
-         $name = strtolower(trim($name));
-         if (!empty($name)) {
-            $object->$name = array2object($value);
-         }
-      }
-   }
-   return $object;
+  if(!is_array($data)) return $data;
+  $object = new stdClass();
+  
+  foreach ($data as $name=>$value) {
+    if (isset($name)) {
+      $name = strtolower(trim($name));
+      $object->$name = array2object($value); 
+    }
+  }
+  return $object;
 }
 
 function object2array($data){
@@ -75,7 +82,7 @@ function processOpenSRS ($type="", $data="") {
             default:
                 $dataArray = $data;
         }
-		// Convert associative array to object
+		    // Convert associative array to object
         $dataObject = array2object($dataArray);
         $classCall = null;
         if (class_exists($dataObject->func)){
