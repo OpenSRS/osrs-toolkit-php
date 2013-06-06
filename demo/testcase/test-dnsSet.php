@@ -5,33 +5,83 @@ if (isSet($_POST['function'])) {
 
 	// Form data capture
 	$formFormat = $_POST["format"];
+	$a = $_POST["a"];
+	$aaaa = $_POST["aaaa"];
+	$cname = $_POST["cname"];
+	$mx = $_POST["mx"];
+	$srv = $_POST["srv"];
+	$txt = $_POST["txt"];
 
-	// Put the data to the Formatted array
 	$callstring = "";
 	$callArray = array (
 		"func" => $_POST["function"],
 		"data" => array (
-			"domain" => $_POST["domain"],
-			"dns_template" => $_POST["dns_template"],
-			"a_ip_address" => $_POST["a_ip_address"],
-			"a_subdomain" => $_POST["a_subdomain"],
-			"aaaa_ipv6_address" => $_POST["aaaa_ipv6_address"],
-			"aaaa_subdomain" => $_POST["aaaa_subdomain"],
-			"cname_hostname" => $_POST["cname_hostname"],
-			"cname_subdomain" => $_POST["cname_subdomain"],
-			"mx_priority" => $_POST["mx_priority"],
-			"mx_subdomain" => $_POST["mx_subdomain"],
-			"mx_hostname" => $_POST["mx_hostname"],
-			"srv_priority" => $_POST["srv_priority"],
-			"srv_weight" => $_POST["srv_weight"],
-			"srv_subdomain" => $_POST["srv_subdomain"],
-			"srv_hostname" => $_POST["srv_hostname"],
-			"srv_port" => $_POST["srv_port"],
-			"txt_subdomain" => $_POST["txt_subdomain"],
-			"txt_text" => $_POST["txt_text"]
-		)
+	 		"domain" => $_POST["domain"],
+	 		"DNS_template" => $_POST["dns_template"],
+ 		)
 	);
-	
+
+
+	if (isSet($a)) {
+		$as = array();
+		for ($i = 0; $i < count($a); $i++) {
+			if(!empty($a["ip_address"][$i]) && !empty($a["subdomain"][$i]) ) {
+	    		array_push($as, array("ip_address" => $a["ip_address"][$i], "subdomain" => $a["subdomain"][$i]));
+	    	}
+		}
+		if (count($as)> 0) $callArray["data"]["a"] = $as;
+	}
+
+	if (isSet($aaaa)) {
+		$aaaas = array();
+		for ($i = 0; $i < count($aaaa); $i++) {
+			if(!empty($aaaa["ipv6_address"][$i]) && !empty($aaaa["subdomain"][$i]) ) {
+				array_push($aaaas, array("ipv6_address" => $aaaa["ipv6_address"][$i], "subdomain" => $aaaa["subdomain"][$i]));	
+			}
+		}
+		if (count($aaaas)> 0) $callArray["data"]["aaaa"] = $aaaas;
+	}
+
+	if (isSet($cname)) {
+		$cnames = array();
+		for ($i = 0; $i < count($cname); $i++) {
+			if(!empty($cname["subdomain"][$i]) && !empty($cname["hostname"][$i]) ) {
+	    		array_push($cnames, array("subdomain" => $cname["subdomain"][$i], "hostname" => $cname["hostname"][$i]));
+	    	}
+		}
+		if (count($cnames)> 0) $callArray["data"]["cname"] = $cnames;
+	}
+
+	if (isSet($mx)) {
+		$mxs = array();
+		for ($i = 0; $i < count($mx); $i++) {
+			if(!empty($mx["priority"][$i]) && !empty($mx["subdomain"][$i]) && !empty($mx["hostname"][$i]) ) {
+	    		array_push($mxs, array("priority" => $mx["priority"][$i], "subdomain" => $mx["subdomain"][$i], "hostname" => $mx["hostname"][$i]));
+	    	}
+		}
+		if (count($mxs) > 0) $callArray["data"]["mx"] = $mxs;
+	}
+
+	if (!empty($srv)) {
+		$srvs = array();
+		for ($i = 0; $i < count($srv); $i++) {
+			if(!empty($srv["subdomain"][$i]) && !empty($srv["hostname"][$i]) ) {
+	    		array_push($srvs, array("port" => $srv["port"][$i], "priority" => $srv["priority"][$i], "subdomain" => $srv["subdomain"][$i], "hostname" => $srv["hostname"][$i], "weight" => $srv["weight"][$i]));
+	  		}
+		}
+		if (count($srvs)> 0) $callArray["data"]["srv"] = $srvs;
+	}
+
+	if (isSet($txt)) {
+		$txts = array();
+		for ($i = 0; $i < count($txt); $i++) {
+			if(!empty($txt["text"][$i])) {
+				array_push($txts, array("subdomain" => $txt["subdomain"][$i], "text" => $txt["text"][$i]));	
+			}
+		}
+		if (count($txts)> 0) $callArray["data"]["txt"] = $txts;
+	}
+
 	if ($formFormat == "json") $callstring = json_encode($callArray);
 	if ($formFormat == "yaml") $callstring = Spyc::YAMLDump($callArray);
 
@@ -76,53 +126,56 @@ if (isSet($_POST['function'])) {
 		<tr>
 			<td width="100%">
 				<b>A</b> <br/>
-				<span class="headLine">a_ip_address </span> <input type="text" name="a_ip_address" value="" class="frontBox"><br />
-				<span class="headLine">a_subdomain </span> <input type="text" name="a_subdomain" value="" class="frontBox">
+				<span class="headLine">a_ip_address </span> <input type="text" name="a[ip_address][]" value="" class="frontBox"><br />
+				<span class="headLine">a_subdomain </span> <input type="text" name="a[subdomain][]" value="" class="frontBox"><br />
+				<span class="headLine">a_ip_address </span> <input type="text" name="a[ip_address][]" value="" class="frontBox"><br />
+				<span class="headLine">a_subdomain </span> <input type="text" name="a[subdomain][]" value="" class="frontBox"><br />
 			</td>
 		</tr>
 		<tr>
 			<td width="100%">
 				<b>AAAA</b> <br/>
-				<span class="headLine">aaaa_ipv6_address </span> <input type="text" name="aaaa_ipv6_address" value="" class="frontBox"><br />
-				<span class="headLine">aaaa_subdomain </span> <input type="text" name="aaaa_subdomain" value="" class="frontBox">
+				<span class="headLine">aaaa_ipv6_address </span> <input type="text" name="aaaa[ipv6_address][]" value="" class="frontBox"><br />
+				<span class="headLine">aaaa_subdomain </span> <input type="text" name="aaaa[subdomain][]" value="" class="frontBox">
 			</td>
 		</tr>
 		<tr>
 			<td width="100%">
 				<b>CNAME</b> <br/>
-				<span class="headLine">cname_hostname </span> <input type="text" name="cname_hostname" value="" class="frontBox"><br />
-				<span class="headLine">cname_subdomain </span> <input type="text" name="cname_subdomain" value="" class="frontBox">
+				<span class="headLine">cname_hostname </span> <input type="text" name="cname[hostname][]" value="" class="frontBox"><br />
+				<span class="headLine">cname_subdomain </span> <input type="text" name="cname[subdomain][]" value="" class="frontBox">
 			</td>
 		</tr>
 		<tr>
 			<td width="100%">
 				<b>MX</b> <br/>
-				<span class="headLine">mx_priority </span> <input type="text" name="mx_priority" value="" class="frontBox"><br />
-				<span class="headLine">mx_subdomain </span> <input type="text" name="mx_subdomain" value="" class="frontBox"><br />
-				<span class="headLine">mx_hostname </span> <input type="text" name="mx_hostname" value="" class="frontBox">
+				<span class="headLine">mx_priority </span> <input type="text" name="mx[priority][]" value="" class="frontBox"><br />
+				<span class="headLine">mx_subdomain </span> <input type="text" name="mx[subdomain][]" value="" class="frontBox"><br />
+				<span class="headLine">mx_hostname </span> <input type="text" name="mx[hostname][]" value="" class="frontBox">
 			</td>
 		</tr>
 		<tr>
 			<td width="100%">
 				<b>SRV</b> <br/>
-				<span class="headLine">srv_priority </span> <input type="text" name="srv_priority" value="" class="frontBox"><br />
-				<span class="headLine">srv_weight </span> <input type="text" name="srv_weight" value="" class="frontBox"><br />
-				<span class="headLine">srv_subdomain </span> <input type="text" name="srv_subdomain" value="" class="frontBox"><br />
-				<span class="headLine">srv_hostname </span> <input type="text" name="srv_hostname" value="" class="frontBox"><br />
-				<span class="headLine">srv_port </span> <input type="text" name="srv_port" value="" class="frontBox">
+				<span class="headLine">srv_priority </span> <input type="text" name="srv[priority][]" value="" class="frontBox"><br />
+				<span class="headLine">srv_weight </span> <input type="text" name="srv[weight][]" value="" class="frontBox"><br />
+				<span class="headLine">srv_subdomain </span> <input type="text" name="srv[subdomain][]" value="" class="frontBox"><br />
+				<span class="headLine">srv_hostname </span> <input type="text" name="srv[hostname][]" value="" class="frontBox"><br />
+				<span class="headLine">srv_port </span> <input type="text" name="srv[port][]" value="" class="frontBox">
 			</td>
 		</tr>
 		<tr>
 			<td width="100%">
 				<b>TXT</b> <br/>
-				<span class="headLine">txt_subdomain </span> <input type="text" name="txt_subdomain" value="" class="frontBox"><br />
-				<span class="headLine">txt_text </span> <input type="text" name="txt_text" value="" class="frontBox">
+				<span class="headLine">txt_subdomain </span> <input type="text" name="txt[subdomain][]" value="" class="frontBox"><br />
+				<span class="headLine">txt_text </span> <input type="text" name="txt[text][]" value="" class="frontBox">
 			</td>
 		</tr>
 		<tr>
 			<td><input value="Set DNS" type="submit"></td>
 		</tr>
 	</table>
+
 </form>
 	
 </body>

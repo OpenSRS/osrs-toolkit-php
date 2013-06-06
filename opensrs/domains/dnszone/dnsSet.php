@@ -23,7 +23,6 @@ class dnsSet extends openSRS_base {
 		parent::__destruct();
 	}
 
-	// Validate the object
 	private function _validateObject (){
 		$allPassed = true;
 		
@@ -33,9 +32,7 @@ class dnsSet extends openSRS_base {
 			$allPassed = false;
 		}
 				
-		// Run the command
 		if ($allPassed) {
-			// Execute the command
 			$this->_processRequest ();
 		} else {
 			trigger_error ("oSRS Error - Incorrect call.", E_USER_WARNING);
@@ -44,6 +41,7 @@ class dnsSet extends openSRS_base {
 
 	// Post validation functions
 	private function _processRequest (){
+
 		$cmd = array(
 			'protocol' => 'XCP',
 			'action' => 'set_dns_zone',
@@ -54,95 +52,78 @@ class dnsSet extends openSRS_base {
 		);
 
 		// Command optional values
-		if (isSet($this->_dataObject->data->dns_template) && $this->_dataObject->data->dns_template != "") $cmd['attributes']['dns_template'] = $this->_dataObject->data->dns_template;
-		
-		// records - A 
-		$a_ip_address = "";
-		$a_subdomain = "";
-		if (isSet($this->_dataObject->data->a_ip_address) && $this->_dataObject->data->a_ip_address != "") $a_ip_address = $this->_dataObject->data->a_ip_address;
-		if (isSet($this->_dataObject->data->a_subdomain) && $this->_dataObject->data->a_subdomain != "") $a_subdomain = $this->_dataObject->data->a_subdomain;
-		if ($a_ip_address != "" && $a_subdomain != ""){
-			$cmd['attributes']['records']['A'][0] = array(
-				'ip_address' => $a_ip_address,
-				'subdomain' => $a_subdomain
-			);
-		}
-		
-		// records - AAAA 
-		$aaaa_ipv6_address = "";
-		$aaaa_subdomain = "";
-		if (isSet($this->_dataObject->data->aaaa_ipv6_address) && $this->_dataObject->data->aaaa_ipv6_address != "") $aaaa_ipv6_address = $this->_dataObject->data->aaaa_ipv6_address;
-		if (isSet($this->_dataObject->data->aaaa_subdomain) && $this->_dataObject->data->aaaa_subdomain != "") $aaaa_subdomain = $this->_dataObject->data->aaaa_subdomain;
-		if ($aaaa_ipv6_address != "" && $aaaa_subdomain != ""){
-			$cmd['attributes']['records']['AAAA'][0] = array(
-				'ipv6_address' => $aaaa_ipv6_address,
-				'subdomain' =>$aaaa_subdomain
-			);
-		}
-		
-		// records - CNAME 
-		$cname_hostname = "";
-		$cname_subdomain = "";
-		if (isSet($this->_dataObject->data->cname_hostname) && $this->_dataObject->data->cname_hostname != "") $cname_hostname = $this->_dataObject->data->cname_hostname;
-		if (isSet($this->_dataObject->data->cname_subdomain) && $this->_dataObject->data->cname_subdomain != "") $cname_subdomain = $this->_dataObject->data->cname_subdomain;
-		if ($cname_hostname != "" && $cname_subdomain != ""){
-			$cmd['attributes']['records']['CNAME'][0] = array(
-				'hostname' => $cname_hostname,
-				'subdomain' => $cname_subdomain
-			);
-		}
-		
-		// records - MX 
-		$mx_priority = "";
-		$mx_subdomain = "";
-		$mx_hostname = "";
-		if (isSet($this->_dataObject->data->mx_priority) && $this->_dataObject->data->mx_priority != "") $mx_priority = $this->_dataObject->data->mx_priority;
-		if (isSet($this->_dataObject->data->mx_subdomain) && $this->_dataObject->data->mx_subdomain != "") $mx_subdomain = $this->_dataObject->data->mx_subdomain;
-		if (isSet($this->_dataObject->data->mx_hostname) && $this->_dataObject->data->mx_hostname != "") $mx_hostname = $this->_dataObject->data->mx_hostname;
-		if ($mx_priority != "" && $mx_subdomain != "" && $mx_hostname != ""){
-			$cmd['attributes']['records']['MX'][0] = array(
-				'priority' => $mx_priority,
-				'subdomain' => $mx_subdomain,
-				'hostname' => $mx_hostname
-			);
-		}
-		
-		// records - SRV 
-		$srv_priority = "";
-		$srv_weight = "";
-		$srv_subdomain = "";
-		$srv_hostname = "";
-		$srv_port = "";
-		if (isSet($this->_dataObject->data->srv_priority) && $this->_dataObject->data->srv_priority != "") $srv_priority = $this->_dataObject->data->srv_priority;
-		if (isSet($this->_dataObject->data->srv_weight) && $this->_dataObject->data->srv_weight != "") $srv_weight = $this->_dataObject->data->srv_weight;
-		if (isSet($this->_dataObject->data->srv_subdomain) && $this->_dataObject->data->srv_subdomain != "") $srv_subdomain = $this->_dataObject->data->srv_subdomain;
-		if (isSet($this->_dataObject->data->srv_hostname) && $this->_dataObject->data->srv_hostname != "") $srv_hostname = $this->_dataObject->data->srv_hostname;
-		if (isSet($this->_dataObject->data->srv_port) && $this->_dataObject->data->srv_port != "") $srv_port = $this->_dataObject->data->srv_port;
-		if ($srv_priority != "" && $srv_weight != "" && $srv_subdomain != "" && $srv_hostname != "" && $srv_port != ""){
-			$cmd['attributes']['records']['SRV'][0] = array(
-				'priority' => $srv_priority,
-				'weight' => $srv_weight,
-				'subdomain' => $srv_subdomain,
-				'hostname' => $srv_hostname,
-				'port' => $srv_port
-			);
+		if (isSet($this->_dataObject->data->dns_template) && $this->_dataObject->data->dns_template != "") {
+			$cmd['attributes']['dns_template'] = $this->_dataObject->data->dns_template;
 		}
 
-		// records - TXT 
-		$txt_subdomain = "";
-		$txt_text = "";
-		if (isSet($this->_dataObject->data->txt_subdomain) && $this->_dataObject->data->txt_subdomain != "") $txt_subdomain = $this->_dataObject->data->txt_subdomain;
-		if (isSet($this->_dataObject->data->txt_text) && $this->_dataObject->data->txt_text != "") $txt_text = $this->_dataObject->data->txt_text;
-		if ($txt_subdomain != "" && $txt_text != ""){
-			$cmd['attributes']['records']['TXT'][0] = array(
-				'subdomain' => $txt_subdomain,
-				'text' => $txt_text
-			);
+		// records - A
+		if (isset($this->_dataObject->data->a) && count($this->_dataObject->data->a) > 0) {
+			$as = array();			
+			foreach ($this->_dataObject->data->a as $key => $value) {	
+				array_push($as, array('ip_address' => $value->ip_address, 'subdomain' => $value->subdomain));
+			}
+			$cmd['attributes']['records']['A'] = $as;
+		}
+
+		// records - AAAA
+		if (isset($this->_dataObject->data->aaaa) && count($this->_dataObject->data->aaaa) > 0) {
+			$aaaas = array();			
+			foreach ($this->_dataObject->data->aaaa as $key => $val) {	            
+				array_push($aaaas, array('ipv6_address' => $val->ipv6_address, 'subdomain' => $val->subdomain));
+			}
+			$cmd['attributes']['records']['AAAA'] = $aaaas;
 		}
 		
-		
-		
-		
+		// records - CNAME
+		if (isset($this->_dataObject->data->cname) && count($this->_dataObject->data->cname) > 0) {
+			$cnames = array();			
+			foreach ($this->_dataObject->data->cname as $key => $val) {	
+				array_push($cnames, array('hostname' => $val->hostname, 'subdomain' => $val->subdomain));
+			}
+			$cmd['attributes']['records']['CNAME'] = $cnames;
+		}
+
+		// records - MX
+		if (isset($this->_dataObject->data->mx) && count($this->_dataObject->data->mx) > 0) {
+			$mxs = array();			
+			foreach ($this->_dataObject->data->mx as $key => $val) {	
+				array_push($mxs, 
+					array(
+						'priority' => $val->priority, 
+						'subdomain' => $val->subdomain, 
+						'hostname' => $val->hostname
+					)
+				);
+			}
+			$cmd['attributes']['records']['MX'] = $mxs;
+		}
+
+		// records - SRV
+		if (isset($this->_dataObject->data->srv) && count($this->_dataObject->data->srv) > 0) {
+			$srvs = array();			
+			foreach ($this->_dataObject->data->srv as $key => $val) {	
+				array_push($srvs, 
+					array(
+						'priority' => $val->priority, 
+						'weight' => $val->weight, 
+						'subdomain' => $val->subdomain, 
+						'hostname' => $val->hostname,
+						'port' => $val->port
+					)
+				);
+			}
+			$cmd['attributes']['records']['SRV'] = $srvs;
+		}
+
+		// records - TXT
+		if (isset($this->_dataObject->data->txt) && count($this->_dataObject->data->txt) > 0) {
+			$txts = array();
+			foreach ($this->_dataObject->data->txt as $key => $val) {	
+				array_push($txts, array('subdomain' => $val->subdomain, 'text' => $val->text));
+			}
+			$cmd['attributes']['records']['TXT'] = $txts;
+		}
+	    
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
 		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
