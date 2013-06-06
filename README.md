@@ -694,6 +694,81 @@ Returned Data:
 }
 ```
 
+
+Set DNS Zone 
+------------------------
+Purpose:  To set DNS Zone record for an existing DNS Zone
+
+
+Example JSON request call:
+```
+{
+	"func":"dnsSet",
+	"data":{
+		"domain":"kgtester1.com",
+		"DNS_template":"",
+		"a":[
+			{"ip_address":"12.12.12.12","subdomain":"sub1"},
+			{"ip_address":"13.13.13.13","subdomain":"sub2"}
+		],
+		"aaaa":[
+			{"ipv6_address":"001:00ab:0000:00a1:0001:000b:00cc:00de","subdomain":"sub3"}
+		],
+		"cname":[
+			{"subdomain":"sub4","hostname":"cname.com"}
+		],
+		"mx":[
+			{"priority":"10","subdomain":"mx","hostname":"mail.com"}
+		],
+		"srv":[
+			{"port":"6666","priority":"1","subdomain":"srv","hostname":"srvhost.com","weight":"10"}
+		],
+		"txt":[
+			{"subdomain":"txt","text":"test text"}
+		]
+	}
+}
+```
+
+Returned Data:
+```
+{
+	"_OPS_version":"0.9",
+	"protocol":"XCP",
+	"object":"DOMAIN",
+	"response_text":"Command Successful",
+	"action":"REPLY",
+	"attributes":{
+		"records":{
+			"A":[
+				{"subdomain":"sub1","ip_address":"12.12.12.12"},
+				{"subdomain":"sub2","ip_address":"13.13.13.13"}
+			],
+			"MX":[
+				{"priority":"10","subdomain":"mx","hostname":"mail.com"}
+			],
+			"TXT":[
+				{"text":"test text","subdomain":"txt"}
+			],
+			"SRV":[
+				{"priority":"1","weight":"10","subdomain":"srv","hostname":"srvhost.com","port":"6666"}
+			],
+			"CNAME":[
+				{"subdomain":"sub4","hostname":"cname.com"}
+			],
+			"AAAA":[
+				{"subdomain":"sub3","ipv6_address":"001:00ab:0000:00a1:0001:000b:00cc:00de"}
+			]
+		},
+		"nameservers_ok":"1"
+	},
+	"response_code":"200",
+	"is_success":"1"
+}
+```
+
+
+
 Register a Domain
 -----------------
 
