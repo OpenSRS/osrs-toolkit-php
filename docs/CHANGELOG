@@ -1,4 +1,8 @@
-Version v3.4 (Mar 10th, 2013)
+Version 3.4.1 (June 6, 2013)
+======================================
+* Fixed DNS related commands to take multiple records on each record type 
+
+Version 3.4 (Mar 10th, 2013)
 ======================================
 * No longer connecting to the port 55000
 * Only SSL will be used to connect to the server host
@@ -9,7 +13,7 @@ related topics
 * mcrypt lib no longer required
 
 
-Version v3.3 (Feb 18th, 2013)
+Version 3.3 (Feb 18th, 2013)
 ======================================
 * Support for OpenSRS Mail API(OMA) commands
 * Moved /testcase directory under /demo
@@ -17,13 +21,13 @@ Version v3.3 (Feb 18th, 2013)
  - The configuration values should be set in openSRS_config.php
 * Moved index.php in the root dir to /demo
 
-Version v3.2.1 (Feb 8th, 2013)
+Version 3.2.1 (Feb 8th, 2013)
 ======================================
 * Bug Fixes: 
 Mail authentication variables are now using admin_username, admin_password, and admin_domain
 across the mail API commands for the consistency.
 
-Version v3.2 (Dec 6th, 2012)
+Version 3.2 (Dec 6th, 2012)
 ======================================
 * Added .AU, .IT, and .PRO requirements in provSWregister.php
 * Changed openSRS_loader.php to use spl_autoload_register to load only required file(s)
@@ -32,7 +36,7 @@ Version v3.2 (Dec 6th, 2012)
 * Changed the config definitions in openSRS_config.php
 
 
-Version v3.1 (Oct 11th, 2012)
+Version 3.1 (Oct 11th, 2012)
 ======================================
 * activeConfig.xml now looks for account.xml in the same directory by default
 * account.xml.template added 
@@ -48,7 +52,7 @@ Added Mail functionality:
 * test-lookupNameSuggest.php
 
 
-Version v2.4 - GA (Oct 19th, 2011)
+Version 2.4 - GA (Oct 19th, 2011)
 ======================================
 Feature Addition:
 * Added Publishing functionality
@@ -57,7 +61,7 @@ Feature Addition:
  		- Raw XML output will display when <osrs_debug>1</osrs_debug> 
 		
     
-Version v2.3 - GA (April 29th, 2010)
+Version 2.3 - GA (April 29th, 2010)
 ======================================
 Feature Addition:
 * Cleared up error messages to make them easier to understand
@@ -79,7 +83,7 @@ Documentation Addition:
 * Added list of all of the PHP warnings provided by the toolkit
 * Added descriptions of the error warnings and what they mean
 
-Version v2.2 - GA (March 24th, 2010)
+Version 2.2 - GA (March 24th, 2010)
 ====================================
 Bug fixes:
 * Updated mail and fast lookup functionality to properly do I/O
@@ -89,7 +93,7 @@ Bug fixes:
 * Mail will now take the global username, password and auth domain for mail commands
     - This will be used unless overwritten in a call directly
 
-Version v2.1 - GA (February 2nd, 2010)
+Version 2.1 - GA (February 2nd, 2010)
 ======================================
 Feature Addition:
 * BulkSubmit functionality 
@@ -117,13 +121,13 @@ Bug Fixes:
 * Fixed bulkChange to use the correct class
     - Added better data validation
 
-Version v1.6 - RC1 (December 18th, 2009
+Version 1.6 - RC1 (December 18th, 2009
 =======================================
 Bug Fixes:
 * Added persistent connections to mail functions for better reliability
 * Fixes in domain look-up
 
-Version v1.5 - Pre-launch Beta (December 3rd, 2009)
+Version 1.5 - Pre-launch Beta (December 3rd, 2009)
 ===================================================
 Feature Addition:
 * Added feature for defaultTLD in lookupDomain, suggestDomain, premiumDomain and allinone
@@ -136,7 +140,7 @@ Bug Fixes:
 * Allowing fastlookup to parse out the tld and query all domains
 * Fixes in Personal name queries
 
-Version v1.4 - Pre-launch Beta (December 2nd, 2009)
+Version 1.4 - Pre-launch Beta (December 2nd, 2009)
 ===================================================
 Feature Additions:
 * Added folder for testcase

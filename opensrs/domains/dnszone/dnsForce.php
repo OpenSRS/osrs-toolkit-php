@@ -4,7 +4,7 @@
  *  data - 
  */
  
-class dnsForce extends openSRS_base {
+class DnsForce extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;

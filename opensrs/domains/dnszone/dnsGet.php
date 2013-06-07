@@ -4,7 +4,7 @@
  *  data - 
  */
  
-class dnsGet extends openSRS_base {
+class DnsGet extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;

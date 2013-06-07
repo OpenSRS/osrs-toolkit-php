@@ -1,33 +1,47 @@
 <?php
-/*
- *  Required object values:
- *  data - 
- */
+
+/**
+* dnsSet class file
+*
+* @category OpenSRS
+* @package  OpenSRS
+* @author   Keiji Suzuki <ksuzuki@tucows.com>
+* @license  MIT License (http://www.opensource.org/licenses/mit-license.php)
+* @link
+*/
  
-class dnsSet extends openSRS_base {
-	private $_dataObject;
-	private $_formatHolder = "";
-	public $resultFullRaw;
-	public $resultRaw;
-	public $resultFullFormatted;
-	public $resultFormatted;
+class DnsSet extends openSRS_base
+{
+    private $_dataObject;
+    private $_formatHolder = "";
+    public $resultFullRaw;
+    public $resultRaw;
+    public $resultFullFormatted;
+    public $resultFormatted;
 
-	public function __construct ($formatString, $dataObject) {
-		parent::__construct();
-		$this->_dataObject = $dataObject;
-		$this->_formatHolder = $formatString;
-		$this->_validateObject ();
-	}
+    /**
+    * __construct
+    *
+    * @param  string  $formatString  	Format type
+    * @param  hash    $dataObject 	Containing domain key/value pairs
+    */
 
-	public function __destruct () {
-		parent::__destruct();
-	}
+    public function __construct ($formatString, $dataObject) {
+    	parent::__construct();
+    	$this->_dataObject = $dataObject;
+    	$this->_formatHolder = $formatString;
+    	$this->_validateObject ();
+    }
 
-	private function _validateObject (){
-		$allPassed = true;
-		
-		// Command required values
-		if (!isSet($this->_dataObject->data->domain) || $this->_dataObject->data->domain == "") {
+    public function __destruct () {
+    	parent::__destruct();
+    }
+
+    private function _validateObject (){
+        $allPassed = true;
+
+        // Command required values
+        if (!isSet($this->_dataObject->data->domain) || $this->_dataObject->data->domain == "") {
 			trigger_error ("oSRS Error - domain is not defined.", E_USER_WARNING);
 			$allPassed = false;
 		}

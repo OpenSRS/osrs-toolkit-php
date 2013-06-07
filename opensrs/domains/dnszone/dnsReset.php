@@ -4,7 +4,7 @@
  *  data - 
  */
  
-class dnsReset extends openSRS_base {
+class DnsReset extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;

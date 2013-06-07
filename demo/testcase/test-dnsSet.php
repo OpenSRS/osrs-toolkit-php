@@ -114,7 +114,7 @@ if (isSet($_POST['function'])) {
 
 <form action="test-dnsSet.php" method="post">
 	<input type="hidden" name="format" value="<?php echo($tf); ?>">
-	<input type="hidden" name="function" value="dnsSet">
+	<input type="hidden" name="function" value="DnsSet">
 
 	<table cellpadding="0" cellspacing="10" border="0" width="100%">
 		<tr>

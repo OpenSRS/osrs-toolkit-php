@@ -4,7 +4,7 @@
  *  data - 
  */
  
-class dnsDelete extends openSRS_base {
+class DnsDelete extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;

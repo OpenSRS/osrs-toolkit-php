@@ -49,7 +49,7 @@ if (isSet($_POST['function'])) {
 
 <form action="test-dnsReset.php" method="post">
 	<input type="hidden" name="format" value="<?php echo($tf); ?>">
-	<input type="hidden" name="function" value="dnsReset">
+	<input type="hidden" name="function" value="DnsReset">
 
 	<table cellpadding="0" cellspacing="0" border="0" width="100%">
 		<tr>

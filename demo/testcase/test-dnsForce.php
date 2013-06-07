@@ -48,7 +48,7 @@ if (isSet($_POST['function'])) {
 
 <form action="test-dnsForce.php" method="post">
 	<input type="hidden" name="format" value="<?php echo($tf); ?>">
-	<input type="hidden" name="function" value="dnsForce">
+	<input type="hidden" name="function" value="DnsForce">
 
 	<table cellpadding="0" cellspacing="0" border="0" width="100%">
 		<tr>
