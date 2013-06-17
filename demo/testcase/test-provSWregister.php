@@ -217,8 +217,8 @@ echo ("Out: ". $osrsHandler->resultFormatted);
 			custom_transfer_nameservers: <input type="text" name="custom_transfer_nameservers" value=""><br>
 			premium_price_to_verify: <input type="text" name="premium_price_to_verify" value=""><br>
 			nameserver_list >>  <br>
-			&nbsp; &nbsp;custom_nameserver: <input type="text" name="name1" value="ns1.nameserver.com"> <input type="text" name="sortorder1" value="1"> <br>
-			&nbsp; &nbsp;custom_nameserver: <input type="text" name="name2" value="ns2.nameserver.com"> <input type="text" name="sortorder2" value="2"> <br>
+			&nbsp; &nbsp;custom_nameserver: <input type="text" name="name1" value="ns1.systemdns.com"> <input type="text" name="sortorder1" value="1"> <br>
+			&nbsp; &nbsp;custom_nameserver: <input type="text" name="name2" value="ns2.systemdns.com"> <input type="text" name="sortorder2" value="2"> <br>
 			&nbsp; &nbsp;custom_nameserver: <input type="text" name="name3" value=""> <input type="text" name="sortorder3" value=""> <br>
 			&nbsp; &nbsp;custom_nameserver: <input type="text" name="name4" value=""> <input type="text" name="sortorder4" value=""> <br>
 			&nbsp; &nbsp;custom_nameserver: <input type="text" name="name5" value=""> <input type="text" name="sortorder5" value=""> <br>

@@ -255,12 +255,12 @@ class provSWregister extends openSRS_base {
 	
 		// NS records
 		if ($this->_dataObject->data->custom_nameservers == 1){
+			$passArray = array();
 			for ($j=1; $j<=10; $j++){
 				$tns = "name". $j;
 				$tso = "sortorder". $j;
-			
-				$passArray = array();
 				$temHolder = array();
+
 				if (isSet($this->_dataObject->data->$tns)){
 					if ($this->_dataObject->data->$tns != ""){
 						$temHolder['name'] = $this->_dataObject->data->$tns;
@@ -269,9 +269,9 @@ class provSWregister extends openSRS_base {
 					}
 				}
 			}
-			
 			$cmd['attributes']['nameserver_list'] = $passArray;
 		}
+
 
 		// ccTLD specific
 		if ($ccTLD == "ca") {
