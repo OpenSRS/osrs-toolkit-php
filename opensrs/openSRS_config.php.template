@@ -46,6 +46,11 @@ define('OSRS_USERNAME', 'opensrs_reseller_username_here');
 */
 define('OSRS_KEY', 'opensrs_reseller_private_key_here');
 
+/**
+* OpenSRS default encryption type => ssl, sslv2, sslv3, tls
+*/
+define('CRYPT_TYPE', 'ssl');
+
 /** 
 * OpenSRS domain service API url.
 * LIVE => rr-n1-tor.opensrs.net, TEST => horizon.opensrs.net

@@ -100,7 +100,7 @@ class openSRS_base {
 	 */	
 	private function init_socket() {
 		if ($this->is_connected()) return true;
-		$this->_socket = fsockopen('ssl://' . OSRS_HOST, OSRS_SSL_PORT, $this->_socketErrorNum, $this->_socketErrorMsg, $this->_socketTimeout);
+		$this->_socket = fsockopen(CRYPT_TYPE . '://' . OSRS_HOST, OSRS_SSL_PORT, $this->_socketErrorNum, $this->_socketErrorMsg, $this->_socketTimeout);
 		if (!$this->_socket) {
 			return false;
 		} else {
