@@ -37,7 +37,7 @@ __CRYPT_TYPE__
 > * sslv3
 > * tls
 > 
-> Please not that OpenSSL ver 1.0.1e does not work with "ssl" cryption type
+> Please note that OpenSSL ver 1.0.1e does not work with "ssl" cryption type
 
 __OSRS_USERNAME__
 > OpenSRS Reseller Username
