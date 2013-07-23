@@ -27,28 +27,23 @@ class lookupGetDomain extends openSRS_base {
 	private function _validateObject (){
 		$allPassed = true;
 		
-		// // Command required values
-		// if ((!isSet($this->_dataObject->data->cookie) || $this->_dataObject->data->cookie == "") && (!isSet($this->_dataObject->data->bypass) || $this->_dataObject->data->bypass == "")) {
-		// 	trigger_error ("oSRS Error - cookie / bypass is not defined.", E_USER_WARNING);
-		// 	$allPassed = false;
-		// }
-		// if ( $this->_dataObject->data->cookie != "" && $this->_dataObject->data->bypass != "" ) {
-		// 	trigger_error ("oSRS Error - Both cookie and bypass cannot be set in one call.", E_USER_WARNING);
-		// 	$allPassed = false;
-		// }
+		if (empty($this->_dataObject->data->cookie) && empty($this->_dataObject->data->domain) ) {
+			trigger_error ("oSRS Error - cookie and domain are not defined.", E_USER_WARNING);
+		 	$allPassed = false;
+		}
 						
-		// if (!isSet($this->_dataObject->data->type) || $this->_dataObject->data->type == "") {
-		// 	trigger_error ("oSRS Error - type is not defined.", E_USER_WARNING);
-		// 	$allPassed = false;
-		// }
+		if (empty($this->_dataObject->data->type)) {
+		 	trigger_error ("oSRS Error - type is not defined.", E_USER_WARNING);
+		 	$allPassed = false;
+		}
 				
-		// // Run the command
-		// if ($allPassed) {
-		// 	// Execute the command
-		$this->_processRequest ();
-		// } else {
-		// 	trigger_error ("oSRS Error - Incorrect call.", E_USER_WARNING);
-		// }
+		// Run the command
+		if ($allPassed) {
+			// Execute the command
+			$this->_processRequest ();
+		} else {
+		 	trigger_error ("oSRS Error - Incorrect call.", E_USER_WARNING);
+		}
 	}
 
 	// Post validation functions
@@ -63,9 +58,8 @@ class lookupGetDomain extends openSRS_base {
 		);
 		
 		if (isSet($this->_dataObject->data->cookie) && $this->_dataObject->data->cookie != "") $cmd['cookie'] = $this->_dataObject->data->cookie;
-		if (isSet($this->_dataObject->data->bypass) && $this->_dataObject->data->bypass != "") $cmd['bypass'] = $this->_dataObject->data->bypass;
-		if (isSet($this->_dataObject->data->registrant_ip) && $this->_dataObject->data->registrant_ip != "") $cmd['registrant_ip'] = $this->_dataObject->data->registrant_ip;
 		if (isSet($this->_dataObject->data->domain) && $this->_dataObject->data->domain != "") $cmd['domain'] = $this->_dataObject->data->domain;
+		if (isSet($this->_dataObject->data->registrant_ip) && $this->_dataObject->data->registrant_ip != "") $cmd['registrant_ip'] = $this->_dataObject->data->registrant_ip;
 				
 		// Command optional values
 		if (isSet($this->_dataObject->data->limit) && $this->_dataObject->data->limit != "") $cmd['attributes']['limit'] = $this->_dataObject->data->limit;

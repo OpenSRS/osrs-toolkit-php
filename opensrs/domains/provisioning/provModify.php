@@ -28,10 +28,11 @@ class provModify extends openSRS_base {
 		$allPassed = true;
 		
 		// Command required values
-		if (!isSet($this->_dataObject->data->cookie) || $this->_dataObject->data->cookie == "") {
-			trigger_error ("oSRS Error - domain is not defined.", E_USER_WARNING);
-			$allPassed = false;
+		if (empty($this->_dataObject->data->cookie) && empty($this->_dataObject->data->domain) ) {
+			trigger_error ("oSRS Error - cookie and/or domain is not defined.", E_USER_WARNING);
+		 	$allPassed = false;
 		}
+
 		if (!isSet($this->_dataObject->data->affect_domains) || $this->_dataObject->data->affect_domains == "") {
 			trigger_error ("oSRS Error - affect_domains is not defined.", E_USER_WARNING);
 			$allPassed = false;
@@ -303,17 +304,20 @@ class provModify extends openSRS_base {
 
 	// Post validation functions
 	private function _processRequest (){
-                  $cmd = array(
-                         'protocol' => 'XCP',
-                         'action' => 'modify',
-                         'object' => 'DOMAIN',
-			 'cookie' => $this->_dataObject->data->cookie,
-                         'attributes' => array (
-                                     'affect_domains' => $this->_dataObject->data->affect_domains,
-                                     'data' => $this->_dataObject->data->data
-                            )
-                  );
+		$cmd = array(
+			'protocol' => 'XCP',
+			'action' => 'modify',
+			'object' => 'DOMAIN',
+			'cookie' => $this->_dataObject->data->cookie,
+			'attributes' => array (
+				'affect_domains' => $this->_dataObject->data->affect_domains,
+				'data' => $this->_dataObject->data->data
+			)
+		);
 		
+		if (isSet($this->_dataObject->data->cookie) && $this->_dataObject->data->cookie != "") $cmd['cookie'] = $this->_dataObject->data->cookie;
+		if (isSet($this->_dataObject->data->domain) && $this->_dataObject->data->domain != "") $cmd['attributes']['domain']  = $this->_dataObject->data->domain;
+
 		// Command optional values
 		
 		switch($this->_dataObject->data->data){
@@ -343,8 +347,6 @@ class provModify extends openSRS_base {
 				//rsp_whois_info data
 				if (isSet($this->_dataObject->data->all) && $this->_dataObject->data->all != "") 
 					$cmd['attributes']['all'] = $this->_dataObject->data->all;
-				if (isSet($this->_dataObject->data->affect_domains) && $this->_dataObject->data->affect_domains != "") 
-					$cmd['attributes']['affect_domains'] = $this->_dataObject->data->affect_domains;
 				if (isSet($this->_dataObject->data->flag) && $this->_dataObject->data->flag != "") 
 					$cmd['attributes']['flag'] = $this->_dataObject->data->flag;
 				break;
@@ -355,8 +357,7 @@ class provModify extends openSRS_base {
 				break;
 			case "change_ips_tag":
 				//change_ips_tag data
-				if (isSet($this->_dataObject->data->domain) && $this->_dataObject->data->domain != "") 
-					$cmd['attributes']['domain'] = $this->_dataObject->data->domain;
+
 				if (isSet($this->_dataObject->data->change_tag_all) && $this->_dataObject->data->change_tag_all != "") 
 					$cmd['attributes']['change_tag_all'] = $this->_dataObject->data->change_tag_all;
 				if (isSet($this->_dataObject->data->gaining_registrar_tag) && $this->_dataObject->data->gaining_registrar_tag != "") 
@@ -401,8 +402,6 @@ class provModify extends openSRS_base {
 				break;
 			case "parkpage_state":
 				//parkpage_state
-				if (isSet($this->_dataObject->data->domain) && $this->_dataObject->data->domain != "") 
-					$cmd['attributes']['domain'] = $this->_dataObject->data->domain;
 				if (isSet($this->_dataObject->data->state) && $this->_dataObject->data->state != "") 
 					$cmd['attributes']['state'] = $this->_dataObject->data->state;
 				break;
@@ -426,8 +425,6 @@ class provModify extends openSRS_base {
 				//whois_privacy_state
 				if (isSet($this->_dataObject->data->state) && $this->_dataObject->data->state != "") 
 					$cmd['attributes']['state'] = $this->_dataObject->data->state;
-				if (isSet($this->_dataObject->data->affect_domains) && $this->_dataObject->data->affect_domains != "") 
-					$cmd['attributes']['affect_domains'] = $this->_dataObject->data->affect_domains;
 				break;
 			default:
 				break;
