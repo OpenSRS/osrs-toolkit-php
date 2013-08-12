@@ -36,7 +36,7 @@ class provSWregister extends openSRS_base {
 			$allPassed = $this->_allTimeRequired ();
 
 			// The following TLDs require additional option values
-			$special_tlds = array("ca", "asia", "be", "de", "eu", "it", "name", "us", "au", "pro");
+			$special_tlds = array("ca", "asia", "be", "de", "eu", "it", "name", "us", "au", "pro", "br");
 
 			if (in_array($tld, $special_tlds)) {
 				$_ccTLD = "_ccTLD_" . $tld;
@@ -114,7 +114,7 @@ class provSWregister extends openSRS_base {
 
 	private function _ccTLD_br () {
         $subtest = true;
-        if ($this->_dataObject->data->br_register_number == "") {
+        if ($this->_dataObject->br_registrant_info->br_register_number == "") {
             trigger_error ("oSRS Error - Registrer number not defined", E_USER_WARNING);
             $subtest = false;
         }
@@ -325,6 +325,10 @@ class provSWregister extends openSRS_base {
 			$cmd['attributes']['lang'] = $this->_dataObject->data->lang;
 			$cmd['attributes']['owner_confirm_address'] = $this->_dataObject->data->owner_confirm_address;
 		}
+
+        if ($ccTLD == "br"){
+            $cmd['attributes']['tld_data']['br_register_number'] = $this->_dataObject->br_registrant_info->br_register_number;
+        }
 
 		if ($ccTLD == "de"){
 			$cmd['attributes']['owner_confirm_address'] = $this->_dataObject->data->owner_confirm_address;

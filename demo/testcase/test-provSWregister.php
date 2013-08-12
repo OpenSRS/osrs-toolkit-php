@@ -2,13 +2,6 @@
 
 if (isSet($_POST['function'])) {
 
-
-// ONLY FOR TESTING PURPOSE!!!
-require_once dirname(__FILE__) . "/../../opensrs/spyc.php";
-
-// !!!!!!!! ---  Proper form values verification  --- !!!!!!!!!
-
-// Put the data to the proper form - ONLY FOR TESTING PURPOSE!!!
 $formFormat = $_POST["format"];
 $formFunction = $_POST["function"];
 
@@ -70,6 +63,10 @@ $callArray = array (
         "authority_website" => $_POST['authority_website'],
         "license_number" => $_POST['license_number'],
         "profession" => $_POST['profession'],
+	),
+	
+	"br_registrant_info" => array(
+		"br_register_number" => $_POST['br_register_number']
 	),
 
 	"data" => array (
@@ -309,6 +306,13 @@ echo ("Out: ". $osrsHandler->resultFormatted);
 			<b>.NAME</b><br />
 			tld_data >> <br/>
 			&nbsp; &nbsp;forwarding_email: <input type="text" name="forwarding_email" value=""><br>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<b>.COM.BR</b><br />
+			tld_data >> <br/>
+			&nbsp; &nbsp;br_register_number: <input type="text" name="br_register_number" value=""><br>
 		</td>
 	</tr>
 	<tr>
