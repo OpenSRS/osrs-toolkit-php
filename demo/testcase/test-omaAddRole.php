@@ -1,7 +1,7 @@
-<?php 
+<?php
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-	
+
 	// Put the data to the Formatted array
 	$callArray = array(
 		"user" => $_POST["user"],
@@ -12,14 +12,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 		$callArray["token"] = $_POST["token"];
 	}
 	// Open SRS Call -> Result
-	require_once dirname(__FILE__) . "/../../opensrs/openSRS_loader.php";
+	require_once(__DIR__ . "/../openSRS_LoaderWrapper.php");
 	$response = AddRole::call($callArray);
 
 	// Print out the results
 	echo (" In: ". json_encode($callArray) ."<br>");
 	echo ("Out: ". $response);
 
-} 
+}
 ?>
 
 <?php include("header.inc") ?>
@@ -46,14 +46,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	</div>
 
 
-	
+
 	<input class="btn" value="Submit" type="submit">
 </form>
 </div>
-	
+
 </body>
 </html>
 
-<?php 
+<?php
 }
 ?>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 if (isSet($_POST['function'])) {
 
@@ -67,7 +67,7 @@ if ($formFormat == "yaml") $callstring = Spyc::YAMLDump($callArray);
 
 
 // Open SRS Call -> Result
-require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
+require_once(__DIR__ . "/../openSRS_LoaderWrapper.php");
 $osrsHandler = processOpenSRS ($formFormat, $callstring);
 
 
@@ -136,7 +136,7 @@ echo ("Out: ". $osrsHandler->resultFormatted);
 			affiliate_id: <input type="text" name="affiliate_id" value="">Recorded on renewal order Leave blank for no affiliate<br>
 			auto_renew: <input type="text" name="auto_renew" value="0"><br>
 			domain: <input type="text" name="domain" value="tucowstest1000120xx.com"><br>
-			
+
 			f_parkp: <input type="text" name="f_parkp" value="Y"><br>
 			f_whois_privacy: <input type="text" name="f_whois_privacy" value="1"><br>
 			f_lock_domain: <input type="text" name="f_lock_domain" value="1"><br>
@@ -162,12 +162,12 @@ echo ("Out: ". $osrsHandler->resultFormatted);
 </form>
 
 
-	
+
 </body>
 </html>
 
 
 
-<?php 
+<?php
 }
-?> 
+?>

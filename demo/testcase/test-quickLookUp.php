@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 
 	// Open SRS Call -> Result
-	require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
+	require_once(__DIR__ . "/../openSRS_LoaderWrapper.php");
 	$osrsHandler = processOpenSRS ($formFormat, $callstring);
 
 
@@ -60,9 +60,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 <form action="" method="post" class="form-horizontal">
 	<input type="hidden" name="format" value="<?php echo($tf); ?>">
 	<input type="hidden" name="function" value="fastDomainLookup">
-	
+
 	<div class="row">
-		<div class="span12">	
+		<div class="span12">
 			<div class="control-group">
 	    		<label class="control-label">Fast Lookup Domain </label>
 	    		<div class="controls"><input type="text" name="domain" value=""></div>
@@ -71,8 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	</div>
 
 	<div class="row">
-		<div class="span4">	
-			<div class="control-group">	
+		<div class="span4">
+			<div class="control-group">
 				<div class="controls"><label class="checkbox">.com<input type="checkbox" name="tld[]" value=".com"></label></div>
 				<div class="controls"><label class="checkbox">.net<input type="checkbox" name="tld[]" value=".net"></label></div>
 	    		<div class="controls"><label class="checkbox">.org<input type="checkbox" name="tld[]" value=".org"></label></div>
@@ -81,8 +81,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	    		<div class="controls"><label class="checkbox">.me<input type="checkbox" name="tld[]" value=".me"></label></div>
 			</div>
 		</div>
-		<div class="span4">	
-			<div class="control-group">	
+		<div class="span4">
+			<div class="control-group">
 				<div class="controls"><label class="checkbox">.asia<input type="checkbox" name="tld[]" value=".asia"></label></div>
 	    		<div class="controls"><label class="checkbox">..org.uk<input type="checkbox" name="tld[]" value=".org.uk"></label></div>
 	    		<div class="controls"><label class="checkbox">.tel<input type="checkbox" name="tld[]" value=".tel"></label></div>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 if (isSet($_POST['function'])) {
 	// ONLY FOR TESTING PURPOSE!!!
@@ -15,13 +15,13 @@ if (isSet($_POST['function'])) {
 			"domain_list" => $_POST["domain_list"]
 		)
 	);
-	
+
 	if ($formFormat == "json") $callstring = json_encode($callArray);
 	if ($formFormat == "yaml") $callstring = Spyc::YAMLDump($callArray);
 
 
 	// Open SRS Call -> Result
-	require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
+	require_once(__DIR__ . "/../openSRS_LoaderWrapper.php");
 	$osrsHandler = processOpenSRS ($formFormat, $callstring);
 
 	// Print out the results
@@ -60,10 +60,10 @@ if (isSet($_POST['function'])) {
 		</tr>
 	</table>
 </form>
-	
+
 </body>
 </html>
 
-<?php 
+<?php
 }
 ?>

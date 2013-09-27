@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 if (isSet($_POST['function'])) {
 	require_once dirname(__FILE__) . "/../../opensrs/spyc.php";
@@ -36,7 +36,7 @@ if (isSet($_POST['function'])) {
 		$aaaas = array();
 		for ($i = 0; $i < count($aaaa); $i++) {
 			if(!empty($aaaa["ipv6_address"][$i]) && !empty($aaaa["subdomain"][$i]) ) {
-				array_push($aaaas, array("ipv6_address" => $aaaa["ipv6_address"][$i], "subdomain" => $aaaa["subdomain"][$i]));	
+				array_push($aaaas, array("ipv6_address" => $aaaa["ipv6_address"][$i], "subdomain" => $aaaa["subdomain"][$i]));
 			}
 		}
 		if (count($aaaas)> 0) $callArray["data"]["aaaa"] = $aaaas;
@@ -76,7 +76,7 @@ if (isSet($_POST['function'])) {
 		$txts = array();
 		for ($i = 0; $i < count($txt); $i++) {
 			if(!empty($txt["text"][$i])) {
-				array_push($txts, array("subdomain" => $txt["subdomain"][$i], "text" => $txt["text"][$i]));	
+				array_push($txts, array("subdomain" => $txt["subdomain"][$i], "text" => $txt["text"][$i]));
 			}
 		}
 		if (count($txts)> 0) $callArray["data"]["txt"] = $txts;
@@ -86,7 +86,7 @@ if (isSet($_POST['function'])) {
 	if ($formFormat == "yaml") $callstring = Spyc::YAMLDump($callArray);
 
 	// Open SRS Call -> Result
-	require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
+	require_once(__DIR__ . "/../openSRS_LoaderWrapper.php");
 	$osrsHandler = processOpenSRS ($formFormat, $callstring);
 
 	// Print out the results
@@ -177,10 +177,10 @@ if (isSet($_POST['function'])) {
 	</table>
 
 </form>
-	
+
 </body>
 </html>
 
-<?php 
+<?php
 }
 ?>

@@ -1,4 +1,4 @@
-<?
+<?php
 $callArray = array (
 	"func" => "premiumDomain",
 	//"func" => "allinone",
@@ -8,11 +8,11 @@ $callArray = array (
                 "domain" => "hockey.com",
 		// These are optional
                 "selected" => ".com;.net;.org",
-                "alldomains" => ".com;.net;.org" 
+                "alldomains" => ".com;.net;.org"
         )
 );
 
-require_once ("../opensrs/openSRS_loader.php");
+require_once(__DIR__ . "/openSRS_LoaderWrapper.php");
 
 //JSON
 $callstring = json_encode($callArray);

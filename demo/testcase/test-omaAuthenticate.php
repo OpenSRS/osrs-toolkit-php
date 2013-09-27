@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 
@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	$callArray = array_filter($callArray);
 
 	// Open SRS Call -> Result
-	require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
+	require_once(__DIR__ . "/../openSRS_LoaderWrapper.php");
 	$response = Authenticate::call($callArray);
 
 	// Print out the results
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	echo ("Out: ". $response);
 
 } else {
-	
+
 ?>
 
 <?php include("header.inc") ?>
@@ -48,10 +48,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	<input class="btn" value="Submit" type="submit">
 </form>
 </div>
-	
+
 </body>
 </html>
 
-<?php 
+<?php
 }
 ?>

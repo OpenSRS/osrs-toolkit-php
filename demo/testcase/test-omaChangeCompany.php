@@ -1,7 +1,7 @@
-<?php 
+<?php
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-	
+
 	// Put the data to the Formatted array
 	$callArray = array(
 		"company" => $_POST["user"],
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 		$callArray["token"] = $_POST["token"];
 	}
 	// Open SRS Call -> Result
-	require_once dirname(__FILE__) . "/../../opensrs/openSRS_loader.php";
+	require_once(__DIR__ . "/../openSRS_LoaderWrapper.php");
 	$response = ChangeCompany::call(array_filter_recursive($callArray));
 
 	// Print out the results
@@ -67,10 +67,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	<input class="btn" value="Submit" type="submit">
 </form>
 </div>
-	
+
 </body>
 </html>
 
-<?php 
+<?php
 }
 ?>

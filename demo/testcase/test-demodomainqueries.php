@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 if (isSet($_POST['function'])) {
 
@@ -37,9 +37,17 @@ if ($formFormat == "yaml") $callstring = Spyc::YAMLDump($callArray);
 
 
 // Open SRS Call -> Result
-require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
+require_once(__DIR__ . "/../openSRS_LoaderWrapper.php");
+
+function convertFormatted2array ($type="", $data="") {
+    $resultArray = "";
+    if ($type == "json") $resultArray = json_decode($data, true);
+    if ($type == "yaml") $resultArray = Spyc::YAMLLoad($data);;
+    return $resultArray;
+}
+
 $osrsHandler = processOpenSRS ($formFormat, $callstring);
-$capArray = convertFormatted2array ($formFormat, $osrsHandler->resultFormatted); 
+$capArray = convertFormatted2array ($formFormat, $osrsHandler->resultFormatted);
 
 $arraLookup  = $capArray['lookup'];
 $arraPrem = $capArray['premium'];
@@ -57,8 +65,8 @@ $arraSugg = $capArray['suggestion'];
 	<meta name="generator" http-equiv="generator" content="Claire Lam" />
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 	<meta http-equiv="Content-Language" content="en"/>
-	
-	
+
+
 	<!-- CSS Styles -->
 	<style type="text/css">
 		.allleft {
@@ -70,7 +78,7 @@ $arraSugg = $capArray['suggestion'];
 			margin: 0 auto;
 			text-align: center;
 		}
-	</style>		
+	</style>
 </head>
 <body>
 
@@ -80,7 +88,7 @@ $arraSugg = $capArray['suggestion'];
 	<input type="hidden" name="function" value="allinoneDomain">
 
 <center>
-	<div><span class="headLine">Lookup / Suggest / Premuim Doamins</span></div>	
+	<div><span class="headLine">Lookup / Suggest / Premuim Doamins</span></div>
 	<div><input type="text" name="domain" id="domain" value="<?php echo ($formSearchWord); ?>" class="frontBox" size="60"> <input value="Check" id="lookupSearch" type="submit"></div>
 </center>
 </form>
@@ -91,16 +99,16 @@ $arraSugg = $capArray['suggestion'];
 
 	<div class="cent">
 		<div class="allleft">Current
-<?php 
+<?php
 if (count($arraLookup) != 0){
 	echo("	<div><h4>Lookup</h4></div>\n");
 	echo("	<div>". $arraLookup[0]['domain'] ." - <b>". $arraLookup[0]['status'] ."</b></div>\n");
 }
-?>			
+?>
 		</div>
 		<div class="allleft">With new implementation
-	
-<?php 
+
+<?php
 if (count($arraLookup) != 0){
 	echo("	<div><h4>Lookup</h4></div>\n");
 	for ($i=0; $i<count($arraLookup); $i++){
@@ -159,7 +167,7 @@ if (count($arraPrem) != 0){
 	<input type="hidden" name="format" value="<?php echo($tf); ?>">
 	<input type="hidden" name="function" value="allinoneDomain">
 	<center>
-		<div><span class="headLine">Lookup / Suggest / Premuim Doamins</span></div>	
+		<div><span class="headLine">Lookup / Suggest / Premuim Doamins</span></div>
 		<div><input type="text" name="domain" id="domain" value="" class="frontBox" size="60"> <input value="Check" id="lookupSearch" type="submit"></div>
 	</center>
 </form>
@@ -181,6 +189,6 @@ if (count($arraPrem) != 0){
 -->
 </body>
 </html>
-<?php 
+<?php
 }
-?> 
+?>
