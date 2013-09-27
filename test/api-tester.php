@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__FILE__) . "/../opensrs/openSRS_loader.php";
+require_once(__DIR__ . "/../demo/openSRS_LoaderWrapper.php");
 
 $callstring = json_encode(array("func" => "lookupGetBalance"));
 $osrsHandler = processOpenSRS ("json", $callstring);
