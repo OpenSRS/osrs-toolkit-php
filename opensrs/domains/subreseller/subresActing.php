@@ -73,12 +73,12 @@ class subresActing extends openSRS_base {
 					'bulk_order' => $this->_dataObject->data->bulk_order
 					),
 			);
-			
+
 			if ($this->_dataObject->data->custom_nameservers == 1){
 				for ($j=1; $j<=10; $j++){
 					$tns = "name". $j;
 					$tso = "sortorder". $j;
-				
+
 					$passArray = array ();
 					$temHolder = array ();
 					if (isSet($this->_dataObject->data->$tns)){
@@ -89,11 +89,11 @@ class subresActing extends openSRS_base {
 						}
 					}
 				}
-				
+
 				$cmd['attributes']['nameserver_list'] = $passArray;
 			}
 
-			
+
 			$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 			$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
 			$arrayResult = $this->_opsHandler->decode($XMLresult);		// FLip XML to Array
@@ -101,8 +101,8 @@ class subresActing extends openSRS_base {
 			// Results
 			$this->resultFullRaw = $arrayResult;
 			$this->resultRaw = $arrayResult;
-			$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-			$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+			$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+			$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 		} else {
 			echo ("Incorrect call data.<br>\n");
 		}

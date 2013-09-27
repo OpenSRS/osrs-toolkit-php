@@ -1,9 +1,9 @@
 <?php
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class persUpdate extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -26,13 +26,13 @@ class persUpdate extends openSRS_base {
 	// Validate the object
 	private function _validateObject (){
 		$allPassed = true;
-		
+
 		// Command required values
 		if (!isSet($this->_dataObject->data->domain) || $this->_dataObject->data->domain == "") {
 			trigger_error ("oSRS Error - domain is not defined.", E_USER_WARNING);
 			$allPassed = false;
 		}
-				
+
 		// Run the command
 		if ($allPassed) {
 			// Execute the command
@@ -49,10 +49,10 @@ class persUpdate extends openSRS_base {
 			'action' => 'UPDATE',
 			'object' => 'SURNAME',
 			'attributes' => array (
-				'domain' => $this->_dataObject->data->domain 
+				'domain' => $this->_dataObject->data->domain
 			)
 		);
-		
+
 		// Command optional values
 		if (isSet($this->_dataObject->data->mailbox_type) && $this->_dataObject->data->mailbox_type != "") $cmd['attributes']['mailbox']['mailbox_type'] = $this->_dataObject->data->mailbox_type;
 		if (isSet($this->_dataObject->data->password) && $this->_dataObject->data->password != "") $cmd['attributes']['mailbox']['password'] = $this->_dataObject->data->password;
@@ -61,7 +61,7 @@ class persUpdate extends openSRS_base {
 		if (isSet($this->_dataObject->data->type) && $this->_dataObject->data->type != "") $cmd['attributes']['dnsRecords'][0]['type'] = $this->_dataObject->data->type;
 		if (isSet($this->_dataObject->data->name) && $this->_dataObject->data->name != "") $cmd['attributes']['dnsRecords'][0]['name'] = $this->_dataObject->data->name;
 		if (isSet($this->_dataObject->data->content) && $this->_dataObject->data->content != "") $cmd['attributes']['dnsRecords'][0]['content'] = $this->_dataObject->data->content;
-		
+
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
 		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
@@ -69,7 +69,7 @@ class persUpdate extends openSRS_base {
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

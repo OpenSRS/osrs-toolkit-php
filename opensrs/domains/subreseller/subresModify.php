@@ -1,9 +1,9 @@
 <?php
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class subresModify extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -26,14 +26,14 @@ class subresModify extends openSRS_base {
 	// Validate the object
 	private function _validateObject (){
 		$allPassed = true;
-		
+
 		$reqPers = array ("first_name", "last_name", "org_name", "address1", "city", "state", "country", "postal_code", "phone", "email", "lang_pref");
 		for ($i = 0; $i < count($reqPers); $i++){
 			if ($this->_dataObject->personal->$reqPers[$i] == "") {
 				trigger_error ("oSRS Error - ". $reqPers[$i] ." is not defined.", E_USER_WARNING);
 				$allPassed = false;
 			}
-		}		
+		}
 
 		$reqData = array ("ccp_enabled", "low_balance_email", "password", "pricing_plan", "status", "system_status_email", "username");
 		for ($i = 0; $i < count($reqData); $i++){
@@ -74,7 +74,7 @@ class subresModify extends openSRS_base {
 				'username' => $this->_dataObject->data->username
 			)
 		);
-		
+
 		// Command optional values
 		if (isSet($this->_dataObject->data->payment_email) && $this->_dataObject->data->payment_email != "") $cmd['attributes']['payment_email'] = $this->_dataObject->data->payment_email;
 		if (isSet($this->_dataObject->data->url) && $this->_dataObject->data->url != "") $cmd['attributes']['url'] = $this->_dataObject->data->url;
@@ -86,7 +86,7 @@ class subresModify extends openSRS_base {
 				$cmd['attributes']['nameservers']['fqdn'. ($i+1)] = $tmpArray[$i];
 			}
 		}
-		
+
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
 		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
@@ -94,8 +94,8 @@ class subresModify extends openSRS_base {
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 
 
@@ -118,5 +118,5 @@ class subresModify extends openSRS_base {
 			"lang_pref" => $this->_dataObject->personal->lang_pref
 		);
 		return $userArray;
-	}	
+	}
 }

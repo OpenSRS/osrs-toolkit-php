@@ -1,9 +1,9 @@
 <?php
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class provRevoke extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -26,7 +26,7 @@ class provRevoke extends openSRS_base {
 	// Validate the object
 	private function _validateObject (){
 		$allPassed = true;
-		
+
 		// Command required values
 		if (!isSet($this->_dataObject->data->reseller) || $this->_dataObject->data->reseller == "") {
 			trigger_error ("oSRS Error - reseller is not defined.", E_USER_WARNING);
@@ -36,7 +36,7 @@ class provRevoke extends openSRS_base {
 			trigger_error ("oSRS Error - domain is not defined.", E_USER_WARNING);
 			$allPassed = false;
 		}
-				
+
 		// Run the command
 		if ($allPassed) {
 			// Execute the command
@@ -57,10 +57,10 @@ class provRevoke extends openSRS_base {
 				'domain' => $this->_dataObject->data->domain,
 			)
 		);
-		
+
 		// Command optional values
 		if (isSet($this->_dataObject->data->notes) && $this->_dataObject->data->notes != "") $cmd['attributes']['notes'] = $this->_dataObject->data->notes;
-		
+
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
 		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
@@ -68,7 +68,7 @@ class provRevoke extends openSRS_base {
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

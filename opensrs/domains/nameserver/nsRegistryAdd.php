@@ -1,9 +1,9 @@
 <?php
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class nsRegistryAdd extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -26,7 +26,7 @@ class nsRegistryAdd extends openSRS_base {
 	// Validate the object
 	private function _validateObject (){
 		$allPassed = true;
-		
+
 		// Command required values
 		if (!isSet($this->_dataObject->data->fqdn) || $this->_dataObject->data->fqdn == "") {
 			trigger_error ("oSRS Error - fqdn is not defined.", E_USER_WARNING);
@@ -40,7 +40,7 @@ class nsRegistryAdd extends openSRS_base {
 			trigger_error ("oSRS Error - all is not defined.", E_USER_WARNING);
 			$allPassed = false;
 		}
-				
+
 		// Run the command
 		if ($allPassed) {
 			// Execute the command
@@ -62,7 +62,7 @@ class nsRegistryAdd extends openSRS_base {
 				'all' => $this->_dataObject->data->all
 			)
 		);
-		
+
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
 		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
@@ -74,7 +74,7 @@ class nsRegistryAdd extends openSRS_base {
                 } else {
 			$this->resultRaw = $arrayResult;
 		}
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

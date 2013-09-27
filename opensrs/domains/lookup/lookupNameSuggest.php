@@ -43,7 +43,7 @@ class lookupNameSuggest extends openSRS_base {
 			trigger_error ("oSRS Error - Search domain strinng not defined.", E_USER_WARNING);
 			$allPassed = false;
 		}
-		
+
 		// Select non empty one
 
                 // Name Suggestion Choice Check
@@ -125,7 +125,7 @@ class lookupNameSuggest extends openSRS_base {
 
 		// Results
 		$this->resultFullRaw = $arrayResult;
-		
+
 		if (isSet($arrayResult['attributes'])){
 
                     $this->resultRaw = array (
@@ -137,7 +137,7 @@ class lookupNameSuggest extends openSRS_base {
 			$this->resultRaw = $arrayResult;
 		}
 
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

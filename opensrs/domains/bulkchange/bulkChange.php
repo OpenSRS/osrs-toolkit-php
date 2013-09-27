@@ -1,9 +1,9 @@
 <?php
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class bulkChange extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -26,7 +26,7 @@ class bulkChange extends openSRS_base {
 	// Validate the object
 	private function _validateObject (){
 		$allPassed = true;
-		
+
 		// Command required values
 		if (!isSet($this->_dataObject->data->change_items) || $this->_dataObject->data->change_items == "") {
 			trigger_error ("oSRS Error - change_items is not defined.", E_USER_WARNING);
@@ -99,8 +99,8 @@ class bulkChange extends openSRS_base {
 	private function _allDomainRenewCheck(){
 		$allDomainRenewPassed=true;
 
-		if(!isSet($this->_dataObject->data->period) && $this->_dataObject->data->period == "" && 
-		!isSet($this->_dataObject->data->let_expire) && $this->_dataObject->data->let_expire == "" && 
+		if(!isSet($this->_dataObject->data->period) && $this->_dataObject->data->period == "" &&
+		!isSet($this->_dataObject->data->let_expire) && $this->_dataObject->data->let_expire == "" &&
 		!isSet($this->_dataObject->data->auto_renew) && $this->_dataObject->data->auto_renew == "" ) {
 
 			trigger_error ("oSRS Error - change type is domain_renew but at least one of period, let_expire or auto_renew has to be defined.", E_USER_WARNING);
@@ -171,7 +171,7 @@ class bulkChange extends openSRS_base {
 		}
 		return $allDomainForwardingPassed;
 	}
-	
+
 	private function _allDomainLockCheck(){
 		$allDomainLockPassed=true;
 		if (!isSet($this->_dataObject->data->op_type) || $this->_dataObject->data->op_type == "") {
@@ -187,8 +187,8 @@ class bulkChange extends openSRS_base {
 			trigger_error ("oSRS Error - change type is domain_nameservers but op_type is not defined.", E_USER_WARNING);
 			$allDomainNameserversPassed = false;
 		}
-		if(!isSet($this->_dataObject->data->add_ns) && $this->_dataObject->data->add_ns == "" && 
-		!isSet($this->_dataObject->data->remove_ns) && $this->_dataObject->data->remove_ns == "" && 
+		if(!isSet($this->_dataObject->data->add_ns) && $this->_dataObject->data->add_ns == "" &&
+		!isSet($this->_dataObject->data->remove_ns) && $this->_dataObject->data->remove_ns == "" &&
 		!isSet($this->_dataObject->data->assign_ns) && $this->_dataObject->data->assign_ns == "" ) {
 
 			trigger_error ("oSRS Error - change type is domain_nameservers but at least one of add_ns, remove_ns or assign_ns has to be defined.", E_USER_WARNING);
@@ -218,7 +218,7 @@ class bulkChange extends openSRS_base {
 	// Post validation functions
 	private function _processRequest (){
 		$this->_dataObject->data->change_items = explode (",", $this->_dataObject->data->change_items);
-	
+
 		$cmd = array(
 			'protocol' => 'XCP',
 			'action' => 'submit_bulk_change',
@@ -228,71 +228,71 @@ class bulkChange extends openSRS_base {
 				'change_items' => $this->_dataObject->data->change_items
 			)
 		);
-		
+
 		// Command optional values
-		if (isSet($this->_dataObject->data->apply_to_locked_domains) && $this->_dataObject->data->apply_to_locked_domains != "") 
+		if (isSet($this->_dataObject->data->apply_to_locked_domains) && $this->_dataObject->data->apply_to_locked_domains != "")
 			$cmd['attributes']['apply_to_locked_domains'] = $this->_dataObject->data->apply_to_locked_domains;
-		if (isSet($this->_dataObject->data->contact_email) && $this->_dataObject->data->contact_email != "") 
+		if (isSet($this->_dataObject->data->contact_email) && $this->_dataObject->data->contact_email != "")
 			$cmd['attributes']['contact_email'] = $this->_dataObject->data->contact_email;
-		if (isSet($this->_dataObject->data->apply_to_all_reseller_items) && $this->_dataObject->data->apply_to_all_reseller_items!= "") 
+		if (isSet($this->_dataObject->data->apply_to_all_reseller_items) && $this->_dataObject->data->apply_to_all_reseller_items!= "")
 			$cmd['attributes']['apply_to_all_reseller_items'] = $this->_dataObject->data->apply_to_all_reseller_items;
 
 		switch($this->_dataObject->data->change_type){
 			case "availability_check":
 				break;
 			case "domain_renew":
-				if (isSet($this->_dataObject->data->period) && $this->_dataObject->data->period!= "") 
+				if (isSet($this->_dataObject->data->period) && $this->_dataObject->data->period!= "")
 					$cmd['attributes']['period'] = $this->_dataObject->data->period;
-				if (isSet($this->_dataObject->data->let_expire) && $this->_dataObject->data->let_expire!= "") 
+				if (isSet($this->_dataObject->data->let_expire) && $this->_dataObject->data->let_expire!= "")
 					$cmd['attributes']['let_expire'] = $this->_dataObject->data->let_expire;
-				if (isSet($this->_dataObject->data->auto_renew) && $this->_dataObject->data->auto_renew!= "") 
+				if (isSet($this->_dataObject->data->auto_renew) && $this->_dataObject->data->auto_renew!= "")
 					$cmd['attributes']['auto_renew'] = $this->_dataObject->data->auto_renew;
-				if (isSet($this->_dataObject->data->affiliate_id) && $this->_dataObject->data->affiliate_id!= "") 
+				if (isSet($this->_dataObject->data->affiliate_id) && $this->_dataObject->data->affiliate_id!= "")
 					$cmd['attributes']['affiliate_id'] = $this->_dataObject->data->affiliate_id;
 				break;
 			case "push_domains":
-				if (isSet($this->_dataObject->data->gaining_reseller_username) && $this->_dataObject->data->gaining_reseller_username!= "") 
+				if (isSet($this->_dataObject->data->gaining_reseller_username) && $this->_dataObject->data->gaining_reseller_username!= "")
 					$cmd['attributes']['gaining_reseller_username'] = $this->_dataObject->data->gaining_reseller_username;
 				break;
 			case "dns_zone":
-				if (isSet($this->_dataObject->data->apply_to_domains) && $this->_dataObject->data->apply_to_domains!= "") 
+				if (isSet($this->_dataObject->data->apply_to_domains) && $this->_dataObject->data->apply_to_domains!= "")
 					$cmd['attributes']['apply_to_domains'] = $this->_dataObject->data->apply_to_domains;
-				if (isSet($this->_dataObject->data->dns_action) && $this->_dataObject->data->dns_action!= "") 
+				if (isSet($this->_dataObject->data->dns_action) && $this->_dataObject->data->dns_action!= "")
 					$cmd['attributes']['dns_action'] = $this->_dataObject->data->dns_action;
-				if (isSet($this->_dataObject->data->dns_template) && $this->_dataObject->data->dns_template!= "") 
+				if (isSet($this->_dataObject->data->dns_template) && $this->_dataObject->data->dns_template!= "")
 					$cmd['attributes']['dns_template'] = $this->_dataObject->data->dns_template;
-				if (isSet($this->_dataObject->data->only_if) && $this->_dataObject->data->only_if!= "") 
+				if (isSet($this->_dataObject->data->only_if) && $this->_dataObject->data->only_if!= "")
 					$cmd['attributes']['only_if'] = $this->_dataObject->data->only_if;
-				if (isSet($this->_dataObject->data->force_dns_nameservers) && $this->_dataObject->data->force_dns_nameservers!= "") 
+				if (isSet($this->_dataObject->data->force_dns_nameservers) && $this->_dataObject->data->force_dns_nameservers!= "")
 					$cmd['attributes']['force_dns_nameservers'] = $this->_dataObject->data->force_dns_nameservers;
 				break;
 			case "dns_zone_record":
-				if (isSet($this->_dataObject->data->dns_action) && $this->_dataObject->data->dns_action!= "") 
+				if (isSet($this->_dataObject->data->dns_action) && $this->_dataObject->data->dns_action!= "")
 					$cmd['attributes']['dns_action'] = $this->_dataObject->data->dns_action;
-				if (isSet($this->_dataObject->data->dns_record_type) && $this->_dataObject->data->dns_record_type!= "") 
+				if (isSet($this->_dataObject->data->dns_record_type) && $this->_dataObject->data->dns_record_type!= "")
 					$cmd['attributes']['dns_record_type'] = $this->_dataObject->data->dns_record_type;
-				if (isSet($this->_dataObject->data->dns_record_data->ip_address) && $this->_dataObject->data->dns_record_data->ip_address!= "") 
+				if (isSet($this->_dataObject->data->dns_record_data->ip_address) && $this->_dataObject->data->dns_record_data->ip_address!= "")
 					$cmd['attributes']['dns_record_data']['ip_address'] = $this->_dataObject->data->dns_record_data->ip_address;
-				if (isSet($this->_dataObject->data->dns_record_data->subdomain) && $this->_dataObject->data->dns_record_data->subdomain!= "") 
+				if (isSet($this->_dataObject->data->dns_record_data->subdomain) && $this->_dataObject->data->dns_record_data->subdomain!= "")
 					$cmd['attributes']['dns_record_data']['subdomain'] = $this->_dataObject->data->dns_record_data->subdomain;
-				if (isSet($this->_dataObject->data->dns_record_data->ipv6_address) && $this->_dataObject->data->dns_record_data->ipv6_address!= "") 
+				if (isSet($this->_dataObject->data->dns_record_data->ipv6_address) && $this->_dataObject->data->dns_record_data->ipv6_address!= "")
 					$cmd['attributes']['dns_record_data']['ipv6_address'] = $this->_dataObject->data->dns_record_data->ipv6_address;
 				if (isSet($this->_dataObject->data->dns_record_data->hostname) && $this->_dataObject->data->dns_record_data->hostname!= "") $
 					$cmd['attributes']['dns_record_data']['hostname'] = $this->_dataObject->data->dns_record_data->hostname;
-				if (isSet($this->_dataObject->data->dns_record_data->priority) && $this->_dataObject->data->dns_record_data->priority!= "") 
+				if (isSet($this->_dataObject->data->dns_record_data->priority) && $this->_dataObject->data->dns_record_data->priority!= "")
 					$cmd['attributes']['dns_record_data']['priority'] = $this->_dataObject->data->dns_record_data->priority;
-				if (isSet($this->_dataObject->data->dns_record_data->weight) && $this->_dataObject->data->dns_record_data->weight!= "") 
+				if (isSet($this->_dataObject->data->dns_record_data->weight) && $this->_dataObject->data->dns_record_data->weight!= "")
 					$cmd['attributes']['dns_record_data']['weight'] = $this->_dataObject->data->dns_record_data->weight;
-				if (isSet($this->_dataObject->data->dns_record_data->port) && $this->_dataObject->data->dns_record_data->port!= "") 
+				if (isSet($this->_dataObject->data->dns_record_data->port) && $this->_dataObject->data->dns_record_data->port!= "")
 					$cmd['attributes']['dns_record_data']['port'] = $this->_dataObject->data->dns_record_data->port;
-				if (isSet($this->_dataObject->data->dns_record_data->text) && $this->_dataObject->data->dns_record_data->text!= "") 
+				if (isSet($this->_dataObject->data->dns_record_data->text) && $this->_dataObject->data->dns_record_data->text!= "")
 					$cmd['attributes']['dns_record_data']['text'] = $this->_dataObject->data->dns_record_data->text;
-				if (isSet($this->_dataObject->data->only_if) && $this->_dataObject->data->only_if!= "") 
+				if (isSet($this->_dataObject->data->only_if) && $this->_dataObject->data->only_if!= "")
 					$cmd['attributes']['only_if'] = $this->_dataObject->data->only_if;
 				break;
 			case "domain_contacts":
 				// Allows for multiple contact changes with the same data
-				if (isSet($this->_dataObject->data->type) && $this->_dataObject->data->type!= "" && 
+				if (isSet($this->_dataObject->data->type) && $this->_dataObject->data->type!= "" &&
 				    isSet($this->_dataObject->personal) && $this->_dataObject->personal!= ""){
 
 					$contact_types=explode (",", $this->_dataObject->data->type);
@@ -306,39 +306,39 @@ class bulkChange extends openSRS_base {
 				}
 				break;
 			case "domain_forwarding":
-				if (isSet($this->_dataObject->data->op_type) && $this->_dataObject->data->op_type!= "") 
+				if (isSet($this->_dataObject->data->op_type) && $this->_dataObject->data->op_type!= "")
 					$cmd['attributes']['op_type'] = $this->_dataObject->data->op_type;
 				break;
 			case "domain_lock":
-				if (isSet($this->_dataObject->data->op_type) && $this->_dataObject->data->op_type!= "") 
+				if (isSet($this->_dataObject->data->op_type) && $this->_dataObject->data->op_type!= "")
 					$cmd['attributes']['op_type'] = $this->_dataObject->data->op_type;
 				break;
 			case "domain_parked_pages":
-				if (isSet($this->_dataObject->data->op_type) && $this->_dataObject->data->op_type!= "") 
+				if (isSet($this->_dataObject->data->op_type) && $this->_dataObject->data->op_type!= "")
 					$cmd['attributes']['op_type'] = $this->_dataObject->data->op_type;
 				break;
 			case "domain_nameservers":
-				if (isSet($this->_dataObject->data->op_type) && $this->_dataObject->data->op_type!= "") 
+				if (isSet($this->_dataObject->data->op_type) && $this->_dataObject->data->op_type!= "")
 					$cmd['attributes']['op_type'] = $this->_dataObject->data->op_type;
-				if (isSet($this->_dataObject->data->add_ns) && $this->_dataObject->data->add_ns!= "") 
+				if (isSet($this->_dataObject->data->add_ns) && $this->_dataObject->data->add_ns!= "")
 					$cmd['attributes']['add_ns'] = explode(",",$this->_dataObject->data->add_ns);
-				if (isSet($this->_dataObject->data->remove_ns) && $this->_dataObject->data->remove_ns!= "") 
+				if (isSet($this->_dataObject->data->remove_ns) && $this->_dataObject->data->remove_ns!= "")
 					$cmd['attributes']['remove_ns'] = explode(",",$this->_dataObject->data->remove_ns);
-				if (isSet($this->_dataObject->data->assign_ns) && $this->_dataObject->data->assign_ns!= "") 
+				if (isSet($this->_dataObject->data->assign_ns) && $this->_dataObject->data->assign_ns!= "")
 					$cmd['attributes']['assign_ns'] = explode(",",$this->_dataObject->data->assign_ns);
 				break;
 			case "whois_privacy":
-				if (isSet($this->_dataObject->data->op_type) && $this->_dataObject->data->op_type!= "") 
+				if (isSet($this->_dataObject->data->op_type) && $this->_dataObject->data->op_type!= "")
 					$cmd['attributes']['op_type'] = $this->_dataObject->data->op_type;
 				break;
 			default:
 				break;
 		}
 
-		
 
-		
-	
+
+
+
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
 		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
@@ -346,8 +346,8 @@ class bulkChange extends openSRS_base {
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 
  private function _createUserData(){

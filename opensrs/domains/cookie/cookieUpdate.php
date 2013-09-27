@@ -1,9 +1,9 @@
 <?php
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class cookieUpdate extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -18,7 +18,7 @@ class cookieUpdate extends openSRS_base {
 		$this->_formatHolder = $formatString;
 		$this->_validateObject ();
 	}
-	
+
 	public function __destruct () {
 		parent::__destruct();
 	}
@@ -36,7 +36,7 @@ class cookieUpdate extends openSRS_base {
 			trigger_error ("oSRS Error - Password string not defined.", E_USER_WARNING);
 			$allPassed = false;
 		}
-		
+
 		if (!isSet($this->_dataObject->data->domain)) {
 			trigger_error ("oSRS Error - Existing domain strinng not defined.", E_USER_WARNING);
 			$allPassed = false;
@@ -79,7 +79,7 @@ class cookieUpdate extends openSRS_base {
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
 		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
-		
+
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		if (isSet($arrayResult['attributes'])){
@@ -87,10 +87,10 @@ class cookieUpdate extends openSRS_base {
 		} else {
 			$this->resultRaw = $arrayResult;
 		}
-		
+
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

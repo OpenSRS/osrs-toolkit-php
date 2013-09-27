@@ -29,7 +29,7 @@ class lookupGetPrice extends openSRS_base {
 	// Validate the object
 	private function _validateObject (){
 		$allPassed = true;
-		
+
 		if (!isSet($this->_dataObject->data->domain)) {
 			trigger_error ("oSRS Error - Domain is not defined.", E_USER_WARNING);
 			$allPassed = false;
@@ -54,7 +54,7 @@ class lookupGetPrice extends openSRS_base {
 				'domain' => $this->_dataObject->data->domain
 			)
 		);
-		
+
 		// Command optional values
 		if (isSet($this->_dataObject->data->period) && $this->_dataObject->data->period != "") $cmd['attributes']['period'] = $this->_dataObject->data->period;
 		if (isSet($this->_dataObject->data->reg_type) && $this->_dataObject->data->reg_type != "") $cmd['attributes']['reg_type'] = $this->_dataObject->data->reg_type;
@@ -70,7 +70,7 @@ class lookupGetPrice extends openSRS_base {
                 } else {
 			$this->resultRaw = $arrayResult;
 		}
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

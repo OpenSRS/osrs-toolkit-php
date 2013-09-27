@@ -1,9 +1,9 @@
 <?php
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class transSendPass extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -26,13 +26,13 @@ class transSendPass extends openSRS_base {
 	// Validate the object
 	private function _validateObject (){
 		$allPassed = true;
-		
+
 		// Command required values
 		if (!isSet($this->_dataObject->data->domain_name) || $this->_dataObject->data->domain_name == "") {
 			trigger_error ("oSRS Error - domain_name is not defined.", E_USER_WARNING);
 			$allPassed = false;
 		}
-				
+
 		// Run the command
 		if ($allPassed) {
 			// Execute the command
@@ -52,7 +52,7 @@ class transSendPass extends openSRS_base {
 				'domain_name' => $this->_dataObject->data->domain_name
 			)
 		);
-		
+
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
 		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
@@ -60,7 +60,7 @@ class transSendPass extends openSRS_base {
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

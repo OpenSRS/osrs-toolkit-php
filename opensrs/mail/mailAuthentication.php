@@ -1,14 +1,14 @@
 <?php
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class mailAuthentication extends openSRS_mail {
 	private $_dataObject;
 	private $_formatHolder = "";
 	private $_osrsm;
-	
+
 	public $resultRaw;
 	public $resultFormatted;
 	public $resultSuccess;
@@ -56,7 +56,7 @@ class mailAuthentication extends openSRS_mail {
 				$this->_dataObject->data->admin_domain = APP_MAIL_DOMAIN;
 			}
 		}
-		
+
 		// Run the command
 		if ($allPassed) {
 			// Execute the command
@@ -65,21 +65,21 @@ class mailAuthentication extends openSRS_mail {
 			trigger_error ("oSRS-eMail Error - Missing data.", E_USER_WARNING);
 		}
 	}
-	
+
 	// Post validation functions
 	private function _processRequest ($command = ""){
 		$sequence = array (
 			0 => "ver ver=\"3.4\"",
 			1 => "login user=\"". $this->_dataObject->data->admin_username ."\" domain=\"". $this->_dataObject->data->admin_domain ."\" password=\"". $this->_dataObject->data->admin_password ."\"",
 			2 => "quit"
-		);		
+		);
 		$tucRes = $this->makeCall($sequence);
 		$arrayResult = $this->parseResults($tucRes);
-		
+
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

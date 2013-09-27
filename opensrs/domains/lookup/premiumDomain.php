@@ -51,7 +51,7 @@ class premiumDomain extends openSRS_base {
 		} else {
 			$arraCall = $arraSelected;
 		}
-		
+
 		// Call function
 		if ($allPassed) {
 			$resObject = $this->_domainTLD ($domain, $arraCall);
@@ -93,10 +93,10 @@ class premiumDomain extends openSRS_base {
 		if (isSet($arrayResult['attributes']['premium']['items'])) {
 			$this->resultRaw = $arrayResult['attributes']['premium']['items'];
 		} else {
-			$this->resultRaw = $arrayResult;						// Null if there are no premium domains 
+			$this->resultRaw = $arrayResult;						// Null if there are no premium domains
 		}
 
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

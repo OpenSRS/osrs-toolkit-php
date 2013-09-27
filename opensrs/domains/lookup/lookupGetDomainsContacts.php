@@ -29,7 +29,7 @@ class lookupGetDomainsContacts extends openSRS_base {
 	// Validate the object
 	private function _validateObject (){
 		$allPassed = true;
-		
+
 		if (!isSet($this->_dataObject->data->domain_list)) {
 			trigger_error ("oSRS Error - Domain list is not defined.", E_USER_WARNING);
 			$allPassed = false;
@@ -47,7 +47,7 @@ class lookupGetDomainsContacts extends openSRS_base {
 	// Post validation functions
 	private function _processRequest (){
 		$domainListArray = explode (",", $this->_dataObject->data->domain_list);
-	
+
 		$cmd = array(
 			"protocol" => "XCP",
 			"action" => "GET_DOMAINS_CONTACTS",
@@ -68,7 +68,7 @@ class lookupGetDomainsContacts extends openSRS_base {
                 } else {
 			$this->resultRaw = $arrayResult;
 		}
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

@@ -29,7 +29,7 @@ class lookupGetDomainsByExpiry extends openSRS_base {
 	// Validate the object
 	private function _validateObject (){
 		$allPassed = true;
-		
+
 		if (!isSet($this->_dataObject->data->exp_from)) {
 			trigger_error ("oSRS Error - exp_from is not defined.", E_USER_WARNING);
 			$allPassed = false;
@@ -76,7 +76,7 @@ class lookupGetDomainsByExpiry extends openSRS_base {
                 } else {
 			$this->resultRaw = $arrayResult;
 		}
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

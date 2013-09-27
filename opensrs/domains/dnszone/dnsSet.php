@@ -9,7 +9,7 @@
 * @license  MIT License (http://www.opensource.org/licenses/mit-license.php)
 * @link
 */
- 
+
 class DnsSet extends openSRS_base
 {
     private $_dataObject;
@@ -45,7 +45,7 @@ class DnsSet extends openSRS_base
 			trigger_error ("oSRS Error - domain is not defined.", E_USER_WARNING);
 			$allPassed = false;
 		}
-				
+
 		if ($allPassed) {
 			$this->_processRequest ();
 		} else {
@@ -72,8 +72,8 @@ class DnsSet extends openSRS_base
 
 		// records - A
 		if (isset($this->_dataObject->data->a) && count($this->_dataObject->data->a) > 0) {
-			$as = array();			
-			foreach ($this->_dataObject->data->a as $key => $value) {	
+			$as = array();
+			foreach ($this->_dataObject->data->a as $key => $value) {
 				array_push($as, array('ip_address' => $value->ip_address, 'subdomain' => $value->subdomain));
 			}
 			$cmd['attributes']['records']['A'] = $as;
@@ -81,17 +81,17 @@ class DnsSet extends openSRS_base
 
 		// records - AAAA
 		if (isset($this->_dataObject->data->aaaa) && count($this->_dataObject->data->aaaa) > 0) {
-			$aaaas = array();			
-			foreach ($this->_dataObject->data->aaaa as $key => $val) {	            
+			$aaaas = array();
+			foreach ($this->_dataObject->data->aaaa as $key => $val) {
 				array_push($aaaas, array('ipv6_address' => $val->ipv6_address, 'subdomain' => $val->subdomain));
 			}
 			$cmd['attributes']['records']['AAAA'] = $aaaas;
 		}
-		
+
 		// records - CNAME
 		if (isset($this->_dataObject->data->cname) && count($this->_dataObject->data->cname) > 0) {
-			$cnames = array();			
-			foreach ($this->_dataObject->data->cname as $key => $val) {	
+			$cnames = array();
+			foreach ($this->_dataObject->data->cname as $key => $val) {
 				array_push($cnames, array('hostname' => $val->hostname, 'subdomain' => $val->subdomain));
 			}
 			$cmd['attributes']['records']['CNAME'] = $cnames;
@@ -99,12 +99,12 @@ class DnsSet extends openSRS_base
 
 		// records - MX
 		if (isset($this->_dataObject->data->mx) && count($this->_dataObject->data->mx) > 0) {
-			$mxs = array();			
-			foreach ($this->_dataObject->data->mx as $key => $val) {	
-				array_push($mxs, 
+			$mxs = array();
+			foreach ($this->_dataObject->data->mx as $key => $val) {
+				array_push($mxs,
 					array(
-						'priority' => $val->priority, 
-						'subdomain' => $val->subdomain, 
+						'priority' => $val->priority,
+						'subdomain' => $val->subdomain,
 						'hostname' => $val->hostname
 					)
 				);
@@ -114,13 +114,13 @@ class DnsSet extends openSRS_base
 
 		// records - SRV
 		if (isset($this->_dataObject->data->srv) && count($this->_dataObject->data->srv) > 0) {
-			$srvs = array();			
-			foreach ($this->_dataObject->data->srv as $key => $val) {	
-				array_push($srvs, 
+			$srvs = array();
+			foreach ($this->_dataObject->data->srv as $key => $val) {
+				array_push($srvs,
 					array(
-						'priority' => $val->priority, 
-						'weight' => $val->weight, 
-						'subdomain' => $val->subdomain, 
+						'priority' => $val->priority,
+						'weight' => $val->weight,
+						'subdomain' => $val->subdomain,
 						'hostname' => $val->hostname,
 						'port' => $val->port
 					)
@@ -132,12 +132,12 @@ class DnsSet extends openSRS_base
 		// records - TXT
 		if (isset($this->_dataObject->data->txt) && count($this->_dataObject->data->txt) > 0) {
 			$txts = array();
-			foreach ($this->_dataObject->data->txt as $key => $val) {	
+			foreach ($this->_dataObject->data->txt as $key => $val) {
 				array_push($txts, array('subdomain' => $val->subdomain, 'text' => $val->text));
 			}
 			$cmd['attributes']['records']['TXT'] = $txts;
 		}
-	    
+
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
 		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
@@ -145,7 +145,7 @@ class DnsSet extends openSRS_base
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

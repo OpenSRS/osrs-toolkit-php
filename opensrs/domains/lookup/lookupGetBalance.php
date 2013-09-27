@@ -3,7 +3,7 @@
  *  Required object values:
  *  - none -
  */
- 
+
 class lookupGetBalance extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -55,8 +55,8 @@ class lookupGetBalance extends openSRS_base {
             $this->resultRaw = $arrayResult['attributes'];
         else
             $this->resultRaw = $arrayResult;
-                
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

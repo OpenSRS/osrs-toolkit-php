@@ -1,9 +1,9 @@
 <?php
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class transGetIn extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -26,7 +26,7 @@ class transGetIn extends openSRS_base {
 	// Validate the object
 	private function _validateObject (){
 		$allPassed = true;
-		
+
 		// Run the command
 		if ($allPassed) {
 			// Execute the command
@@ -45,7 +45,7 @@ class transGetIn extends openSRS_base {
 //			'registrant_ip' => '12.34.56.78',
 			'attributes' => array ()
 		);
-		
+
 		// Command optional values
 		if (isSet($this->_dataObject->data->completed_from) && $this->_dataObject->data->completed_from != "") $cmd['attributes']['completed_from'] = $this->_dataObject->data->completed_from;
 		if (isSet($this->_dataObject->data->completed_to) && $this->_dataObject->data->completed_to != "") $cmd['attributes']['completed_to'] = $this->_dataObject->data->completed_to;
@@ -67,7 +67,7 @@ class transGetIn extends openSRS_base {
 		if (isSet($this->_dataObject->data->status) && $this->_dataObject->data->status != "") $cmd['attributes']['status'] = $this->_dataObject->data->status;
 		if (isSet($this->_dataObject->data->transfer_id) && $this->_dataObject->data->transfer_id != "") $cmd['attributes']['transfer_id'] = $this->_dataObject->data->transfer_id;
 		if (isSet($this->_dataObject->data->losing_registrar) && $this->_dataObject->data->losing_registrar != "") $cmd['attributes']['losing_registrar'] = $this->_dataObject->data->losing_registrar;
-		
+
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
 		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
@@ -79,7 +79,7 @@ class transGetIn extends openSRS_base {
                 } else {
 			$this->resultRaw = $arrayResult;
 		}
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

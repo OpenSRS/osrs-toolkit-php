@@ -1,9 +1,9 @@
 <?php
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class persNameSuggest extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -26,13 +26,13 @@ class persNameSuggest extends openSRS_base {
 	// Validate the object
 	private function _validateObject (){
 		$allPassed = true;
-		
+
 		// Command required values
 		if (!isSet($this->_dataObject->data->searchstring) || $this->_dataObject->data->searchstring == "") {
 			trigger_error ("oSRS Error - searchstring is not defined.", E_USER_WARNING);
 			$allPassed = false;
 		}
-				
+
 		// Run the command
 		if ($allPassed) {
 			// Execute the command
@@ -52,12 +52,12 @@ class persNameSuggest extends openSRS_base {
 				'searchstring' => $this->_dataObject->data->searchstring
 			)
 		);
-		
+
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		trigger_error($xmlCMD);
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
 		trigger_error($XMLresult);
-		
+
 		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
 
 		// Results
@@ -67,7 +67,7 @@ class persNameSuggest extends openSRS_base {
                 } else {
 			$this->resultRaw = $arrayResult;
 		}
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

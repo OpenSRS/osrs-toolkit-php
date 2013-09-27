@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class provUpdateContacts extends openSRS_base {
 	private $_dataObject;
@@ -31,7 +31,7 @@ class provUpdateContacts extends openSRS_base {
 				$allPassed = false;
 			}
 		}
-		
+
 		$reqData = array ("domain", "types");
 		for ($i = 0; $i < count($reqData); $i++){
 			if ($this->_dataObject->data->$reqData[$i] == "") {
@@ -46,7 +46,7 @@ class provUpdateContacts extends openSRS_base {
 			$this->processRequest ();
 		} else {
 			trigger_error ("oSRS Error - Incorrect call.", E_USER_WARNING);
-		}		
+		}
 	}
 
 	private function _createUserData(){
@@ -68,12 +68,12 @@ class provUpdateContacts extends openSRS_base {
 			"lang_pref" => $this->_dataObject->personal->lang_pref
 		);
 		return $userArray;
-	}	
-	
+	}
+
 	// Post validation functions
 	private function processRequest (){
 		$this->_dataObject->data->types = explode (",", $this->_dataObject->data->types);
-	
+
 		// Compile the command
 		$cmd = array(
 			'protocol' => 'XCP',
@@ -98,7 +98,7 @@ class provUpdateContacts extends openSRS_base {
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

@@ -1,9 +1,9 @@
 <?php
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class bulkTransfer extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -26,7 +26,7 @@ class bulkTransfer extends openSRS_base {
 	// Validate the object
 	private function _validateObject (){
 		$allPassed = true;
-		
+
 		// Command required values
 		if (!isSet($this->_dataObject->data->custom_tech_contact) || $this->_dataObject->data->custom_tech_contact == "") {
 			trigger_error ("oSRS Error - custom_tech_contact is not defined.", E_USER_WARNING);
@@ -44,11 +44,11 @@ class bulkTransfer extends openSRS_base {
 			trigger_error ("oSRS Error - reg_password is not defined.", E_USER_WARNING);
 			$allPassed = false;
 		}
-				
+
 		// Run the command
 		if ($allPassed)
 	 		$allPassed=$this->_allTimeRequired();
-	
+
 		if ($allPassed){
 			// Execute the command
 			$this->_processRequest ();
@@ -73,7 +73,7 @@ private function _allTimeRequired(){
 	// Post validation functions
 	private function _processRequest (){
 		$this->_dataObject->data->domain_list = explode (",", $this->_dataObject->data->domain_list);
-	
+
 		$cmd = array(
 			'protocol' => 'XCP',
 			'action' => 'bulk_transfer',
@@ -92,15 +92,15 @@ private function _allTimeRequired(){
 				'domain_list' => $this->_dataObject->data->domain_list
 			)
 		);
-		
+
 		// Command optional values
 
 		if (isSet($this->_dataObject->data->reg_domain) || $this->_dataObject->data->reg_domain != "") $cmd['attributes']['reg_domain'] = $this->_dataObject->data->reg_domain;
-		
+
 		if (isSet($this->_dataObject->data->affiliate_id) && $this->_dataObject->data->affiliate_id != "") $cmd['attributes']['affiliate_id'] = $this->_dataObject->data->affiliate_id;
 		if (isSet($this->_dataObject->data->handle) && $this->_dataObject->data->handle != "") $cmd['attributes']['handle'] = $this->_dataObject->data->handle;
 		if (isSet($this->_dataObject->data->registrant_ip) && $this->_dataObject->data->registrant_ip != "") $cmd['attributes']['registrant_ip'] = $this->_dataObject->data->registrant_ip;
-		
+
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
 		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
@@ -108,10 +108,10 @@ private function _allTimeRequired(){
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
-	
+
 	private function _createUserData(){
 		$userArray = array(
 			"first_name" => $this->_dataObject->personal->first_name,
@@ -131,6 +131,6 @@ private function _allTimeRequired(){
 			"lang_pref" => $this->_dataObject->personal->lang_pref
 		);
 		return $userArray;
-	}	
-	
+	}
+
 }

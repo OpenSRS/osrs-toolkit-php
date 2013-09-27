@@ -1,9 +1,9 @@
 <?php
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class provRenew extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -26,7 +26,7 @@ class provRenew extends openSRS_base {
 	// Validate the object
 	private function _validateObject (){
 		$allPassed = true;
-		
+
 		// Command required values
 		if (!isSet($this->_dataObject->data->auto_renew) || $this->_dataObject->data->auto_renew == "") {
 			trigger_error ("oSRS Error - auto_renew is not defined.", E_USER_WARNING);
@@ -48,7 +48,7 @@ class provRenew extends openSRS_base {
 			trigger_error ("oSRS Error - period is not defined.", E_USER_WARNING);
 			$allPassed = false;
 		}
-				
+
 		// Run the command
 		if ($allPassed) {
 			// Execute the command
@@ -64,7 +64,7 @@ class provRenew extends openSRS_base {
 			'protocol' => 'XCP',
 			'action' => 'renew',
 			'object' => 'DOMAIN',
-			'attributes' => array ( 
+			'attributes' => array (
 			    'auto_renew' => $this->_dataObject->data->auto_renew,
 			    'currentexpirationyear' => $this->_dataObject->data->currentexpirationyear,
 			    'domain' => $this->_dataObject->data->domain,
@@ -72,11 +72,11 @@ class provRenew extends openSRS_base {
 			    'period' => $this->_dataObject->data->period
 			)
 		);
-		
+
 		// Command optional values
 		if (isSet($this->_dataObject->data->f_parkp) && $this->_dataObject->data->f_parkp != "") $cmd['attributes']['f_parkp'] = $this->_dataObject->data->f_parkp;
 		if (isSet($this->_dataObject->data->affiliate_id) && $this->_dataObject->data->affiliate_id != "") $cmd['attributes']['affiliate_id'] = $this->_dataObject->data->affiliate_id;
-		
+
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
 		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
@@ -88,7 +88,7 @@ class provRenew extends openSRS_base {
                 } else {
 			$this->resultRaw = $arrayResult;
 		}
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

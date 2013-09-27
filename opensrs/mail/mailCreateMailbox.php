@@ -1,14 +1,14 @@
 <?php
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class mailCreateMailbox extends openSRS_mail {
 	private $_dataObject;
 	private $_formatHolder = "";
 	private $_osrsm;
-	
+
 	public $resultRaw;
 	public $resultFormatted;
 	public $resultSuccess;
@@ -29,7 +29,7 @@ class mailCreateMailbox extends openSRS_mail {
 	private function _validateObject (){
 		$allPassed = true;
 		$compile = "";
-		
+
 
 		// Command required values - authentication
 		if (!isSet($this->_dataObject->data->admin_username) || $this->_dataObject->data->admin_username == "") {
@@ -56,7 +56,7 @@ class mailCreateMailbox extends openSRS_mail {
 				$this->_dataObject->data->admin_domain = APP_MAIL_DOMAIN;
 			}
 		}
-						
+
 		// Command required values
 		if (!isSet($this->_dataObject->data->domain) || $this->_dataObject->data->domain == "") {
 			trigger_error ("oSRS-eMail Error - domain is not defined.", E_USER_WARNING);
@@ -64,28 +64,28 @@ class mailCreateMailbox extends openSRS_mail {
 		} else {
 			$compile .= " domain=\"". $this->_dataObject->data->domain ."\"";
 		}
-		
+
 		if (!isSet($this->_dataObject->data->workgroup) || $this->_dataObject->data->workgroup == "") {
 			trigger_error ("oSRS-eMail Error - workgroup is not defined.", E_USER_WARNING);
 			$allPassed = false;
 		} else {
 			$compile .= " workgroup=\"". $this->_dataObject->data->workgroup ."\"";
 		}
-		
+
 		if (!isSet($this->_dataObject->data->mailbox) || $this->_dataObject->data->mailbox == "") {
 			trigger_error ("oSRS-eMail Error - mailbox is not defined.", E_USER_WARNING);
 			$allPassed = false;
 		} else {
 			$compile .= " mailbox=\"". $this->_dataObject->data->mailbox ."\"";
 		}
-		
+
 		if (!isSet($this->_dataObject->data->password) || $this->_dataObject->data->password == "") {
 			trigger_error ("oSRS-eMail Error - password is not defined.", E_USER_WARNING);
 			$allPassed = false;
 		} else {
 			$compile .= " password=\"". $this->_dataObject->data->password ."\"";
 		}
-		
+
 		// Command optional values
 		if (isSet($this->_dataObject->data->first_name) && $this->_dataObject->data->first_name != "")
                         $compile .= " first_name=\"". $this->_dataObject->data->first_name ."\"";
@@ -98,7 +98,7 @@ class mailCreateMailbox extends openSRS_mail {
 
 		if (isSet($this->_dataObject->data->phone) && $this->_dataObject->data->phone != "")
                         $compile .= " phone=\"". $this->_dataObject->data->phone ."\"";
-                
+
 		if (isSet($this->_dataObject->data->fax) && $this->_dataObject->data->fax != "")
                         $compile .= " fax=\"". $this->_dataObject->data->fax ."\"";
 
@@ -119,7 +119,7 @@ class mailCreateMailbox extends openSRS_mail {
 
 		if (isSet($this->_dataObject->data->spam_level) && $this->_dataObject->data->spam_level != "")
                         $compile .= " spam_level=\"". $this->_dataObject->data->spam_level ."\"";
-		
+
 		// Run the command
 		if ($allPassed) {
 			// Execute the command
@@ -128,7 +128,7 @@ class mailCreateMailbox extends openSRS_mail {
 			trigger_error ("oSRS-eMail Error - Missing data.", E_USER_WARNING);
 		}
 	}
-	
+
 	// Post validation functions
 	private function _processRequest ($command = ""){
 		$sequence = array (
@@ -136,14 +136,14 @@ class mailCreateMailbox extends openSRS_mail {
 			1 => "login user=\"". $this->_dataObject->data->admin_username ."\" domain=\"". $this->_dataObject->data->admin_domain ."\" password=\"". $this->_dataObject->data->admin_password ."\"",
 			2 => "create_mailbox". $command,
 			3 => "quit"
-		);		
+		);
 		$tucRes = $this->makeCall($sequence);
 		$arrayResult = $this->parseResults($tucRes);
-		
+
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

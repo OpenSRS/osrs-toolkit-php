@@ -1,9 +1,9 @@
 <?php
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class nsAdvancedUpdt extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -26,7 +26,7 @@ class nsAdvancedUpdt extends openSRS_base {
 	// Validate the object
 	private function _validateObject (){
 		$allPassed = true;
-		
+
 		// Command required values
 		if ((!isSet($this->_dataObject->data->cookie) || $this->_dataObject->data->cookie == "") && (!isSet($this->_dataObject->data->bypass) || $this->_dataObject->data->bypass == "")) {
 			trigger_error ("oSRS Error - cookie / bypass is not defined.", E_USER_WARNING);
@@ -42,7 +42,7 @@ class nsAdvancedUpdt extends openSRS_base {
 			trigger_error ("oSRS Error - op_type is not defined.", E_USER_WARNING);
 			$allPassed = false;
 		}
-				
+
 		// Run the command
 		if ($allPassed) {
 			// Execute the command
@@ -63,11 +63,11 @@ class nsAdvancedUpdt extends openSRS_base {
 				'op_type' => $this->_dataObject->data->op_type
 			)
 		);
-		
+
 		// Cookie / bypass
 		if (isSet($this->_dataObject->data->cookie) && $this->_dataObject->data->cookie != "") $cmd['cookie'] = $this->_dataObject->data->cookie;
 		if (isSet($this->_dataObject->data->bypass) && $this->_dataObject->data->bypass != "") $cmd['domain'] = $this->_dataObject->data->bypass;
-		
+
 				// Command optional values
 		if (isSet($this->_dataObject->data->add_ns) && $this->_dataObject->data->add_ns != "") {
 			$tempAdd = explode (",", $this->_dataObject->data->add_ns);
@@ -81,7 +81,7 @@ class nsAdvancedUpdt extends openSRS_base {
 			$tempAdd = explode (",", $this->_dataObject->data->remove_ns);
 			$cmd['attributes']['remove_ns'] = $tempAdd;
 		}
-		
+
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
 		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
@@ -89,7 +89,7 @@ class nsAdvancedUpdt extends openSRS_base {
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }
