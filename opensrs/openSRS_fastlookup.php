@@ -1,7 +1,7 @@
 <?php
 
 class openSRS_fastlookup {
-	
+
 	private $_socket = false;
 	private $_socketErrorNum = false;
 	private $_socketErrorMsg = false;
@@ -36,13 +36,13 @@ class openSRS_fastlookup {
 		// Read result hand for parsing
 		$result = fread($this->_socket, 1024);
 		$data = $this->parseResult ($result);
-		
+
 		// Close the socket
 		$this->close_socket ();
 
 		return $data;
 	}
-	
+
 	public function checkDomainBunch ($domain, $tlds){
 		if (!$this->init_socket() ) {
 			trigger_error ("oSRS Error - Unable to establish socket: (". $this->_socketErrorNum .") ". $this->_socketErrorMsg, E_USER_WARNING);
@@ -51,7 +51,7 @@ class openSRS_fastlookup {
 
 		// check to see if the domain has a "." in it, if it does then take everything before the dot as the domain
 		// This is if someone puts in a domain name instead of just a name
-		
+
 		if(preg_match("/(^.+)\.(.+)\.(.+)/",$domain,$matches) > 0)
 			$domain=$matches[1];
 		else if (preg_match("/(^.+)\.(.+)/",$domain,$matches) > 0)
@@ -73,28 +73,28 @@ class openSRS_fastlookup {
 			// Read result hand for parsing
 			$result = fread($this->_socket, 1024);
 			$checkRes = $this->parseResult ($result);
-			
+
 			// Sort out the results
 			$loopAray = array ();
 			$loopAray['domain'] = $domain;
 			$loopAray['tld'] = $tld;
 			$loopAray['result'] = $checkRes;
-			
+
 			// Final push
 			array_push ($resultArray, $loopAray);
 		}
-		
+
 		// Close the socket
 		$this->close_socket ();
-		
+
 		// And there you go!!  That's it
 		return $resultArray;
 	}
 
-	
+
 	private function parseResult ($resString) {
 		$resultReturn = "";
-		
+
 		if ($resString != "") {
 			$temArra = explode (" ", $resString);
 			if ($temArra[0] == 210) $resultReturn = "Available";
@@ -104,11 +104,18 @@ class openSRS_fastlookup {
 		} else {
 			$resultReturn = "Read error";
 		}
-	
+
 		return $resultReturn;
 	}
 
-	private function init_socket() {
+    protected function convertArray2Formatted ($type="", $data="") {
+      $resultString = "";
+      if ($type == "json") $resultString = json_encode($data);
+      if ($type == "yaml") $resultString = Spyc::YAMLDump($data);
+      return $resultString;
+    }
+
+    private function init_socket() {
 		$this->_socket = pfsockopen(OSRS_HOST, OSRS_FASTLOOKUP_PORT, $this->_socketErrorNum, $this->_socketErrorMsg, $this->_socketTimeout);
 		if (!$this->_socket) {
 			return false;
@@ -116,7 +123,7 @@ class openSRS_fastlookup {
 			return true;
 		}
 	}
-	
+
 	private function close_socket() {
 		fclose($this->_socket);
 		$this->_socket = false;
