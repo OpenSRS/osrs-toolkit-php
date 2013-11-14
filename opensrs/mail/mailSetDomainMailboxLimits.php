@@ -52,7 +52,7 @@ class mailSetDomainMailboxLimits extends openSRS_mail {
 				trigger_error ("oSRS-eMail Error - authentication domain is not defined.", E_USER_WARNING);
 				$allPassed = false;
 			} else {
-				$this->_dataObject->data->admin_domain = ;
+				$this->_dataObject->data->admin_domain = APP_MAIL_DOMAIN;
 			}
 		}
 						
