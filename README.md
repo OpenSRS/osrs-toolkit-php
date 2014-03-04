@@ -85,11 +85,6 @@ $osrsHandler = processOpenSRS ("array", $callArray);
 var_dump($osrsHandler);
 ```
 
-
-Demo Portal
---------------
-
-Demo is available at http://opensrsphpdemo.com
         
 
 Requirements
