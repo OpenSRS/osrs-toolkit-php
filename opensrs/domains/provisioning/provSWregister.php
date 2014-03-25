@@ -286,13 +286,13 @@ class provSWregister extends openSRS_base {
 		}
 		
 		if ($ccTLD == "asia") {
-			$reqDatas = array("contact_type", "id_number", "id_type", "legal_entity_type", "locality_country", "id_type_info", 
+            $reqDatasASIA = array("contact_type", "id_number", "id_type", "legal_entity_type", "locality_country", "id_type_info",
 				"legal_entity_type_info","locality_city", "locality_state_prov"
 			);
 
 			foreach($reqDatasASIA as $reqData) {
-				if(isSet($this->_dataObject->cedinfo->data->$reqData) && $this->_dataObject->data->$reqData != "")
-					$cmd['attributes']['tld_data']['ced_info'][$reqData] = $this->_dataObject->data->$reqData;
+				if(isSet($this->_dataObject->cedinfo->$reqData) && $this->_dataObject->cedinfo->$reqData != "")
+					$cmd['attributes']['tld_data']['ced_info'][$reqData] = $this->_dataObject->cedinfo->$reqData;
 			}
 		}
 		
