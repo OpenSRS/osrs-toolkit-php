@@ -351,6 +351,14 @@ class provSWregister extends openSRS_base {
 					$cmd['attributes']['tld_data']['professional_data'][$reqData] = $this->_dataObject->professional_data->$reqData;
 			}
 		}
+
+        if ($ccTLD == "fr") {
+            $reqDatasFR = array("country_of_birth", "date_of_birth", "place_of_birth", "postal_code_of_birth", "registrant_type", "registrant_vat_id", "siren_siret", "trademark_number");
+            foreach($reqDatasFR as $reqData) {
+                if(isSet($this->_dataObject->registrant_extra_info->$reqData) && $this->_dataObject->registrant_extra_info->$reqData != "")
+                    $cmd['attributes']['tld_data']['registrant_extra_info'][$reqData] = $this->_dataObject->registrant_extra_info->$reqData;
+            }
+        }
 		
 		
 		// Process the call
