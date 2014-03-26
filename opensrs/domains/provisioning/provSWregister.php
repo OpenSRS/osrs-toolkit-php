@@ -359,7 +359,23 @@ class provSWregister extends openSRS_base {
                     $cmd['attributes']['tld_data']['registrant_extra_info'][$reqData] = $this->_dataObject->registrant_extra_info->$reqData;
             }
         }
-		
+
+        if ($ccTLD == "hu") {
+            $reqDatasHU = array("id_card_number", "registrant_type", "registrant_vat_id");
+            foreach($reqDatasHU as $reqData) {
+                if(isSet($this->_dataObject->registrant_extra_info->$reqData) && $this->_dataObject->registrant_extra_info->$reqData != "")
+                    $cmd['attributes']['tld_data']['registrant_extra_info'][$reqData] = $this->_dataObject->registrant_extra_info->$reqData;
+            }
+        }
+
+        if($ccTLD == "pm" || $ccTLD == "re" || $ccTLD == "tf" || $ccTLD == "wf" || $ccTLD == "yt") {
+            $reqDatasMORE = array("country_of_birth", "date_of_birth", "place_of_birth", "postal_code_of_birth", "province_of_birth", "registrant_type", "registrant_vat_id", "registration_number", "trademark_number");
+            foreach($reqDatasMORE as $reqData) {
+                if(isSet($this->_dataObject->registrant_extra_info->$reqData) && $this->_dataObject->registrant_extra_info->$reqData != "")
+                    $cmd['attributes']['tld_data']['registrant_extra_info'][$reqData] = $this->_dataObject->registrant_extra_info->$reqData;
+            }
+        }
+
 		
 		// Process the call
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
