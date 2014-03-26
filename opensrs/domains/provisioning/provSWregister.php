@@ -376,6 +376,22 @@ class provSWregister extends openSRS_base {
             }
         }
 
+        if($ccTLD == "ru") {
+            $reqDatasRU = array("date_of_birth", "id_card_authority", "id_card_issue_date", "id_card_number", "place_of_birth", "registrant_type");
+            foreach($reqDatasRU as $reqData) {
+                if(isSet($this->_dataObject->registrant_extra_info->$reqData) && $this->_dataObject->registrant_extra_info->$reqData != "")
+                    $cmd['attributes']['tld_data']['registrant_extra_info'][$reqData] = $this->_dataObject->registrant_extra_info->$reqData;
+            }
+        }
+
+        if($ccTLD == "se") {
+            $reqDatasSE = array("id_card_number", "registrant_type", "registrant_vat_id", "registration_number");
+            foreach($reqDatasSE as $reqData) {
+                if(isSet($this->_dataObject->registrant_extra_info->$reqData) && $this->_dataObject->registrant_extra_info->$reqData != "")
+                    $cmd['attributes']['tld_data']['registrant_extra_info'][$reqData] = $this->_dataObject->registrant_extra_info->$reqData;
+            }
+        }
+
 		
 		// Process the call
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
