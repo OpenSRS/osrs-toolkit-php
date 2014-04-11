@@ -40,7 +40,7 @@ class allinoneDomain extends openSRS_base {
 			trigger_error ("oSRS Error - Search domain strinng not defined.", E_USER_WARNING);
 			$allPassed = false;
 		}
-		
+
 		// Select non empty one
 		if (isSet($this->_dataObject->data->selected) && $this->_dataObject->data->selected != "") $arraSelected = explode (";", $this->_dataObject->data->selected);
 		if (isSet($this->_dataObject->data->defaulttld) && $this->_dataObject->data->defaulttld != "") $arraAll = explode (";", $this->_dataObject->data->defaulttld);
@@ -101,7 +101,7 @@ class allinoneDomain extends openSRS_base {
 
 		// Results
 		$this->resultFullRaw = $arrayResult;
-		
+
 		// empty premium
 		$this->resultFullRaw = $arrayResult;
 
@@ -123,7 +123,7 @@ class allinoneDomain extends openSRS_base {
 			$this->resultRaw = $arrayResult;
 		}
 
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

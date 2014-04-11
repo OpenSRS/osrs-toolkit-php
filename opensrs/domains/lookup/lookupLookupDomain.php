@@ -35,7 +35,7 @@ class lookupLookupDomain extends openSRS_base {
 			trigger_error ("oSRS Error - Search domain strinng not defined.", E_USER_WARNING);
 			$allPassed = false;
 		}
-		
+
 		// Call function
 		if ($allPassed) {
 			$this->_processRequest ();
@@ -54,7 +54,7 @@ class lookupLookupDomain extends openSRS_base {
 				'domain' => $this->_dataObject->data->domain,
 			)
 		);
-		
+
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
 		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
@@ -66,7 +66,7 @@ class lookupLookupDomain extends openSRS_base {
                 } else {
 			$this->resultRaw = $arrayResult;
 		}
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

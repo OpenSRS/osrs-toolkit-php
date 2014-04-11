@@ -1,9 +1,9 @@
 <?php
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class persSUregister extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -26,7 +26,7 @@ class persSUregister extends openSRS_base {
 	// Validate the object
 	private function _validateObject (){
 		$allPassed = true;
-		
+
 		// Command required values
 		if (!isSet($this->_dataObject->data->domain) || $this->_dataObject->data->domain == "") {
 			trigger_error ("oSRS Error - domain is not defined.", E_USER_WARNING);
@@ -40,7 +40,7 @@ class persSUregister extends openSRS_base {
 			trigger_error ("oSRS Error - password is not defined.", E_USER_WARNING);
 			$allPassed = false;
 		}
-				
+
 		// Run the command
 		if ($allPassed) {
 			// Execute the command
@@ -64,7 +64,7 @@ class persSUregister extends openSRS_base {
 				)
 			)
 		);
-		
+
 		// Command optional values
 		if (isSet($this->_dataObject->data->forward_email) && $this->_dataObject->data->forward_email != "") $cmd['attributes']['mailbox']['forward_email'] = $this->_dataObject->data->forward_email;
 		$content = "";
@@ -78,7 +78,7 @@ class persSUregister extends openSRS_base {
 			$cmd['attributes']['dnsRecords']['name'] = $name;
 			$cmd['attributes']['dnsRecords']['type'] = $type;
 		}
-		
+
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
 		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
@@ -86,7 +86,7 @@ class persSUregister extends openSRS_base {
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

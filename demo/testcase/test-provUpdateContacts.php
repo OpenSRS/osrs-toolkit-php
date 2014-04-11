@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 if (isSet($_POST['function'])) {
 
@@ -45,7 +45,7 @@ if ($formFormat == "yaml") $callstring = Spyc::YAMLDump($callArray);
 
 
 // Open SRS Call -> Result
-require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
+require_once(__DIR__ . "/../openSRS_LoaderWrapper.php");
 $osrsHandler = processOpenSRS ($formFormat, $callstring);
 
 
@@ -119,12 +119,12 @@ echo ("Out: ". $osrsHandler->resultFormatted);
 </form>
 
 
-	
+
 </body>
 </html>
 
 
 
-<?php 
+<?php
 }
-?> 
+?>

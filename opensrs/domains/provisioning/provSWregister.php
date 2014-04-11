@@ -1,9 +1,9 @@
 <?php
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class provSWregister extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -55,11 +55,11 @@ class provSWregister extends openSRS_base {
 			die();
 		}
 	}
-	
+
 	// Personal Information
 	private function _allTimeRequired(){
 		$subtest = true;
-		
+
 		$reqPers = array("first_name", "last_name", "org_name", "address1", "city", "state", "country", "postal_code", "phone", "email", "lang_pref");
 		foreach ($reqPers as $reqPer) {
 		  if ($this->_dataObject->personal->$reqPer == "") {
@@ -67,7 +67,7 @@ class provSWregister extends openSRS_base {
 				$subtest = false;
 			}
 		}
-		
+
 		$reqDatas = array("reg_type", "reg_username", "reg_password", "domain", "custom_nameservers", "period", "custom_tech_contact", "custom_nameservers");
 		foreach ($reqDatas as $reqData) {
 			if ($this->_dataObject->data->$reqData == "") {
@@ -75,11 +75,11 @@ class provSWregister extends openSRS_base {
 				$subtest = false;
 			}
 		}
-		
+
 		return $subtest;
 	}
-	
-	
+
+
 	// ccTLD specific validation
 	private function _ccTLD_ca () {
 		$subtest = true;
@@ -92,17 +92,17 @@ class provSWregister extends openSRS_base {
 		}
 		return $subtest;
 	}
-	
+
 	// ccTLD specific validation
 	private function _ccTLD_au () {
 		$subtest = true;
 		$reqDatas = array("registrant_name",  "eligibility_type");
-		
+
 		$tld = explode(".", strtolower($this->_dataObject->data->domain), 2);
-				
+
 		if ($tld == "au")
 			$reqDatas = array_merge($reqDatas, array("registrant_id", "registrant_id_type"));
-			
+
 		foreach($reqDatas as $reqData) {
 		  if ($this->_dataObject->au_registrant_info->$reqData == "") {
 				trigger_error ("oSRS Error - ". $reqData ." is not defined.", E_USER_WARNING);
@@ -120,7 +120,7 @@ class provSWregister extends openSRS_base {
         }
         return $subtest;
     }
- 	
+
  	private function _ccTLD_pro () {
         $subtest = true;
         if ($this->_dataObject->professional_data->profession == "") {
@@ -141,7 +141,7 @@ class provSWregister extends openSRS_base {
 		}
 		return $subtest;
 	}
-	
+
 	private function _ccTLD_asia () {
 		$subtest = true;
 		$reqDatas = array("contact_type", "id_number", "id_type", "legal_entity_type", "locality_country");
@@ -153,7 +153,7 @@ class provSWregister extends openSRS_base {
 		}
 		return $subtest;
 	}
-	
+
 	private function _ccTLD_be () {
 		$subtest = true;
 		$reqData = array("lang", "owner_confirm_address");
@@ -177,7 +177,7 @@ class provSWregister extends openSRS_base {
 		}
 		return $subtest;
 	}
-	
+
 	private function _ccTLD_eu () {
 		$subtest = true;
 		$reqDatas = array("eu_country", "lang", "owner_confirm_address");
@@ -201,7 +201,7 @@ class provSWregister extends openSRS_base {
 		}
 		return $subtest;
 	}
-	
+
 	private function _ccTLD_name () {
 		$subtest = true;
 		$reqData = array("forwarding_email");
@@ -213,10 +213,10 @@ class provSWregister extends openSRS_base {
 		}
 		return $subtest;
 	}
-	
+
 	// Post validation functions
 	private function _processRequest ($ccTLD){
-		// Compile the command	
+		// Compile the command
 		$cmd = array(
 			'protocol' => 'XCP',
 			'action' => 'SW_REGISTER',
@@ -252,7 +252,7 @@ class provSWregister extends openSRS_base {
 				$cmd['attributes'][$reqData] = $this->_dataObject->data->$reqData;
 		}
 
-	
+
 		// NS records
 		if ($this->_dataObject->data->custom_nameservers == 1){
 			$passArray = array();
@@ -284,9 +284,9 @@ class provSWregister extends openSRS_base {
 			if (isSet($this->_dataObject->data->rant_agrees) && $this->_dataObject->data->rant_agrees != "") $cmd['attributes']['rant_agrees'] = $this->_dataObject->data->rant_agrees;
 			if (isSet($this->_dataObject->data->rant_no) && $this->_dataObject->data->rant_no != "") $cmd['attributes']['rant_no'] = $this->_dataObject->data->rant_no;
 		}
-		
+
 		if ($ccTLD == "asia") {
-			$reqDatas = array("contact_type", "id_number", "id_type", "legal_entity_type", "locality_country", "id_type_info", 
+			$reqDatas = array("contact_type", "id_number", "id_type", "legal_entity_type", "locality_country", "id_type_info",
 				"legal_entity_type_info","locality_city", "locality_state_prov"
 			);
 
@@ -295,9 +295,9 @@ class provSWregister extends openSRS_base {
 					$cmd['attributes']['tld_data']['ced_info'][$reqData] = $this->_dataObject->data->$reqData;
 			}
 		}
-		
+
 		if ($ccTLD == "au") {
-			$reqDatasAU = array("registrant_name", "eligibility_type", "registrant_id", "registrant_id_type", "eligibility_name", 
+			$reqDatasAU = array("registrant_name", "eligibility_type", "registrant_id", "registrant_id_type", "eligibility_name",
 				"eligibility_id", "eligibility_id_type", "eligibility_reason"
 			);
 
@@ -313,14 +313,14 @@ class provSWregister extends openSRS_base {
 			$cmd['attributes']['tld_data']['it_registrant_info']['reg_code'] = $this->_dataObject->it_registrant_info->reg_code;
 			$cmd['attributes']['tld_data']['it_registrant_info']['entity_type'] = $this->_dataObject->it_registrant_info->entity_type;
 		}
-		
+
 
 		if ($ccTLD == "eu"){
 			$cmd['attributes']['country'] = strtoupper($this->_dataObject->data->eu_country);
 			$cmd['attributes']['lang'] = $this->_dataObject->data->lang;
 			$cmd['attributes']['owner_confirm_address'] = $this->_dataObject->data->owner_confirm_address;
 		}
-		
+
 		if ($ccTLD == "be"){
 			$cmd['attributes']['lang'] = $this->_dataObject->data->lang;
 			$cmd['attributes']['owner_confirm_address'] = $this->_dataObject->data->owner_confirm_address;
@@ -351,8 +351,8 @@ class provSWregister extends openSRS_base {
 					$cmd['attributes']['tld_data']['professional_data'][$reqData] = $this->_dataObject->professional_data->$reqData;
 			}
 		}
-		
-		
+
+
 		// Process the call
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
@@ -365,10 +365,10 @@ class provSWregister extends openSRS_base {
                 } else {
 			$this->resultRaw = $arrayResult;
 		}
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
-	
+
 	private function _createUserData(){
 		$userArray = array(
 			"first_name" => $this->_dataObject->personal->first_name,

@@ -1,14 +1,14 @@
 <?php
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class mailSetDomainMailboxLimits extends openSRS_mail {
 	private $_dataObject;
 	private $_formatHolder = "";
 	private $_osrsm;
-	
+
 	public $resultRaw;
 	public $resultFormatted;
 	public $resultSuccess;
@@ -29,7 +29,7 @@ class mailSetDomainMailboxLimits extends openSRS_mail {
 	private function _validateObject (){
 		$allPassed = true;
 		$compile = "";
-		
+
 		// Command required values - authentication
 		if (!isSet($this->_dataObject->data->admin_username) || $this->_dataObject->data->admin_username == "") {
 			if (APP_MAIL_USERNAME == ""){
@@ -55,7 +55,7 @@ class mailSetDomainMailboxLimits extends openSRS_mail {
 				$this->_dataObject->data->admin_domain = APP_MAIL_DOMAIN;
 			}
 		}
-						
+
 		// Command required values
 		if (!isSet($this->_dataObject->data->domain) || $this->_dataObject->data->domain == "") {
 			trigger_error ("oSRS-eMail Error - domain is not defined.", E_USER_WARNING);
@@ -63,14 +63,14 @@ class mailSetDomainMailboxLimits extends openSRS_mail {
 		} else {
 			$compile .= " domain=\"". $this->_dataObject->data->domain ."\"";
 		}
-		
+
 		// Command optional values
 		if (isSet($this->_dataObject->data->mailbox) || $this->_dataObject->data->mailbox != "") $compile .= " mailbox=\"". $this->_dataObject->data->mailbox ."\"";
 		if (isSet($this->_dataObject->data->filter_only) || $this->_dataObject->data->filter_only != "") $compile .= " filter_only=\"". $this->_dataObject->data->filter_only ."\"";
 		if (isSet($this->_dataObject->data->alias) || $this->_dataObject->data->alias != "") $compile .= " alias=\"". $this->_dataObject->data->alias ."\"";
 		if (isSet($this->_dataObject->data->forward_only) || $this->_dataObject->data->forward_only != "") $compile .= " forward_only=\"". $this->_dataObject->data->forward_only ."\"";
 		if (isSet($this->_dataObject->data->mailing_list) || $this->_dataObject->data->mailing_list != "") $compile .= " mailing_list=\"". $this->_dataObject->data->mailing_list ."\"";
-		
+
 		// Run the command
 		if ($allPassed) {
 			// Execute the command
@@ -79,7 +79,7 @@ class mailSetDomainMailboxLimits extends openSRS_mail {
 			trigger_error ("oSRS-eMail Error - Missing data.", E_USER_WARNING);
 		}
 	}
-	
+
 	// Post validation functions
 	private function _processRequest ($command = ""){
 		$sequence = array (
@@ -87,14 +87,14 @@ class mailSetDomainMailboxLimits extends openSRS_mail {
 			1 => "login user=\"". $this->_dataObject->data->admin_username ."\" domain=\"". $this->_dataObject->data->admin_domain ."\" password=\"". $this->_dataObject->data->admin_password ."\"",
 			2 => "set_domain_mailbox_limits". $command,
 			3 => "quit"
-		);		
+		);
 		$tucRes = $this->makeCall($sequence);
 		$arrayResult = $this->parseResults($tucRes);
-		
+
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

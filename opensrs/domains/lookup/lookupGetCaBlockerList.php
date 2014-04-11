@@ -3,7 +3,7 @@
  *  Required object values:
  *  data - domain - .CA only
  */
- 
+
 class lookupGetCaBlockerList extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -59,7 +59,7 @@ class lookupGetCaBlockerList extends openSRS_base {
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

@@ -29,7 +29,7 @@ class lookupGetOrderInfo extends openSRS_base {
 	// Validate the object
 	private function _validateObject (){
 		$allPassed = true;
-		
+
 		if (!isSet($this->_dataObject->data->order_id)) {
 			trigger_error ("oSRS Error - order_id is not defined.", E_USER_WARNING);
 			$allPassed = false;
@@ -54,7 +54,7 @@ class lookupGetOrderInfo extends openSRS_base {
 				"order_id" => $this->_dataObject->data->order_id
 			)
 		);
-		
+
 		// Command optional values
 		if (isSet($this->_dataObject->data->page) && $this->_dataObject->data->page != "") $cmd['attributes']['page'] = $this->_dataObject->data->page;
 		if (isSet($this->_dataObject->data->limit) && $this->_dataObject->data->limit != "") $cmd['attributes']['limit'] = $this->_dataObject->data->limit;
@@ -68,7 +68,7 @@ class lookupGetOrderInfo extends openSRS_base {
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

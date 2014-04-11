@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	// Put the data to the Formatted array
@@ -8,13 +8,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 		"attributes" => array(
 			"token" => $_POST["token"],
 			"duration" => $_POST["duration"],
-			"type" => $_POST["type"], //sso or session or oma 
-    		"oma" => $_POST["oma"] ? true : false		
+			"type" => $_POST["type"], //sso or session or oma
+    		"oma" => $_POST["oma"] ? true : false
     	)
 	);
 
 	// Open SRS Call -> Result
-	require_once dirname(__FILE__) . "/../../opensrs/openSRS_loader.php";
+	require_once(__DIR__ . "/../openSRS_LoaderWrapper.php");
 	$response = GenerateToken::call($callArray);
 
 	// Print out the results
@@ -65,10 +65,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	<input class="btn" value="Submit" type="submit">
 </form>
 </div>
-	
+
 </body>
 </html>
 
-<?php 
+<?php
 }
 ?>

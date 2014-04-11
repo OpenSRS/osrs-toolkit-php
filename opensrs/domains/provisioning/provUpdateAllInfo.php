@@ -1,9 +1,9 @@
 <?php
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class provUpdateAllInfo extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -26,7 +26,7 @@ class provUpdateAllInfo extends openSRS_base {
 	// Validate the object
 	private function _validateObject (){
 		$allPassed = true;
-		
+
 		// Command required values
 		if (!isSet($this->_dataObject->data->domain) || $this->_dataObject->data->domain  == "") {
 			trigger_error ("oSRS Error - domain is not defined.", E_USER_WARNING);
@@ -40,7 +40,7 @@ class provUpdateAllInfo extends openSRS_base {
 		}else{
 			if(!$this->_allRequired("owner_contact"))
 				$allPassed=false;
-		
+
 		}
 		if (!isSet($this->_dataObject->data->admin_contact) || $this->_dataObject->data->admin_contact  == ""){
 			trigger_error ("oSRS Error - admin_contact is not defined.", E_USER_WARNING);
@@ -48,7 +48,7 @@ class provUpdateAllInfo extends openSRS_base {
 		}else{
 			if(!$this->_allRequired("admin_contact"))
 				$allPassed=false;
-			
+
 		}
 		if (!isSet($this->_dataObject->data->tech_contact) || $this->_dataObject->data->tech_contact  == ""){
 			trigger_error ("oSRS Error - tech_contact in is not defined.", E_USER_WARNING);
@@ -56,7 +56,7 @@ class provUpdateAllInfo extends openSRS_base {
 		}else{
 			if(!$this->_allRequired("tech_contact"))
 				$allPassed=false;
-		}	
+		}
 		if (!isSet($this->_dataObject->data->billing_contact) || $this->_dataObject->data->billing_contact  == ""){
 				trigger_error ("oSRS Error - billing_contact is not defined.", E_USER_WARNING);
 				$allPassed = false;
@@ -64,7 +64,7 @@ class provUpdateAllInfo extends openSRS_base {
 			if(!$this->_allRequired("billing_contact"))
 				$allPassed=false;
 		}
-		
+
 		//Check Nameserver Values
 		if (!isSet($this->_dataObject->data->nameserver_names) || $this->_dataObject->data->nameserver_names  == "") {
 			trigger_error ("oSRS Error - The function requires at least one nameserver is provided.", E_USER_WARNING);
@@ -78,11 +78,11 @@ class provUpdateAllInfo extends openSRS_base {
 				$allPassed = false;
 			}
 		}
-		
-				
+
+
 		// Run the command
 		if ($allPassed) {
-		
+
 			// Execute the command
 			$this->_processRequest ();
 		} else {
@@ -90,7 +90,7 @@ class provUpdateAllInfo extends openSRS_base {
 		}
 	}
 
-			
+
 	private function _allRequired($contact){
 		$allInfo = true;
 		// Check Contact information
@@ -133,7 +133,7 @@ class provUpdateAllInfo extends openSRS_base {
 							"email" => $this->_dataObject->data->owner_contact->email,
 							"lang_pref" => $this->_dataObject->data->owner_contact->lang_pref
 							),
-							
+
 						'admin' => array(
 							"first_name" => $this->_dataObject->data->admin_contact->first_name,
 							"last_name" => $this->_dataObject->data->admin_contact->last_name,
@@ -150,7 +150,7 @@ class provUpdateAllInfo extends openSRS_base {
 							"email" => $this->_dataObject->data->admin_contact->email,
 							"lang_pref" => $this->_dataObject->data->admin_contact->lang_pref
 							),
-							
+
 						'tech' => array(
 							"first_name" => $this->_dataObject->data->tech_contact->first_name,
 							"last_name" => $this->_dataObject->data->tech_contact->last_name,
@@ -185,9 +185,9 @@ class provUpdateAllInfo extends openSRS_base {
 							)
 						)
 				)
-			
+
 		);
-		
+
 		// Command optional values
 		if (isSet($this->_dataObject->data->nameserver_names) && $this->_dataObject->data->nameserver_names != ""){
 
@@ -200,16 +200,16 @@ class provUpdateAllInfo extends openSRS_base {
 
 			foreach ($nameServers as $nameServer){
 				$cmd['attributes']['nameserver_list'][$i]['fqdn'] = $nameServer;
-				
+
 				if(isSet($ipAddresses[$i]))
 					$cmd['attributes']['nameserver_list'][$i]['ipaddress'] = $ipAddresses[$i];
-				
+
 				$i++;
 			}
-			
+
 
 		}
-		
+
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
 		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
@@ -217,8 +217,8 @@ class provUpdateAllInfo extends openSRS_base {
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 
 

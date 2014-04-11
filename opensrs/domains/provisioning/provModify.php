@@ -1,9 +1,9 @@
 <?php
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class provModify extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -26,7 +26,7 @@ class provModify extends openSRS_base {
 	// Validate the object
 	private function _validateObject (){
 		$allPassed = true;
-		
+
 		// Command required values
 		if (empty($this->_dataObject->data->cookie) && empty($this->_dataObject->data->domain) ) {
 			trigger_error ("oSRS Error - cookie and/or domain is not defined.", E_USER_WARNING);
@@ -40,7 +40,7 @@ class provModify extends openSRS_base {
 		if (!isSet($this->_dataObject->data->data) || $this->_dataObject->data->data == "") {
 			trigger_error ("oSRS Error - data variable that defines the modify type is not defined.", E_USER_WARNING);
 			$allPassed = false;
-				
+
 		}else{
 
 			switch($this->_dataObject->data->data){
@@ -102,7 +102,7 @@ class provModify extends openSRS_base {
 					break;
 			}
 		}
-	
+
 
 		// Run the command
 		if ($allPassed) {
@@ -141,7 +141,7 @@ class provModify extends openSRS_base {
 			trigger_error ("oSRS Error - change type is ced_info but locality_state_prov is not defined.", E_USER_WARNING);
 			$allCedInfo = false;
 		}
-	
+
 		return $allCedInfo;
 	}
 
@@ -157,7 +157,7 @@ class provModify extends openSRS_base {
 			trigger_error ("oSRS Error - change type is rsp_whois_info but flag is not defined.", E_USER_WARNING);
 			$allRspWhoisInfo = false;
 		}
-	
+
 		return $allRspWhoisInfo;
 	}
 
@@ -237,7 +237,7 @@ class provModify extends openSRS_base {
 	}
 
 	private function _allNexusInfoCheck(){
-		$allNexusInfo=true;	
+		$allNexusInfo=true;
 		if (!isSet($this->_dataObject->data->nexus) || $this->_dataObject->data->nexus == "") {
 			trigger_error ("oSRS Error - data type is nexus_info but nexus is not defined.", E_USER_WARNING);
 			$allNexusInfo = false;
@@ -314,60 +314,60 @@ class provModify extends openSRS_base {
 				'data' => $this->_dataObject->data->data
 			)
 		);
-		
+
 		if (isSet($this->_dataObject->data->cookie) && $this->_dataObject->data->cookie != "") $cmd['cookie'] = $this->_dataObject->data->cookie;
 		if (isSet($this->_dataObject->data->domain) && $this->_dataObject->data->domain != "") $cmd['attributes']['domain']  = $this->_dataObject->data->domain;
 
 		// Command optional values
-		
+
 		switch($this->_dataObject->data->data){
 			case "ced_info":
 				// ced_info data
-				if (isSet($this->_dataObject->data->ced_info->contact_type) && $this->_dataObject->data->ced_info->contact_type != "") 
+				if (isSet($this->_dataObject->data->ced_info->contact_type) && $this->_dataObject->data->ced_info->contact_type != "")
 					$cmd['attributes']['ced_info']['contact_type'] = $this->_dataObject->data->ced_info->contact_type;
-				if (isSet($this->_dataObject->data->ced_info->id_number) && $this->_dataObject->data->ced_info->id_number != "") 
+				if (isSet($this->_dataObject->data->ced_info->id_number) && $this->_dataObject->data->ced_info->id_number != "")
 					$cmd['attributes']['ced_info']['id_number'] = $this->_dataObject->data->ced_info->id_number;
-				if (isSet($this->_dataObject->data->ced_info->id_type) && $this->_dataObject->data->ced_info->id_type != "") 
+				if (isSet($this->_dataObject->data->ced_info->id_type) && $this->_dataObject->data->ced_info->id_type != "")
 					$cmd['attributes']['ced_info']['id_type'] = $this->_dataObject->data->ced_info->id_type;
-				if (isSet($this->_dataObject->data->ced_info->id_type_info) && $this->_dataObject->data->ced_info->id_type_info != "") 
+				if (isSet($this->_dataObject->data->ced_info->id_type_info) && $this->_dataObject->data->ced_info->id_type_info != "")
 					$cmd['attributes']['ced_info']['id_type_info'] = $this->_dataObject->data->ced_info->id_type_info;
-				if (isSet($this->_dataObject->data->ced_info->legal_entity_type) && $this->_dataObject->data->ced_info->legal_entity_type != "") 
+				if (isSet($this->_dataObject->data->ced_info->legal_entity_type) && $this->_dataObject->data->ced_info->legal_entity_type != "")
 					$cmd['attributes']['ced_info']['legal_entity_type'] = $this->_dataObject->data->ced_info->legal_entity_type;
-				if (isSet($this->_dataObject->data->ced_info->legal_entity_type_info) && $this->_dataObject->data->ced_info->legal_entity_type_info != "") 
+				if (isSet($this->_dataObject->data->ced_info->legal_entity_type_info) && $this->_dataObject->data->ced_info->legal_entity_type_info != "")
 					$cmd['attributes']['ced_info']['legal_entity_type_info'] = $this->_dataObject->data->ced_info->legal_entity_type_info;
-				if (isSet($this->_dataObject->data->ced_info->locality_city) && $this->_dataObject->data->ced_info->locality_city != "") 
+				if (isSet($this->_dataObject->data->ced_info->locality_city) && $this->_dataObject->data->ced_info->locality_city != "")
 					$cmd['attributes']['ced_info']['locality_city'] = $this->_dataObject->data->ced_info->locality_city;
-				if (isSet($this->_dataObject->data->ced_info->locality_country) && $this->_dataObject->data->ced_info->locality_country != "") 
+				if (isSet($this->_dataObject->data->ced_info->locality_country) && $this->_dataObject->data->ced_info->locality_country != "")
 					$cmd['attributes']['ced_info']['locality_country'] = $this->_dataObject->data->ced_info->locality_country;
-				if (isSet($this->_dataObject->data->ced_info->locality_state_prov) && $this->_dataObject->data->ced_info->locality_state_prov != "") 
+				if (isSet($this->_dataObject->data->ced_info->locality_state_prov) && $this->_dataObject->data->ced_info->locality_state_prov != "")
 					$cmd['attributes']['ced_info']['localicty_state_prov'] = $this->_dataObject->data->ced_info->locality_state_prov;
-					
+
 				break;
 			case "rsp_whois_info":
 				//rsp_whois_info data
-				if (isSet($this->_dataObject->data->all) && $this->_dataObject->data->all != "") 
+				if (isSet($this->_dataObject->data->all) && $this->_dataObject->data->all != "")
 					$cmd['attributes']['all'] = $this->_dataObject->data->all;
-				if (isSet($this->_dataObject->data->flag) && $this->_dataObject->data->flag != "") 
+				if (isSet($this->_dataObject->data->flag) && $this->_dataObject->data->flag != "")
 					$cmd['attributes']['flag'] = $this->_dataObject->data->flag;
 				break;
 			case "trademark":
 				//trademark data
-				if (isSet($this->_dataObject->data->trademark) && $this->_dataObject->data->trademark != "") 
+				if (isSet($this->_dataObject->data->trademark) && $this->_dataObject->data->trademark != "")
 					$cmd['attributes']['trademark'] = $this->_dataObject->data->trademark;
 				break;
 			case "change_ips_tag":
 				//change_ips_tag data
 
-				if (isSet($this->_dataObject->data->change_tag_all) && $this->_dataObject->data->change_tag_all != "") 
+				if (isSet($this->_dataObject->data->change_tag_all) && $this->_dataObject->data->change_tag_all != "")
 					$cmd['attributes']['change_tag_all'] = $this->_dataObject->data->change_tag_all;
-				if (isSet($this->_dataObject->data->gaining_registrar_tag) && $this->_dataObject->data->gaining_registrar_tag != "") 
+				if (isSet($this->_dataObject->data->gaining_registrar_tag) && $this->_dataObject->data->gaining_registrar_tag != "")
 					$cmd['attributes']['gaining_registrar_tag'] = $this->_dataObject->data->gaining_registrar_tag;
-				if (isSet($this->_dataObject->data->rsp_override) && $this->_dataObject->data->rsp_override != "") 
+				if (isSet($this->_dataObject->data->rsp_override) && $this->_dataObject->data->rsp_override != "")
 					$cmd['attributes']['rsp_override'] = $this->_dataObject->data->rsp_override;
 				break;
 			case "contact_info":
 				//contact_info data
-				if (isSet($this->_dataObject->data->report_email) && $this->_dataObject->data->report_email != "") 
+				if (isSet($this->_dataObject->data->report_email) && $this->_dataObject->data->report_email != "")
 					$cmd['attributes']['report_email'] = $this->_dataObject->data->report_email;
 				if (isSet($this->_dataObject->data->contact_type) && $this->_dataObject->data->contact_type != ""){
 					$contact_types=explode(",",$this->_dataObject->data->contact_type);
@@ -377,59 +377,59 @@ class provModify extends openSRS_base {
 				break;
 			case "domain_auth_info":
 				//domain_auth_info data
-				if (isSet($this->_dataObject->data->domain_auth_info) && $this->_dataObject->data->domain_auth_info != "") 
+				if (isSet($this->_dataObject->data->domain_auth_info) && $this->_dataObject->data->domain_auth_info != "")
 					$cmd['attributes']['domain_auth_info'] = $this->_dataObject->data->domain_auth_info;
 				break;
 			case "expire_action":
 				//expire_action data
-				if (isSet($this->_dataObject->data->auto_renew) && $this->_dataObject->data->auto_renew != "") 
+				if (isSet($this->_dataObject->data->auto_renew) && $this->_dataObject->data->auto_renew != "")
 					$cmd['attributes']['auto_renew'] = $this->_dataObject->data->auto_renew;
-				if (isSet($this->_dataObject->data->let_expire) && $this->_dataObject->data->let_expire != "") 
+				if (isSet($this->_dataObject->data->let_expire) && $this->_dataObject->data->let_expire != "")
 					$cmd['attributes']['let_expire'] = $this->_dataObject->data->let_expire;
 				break;
 			case "forwarding_email":
-				if (isSet($this->_dataObject->data->forwarding_email) && $this->_dataObject->data->forwarding_email != "") 
+				if (isSet($this->_dataObject->data->forwarding_email) && $this->_dataObject->data->forwarding_email != "")
 					$cmd['attributes']['forwarding_email'] = $this->_dataObject->data->forwarding_email;
 				break;
 			case "nexus_info":
 				//nexus_info data
-				if (isSet($this->_dataObject->data->nexus->app_purpose) && $this->_dataObject->data->nexus->app_purpose != "") 
+				if (isSet($this->_dataObject->data->nexus->app_purpose) && $this->_dataObject->data->nexus->app_purpose != "")
 					$cmd['attributes']['nexus']['app_purpose'] = $this->_dataObject->data->nexus->app_purpose;
-				if (isSet($this->_dataObject->data->nexus->category) && $this->_dataObject->data->nexus->category != "") 
+				if (isSet($this->_dataObject->data->nexus->category) && $this->_dataObject->data->nexus->category != "")
 					$cmd['attributes']['nexus']['category'] = $this->_dataObject->data->nexus->category;
-				if (isSet($this->_dataObject->data->nexus->validator) && $this->_dataObject->data->nexus->validator != "") 
+				if (isSet($this->_dataObject->data->nexus->validator) && $this->_dataObject->data->nexus->validator != "")
 					$cmd['attributes']['nexus']['validator'] = $this->_dataObject->data->nexus->validator;
 				break;
 			case "parkpage_state":
 				//parkpage_state
-				if (isSet($this->_dataObject->data->state) && $this->_dataObject->data->state != "") 
+				if (isSet($this->_dataObject->data->state) && $this->_dataObject->data->state != "")
 					$cmd['attributes']['state'] = $this->_dataObject->data->state;
 				break;
 			case "status":
 				//status data
-				if (isSet($this->_dataObject->data->lock_state) && $this->_dataObject->data->lock_state != "") 
+				if (isSet($this->_dataObject->data->lock_state) && $this->_dataObject->data->lock_state != "")
 					$cmd['attributes']['lock_state'] = $this->_dataObject->data->lock_state;
-				if (isSet($this->_dataObject->data->domain_name) && $this->_dataObject->data->domain_name != "") 
+				if (isSet($this->_dataObject->data->domain_name) && $this->_dataObject->data->domain_name != "")
 					$cmd['attributes']['domain_name'] = $this->_dataObject->data->domain_name;
 				break;
 			case "uk_whois_opt":
 				//uk_whois_opt
 				if (isSet($this->_dataObject->data->reg_type) && $this->_dataObject->data->reg_type != "")
 					$cmd['attributes']['reg_type'] = $this->_dataObject->data->reg_type;
-				if (isSet($this->_dataObject->data->uk_affect_domains) && $this->_dataObject->data->uk_affect_domains != "") 
+				if (isSet($this->_dataObject->data->uk_affect_domains) && $this->_dataObject->data->uk_affect_domains != "")
 					$cmd['attributes']['uk_affect_domains'] = $this->_dataObject->data->uk_affect_domains;
-				if (isSet($this->_dataObject->data->uk_whois_opt) && $this->_dataObject->data->uk_whois_opt != "") 
+				if (isSet($this->_dataObject->data->uk_whois_opt) && $this->_dataObject->data->uk_whois_opt != "")
 					$cmd['attributes']['uk_whois_opt'] = $this->_dataObject->data->uk_whois_opt;
 				break;
 			case "whois_privacy_state":
 				//whois_privacy_state
-				if (isSet($this->_dataObject->data->state) && $this->_dataObject->data->state != "") 
+				if (isSet($this->_dataObject->data->state) && $this->_dataObject->data->state != "")
 					$cmd['attributes']['state'] = $this->_dataObject->data->state;
 				break;
 			default:
 				break;
 		}
-		
+
 		// Run the command
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
@@ -438,10 +438,10 @@ class provModify extends openSRS_base {
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
-	
-		
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+
+
 
 	}
 

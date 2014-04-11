@@ -52,7 +52,7 @@ class suggestDomain extends openSRS_base {
 		} else {
 			$arraCall = $arraSelected;
 		}
-		
+
 		// Call function
 		if ($allPassed) {
 			$resObject = $this->_domainTLD ($domain, $arraCall);
@@ -83,7 +83,7 @@ class suggestDomain extends openSRS_base {
                 if(isSet($this->_dataObject->data->maximum) && $this->_dataObject->data->maximum != ""){
                     $cmd['attributes']['service_override']['suggestion']['maximum'] = $this->_dataObject->data->maximum;
                 }
-		
+
 //		print_r ($cmd);
 //		echo ("\n\n\n");
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
@@ -103,8 +103,8 @@ class suggestDomain extends openSRS_base {
 		} else {
 			$this->resultRaw = $arrayResult;
 		}
-		
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

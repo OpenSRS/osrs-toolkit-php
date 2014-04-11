@@ -1,9 +1,9 @@
 <?php
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class trustUpdateOrder extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -25,7 +25,7 @@ class trustUpdateOrder extends openSRS_base {
 
 	private function _validateObject (){
 		$allPassed = true;
-		
+
 		if (!isSet($this->_dataObject->data->order_id)) {
 			trigger_error ("oSRS Error - order_id is not defined.", E_USER_WARNING);
 			$allPassed = false;
@@ -39,18 +39,18 @@ class trustUpdateOrder extends openSRS_base {
 			trigger_error ("oSRS Error - Incorrect call.", E_USER_WARNING);
 		}
 	}
-	
+
 	// Post validation functions
-	private function _processRequest (){		
+	private function _processRequest (){
 		$cmd = array(
 			'protocol' => 'XCP',
 			'action' => 'update_order',
 			'object' => 'trust_service',
-			'attributes' => array( 
+			'attributes' => array(
 				'order_id' => $this->_dataObject->data->order_id
 			)
 		);
-		
+
 		// Command optional values
 		if (isSet($this->_dataObject->data->product_type) && $this->_dataObject->data->product_type != "") $cmd['attributes']['product_type'] = $this->_dataObject->data->product_type;
 		// reg_type => SiteLock ONLY
@@ -64,7 +64,7 @@ class trustUpdateOrder extends openSRS_base {
 		if (isSet($this->_dataObject->data->server_count) && $this->_dataObject->data->server_count != "") $cmd['attributes']['server_count'] = $this->_dataObject->data->server_count;
 
 
-		
+
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
 		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
@@ -76,9 +76,9 @@ class trustUpdateOrder extends openSRS_base {
 		} else {
 			$this->resultRaw = $arrayResult;
 		}
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 		$this->XMLresult = $XMLresult;
 	}
-	
+
 }

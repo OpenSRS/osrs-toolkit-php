@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 if (isSet($_POST['function'])) {
 	// ONLY FOR TESTING PURPOSE!!!
@@ -19,7 +19,7 @@ if (isSet($_POST['function'])) {
 
 
 	// Open SRS Call -> Result
-	require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
+	require_once(__DIR__ . "/../openSRS_LoaderWrapper.php");
 	$osrsHandler = processOpenSRS ($formFormat, $callstring);
 
 	// Print out the results
@@ -56,10 +56,10 @@ if (isSet($_POST['function'])) {
 		</tr>
 	</table>
 </form>
-	
+
 </body>
 </html>
 
-<?php 
+<?php
 }
 ?>

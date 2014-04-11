@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 
@@ -15,12 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	if(!empty($_POST["poll"])){
 		$callArray["attributes"]["poll"] = $_POST["poll"];
 	}
-	
+
 	if(!empty($_POST["token"])){
 		$callArray["token"] = $_POST["token"];
 	}
 	// Open SRS Call -> Result
-	require_once dirname(__FILE__) . "/../../opensrs/openSRS_loader.php";
+	require_once(__DIR__ . "/../openSRS_LoaderWrapper.php");
 	$response = GetDeletedMessages::call(array_filter_recursive($callArray));
 
 	// Print out the results
@@ -70,10 +70,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	<input class="btn" value="Submit" type="submit">
 </form>
 </div>
-	
+
 </body>
 </html>
 
-<?php 
+<?php
 }
 ?>

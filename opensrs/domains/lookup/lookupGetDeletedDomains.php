@@ -79,7 +79,7 @@ class lookupGetDeletedDomains extends openSRS_base {
 			"object" => "domain",
 			"attributes" => array ()
 		);
-		
+
 		// Command optional values
 		if (isSet($this->_dataObject->data->owner_email) && $this->_dataObject->data->owner_email != "") $cmd['attributes']['owner_email'] = $this->_dataObject->data->owner_email;
 		if (isSet($this->_dataObject->data->admin_email) && $this->_dataObject->data->admin_email != "") $cmd['attributes']['admin_email'] = $this->_dataObject->data->admin_email;
@@ -103,7 +103,7 @@ class lookupGetDeletedDomains extends openSRS_base {
                 } else {
 			$this->resultRaw = $arrayResult;
 		}
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

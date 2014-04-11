@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 if (isSet($_POST['function'])) {
 
@@ -42,7 +42,7 @@ if ($formFormat == "yaml") $callstring = Spyc::YAMLDump($callArray);
 
 
 // Open SRS Call -> Result
-require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
+require_once(__DIR__ . "/../openSRS_LoaderWrapper.php");
 $osrsHandler = processOpenSRS ($formFormat, $callstring);
 
 
@@ -84,7 +84,7 @@ echo ("Out: ". $osrsHandler->resultFormatted);
                 </td>
         </tr>
         <tr><td><br><span class="headLine"><b>Name Suggestion Options</b></span></td></tr>
-        <tr><td> 
+        <tr><td>
                         <span class="headLine">Max Number of Suggestion Results </span>
                         <input type="text" name="max" id="max" value="" class="frontBox"><br>
 		</td>
@@ -128,12 +128,12 @@ echo ("Out: ". $osrsHandler->resultFormatted);
 </form>
 
 
-	
+
 </body>
 </html>
 
 
 
-<?php 
+<?php
 }
-?> 
+?>

@@ -25,7 +25,7 @@ class openSRS_base {
 	 * openSRS_base object constructor
 	 *
 	 * Closes an existing socket connection, if we have one
-	 * 
+	 *
 	 * @since   3.1
 	 */
 	public function __construct () {
@@ -51,7 +51,7 @@ class openSRS_base {
 	 * Method to check the PHP version and OpenSSL PHP lib installation
 	 *
 	 * @since   3.1
-	 */	
+	 */
 	private function _verifySystemProperties () {
 		if (!function_exists('version_compare') || version_compare('4.3', phpversion(), '>=')) {
 			$error_message = "PHP version must be v4.3+ (current version is ". phpversion() .") to use \"SSL\" encryption";
@@ -70,9 +70,9 @@ class openSRS_base {
 	 * @param 	string 	$request Raw XML request
 	 *
 	 * @return 	string 	$data 	Raw XML response
-	 *  
+	 *
 	 * @since   3.1
-	 */	
+	 */
 	public function send_cmd($request) {
 		// make or get the socket filehandle
 		if (!$this->init_socket() ) {
@@ -95,9 +95,9 @@ class openSRS_base {
 	 * Method to initialize a socket connection to the OpenSRS server
 	 *
 	 * @return 	boolean  True if connected
-	 *  
+	 *
 	 * @since   3.1
-	 */	
+	 */
 	private function init_socket() {
 		if ($this->is_connected()) return true;
 		$this->_socket = fsockopen(CRYPT_TYPE . '://' . OSRS_HOST, OSRS_SSL_PORT, $this->_socketErrorNum, $this->_socketErrorMsg, $this->_socketTimeout);
@@ -107,23 +107,23 @@ class openSRS_base {
 			return true;
 		}
 	}
-	
+
 	/**
 	 * Method to check if a socket connection exists
 	 *
 	 * @return 	boolean  True if connected
-	 *  
+	 *
 	 * @since   3.4
-	 */	
+	 */
 	public function is_connected() {
 		return (is_resource($this->_socket)) ? true : false;
 	}
 
 	/**
 	 * Method to close the socket connection
-	 *  
+	 *
 	 * @since   3.4
-	 */	
+	 */
 	private function close_socket() {
 		if (is_resource($this->_socket))
 		{
@@ -134,10 +134,10 @@ class openSRS_base {
 
 	/**
 	 * Method to read data from the buffer stream
-	 *  
+	 *
 	 * @return 	string 	XML response
 	 * @since   3.1
-	 */	
+	 */
 	private function read_data() {
 		$buf = $this->readData($this->_socket, $this->_socketReadTimeout);
 		if (!$buf) {
@@ -147,19 +147,19 @@ class openSRS_base {
 			$data = $buf;
 		}
 		if (!empty($this->osrs_debug)) print_r("<pre>" . htmlentities($data) . "</pre>");
-		
+
 		return $data;
 	}
 
 	/**
 	 * Method to send data
-	 *  
+	 *
 	 * @param 	string 	$message 	XML request
 	 * @return 	string  $message	XML response
 	 * @since   3.1
-	 */	
+	 */
 	private function send_data($message) {
-		if (!empty($this->osrs_debug)) print_r("<pre>" . htmlentities($message) . "</pre>");		
+		if (!empty($this->osrs_debug)) print_r("<pre>" . htmlentities($message) . "</pre>");
 		return $this->writeData( $this->_socket, $message );
 	}
 
@@ -179,7 +179,7 @@ class openSRS_base {
 		$header .= "X-Username: " . OSRS_USERNAME . CRLF;
 		$header .= "X-Signature: " . $signature . CRLF;
 		$header .= "Content-Length: " . $len . CRLF . CRLF;
-		
+
 		fputs($fh, $header);
 		fputs($fh, $msg, $len );
 	}
@@ -227,7 +227,7 @@ class openSRS_base {
 	* @param	int 	timeout for read
 	* @return	mixed	buffer with data, or an error for a short read
 	*/
-	private function readData(&$fh, $timeout=5) {
+	private function readData(&$fh, $timeout= 5) {
 		$len = 0;
 		/* PHP doesn't have timeout for fread ... we just set the timeout for the socket */
 		socket_set_timeout($fh, $timeout);
@@ -254,4 +254,30 @@ class openSRS_base {
 		$this->close_socket();
 		return $buf;
 	}
+
+    protected function convertArray2Formatted ($type="", $data="") {
+      $resultString = "";
+      if ($type == "json") $resultString = json_encode($data);
+      if ($type == "yaml") $resultString = Spyc::YAMLDump($data);
+      return $resultString;
+    }
+
+    protected function convertFormatted2array ($type="", $data="") {
+        $resultArray = "";
+        if ($type == "json") $resultArray = json_decode($data, true);
+        if ($type == "yaml") $resultArray = Spyc::YAMLLoad($data);;
+        return $resultArray;
+    }
+
+    protected function array_filter_recursive($input)
+    {
+      foreach ($input as &$value)
+      {
+        if (is_array($value))
+        {
+          $value = $this->array_filter_recursive($value);
+        }
+      }
+      return array_filter($input);
+    }
 }

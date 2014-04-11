@@ -1,14 +1,14 @@
 <?php
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class mailGetDomainMailboxes extends openSRS_mail {
 	private $_dataObject;
 	private $_formatHolder = "";
 	private $_osrsm;
-	
+
 	public $resultRaw;
 	public $resultFormatted;
 	public $resultSuccess;
@@ -29,7 +29,7 @@ class mailGetDomainMailboxes extends openSRS_mail {
 	private function _validateObject (){
 		$allPassed = true;
 		$compile = "";
-		
+
 		// Command required values - authentication
 		if (!isSet($this->_dataObject->data->admin_username) || $this->_dataObject->data->admin_username == "") {
 			if (APP_MAIL_USERNAME == ""){
@@ -55,7 +55,7 @@ class mailGetDomainMailboxes extends openSRS_mail {
 				$this->_dataObject->data->admin_domain = APP_MAIL_DOMAIN;
 			}
 		}
-						
+
 		// Command required values
 		if (!isSet($this->_dataObject->data->domain) || $this->_dataObject->data->domain == "") {
 			trigger_error ("oSRS-eMail Error - domain is not defined.", E_USER_WARNING);
@@ -63,7 +63,7 @@ class mailGetDomainMailboxes extends openSRS_mail {
 		} else {
 			$compile .= " domain=\"". $this->_dataObject->data->domain ."\"";
 		}
-		
+
 		// Command optional values
 		if (isSet($this->_dataObject->data->limit) && $this->_dataObject->data->limit != ""){
                         $compile .= " limit=\"". $this->_dataObject->data->limit ."\"";
@@ -76,7 +76,7 @@ class mailGetDomainMailboxes extends openSRS_mail {
 			trigger_error ("oSRS-eMail Error - Missing data.", E_USER_WARNING);
 		}
 	}
-	
+
 	// Post validation functions
 	private function _processRequest ($command = ""){
 		$sequence = array (
@@ -87,11 +87,11 @@ class mailGetDomainMailboxes extends openSRS_mail {
 		);
 		$tucRes = $this->makeCall($sequence);
 		$arrayResult = $this->parseResults($tucRes);
-		
+
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

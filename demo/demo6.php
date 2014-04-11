@@ -1,11 +1,11 @@
-<?php 
+<?php
 
 if (isSet($_POST['function'])) {
 	$callstring = "";
 
 	$firstname = trim($_POST["firstname"]);
 	$lastname = trim($_POST["lastname"]);
-	
+
 
 	$searchstring = $firstname . " " . $lastname;
 
@@ -14,9 +14,9 @@ if (isSet($_POST['function'])) {
 		"data" => array ("searchstring" => $searchstring)
 	);
 
-	$callstring = json_encode($callArray);	
+	$callstring = json_encode($callArray);
 	// Open SRS Call -> Result
-	require_once ("../opensrs/openSRS_loader.php");
+	require_once(__DIR__ . "/openSRS_LoaderWrapper.php");
 	$osrsHandler = processOpenSRS ("json", $callstring);
 	$json_out = $osrsHandler->resultFormatted;
 
@@ -31,9 +31,9 @@ if (isSet($_POST['function'])) {
 
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 	<script language="Javascript" type="text/javascript" src="js/runonload.js"></script>
-	<script language="Javascript" type="text/javascript" src="js/democode.js"></script>	
+	<script language="Javascript" type="text/javascript" src="js/democode.js"></script>
 
-	
+
 	<style media="screen" type="text/css">
 	.defaultText { width: 205px; height: 39px; font-size: 20px;}
 	.defaultTextActive { color: #a1a1a1; font-style: italic;}
@@ -91,7 +91,7 @@ if (isSet($_POST['function'])) {
 
 					<div id="content">
 						<table width="540px">
-						<?php 
+						<?php
 						if (isSet($json_out)){
 							$json_a = json_decode($json_out, true);
 
@@ -113,21 +113,21 @@ if (isSet($_POST['function'])) {
 							}
 						}
 						?>
-					</table>	
+					</table>
 				</div>
 
 				<!-- Page footer -->
 				<div id="footer">
 					<!-- Left links -->
 					<a href="http://www.facebook.com/home.php#/pages/OpenSRS/127798660660?ref=s">OpenSRS is part of </a><a href="http://www.tucowsinc.com/">Tucows</a>
-					<span class="separator">|</span> <a href="http://opensrs.com/privacy">Privacy Policy</a>	<span class="separator">|</span> 
+					<span class="separator">|</span> <a href="http://opensrs.com/privacy">Privacy Policy</a>	<span class="separator">|</span>
 					<a href="http://opensrs.com/sitemap.php">Sitemap</a> <span class="separator">|</span>  &copy; 2010
-				</div>	
+				</div>
 
 			</div></div>
 		</div>
-		
-		
+
+
 		<script type="text/javascript">
 				<!--
 				$(document).ready(function() {
@@ -145,11 +145,11 @@ if (isSet($_POST['function'])) {
 		        }
 		    	});
 
-		    	$(".defaultText").blur();        
+		    	$(".defaultText").blur();
 				});
 				//-->
 			</script>
-		
+
 	</body>
 
 	</html>

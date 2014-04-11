@@ -1,4 +1,4 @@
-<?
+<?php
 $callArray = array (
         "func" => "subresGet",
         "data" => array (
@@ -6,7 +6,7 @@ $callArray = array (
         )
 );
 
-require_once("../opensrs/openSRS_loader.php");
+require_once(__DIR__ . "/openSRS_LoaderWrapper.php");
 
 $callstring = json_encode($callArray);
 

@@ -1,9 +1,9 @@
 <?php
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class trustSWregister extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -30,9 +30,9 @@ class trustSWregister extends openSRS_base {
 		$allPassed = $this->_allTimeRequired ();
 		// Run the command
 		if ($allPassed) {
-			// Execute the command			
+			// Execute the command
 			$this->_processRequest ();
-		} else {			
+		} else {
 			trigger_error ("oSRS Error - Incorrect call.", E_USER_WARNING);
 		}
 	} // end of private function _validateObject()
@@ -40,7 +40,7 @@ class trustSWregister extends openSRS_base {
 	// Personal Information
 	private function _allTimeRequired(){
 		$subtest = true;
-		
+
 		// $reqPers = array ("first_name", "last_name", "org_name", "address1", "city", "state", "country", "postal_code", "phone", "email");
 		// 	for ($i = 0; $i < count($reqPers); $i++){
 		// 		if ($this->_dataObject->personal->$reqPers[$i] == "") {
@@ -48,7 +48,7 @@ class trustSWregister extends openSRS_base {
 		// 			$subtest = false;
 		// 		}
 		// 	}
-		
+
 		$reqData = array ("reg_type", "product_type");
 		for ($i = 0; $i < count($reqData); $i++){
 			if ($this->_dataObject->data->$reqData[$i] == "") {
@@ -56,17 +56,17 @@ class trustSWregister extends openSRS_base {
 				$subtest = false;
 			}
 		}
-		
+
 		return $subtest;
 	}
-	
+
 	// Post validation functions
-	private function _processRequest (){		
+	private function _processRequest (){
 		$cmd = array(
 			'protocol' => 'XCP',
 			'action' => 'SW_REGISTER',
 			'object' => 'trust_service',
-			'attributes' => array( 
+			'attributes' => array(
 				'reg_type' => $this->_dataObject->data->reg_type,
 				'product_type' => $this->_dataObject->data->product_type,
 				'contact_set' => array(
@@ -90,7 +90,7 @@ class trustSWregister extends openSRS_base {
 		if (isSet($this->_dataObject->data->server_count) && $this->_dataObject->data->server_count != "") $cmd['attributes']['server_count'] = $this->_dataObject->data->server_count;
 		if (isSet($this->_dataObject->data->handle) && $this->_dataObject->data->handle != "") $cmd['attributes']['handle'] = $this->_dataObject->data->handle;
 
-		
+
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
 		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
@@ -102,11 +102,11 @@ class trustSWregister extends openSRS_base {
 		} else {
 			$this->resultRaw = $arrayResult;
 		}
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 		$this->XMLresult = $XMLresult;
 	}
-	
+
 	private function _createUserData(){
 		$userArray = array(
 			"first_name" => $this->_dataObject->personal->first_name,

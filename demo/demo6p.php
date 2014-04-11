@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 if (isSet($_POST['function'])) {
 	require_once("../opensrs/spyc.php");
@@ -14,9 +14,9 @@ if (isSet($_POST['function'])) {
 		);
 
 
-	$callstring = json_encode($callArray);	
+	$callstring = json_encode($callArray);
 	// Open SRS Call -> Result
-	require_once ("../opensrs/openSRS_loader.php");
+	require_once(__DIR__ . "/openSRS_LoaderWrapper.php");
 	$osrsHandler = processOpenSRS ("json", $callstring);
 	$json_out = $osrsHandler->resultFormatted;
 

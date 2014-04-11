@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 if (isSet($_POST['function'])) {
 
@@ -55,16 +55,16 @@ $callArray = array (
         "eligibility_id" => $_POST['eligibility_id'],
         "eligibility_id_type" => $_POST['eligibility_id_type'],
         "eligibility_name" => $_POST['eligibility_name'],
-          
+
 	),
-	
+
 	"professional_data" => array (
         "authority" => $_POST['authority'],
         "authority_website" => $_POST['authority_website'],
         "license_number" => $_POST['license_number'],
         "profession" => $_POST['profession'],
 	),
-	
+
 	"br_registrant_info" => array(
 		"br_register_number" => $_POST['br_register_number']
 	),
@@ -123,7 +123,7 @@ if ($formFormat == "yaml") $callstring = Spyc::YAMLDump($callArray);
 
 
 // Open SRS Call -> Result
-require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
+require_once(__DIR__ . "/../openSRS_LoaderWrapper.php");
 $osrsHandler = processOpenSRS ($formFormat, $callstring);
 
 
@@ -186,7 +186,7 @@ echo ("Out: ". $osrsHandler->resultFormatted);
 	<tr>
 		<td>
 			<b>Required at all time</b><br>
-			
+
 			<?php echo("domain: <input type=\"text\" name=\"domain\" value=\"phptest" . time() . ".com\"><br>"); ?>
 			period: <input type="text" name="period" value="1">year(s)<br>
 			reg_username: <input type="text" name="reg_username" value="phptest"><br>
@@ -234,7 +234,7 @@ echo ("Out: ". $osrsHandler->resultFormatted);
 			&nbsp; &nbsp;locality_city: <input type="text" name="locality_city" value=""> - Optional<br>
 			&nbsp; &nbsp;locality_country: <input type="text" name="locality_country" value=""><br>
 			&nbsp; &nbsp;locality_state_prov: <input type="text" name="locality_state_prov" value=""> - Optional<br>
-			
+
 		</td>
 	</tr>
 	<tr>
@@ -244,7 +244,7 @@ echo ("Out: ". $osrsHandler->resultFormatted);
 			&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;.BE | .EU | lang: <input type="text" name="lang" value="en"><br>
 			.DE | .BE | .EU | owner_confirm_address: <input type="text" name="owner_confirm_address" value=""><br>
 		</td>
-	</tr>	
+	</tr>
 	<tr>
 		<td>
 			<b>.CA</b><br />
@@ -275,8 +275,8 @@ echo ("Out: ". $osrsHandler->resultFormatted);
 			registrant_id_type: <input type="text" name="registrant_id_type" value="ABN"><br>
 			registrant_id: <input type="text" name="registrant_id" value="99 999 999 999"> - Required if registrant_id_type = ACN or ABN<br>
 			eligibility_type: <input type="text" name="eligibility_type" value="Registered Business"><br>
-    		eligibility_id: <input type="text" name="eligibility_id" value="99999999"> - Required for .COM.AU and .NET.AU<br> 
-			eligibility_id_type: <input type="text" name="eligibility_id_type" value="ACN"> - Required for .COM.AU and .NET.AU<br> 
+    		eligibility_id: <input type="text" name="eligibility_id" value="99999999"> - Required for .COM.AU and .NET.AU<br>
+			eligibility_id_type: <input type="text" name="eligibility_id_type" value="ACN"> - Required for .COM.AU and .NET.AU<br>
 			eligibility_name: <input type="text" name="eligibility_name" value="Don Marshall CTO"> - Optional<br>
 		</td>
 	</tr>
@@ -322,12 +322,12 @@ echo ("Out: ". $osrsHandler->resultFormatted);
 </form>
 
 
-	
+
 </body>
 </html>
 
 
 
-<?php 
+<?php
 }
-?> 
+?>

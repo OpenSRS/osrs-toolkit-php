@@ -35,10 +35,10 @@ class lookupDomain extends openSRS_base {
 			trigger_error ("oSRS Error - Search domain strinng not defined.", E_USER_WARNING);
 			$allPassed = false;
 		}
-		
+
 		if (isSet($this->_dataObject->data->selected) && $this->_dataObject->data->selected != "") $arraSelected = explode (";", $this->_dataObject->data->selected);
 		if (isSet($this->_dataObject->data->defaulttld) && $this->_dataObject->data->defaulttld != "") $arraAll = explode (";", $this->_dataObject->data->defaulttld);
-		
+
 		if (count($arraSelected) == 0) {
 			if (count($arraAll) == 0){
 				$arraCall = array (".com",".net",".org", ".ca");
@@ -48,7 +48,7 @@ class lookupDomain extends openSRS_base {
 		} else {
 			$arraCall = $arraSelected;
 		}
-		
+
 		// Call function
 		if ($allPassed) {
 			$resObject = $this->_domainTLD ($domain, $arraCall);
@@ -92,7 +92,7 @@ class lookupDomain extends openSRS_base {
 		$arrayResult = $this->_opsHandler->decode($XMLresult);		// FLip XML to Array
 //		print_r ($arrayResult);
 //		echo ("\n\n\n");
-		
+
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		if (isSet($arrayResult['attributes']['lookup']['items'])){
@@ -100,8 +100,8 @@ class lookupDomain extends openSRS_base {
 		} else {
 			$this->resultRaw = $arrayResult;
 		}
-				
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

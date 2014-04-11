@@ -29,7 +29,7 @@ class trustRequestOnDemandScan extends openSRS_base {
 	// Validate the object
 	private function _validateObject (){
 		$allPassed = true;
-		
+
 		if (!isSet($this->_dataObject->data->order_id) and !isSet($this->_dataObject->data->product_id) ) {
 			trigger_error ("oSRS Error - order_id or product_id is not defined.", E_USER_WARNING);
 			$allPassed = false;
@@ -51,10 +51,10 @@ class trustRequestOnDemandScan extends openSRS_base {
 			"action" => "request_on_demand_scan",
 			"object" => "trust_service"
 		);
-		
+
 		if (isSet($this->_dataObject->data->product_id) && $this->_dataObject->data->product_id != "") $cmd['attributes']['product_id'] = $this->_dataObject->data->product_id;
 		if (isSet($this->_dataObject->data->order_id) && $this->_dataObject->data->order_id != "") $cmd['attributes']['order_id'] = $this->_dataObject->data->order_id;
-		
+
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
 		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
@@ -62,7 +62,7 @@ class trustRequestOnDemandScan extends openSRS_base {
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }
