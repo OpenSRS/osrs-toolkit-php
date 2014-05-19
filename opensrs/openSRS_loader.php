@@ -18,12 +18,13 @@ final class Autoloader
   static public function load_domains( $classname )
   {
     $iterator = new DirectoryIterator(OPENSRSDOMAINS);
-    foreach($iterator as $dir){
-    	if($dir->isDot()) continue;
-      $classfile = OPENSRSDOMAINS . DS . $dir . DS . $classname . ".php";
+    while($iterator->valid()){
+    	if($iterator->isDot()) continue;
+      $classfile = OPENSRSDOMAINS . DS . $iterator->getFilename() . DS . $classname . ".php";
     	if(file_exists( $classfile )) {
       	require_once $classfile;
     	}
+		$iterator->next();
     }
   }
 }
