@@ -72,7 +72,7 @@ class provUpdateContacts extends openSRS_base {
         return $userArray;
     }*/  
     
-    private function _createUserData($type){
+    private function _createUserData($type = null){
         switch ($type) {
           case "admin":
             $userArray = array(
