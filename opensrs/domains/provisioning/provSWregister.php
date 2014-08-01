@@ -357,6 +357,15 @@ class provSWregister extends openSRS_base {
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
 		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
+        
+        /* Added by BC : NG : 16-7-2014 : To set error message for Insufficient Funds */
+        if(isset($arrayResult['attributes']['forced_pending']) and $arrayResult['attributes']['forced_pending'] != "" and $arrayResult['is_success'] == 1)
+        {
+            $arrayResult['is_success'] = 0;
+            if($arrayResult['response_text'] == 'Registration successful')    // Get Resonse Text 'Registration successful'  when insufficient fund
+                $arrayResult['response_text'] = "Insufficient Funds";
+        }
+        /* End : To set error message for Insufficient Funds */
 
 		// Results
 		$this->resultFullRaw = $arrayResult;
