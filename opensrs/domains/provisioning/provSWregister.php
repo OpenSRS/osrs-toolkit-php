@@ -285,16 +285,31 @@ class provSWregister extends openSRS_base {
 			if (isSet($this->_dataObject->data->rant_no) && $this->_dataObject->data->rant_no != "") $cmd['attributes']['rant_no'] = $this->_dataObject->data->rant_no;
 		}
 		
-		if ($ccTLD == "asia") {
-			$reqDatas = array("contact_type", "id_number", "id_type", "legal_entity_type", "locality_country", "id_type_info", 
-				"legal_entity_type_info","locality_city", "locality_state_prov"
-			);
+		/* Changed by BC : NG : 9-9-2014 : To resolve issue of tld .asia registration error  */
+        
+        /*if ($ccTLD == "asia") {
+            $reqDatas = array("contact_type", "id_number", "id_type", "legal_entity_type", "locality_country", "id_type_info", 
+                "legal_entity_type_info","locality_city", "locality_state_prov"
+            );
 
-			foreach($reqDatasASIA as $reqData) {
-				if(isSet($this->_dataObject->cedinfo->data->$reqData) && $this->_dataObject->data->$reqData != "")
-					$cmd['attributes']['tld_data']['ced_info'][$reqData] = $this->_dataObject->data->$reqData;
-			}
-		}
+            foreach($reqDatasASIA as $reqData) {
+                if(isSet($this->_dataObject->cedinfo->data->$reqData) && $this->_dataObject->data->$reqData != "")
+                    $cmd['attributes']['tld_data']['ced_info'][$reqData] = $this->_dataObject->data->$reqData;
+            }
+        }*/
+        
+        if ($ccTLD == "asia") {
+            $reqDatasASIA = array("contact_type", "id_number", "id_type", "legal_entity_type", "locality_country", "id_type_info", 
+                "legal_entity_type_info","locality_city", "locality_state_prov"
+            );
+
+            foreach($reqDatasASIA as $reqData) {
+                if(isSet($this->_dataObject->cedinfo->$reqData) && $this->_dataObject->cedinfo->$reqData != "")
+                    $cmd['attributes']['tld_data']['ced_info'][$reqData] = $this->_dataObject->cedinfo->$reqData;
+            }
+        }
+        
+        /* END : To resolve issue of tld .asia registration error  */
 		
 		if ($ccTLD == "au") {
 			$reqDatasAU = array("registrant_name", "eligibility_type", "registrant_id", "registrant_id_type", "eligibility_name", 
