@@ -43,10 +43,13 @@ class provSWregister extends openSRS_base {
         		$allPassed = $this->$_ccTLD();
  			  	/* Changed by BC : NG : 10-9-2014 : To hide notice displayed at register page for tld .asia */
                 /*trigger_error($tld . " needs special requirements.");*/
-                if($tld != "asia")
+                /* Changed by BC : NG : 8-10-2014 : To hide notice displayed at register page for tld .it */
+                /*if($tld != "asia")*/
+                if($tld != "asia" && $tld != "it")
                 {
                        trigger_error($tld . " needs special requirements.");
                 }
+                /* End : To hide notice displayed at register page for tld .it */
                 /* End : To hide notice displayed at register page for tld .asia */
       		}
 
