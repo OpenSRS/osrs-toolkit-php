@@ -64,7 +64,9 @@ class openSRS_fastlookup {
 
 			$callCheck = "check_domain ". $domain . $tld;
 			$callLength = strlen($callCheck);
-			echo $callCheck . "<br/>";
+            /* Commented by BC : NG : 1-12-2014 : To solve issue in fast look up */
+			//echo $callCheck . "<br/>";
+            /* End : To solve issue in fast look up */
 			fputs($this->_socket, $callCheck, $callLength );
 
 //			// wait 0.25 sec - Immediate socket read will result for wait loops and longer response
