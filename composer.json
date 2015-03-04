@@ -1,7 +1,8 @@
 {
-    "name": "derekvasilich/osrs-toolkit-php",
-    "description": "Open SRS PHP Toolkit",
+    "name": "opensrs/osrs-toolkit-php",
+    "description": "OpenSRS PHP Toolkit",
     "type": "project",
-    "license": "MIT"
+    "license": "MIT",
+    "version": "3.4"
 }
 
