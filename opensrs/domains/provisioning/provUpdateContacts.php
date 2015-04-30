@@ -24,7 +24,17 @@ class provUpdateContacts extends openSRS_base {
 		$allPassed = true;
 
 		// Personal information
-		$reqPers = array ("first_name", "last_name", "org_name", "address1", "city", "state", "country", "postal_code", "phone", "email", "lang_pref");
+        /* Changed by BC : NG : 2-5-2015 : To resolve issue for tld .NL  */
+		//$reqPers = array ("first_name", "last_name", "org_name", "address1", "city", "state", "country", "postal_code", "phone", "email", "lang_pref");
+        if($tld == "nl")
+        {
+            $reqPers = array ("first_name", "last_name", "org_name", "address1", "city", "country", "postal_code", "phone", "email", "lang_pref");
+        }
+        else
+        {
+            $reqPers = array ("first_name", "last_name", "org_name", "address1", "city", "state", "country", "postal_code", "phone", "email", "lang_pref");
+        }
+        /* End : To resolve issue for tld .NL  */
 		for ($i = 0; $i < count($reqPers); $i++){
 			if ($this->_dataObject->personal->$reqPers[$i] == "") {
 				trigger_error ("oSRS Error - ". $reqPers[$i] ." is not defined.", E_USER_WARNING);
