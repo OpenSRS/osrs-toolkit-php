@@ -47,10 +47,13 @@ class provSWregister extends openSRS_base {
                 /*if($tld != "asia")*/   
                 /* Changed by BC : NG : 11-2-2015 : To resolve issue for tld .EU domain registration */
                 /*if($tld != "asia" && $tld != "it")*/
-                if($tld != "asia" && $tld != "it" && $tld != "eu")
+                /* Changed by BC : NG : 21-2-2014 : To hide notice displayed at register page for tld .de */ 
+                /*if($tld != "asia" && $tld != "it" && $tld != "eu")*/
+                if($tld != "asia" && $tld != "it" && $tld != "eu" && $tld != "de")
                 {
                        trigger_error($tld . " needs special requirements.");
                 }
+                /* End: To hide notice displayed at register page for tld .de */
                 /* End : To resolve issue for tld .EU domain registration */
                 /* End : To hide notice displayed at register page for tld .it */
                 /* End : To hide notice displayed at register page for tld .asia */
