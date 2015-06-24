@@ -36,7 +36,7 @@ class provSWregister extends openSRS_base {
 			$allPassed = $this->_allTimeRequired ();
 
 			// The following TLDs require additional option values
-			$special_tlds = array("ca", "asia", "be", "de", "eu", "it", "name", "us", "au", "pro", "br");
+			$special_tlds = array("ca", "asia", "be", "de", "eu", "it", "name", "us", "au", "pro", "br", "nu", "se");
 
 			if (in_array($tld, $special_tlds)) {
 				$_ccTLD = "_ccTLD_" . $tld;
@@ -229,6 +229,54 @@ class provSWregister extends openSRS_base {
 		return $subtest;
 	}
 	
+	private function _ccTLD_nu () {
+		$subtest = true;
+		$reqDatas = array("registrant_type");
+		foreach($reqDatas as $reqData) {
+			if ($this->_dataObject->registrant_extra_info->$reqData == "") {
+				trigger_error ("oSRS Error - ". $reqData ." is not defined.", E_USER_WARNING);
+				$subtest = false;
+			}
+			else
+			{
+				if ($reqData == "registrant_type" && $this->_dataObject->registrant_extra_info->$reqData == 'individual')
+				{
+					$reqDatas[] = 'id_card_number';
+				}
+				else
+				{
+					$reqDatas[] = 'registrant_vat_id';
+					$reqDatas[] = 'registration_number';
+				} 
+			}
+		}
+		return $subtest;
+	}
+	
+	private function _ccTLD_se () {
+		$subtest = true;
+		$reqDatas = array("registrant_type");
+		foreach($reqDatas as $reqData) {
+			if ($this->_dataObject->registrant_extra_info->$reqData == "") {
+				trigger_error ("oSRS Error - ". $reqData ." is not defined.", E_USER_WARNING);
+				$subtest = false;
+			}
+			else
+			{
+				if ($reqData == "registrant_type" && $this->_dataObject->registrant_extra_info->$reqData == 'individual')
+				{
+					$reqDatas[] = 'id_card_number';
+				}
+				else
+				{
+					$reqDatas[] = 'registrant_vat_id';
+					$reqDatas[] = 'registration_number';
+				} 
+			}
+		}
+		return $subtest;
+	}
+	
 	// Post validation functions
 	private function _processRequest ($ccTLD){
 		// Compile the command	
@@ -372,6 +420,30 @@ class provSWregister extends openSRS_base {
 			$cmd['attributes']['tld_data']['nexus']['app_purpose'] = $this->_dataObject->nexus->app_purpose;
 			$cmd['attributes']['tld_data']['nexus']['category'] = $this->_dataObject->nexus->category;
 			if (isSet($this->_dataObject->nexus->validator) && $this->_dataObject->nexus->validator != "") $cmd['attributes']['tld_data']['nexus']['validator'] = $this->_dataObject->nexus->validator;
+		}
+		if ($ccTLD == "nu") {
+			$cmd['attributes']['tld_data']['registrant_extra_info']['registrant_type'] = $this->_dataObject->registrant_extra_info->registrant_type;
+			if ($this->_dataObject->registrant_extra_info->registrant_type == 'individual')
+			{
+				$cmd['attributes']['tld_data']['registrant_extra_info']['id_card_number'] = $this->_dataObject->registrant_extra_info->id_card_number;
+			}
+			else
+			{
+				$cmd['attributes']['tld_data']['registrant_extra_info']['registrant_vat_id'] = $this->_dataObject->registrant_extra_info->registrant_vat_id;
+				$cmd['attributes']['tld_data']['registrant_extra_info']['registration_number'] = $this->_dataObject->registrant_extra_info->registration_number;
+			}
+		}
+		if ($ccTLD == "se") {
+			$cmd['attributes']['tld_data']['registrant_extra_info']['registrant_type'] = $this->_dataObject->registrant_extra_info->registrant_type;
+			if ($this->_dataObject->registrant_extra_info->registrant_type == 'individual')
+			{
+				$cmd['attributes']['tld_data']['registrant_extra_info']['id_card_number'] = $this->_dataObject->registrant_extra_info->id_card_number;
+			}
+			else
+			{
+				$cmd['attributes']['tld_data']['registrant_extra_info']['registrant_vat_id'] = $this->_dataObject->registrant_extra_info->registrant_vat_id;
+				$cmd['attributes']['tld_data']['registrant_extra_info']['registration_number'] = $this->_dataObject->registrant_extra_info->registration_number;
+			}
 		}
 
 		if ($ccTLD == "pro") {
