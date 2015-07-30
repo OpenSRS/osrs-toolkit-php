@@ -1,0 +1,12 @@
+{
+    "name": "opensrs/osrs-toolkit-php",
+    "description": "OpenSRS PHP Toolkit",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Colin Campbell",
+            "email": "ccampbell@tucows.com"
+        }
+    ],
+    "require": {}
+}
