@@ -8,5 +8,7 @@
             "email": "ccampbell@tucows.com"
         }
     ],
-    "require": {}
+    "require": {
+        "mustangostang/spyc": "^0.5.1"
+    }
 }
