@@ -22,4 +22,27 @@ class openSRS_LoaderTest extends PHPUnit_Framework_TestCase
         $this->setExpectedException('PHPUNIT_Framework_Error');
         processOpenSRS('array', array('func' => 'xxx', 'data' => array()));
     }
+
+    /**
+     * processOpenSRS should return an object of 
+     * the requestion function name
+     * 
+     * @return void
+     */
+    public function testProcess()
+    {
+        $data = array(
+            'func' => 'premiumDomain',
+            'data' => array(
+                'domain' => 'hockey.com',
+                'selected' => '.com',
+                'alldomains' => '.com'
+            )
+        );
+
+        $this->assertInstanceOf(
+            $data['func'],
+            processOpenSRS('array', $data)
+        );
+    }
 }
