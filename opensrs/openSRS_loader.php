@@ -77,7 +77,6 @@ function processOpenSRS($type = '', $data = '')
 {
     if (empty($data)) {
         trigger_error('OSRS Error - No data found.');
-
         return;
     } else {
         $dataArray = array();
