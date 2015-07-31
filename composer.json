@@ -9,6 +9,7 @@
         }
     ],
     "require": {
-        "mustangostang/spyc": "^0.5.1"
+        "mustangostang/spyc": "^0.5.1",
+        "phpunit/phpunit": "^4.7"
     }
 }
