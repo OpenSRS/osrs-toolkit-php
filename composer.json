@@ -11,5 +11,10 @@
     "require": {
         "mustangostang/spyc": "^0.5.1",
         "phpunit/phpunit": "^4.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "OpenSRS\\": "opensrs"
+        }
     }
 }

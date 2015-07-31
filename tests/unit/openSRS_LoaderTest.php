@@ -25,7 +25,7 @@ class openSRS_LoaderTest extends PHPUnit_Framework_TestCase
 
     /**
      * processOpenSRS should return an object of 
-     * the requestion function name
+     * the requested function name
      * 
      * @return void
      */
