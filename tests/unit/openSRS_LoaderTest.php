@@ -1,7 +1,6 @@
 <?php
 
 require_once(__DIR__ . '/../../opensrs/openSRS_loader.php');
-
 class openSRS_LoaderTest extends PHPUnit_Framework_TestCase
 {
     /**
@@ -44,5 +43,24 @@ class openSRS_LoaderTest extends PHPUnit_Framework_TestCase
             $data['func'],
             processOpenSRS('array', $data)
         );
+    }
+
+    /**
+     * Should remove empty elements from an array recursively 
+     */
+    public function testArrayFilterRecursive()
+    {
+        // test a single level
+        $data = array('empty' => array());
+        $this->assertEmpty($data['empty']);
+
+        // test a nested level
+        $data = array(
+            'something' => array(
+                'empty' => array()
+            )
+        );
+
+        $this->assertEmpty($data['something']['empty']);
     }
 }
