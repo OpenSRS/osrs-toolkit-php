@@ -4,3 +4,4 @@ tags
 
 /vendor/
 composer.lock
+.vagrant

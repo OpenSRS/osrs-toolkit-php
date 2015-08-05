@@ -1,0 +1,26 @@
+---
+- hosts: all
+  sudo: true
+  tasks:
+    - name: update apt cache
+      apt: update_cache=yes
+    - name: install packages
+      apt: name={{ item }} state=present
+      with_items:
+        - nginx
+        - php5
+        - php5-cli
+        - php5-mcrypt
+        - php5-mysql
+        - php5-fpm
+        - php5-xdebug
+    - name: enable mcrypt
+      command: php5enmod mcrypt
+    - name: configure nginx
+      template: src=nginx.conf dest=/etc/nginx/nginx.conf
+      template: src=default dest=/etc/nginx/sites-available/default
+    - name: reload nginx
+      service: name=nginx state=reloaded
+    - name: reload php5-fpm
+      service: name=php5-fpm state=reloaded
+
