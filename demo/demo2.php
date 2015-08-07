@@ -1,16 +1,16 @@
 <?php
 
+require_once '../opensrs/openSRS_loader.php';
+
 $callArray = array (
         'func' => 'subresGet',
         'data' => array (
-                'username' => OSRS_USERNAME,
+                'username' => 'subreseller',
         ),
 );
 
-require_once '../opensrs/openSRS_loader.php';
 
 $callstring = json_encode($callArray);
-
 $osrsHandler = processOpenSRS ('json', $callstring);
 
 echo (' In: '.$callstring.'<br>');
