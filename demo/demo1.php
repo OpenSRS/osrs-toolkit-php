@@ -13,20 +13,25 @@ $callArray = array (
         ),
 );
 
-require_once '../opensrs/openSRS_loader.php';
+// require_once '../opensrs/openSRS_loader.php';
+require __DIR__ . '/../vendor/autoload.php';
+use OpenSRS\Request;
+
 
 //JSON
-// $callstring = json_encode($callArray);
+$callstring = json_encode($callArray);
 // $osrsHandler = processOpenSRS ('json', $callstring);
+$request = new Request();
+$osrsHandler = $request->process('json', $callstring);
 
 //YAML
-$callstring = Spyc::YAMLDump($callArray);
-$osrsHandler = processOpenSRS ("yaml", $callstring);
+// $callstring = Spyc::YAMLDump($callArray);
+// $osrsHandler = processOpenSRS ("yaml", $callstring);
 
 //$callstring = XML($callArray);
 //$osrsHandler = processOpenSRS ("xml", $callstring);
 
-echo (' In: '.$callstring.'<br>');
+// echo (' In: '.$callstring.'<br>');
 //echo ("Out Result Full Raw: ". $osrsHandler->resultFullRaw ."<br>");
 //echo ("Out Results Formatted: ". $osrsHandler->resultFormatted ."<br>");
 
