@@ -2,7 +2,7 @@
 
 namespace OpenSRS;
 
-// defined('OPENSRSURI') or die;
+defined('OPENSRSURI') or die;
 
 
 /**
