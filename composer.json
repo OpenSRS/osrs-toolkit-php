@@ -1,0 +1,11 @@
+{
+    "name": "opensrs/osrs-toolkit-php",
+    "description": "OpenSRS PHP Toolkit",
+    "type": "project",
+    "license": "MIT",
+    "version": "3.4",
+    "require": {
+        "php": ">=5.3.0"
+    }
+}
+
