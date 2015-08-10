@@ -43,6 +43,20 @@ class openSRS_BaseTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Close socket should close openSRS base socket
+     * 
+     * @return void
+     */
+    public function testCloseSocket()
+    {
+        $base = new openSRS_base;
+
+        $this->invokeMethod($base, 'close_socket');
+
+        $this->assertFalse($base->is_connected());
+    }
+
+    /**
      * Call a private method for a class 
      * 
      * @param mixed $object object 
@@ -59,5 +73,4 @@ class openSRS_BaseTest extends PHPUnit_Framework_TestCase
                 
         return $method->invokeArgs($object, $parameters);
     }
-    
 }
