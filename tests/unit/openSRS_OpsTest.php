@@ -94,4 +94,21 @@ class openSRS_OpsTest extends PHPUnit_Framework_TestCase
         // make sure this is xml
         $this->assertTrue($xml->isValid());
     }
+
+    /**
+     * should convert xml to php array
+     * 
+     * @return void
+     */
+    public function testXml2Php()
+    {
+        $ops = new openSRS_ops;
+        $data = array('convert' => 'this');
+
+        // use our built in php to xml to test
+        $result = $ops->PHP2XML($data);
+    
+        // converting back, they should be the same
+        $this->assertSame($data, $ops->XML2PHP($result));
+    }
 }
