@@ -72,4 +72,26 @@ class openSRS_OpsTest extends PHPUnit_Framework_TestCase
         // make sure this is xml
         $this->assertTrue($xml->isValid());
     }
+
+    /**
+     * Should convert php arrays to valid xml
+     * 
+     * @return void
+     */
+    public function testEncode()
+    {
+        $ops = new openSRS_ops;
+        $data = array('protocol' => '', 'action' => '', 'object' => '');
+
+        $result = $ops->encode($data);
+
+        $xml = XMLReader::xml($result);
+
+        // The validate parser option must be enabled for 
+        // this method to work properly
+        $xml->setParserProperty(XMLReader::VALIDATE, true);
+
+        // make sure this is xml
+        $this->assertTrue($xml->isValid());
+    }
 }
