@@ -50,4 +50,26 @@ class openSRS_OpsTest extends PHPUnit_Framework_TestCase
        
         $this->assertEquals($result, "  <data_block>\n   <dt_assoc>\n   <item key=\"convert\">this</item>\n   </dt_assoc>\n  </data_block>"); 
     }
+
+    /**
+     * Should convert php arrays to valid xml recursivly
+     * 
+     * @return void
+     */
+    public function testConvertData()
+    {
+        $ops = new openSRS_ops;
+        $data = array('please' => 'convert', 'me');
+
+        $result = $ops->_convertData($data);
+
+        $xml = XMLReader::xml($result);
+
+        // The validate parser option must be enabled for 
+        // this method to work properly
+        $xml->setParserProperty(XMLReader::VALIDATE, true);
+
+        // make sure this is xml
+        $this->assertTrue($xml->isValid());
+    }
 }
