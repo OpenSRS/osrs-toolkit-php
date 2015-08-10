@@ -33,7 +33,21 @@ class openSRS_OpsTest extends PHPUnit_Framework_TestCase
         $no = array(1, 2, 3, 4);
         $yes = array('this' => 'is', 'associative');
 
-        $this->assertfalse($ops->_is_assoc($no));
+        $this->assertFalse($ops->_is_assoc($no));
         $this->assertTrue($ops->_is_assoc($yes));
+    }
+
+    /**
+     * Should convert php array to formmated xml
+     * 
+     * @return void
+     */
+    public function testPhp2Xml()
+    {
+        $ops = new openSRS_ops;
+        $data = array('convert' => 'this');
+        $result = $ops->PHP2XML($data);
+       
+        $this->assertEquals($result, "  <data_block>\n   <dt_assoc>\n   <item key=\"convert\">this</item>\n   </dt_assoc>\n  </data_block>"); 
     }
 }
