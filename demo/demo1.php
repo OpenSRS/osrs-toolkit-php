@@ -6,7 +6,7 @@ $callArray = array (
         //"func" => "premiumDomain",
 
         'data' => array (
-                // 'domain' => 'hockey.com',
+                'domain' => 'hockey.com',
 		// These are optional
                 'selected' => '.com;.net;.org',
                 'alldomains' => '.com;.net;.org', 

@@ -34,27 +34,18 @@ class PremiumDomain extends Base
     // Validate the object
     private function _validateObject()
     {
-        $allPassed = true;
         $domain = '';
         $arraSelected = array();
         $arraAll = array();
         $arraCall = array();
 
+        // search domain must be definded
         if (!isset($this->_dataObject->data->domain)) {
-            throw new Exception('oSRS Error - Searh domain string not defined.');
+            throw new Exception('oSRS Error - Search domain string not defined.');
         }
 
         // Grab domain name
         $domain = $this->_dataObject->data->domain;
-
-        // if (isset($this->_dataObject->data->domain)) {
-        //     // Grab domain name
-        //     $domain = $this->_dataObject->data->domain;
-        // } else {
-        //     // trigger_error('oSRS Error - Search domain strinng not defined.', E_USER_WARNING);
-        //     throw new Exception('oSRS Error - Searh domain string not defined.');
-        //     $allPassed = false;
-        // }
 
         // Select non empty one
         if (isset($this->_dataObject->data->selected) && $this->_dataObject->data->selected != '') {
@@ -74,12 +65,7 @@ class PremiumDomain extends Base
         }
 
         // Call function
-        if ($allPassed) {
-            $resObject = $this->_domainTLD($domain, $arraCall);
-        } else {
-            // trigger_error('oSRS Error - Incorrect call.', E_USER_WARNING);
-            throw new Exception('oSRS Error - Incorrect call.');
-        }
+        $resObject = $this->_domainTLD($domain, $arraCall);
     }
 
     // Selected / all TLD options
