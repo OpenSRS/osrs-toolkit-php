@@ -21,23 +21,31 @@ use OpenSRS\Request;
 //JSON
 $callstring = json_encode($callArray);
 // $osrsHandler = processOpenSRS ('json', $callstring);
-$request = new Request();
-$osrsHandler = $request->process('json', $callstring);
 
-//YAML
-// $callstring = Spyc::YAMLDump($callArray);
-// $osrsHandler = processOpenSRS ("yaml", $callstring);
+try {
+    $request = new Request();
+    $osrsHandler = $request->process('json', $callstring);
 
-//$callstring = XML($callArray);
-//$osrsHandler = processOpenSRS ("xml", $callstring);
+    var_dump($osrsHandler->resultRaw);
 
-// echo (' In: '.$callstring.'<br>');
-//echo ("Out Result Full Raw: ". $osrsHandler->resultFullRaw ."<br>");
-//echo ("Out Results Formatted: ". $osrsHandler->resultFormatted ."<br>");
+    //YAML
+    // $callstring = Spyc::YAMLDump($callArray);
+    // $osrsHandler = processOpenSRS ("yaml", $callstring);
 
-//Array
-$variable = var_dump($osrsHandler->resultRaw, true);
-$variable = str_replace ("\n", "<br>\n",  $variable);
-echo ('Out Results Formatted: '.$variable);
+    //$callstring = XML($callArray);
+    //$osrsHandler = processOpenSRS ("xml", $callstring);
+
+    // echo (' In: '.$callstring.'<br>');
+    //echo ("Out Result Full Raw: ". $osrsHandler->resultFullRaw ."<br>");
+    //echo ("Out Results Formatted: ". $osrsHandler->resultFormatted ."<br>");
+
+    //Array
+    // $variable = var_dump($osrsHandler->resultRaw, true);
+    // $variable = str_replace ("\n", "<br>\n",  $variable);
+    // echo ('Out Results Formatted: '.$variable);
+}
+catch(\OpenSRS\Exception $e) {
+    echo $e->getMessage();
+}
 
 ?>

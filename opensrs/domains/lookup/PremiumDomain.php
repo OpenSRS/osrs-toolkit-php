@@ -3,6 +3,7 @@
 namespace opensrs\domains\lookup;
 
 use OpenSRS\Base;
+use OpenSRS\Exception;
 
 class PremiumDomain extends Base
 {
@@ -43,7 +44,8 @@ class PremiumDomain extends Base
             // Grab domain name
             $domain = $this->_dataObject->data->domain;
         } else {
-            trigger_error('oSRS Error - Search domain strinng not defined.', E_USER_WARNING);
+            // trigger_error('oSRS Error - Search domain strinng not defined.', E_USER_WARNING);
+            throw new Exception('oSRS Error - Searh domain string not defined.');
             $allPassed = false;
         }
 
@@ -68,7 +70,8 @@ class PremiumDomain extends Base
         if ($allPassed) {
             $resObject = $this->_domainTLD($domain, $arraCall);
         } else {
-            trigger_error('oSRS Error - Incorrect call.', E_USER_WARNING);
+            // trigger_error('oSRS Error - Incorrect call.', E_USER_WARNING);
+            throw new Exception('oSRS Error - Incorrect call.');
         }
     }
 

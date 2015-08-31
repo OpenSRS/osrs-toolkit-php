@@ -18,7 +18,8 @@ class Request
     public function process($format = '', $data = '')
     {
         if (empty($data)) {
-            trigger_error('OSRS Error - No data found.');
+            // trigger_error('OSRS Error - No data found.');
+            throw new Exception('OSRS Error - No data found.');
             return;
         } 
         
@@ -42,14 +43,6 @@ class Request
         $classCall = null;
 
         $classCall = RequestFactory::build($dataObject->func, $format, $dataObject);
-        var_dump($classCall);
-        return $classCall;
-        if (class_exists($dataObject->func)) {
-            $classCall = new $dataObject->func($format, $dataObject);
-        } else {
-            trigger_error("OSRS Error - Unable to find the function $dataObject->func.  Either the function is misspelled or there are incorrect file paths set in openSRS_config.php.");
-        }
-
         return $classCall;
     }
 
