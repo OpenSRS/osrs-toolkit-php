@@ -31,6 +31,18 @@ class RequestFactory
                 return new \OpenSRS\domains\lookup\GetDomansByExpiry($type, $dataObject);
                 break;
 
+            case 'lookupGetDomainsContacts':
+                return new \OpenSRS\domains\lookup\GetDomainsContacts($type, $dataObject);
+                break;
+
+            case 'lookupGetNotes':
+                return new \OpenSRS\domains\lookup\GetNotes($type, $dataObject);
+                break;
+
+            case 'lookupGetOrderInfo':
+                return new \OpenSRS\domains\lookup\GetOrderInfo($type, $dataObject);
+                break;
+
             default:
                 throw new Exception("OSRS Error - $func is unsupported.");
         } 
