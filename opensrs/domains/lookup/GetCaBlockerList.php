@@ -1,10 +1,16 @@
 <?php
+
+namespace opensrs\domains\lookup;
+
+use OpenSRS\Base;
+use OpenSRS\Exception;
+
 /*
  *  Required object values:
  *  data - domain - .CA only
  */
  
-class lookupGetCaBlockerList extends openSRS_base {
+class GetCaBlockerList extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;
