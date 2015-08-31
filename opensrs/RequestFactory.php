@@ -43,6 +43,34 @@ class RequestFactory
                 return new \OpenSRS\domains\lookup\GetOrderInfo($type, $dataObject);
                 break;
 
+            case 'lookupGetOrdersByDomain':
+                return new \OpenSRS\domains\lookup\GetOrdersByDomain($type, $dataObject);
+                break;
+
+            case 'lookupGetPrice':
+                return new \OpenSRS\domains\lookup\GetPrice($type, $dataObject);
+                break;
+
+            case 'lookupNameSuggest':
+                return new \OpenSRS\domains\lookup\NameSuggest($type, $dataObject);
+                break;
+
+            case 'suggestDomain':
+                return new \OpenSRS\domains\lookup\SuggestDomain($type, $dataObject);
+                break;
+
+            case 'lookupBelongsToRsp':
+                return new \OpenSRS\domains\lookup\BelongsToRsp($type, $dataObject);
+                break;
+
+            case 'allinoneDomain':
+                return new \OpenSRS\domains\lookup\AllInOneDomain($type, $dataObject);
+                break;
+
+            case 'lookupGetCaBlockerList':
+                return new \OpenSRS\domains\lookup\GetCaBlockerList($type, $dataObject);
+                break;
+
             default:
                 throw new Exception("OSRS Error - $func is unsupported.");
         } 
