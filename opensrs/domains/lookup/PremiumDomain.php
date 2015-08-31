@@ -40,14 +40,21 @@ class PremiumDomain extends Base
         $arraAll = array();
         $arraCall = array();
 
-        if (isset($this->_dataObject->data->domain)) {
-            // Grab domain name
-            $domain = $this->_dataObject->data->domain;
-        } else {
-            // trigger_error('oSRS Error - Search domain strinng not defined.', E_USER_WARNING);
+        if (!isset($this->_dataObject->data->domain)) {
             throw new Exception('oSRS Error - Searh domain string not defined.');
-            $allPassed = false;
         }
+
+        // Grab domain name
+        $domain = $this->_dataObject->data->domain;
+
+        // if (isset($this->_dataObject->data->domain)) {
+        //     // Grab domain name
+        //     $domain = $this->_dataObject->data->domain;
+        // } else {
+        //     // trigger_error('oSRS Error - Search domain strinng not defined.', E_USER_WARNING);
+        //     throw new Exception('oSRS Error - Searh domain string not defined.');
+        //     $allPassed = false;
+        // }
 
         // Select non empty one
         if (isset($this->_dataObject->data->selected) && $this->_dataObject->data->selected != '') {

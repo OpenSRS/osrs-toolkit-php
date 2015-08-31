@@ -6,7 +6,7 @@ $callArray = array (
         //"func" => "premiumDomain",
 
         'data' => array (
-                'domain' => 'hockey.com',
+                // 'domain' => 'hockey.com',
 		// These are optional
                 'selected' => '.com;.net;.org',
                 'alldomains' => '.com;.net;.org', 
@@ -45,7 +45,5 @@ try {
     // echo ('Out Results Formatted: '.$variable);
 }
 catch(\OpenSRS\Exception $e) {
-    echo $e->getMessage();
+    var_dump($e->getMessage());
 }
-
-?>
