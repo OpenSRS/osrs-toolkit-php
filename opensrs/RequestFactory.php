@@ -10,6 +10,10 @@ class RequestFactory
             case 'premiumDomain':
                 return new \OpenSRS\domains\lookup\PremiumDomain($type, $dataObject); 
                 break;
+
+            case 'lookupDomain':
+                return new \OpenSRS\domains\lookup\LookupDomain($type, $dataObject);
+                break;
         } 
     }
 }
