@@ -15,6 +15,10 @@ class RequestFactory
                 return new \OpenSRS\domains\lookup\LookupDomain($type, $dataObject);
                 break;
 
+            case 'lookupGetDomain':
+                return new \OpenSRS\domains\lookup\GetDomain($type, $dataObject);
+                break;
+
             default:
                 throw new Exception("OSRS Error - $func is unsupported.");
         } 
