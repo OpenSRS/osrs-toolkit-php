@@ -35,9 +35,6 @@ class PremiumDomain extends Base
     private function _validateObject()
     {
         $domain = '';
-        $arraSelected = array();
-        $arraAll = array();
-        $arraCall = array();
 
         // search domain must be definded
         if (!isset($this->_dataObject->data->domain)) {
@@ -47,6 +44,28 @@ class PremiumDomain extends Base
         // Grab domain name
         $domain = $this->_dataObject->data->domain;
 
+        // get tlds
+        $tlds = $this->getTlds();
+
+        // Call function
+        $resObject = $this->_domainTLD($domain, $tlds);
+    }
+
+    /**
+     * Get tlds for domain call 
+     * Will use (in order of preference)... 
+     * 1. selected tlds 
+     * 2. supplied default tlds 
+     * 3. included default tlds
+     * 
+     * @return array tlds 
+     */
+    public function getTlds()
+    {
+        $arraSelected = array();
+        $arraAll = array();
+        $arraCall = array();
+
         // Select non empty one
         if (isset($this->_dataObject->data->selected) && $this->_dataObject->data->selected != '') {
             $arraSelected = explode(';', $this->_dataObject->data->selected);
@@ -54,6 +73,7 @@ class PremiumDomain extends Base
         if (isset($this->_dataObject->data->defaulttld) && $this->_dataObject->data->defaulttld != '') {
             $arraAll = explode(';', $this->_dataObject->data->defaulttld);
         }
+
         if (count($arraSelected) == 0) {
             if (count($arraAll) == 0) {
                 $arraCall = array('.com','.net','.org');
@@ -64,8 +84,7 @@ class PremiumDomain extends Base
             $arraCall = $arraSelected;
         }
 
-        // Call function
-        $resObject = $this->_domainTLD($domain, $arraCall);
+        return $arraCall;
     }
 
     // Selected / all TLD options

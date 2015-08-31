@@ -19,12 +19,13 @@ use OpenSRS\Request;
 
 
 //JSON
-$callstring = json_encode($callArray);
+// $callstring = json_encode($callArray);
 // $osrsHandler = processOpenSRS ('json', $callstring);
 
 try {
     $request = new Request();
-    $osrsHandler = $request->process('json', $callstring);
+    $osrsHandler = $request->process('array', $callArray);
+    // $osrsHandler = $request->process('json', $callstring);
 
     var_dump($osrsHandler->resultRaw);
 
