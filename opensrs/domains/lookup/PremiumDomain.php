@@ -60,31 +60,31 @@ class PremiumDomain extends Base
      * 
      * @return array tlds 
      */
-    public function getTlds()
+    public function getTlds($includedDefaults = array('.com', '.net', '.org'))
     {
-        $arraSelected = array();
-        $arraAll = array();
-        $arraCall = array();
+        $selected = array();
+        $suppliedDefaults = array();
 
         // Select non empty one
         if (isset($this->_dataObject->data->selected) && $this->_dataObject->data->selected != '') {
-            $arraSelected = explode(';', $this->_dataObject->data->selected);
+            $selected = explode(';', $this->_dataObject->data->selected);
         }
         if (isset($this->_dataObject->data->defaulttld) && $this->_dataObject->data->defaulttld != '') {
-            $arraAll = explode(';', $this->_dataObject->data->defaulttld);
+            $suppliedDefaults = explode(';', $this->_dataObject->data->defaulttld);
         }
 
-        if (count($arraSelected) == 0) {
-            if (count($arraAll) == 0) {
-                $arraCall = array('.com','.net','.org');
-            } else {
-                $arraCall = $arraAll;
-            }
-        } else {
-            $arraCall = $arraSelected;
+        // use selected
+        if (count($selected) > 0) {
+            return $selected; 
         }
 
-        return $arraCall;
+        // use supplied defaults
+        if (count($suppliedDefaults) > 0) {
+            return $suppliedDefaults; 
+        }
+
+        // use included defaults
+        return $includedDefaults;
     }
 
     // Selected / all TLD options
