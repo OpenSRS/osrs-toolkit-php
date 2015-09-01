@@ -34,9 +34,11 @@ class LookupDomain extends Base
         $domain = '';
 
         // search domain must be definded
-        if (!isset($this->dataObject->data->domain)) {
+        if (!$this->hasDomain()) {
             throw new Exception('oSRS Error - Search domain string not defined.');
         }
+
+        $domain = $this->getDomain();
 
         $tlds = $this->getConfiguredTlds();
 
