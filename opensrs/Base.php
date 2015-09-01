@@ -23,6 +23,10 @@ class Base
 
 	protected $_opsHandler;
 
+    protected $defaultTlds = array('.com', '.net', '.org');
+    protected $dataObject;
+    protected $dataFormat;
+
 	/**
 	 * openSRS_base object constructor
 	 *
@@ -268,5 +272,47 @@ class Base
         }
 
         return $resultString;
+    }
+    
+    /**
+     * Get configured tlds for domain call 
+     * Will use (in order of preference)... 
+     * 1. selected tlds 
+     * 2. supplied default tlds 
+     * 3. included default tlds
+     * 
+     * @return array tlds 
+     */
+    public function getConfiguredTlds()
+    {
+        $selected = array();
+        $suppliedDefaults = array();
+
+        // Select non empty one
+        if (isset($this->dataObject->data->selected) && $this->dataObject->data->selected != '') {
+            $selected = explode(';', $this->dataObject->data->selected);
+        }
+        if (isset($this->dataObject->data->defaulttld) && $this->dataObject->data->defaulttld != '') {
+            $suppliedDefaults = explode(';', $this->dataObject->data->defaulttld);
+        }
+
+        // use selected
+        if (count($selected) > 0) {
+            return $selected; 
+        }
+
+        // use supplied defaults
+        if (count($suppliedDefaults) > 0) {
+            return $suppliedDefaults; 
+        }
+
+        // use included defaults
+        return $this->defaultTlds;
+    }
+
+    public function setDataObject($format, $dataObject)
+    {
+        $this->dataObject = $dataObject;
+        $this->dataFormat = $format;
     }
 }
