@@ -9,7 +9,7 @@ use OpenSRS\Exception;
  *  Required object values:
  *  data - domain - .CA only
  */
- 
+
 class GetCaBlockerList extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -54,9 +54,9 @@ class GetCaBlockerList extends Base {
 			"action" => "get_ca_blocker_list",
 			"object" => "domain",
 			"attributes" => array (
-			    "domain" => $this->_dataObject->data->domain
-			)
-		);
+				"domain" => $this->_dataObject->data->domain
+				)
+			);
 
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
