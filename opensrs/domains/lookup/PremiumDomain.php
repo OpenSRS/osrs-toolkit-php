@@ -34,27 +34,37 @@ class PremiumDomain extends Base
     // Validate the object
     private function _validateObject()
     {
-        $allPassed = true;
         $domain = '';
-        $arraSelected = array();
-        $arraAll = array();
-        $arraCall = array();
 
+        // search domain must be definded
         if (!isset($this->_dataObject->data->domain)) {
-            throw new Exception('oSRS Error - Searh domain string not defined.');
+            throw new Exception('oSRS Error - Search domain string not defined.');
         }
 
         // Grab domain name
         $domain = $this->_dataObject->data->domain;
 
-        // if (isset($this->_dataObject->data->domain)) {
-        //     // Grab domain name
-        //     $domain = $this->_dataObject->data->domain;
-        // } else {
-        //     // trigger_error('oSRS Error - Search domain strinng not defined.', E_USER_WARNING);
-        //     throw new Exception('oSRS Error - Searh domain string not defined.');
-        //     $allPassed = false;
-        // }
+        // get tlds
+        $tlds = $this->getTlds();
+
+        // Call function
+        $resObject = $this->_domainTLD($domain, $tlds);
+    }
+
+    /**
+     * Get tlds for domain call 
+     * Will use (in order of preference)... 
+     * 1. selected tlds 
+     * 2. supplied default tlds 
+     * 3. included default tlds
+     * 
+     * @return array tlds 
+     */
+    public function getTlds()
+    {
+        $arraSelected = array();
+        $arraAll = array();
+        $arraCall = array();
 
         // Select non empty one
         if (isset($this->_dataObject->data->selected) && $this->_dataObject->data->selected != '') {
@@ -63,6 +73,7 @@ class PremiumDomain extends Base
         if (isset($this->_dataObject->data->defaulttld) && $this->_dataObject->data->defaulttld != '') {
             $arraAll = explode(';', $this->_dataObject->data->defaulttld);
         }
+
         if (count($arraSelected) == 0) {
             if (count($arraAll) == 0) {
                 $arraCall = array('.com','.net','.org');
@@ -73,13 +84,7 @@ class PremiumDomain extends Base
             $arraCall = $arraSelected;
         }
 
-        // Call function
-        if ($allPassed) {
-            $resObject = $this->_domainTLD($domain, $arraCall);
-        } else {
-            // trigger_error('oSRS Error - Incorrect call.', E_USER_WARNING);
-            throw new Exception('oSRS Error - Incorrect call.');
-        }
+        return $arraCall;
     }
 
     // Selected / all TLD options
