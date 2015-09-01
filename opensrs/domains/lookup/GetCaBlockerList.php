@@ -10,7 +10,7 @@ use OpenSRS\Exception;
  *  data - domain - .CA only
  */
  
-class GetCaBlockerList extends openSRS_base {
+class GetCaBlockerList extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;
@@ -33,7 +33,7 @@ class GetCaBlockerList extends openSRS_base {
 	private function _validateObject (){
 		$allPassed = true;
 
-		if (!isSet($this->_dataObject->data->domain)) {
+		if (!isset($this->_dataObject->data->domain)) {
 			trigger_error ("oSRS Error - Search domain strinng not defined.", E_USER_WARNING);
 			$allPassed = false;
 		}
@@ -65,7 +65,7 @@ class GetCaBlockerList extends openSRS_base {
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }
