@@ -60,11 +60,10 @@ class PremiumDomain extends Base
      * 
      * @return array tlds 
      */
-    public function getTlds()
+    public function getTlds($includedDefaults = array('.com', '.net', '.org'))
     {
         $selected = array();
         $suppliedDefaults = array();
-        $tlds = array('.com','.net','.org');
 
         // Select non empty one
         if (isset($this->_dataObject->data->selected) && $this->_dataObject->data->selected != '') {
@@ -85,7 +84,7 @@ class PremiumDomain extends Base
         }
 
         // use included defaults
-        return $tlds;
+        return $includedDefaults;
     }
 
     // Selected / all TLD options
