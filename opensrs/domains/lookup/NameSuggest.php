@@ -39,7 +39,7 @@ class NameSuggest extends Base {
 		$arransCall = array ();
 		$arralkCall = array ();
 
-		if (isSet($this->_dataObject->data->domain)) {
+		if (isset($this->_dataObject->data->domain)) {
 			// Grab domain name
 			$tdomain = $this->_dataObject->data->domain;
 			$tdom = explode (".", $tdomain);
@@ -52,21 +52,21 @@ class NameSuggest extends Base {
 		// Select non empty one
 
                 // Name Suggestion Choice Check
-		if (isSet($this->_dataObject->data->nsselected) && $this->_dataObject->data->nsselected != "") $arransSelected = explode (";", $this->_dataObject->data->nsselected);
+		if (isset($this->_dataObject->data->nsselected) && $this->_dataObject->data->nsselected != "") $arransSelected = explode (";", $this->_dataObject->data->nsselected);
 
                 // Lookup Choice Check
-		if (isSet($this->_dataObject->data->lkselected) && $this->_dataObject->data->lkselected != "") $arralkSelected = explode (";", $this->_dataObject->data->lkselected);
+		if (isset($this->_dataObject->data->lkselected) && $this->_dataObject->data->lkselected != "") $arralkSelected = explode (";", $this->_dataObject->data->lkselected);
 
                 // Get Default Name Suggestion Choices For No Form Submission
-		if (isSet($this->_dataObject->data->allnsdomains) && $this->_dataObject->data->allnsdomains != "") $arransAll = explode (";", $this->_dataObject->data->allnsdomains);
+		if (isset($this->_dataObject->data->allnsdomains) && $this->_dataObject->data->allnsdomains != "") $arransAll = explode (";", $this->_dataObject->data->allnsdomains);
 
                 // Get Default Lookup Choices For No Form Submission
-		if (isSet($this->_dataObject->data->alllkdomains) && $this->_dataObject->data->alllkdomains != "") $arralkAll = explode (";", $this->_dataObject->data->alllkdomains);
+		if (isset($this->_dataObject->data->alllkdomain) && $this->_dataObject->data->alllkdomains != "") $arralkAll = explode (";", $this->_dataObject->data->alllkdomains);
 
 
                 // If Name Suggestion Choices Empty
-		if (count($arransSelected) == 0) {
-			if (count($arransAll) == 0){
+		if (empty($arransSelected)) {
+			if (empty($arransAll)){
 				$arransCall = array (".com",".net",".org",".info",".biz",".us",".mobi");
 			} else {
 				$arransCall = $arransAll;
@@ -76,8 +76,8 @@ class NameSuggest extends Base {
 		}
 
                 // If Lookup Choices Empty
-		if (count($arralkSelected) == 0) {
-			if (count($arralkAll) == 0){
+		if (empty($arralkSelected)) {
+			if (empty($arralkAll)){
 				$arralkCall = array (".com",".net",".ca",".us",".eu",".de",".co.uk");
 			} else {
 				$arralkCall = $arralkAll;
@@ -117,7 +117,7 @@ class NameSuggest extends Base {
 			)
 		);
 
-                if(isSet($this->_dataObject->data->maximum) && $this->_dataObject->data->maximum != ""){
+                if(isset($this->_dataObject->data->maximum) && $this->_dataObject->data->maximum != ""){
                     $cmd['attributes']['service_override']['lookup']['maximum'] = $this->_dataObject->data->maximum;
                     $cmd['attributes']['service_override']['suggestion']['maximum'] = $this->_dataObject->data->maximum;
                 }
@@ -130,19 +130,24 @@ class NameSuggest extends Base {
 
 		// Results
 		$this->resultFullRaw = $arrayResult;
+
+		var_dump($arrayResult);
 		
-		if (isSet($arrayResult['attributes'])){
+		if (isset($arrayResult['attributes'])){
+            $this->resultRaw = array ();
 
-                    $this->resultRaw = array (
-                            'lookup' => $arrayResult['attributes']['lookup']['items'],
-                            'suggestion' => $arrayResult['attributes']['suggestion']['items']
-                    );
+            if(isset($arrayResult['attributes']['lookup']['items'])){
+            	$this->resultRaw['lookup'] = $arrayResult['attributes']['lookup']['items'];
+            }
 
-                } else {
+            if(isset($arrayResult['attributes']['suggestion']['items'])){
+            	$this->resultRaw['suggestion'] = $arrayResult['attributes']['suggestion']['items'];
+            }
+        } else {
 			$this->resultRaw = $arrayResult;
 		}
 
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }

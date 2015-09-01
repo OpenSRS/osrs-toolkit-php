@@ -36,7 +36,7 @@ class GetPrice extends Base {
 	private function _validateObject (){
 		$allPassed = true;
 		
-		if (!isSet($this->_dataObject->data->domain)) {
+		if (!isset($this->_dataObject->data->domain)) {
 			trigger_error ("oSRS Error - Domain is not defined.", E_USER_WARNING);
 			$allPassed = false;
 		}
@@ -62,8 +62,8 @@ class GetPrice extends Base {
 		);
 		
 		// Command optional values
-		if (isSet($this->_dataObject->data->period) && $this->_dataObject->data->period != "") $cmd['attributes']['period'] = $this->_dataObject->data->period;
-		if (isSet($this->_dataObject->data->reg_type) && $this->_dataObject->data->reg_type != "") $cmd['attributes']['reg_type'] = $this->_dataObject->data->reg_type;
+		if (isset($this->_dataObject->data->period) && $this->_dataObject->data->period != "") $cmd['attributes']['period'] = $this->_dataObject->data->period;
+		if (isset($this->_dataObject->data->reg_type) && $this->_dataObject->data->reg_type != "") $cmd['attributes']['reg_type'] = $this->_dataObject->data->reg_type;
 
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
@@ -71,12 +71,12 @@ class GetPrice extends Base {
 
 		// Results
 		$this->resultFullRaw = $arrayResult;
-                if (isSet($arrayResult['attributes'])){
-                    $this->resultRaw = $arrayResult['attributes'];
-                } else {
+            if (isset($arrayResult['attributes'])){
+                $this->resultRaw = $arrayResult['attributes'];
+        } else {
 			$this->resultRaw = $arrayResult;
 		}
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }
