@@ -21,19 +21,19 @@ class GetDeletedDomains extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
-	public function __construct ($formatString, $dataObject) {
+	public function __construct($formatString, $dataObject) {
 		parent::__construct();
 		$this->_dataObject = $dataObject;
 		$this->_formatHolder = $formatString;
 		$this->_validateObject ();
 	}
 
-	public function __destruct () {
+	public function __destruct() {
 		parent::__destruct();
 	}
 
 	// Validate the object
-	private function _validateObject (){
+	private function _validateObject(){
 		$allPassed = true;
 
 // Maybe all attribute array should be compiled here
@@ -71,19 +71,19 @@ class GetDeletedDomains extends Base {
 		// Run the command
 		if ($allPassed) {
 			// Execute the command
-			$this->_processRequest ();
+			$this->_processRequest();
 		} else {
-			trigger_error ("oSRS Error - Incorrect call.", E_USER_WARNING);
+			trigger_error("oSRS Error - Incorrect call.", E_USER_WARNING);
 		}
 	}
 
 	// Post validation functions
-	private function _processRequest (){
+	private function _processRequest(){
 		$cmd = array(
 			"protocol" => "XCP",
 			"action" => "GET_DELETED_DOMAINS",
 			"object" => "domain",
-			"attributes" => array ()
+			"attributes" => array()
 		);
 		
 		// Command optional values
@@ -104,9 +104,9 @@ class GetDeletedDomains extends Base {
 
 		// Results
 		$this->resultFullRaw = $arrayResult;
-                if (isset($arrayResult['attributes'])){
-                    $this->resultRaw = $arrayResult['attributes'];
-                } else {
+        if (isset($arrayResult['attributes'])){
+            $this->resultRaw = $arrayResult['attributes'];
+        } else {
 			$this->resultRaw = $arrayResult;
 		}
 		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);

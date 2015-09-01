@@ -18,19 +18,19 @@ class GetCaBlockerList extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
-	public function __construct ($formatString, $dataObject) {
+	public function __construct($formatString, $dataObject) {
 		parent::__construct();
 		$this->_dataObject = $dataObject;
 		$this->_formatHolder = $formatString;
 		$this->_validateObject ();
 	}
 
-	public function __destruct () {
+	public function __destruct() {
 		parent::__destruct();
 	}
 
 	// Validate the object
-	private function _validateObject (){
+	private function _validateObject(){
 		$allPassed = true;
 
 		if (!isset($this->_dataObject->data->domain)) {
@@ -41,14 +41,14 @@ class GetCaBlockerList extends Base {
 		// Run the command
 		if ($allPassed) {
 			// Execute the command
-			$this->_processRequest ();
+			$this->_processRequest();
 		} else {
 			trigger_error ("oSRS Error - Incorrect call.", E_USER_WARNING);
 		}
 	}
 
 	// Post validation functions
-	private function _processRequest (){
+	private function _processRequest(){
 		$cmd = array(
 			"protocol" => "XCP",
 			"action" => "get_ca_blocker_list",
