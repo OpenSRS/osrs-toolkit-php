@@ -34,34 +34,26 @@ class GetDomainsContacts extends Base {
 
 	// Validate the object
 	private function _validateObject (){
-		$allPassed = true;
-		
 		if (!isSet($this->_dataObject->data->domain_list)) {
-			trigger_error ("oSRS Error - Domain list is not defined.", E_USER_WARNING);
+			throw new Exception ("oSRS Error - Domain list is not defined.");
 			$allPassed = false;
 		}
 
-		// Run the command
-		if ($allPassed) {
-			// Execute the command
-			$this->_processRequest ();
-		} else {
-			trigger_error ("oSRS Error - Incorrect call.", E_USER_WARNING);
-		}
+		$this->_processRequest ();
 	}
 
 	// Post validation functions
 	private function _processRequest (){
 		$domainListArray = explode (",", $this->_dataObject->data->domain_list);
-	
+
 		$cmd = array(
 			"protocol" => "XCP",
 			"action" => "GET_DOMAINS_CONTACTS",
 			"object" => "DOMAIN",
 			"attributes" => array (
 				'domain_list' => $domainListArray
-			)
-		);
+				)
+			);
 
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
@@ -69,12 +61,12 @@ class GetDomainsContacts extends Base {
 
 		// Results
 		$this->resultFullRaw = $arrayResult;
-                if (isSet($arrayResult['attributes'])){
-                    $this->resultRaw = $arrayResult['attributes'];
-                } else {
+		if (isSet($arrayResult['attributes'])){
+			$this->resultRaw = $arrayResult['attributes'];
+		} else {
 			$this->resultRaw = $arrayResult;
 		}
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }
