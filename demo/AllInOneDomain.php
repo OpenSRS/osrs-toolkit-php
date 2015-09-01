@@ -4,9 +4,9 @@ $callArray = array (
     'func' => 'allinoneDomain',
 
     'data' => array (
-            'domain' => 'hockey.com',
-    ),
-);
+        'domain' => 'hockey.com',
+        ),
+    );
 
 require __DIR__ . '/../vendor/autoload.php';
 use OpenSRS\Request;

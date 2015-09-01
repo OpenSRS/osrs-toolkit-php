@@ -71,18 +71,18 @@ class premiumDomain extends openSRS_base {
 				"service_override" => array(
 					"premium" => array(
 						"tlds" => $request
-					)
-				),
+						)
+					),
 				"services" => array(
 					"premium"
+					)
 				)
-			)
-		);
+			);
 
 
-                if(isSet($this->_dataObject->data->maximum) && $this->_dataObject->data->maximum != ""){
-                    $cmd['attributes']['service_override']['premium']['maximum'] = $this->_dataObject->data->maximum;
-                }
+		if(isSet($this->_dataObject->data->maximum) && $this->_dataObject->data->maximum != ""){
+			$cmd['attributes']['service_override']['premium']['maximum'] = $this->_dataObject->data->maximum;
+		}
 
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
