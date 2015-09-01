@@ -40,54 +40,72 @@ class NameSuggestTest extends PHPUnit_Framework_TestCase
             );
 
 
-        // get selected tlds
+
+        // test default tlds
+        $ns = new NameSuggest('array', $data);
+        $expectedResult = array(
+            "lookup" => array(
+                "tlds" => $ns->defaulttld_allnsdomains
+                ),
+            "suggestion" => array(
+                "tlds" => $ns->defaulttld_alllkdomains
+                )
+            );
+        $this->assertTrue($expectedResult == $ns->getTlds());
+
+
+
+        // get selected tlds, specify only lookup tlds
         $data->data->nsselected = '.com';
         $ns = new NameSuggest('array', $data);
-        $this->assertTrue(array('.com') == $ns->getTlds('nsselected'));
+        $expectedResult = array(
+            "lookup" => array(
+                "tlds" => array( '.com' )
+                ),
+            "suggestion" => array(
+                "tlds" => $ns->defaulttld_alllkdomains
+                )
+            );
+        $this->assertTrue($expectedResult == $ns->getTlds());
         // unset test value
         unset($data->data->nsselected);
 
-        // test default nsselected
+
+
+
+        // get selected tlds, specify suggestion tlds
+        $data->data->alllkdomains = '.com;.net';
         $ns = new NameSuggest('array', $data);
-        $this->assertTrue($ns->defaulttld_nsselected == $ns->getTlds('nsselected'));
-
-
-        // get lookup choice check
-        $data->data->lkselected = '.com';
-        $ns = new NameSuggest('array', $data);
-        $this->assertTrue(array('.com') == $ns->getTlds('lkselected'));
-        // unset test value
-        unset($data->data->lkselected);
-
-
-        // test default lkselected
-        $ns = new NameSuggest('array', $data);
-        $this->assertTrue($ns->defaulttld_lkselected == $ns->getTlds('lkselected'));
-
-
-        // Get Default Name Suggestion Choices For No Form Submission
-        $data->data->allnsdomains = '.com';
-        $ns = new NameSuggest('array', $data);
-        $this->assertTrue(array('.com') == $ns->getTlds('allnsdomains'));
-        // unset test value
-        unset($data->data->allnsdomains);
-
-
-        // test default allnsdomains
-        $ns = new NameSuggest('array', $data);
-        $this->assertTrue($ns->defaulttld_allnsdomains == $ns->getTlds('allnsdomains'));
-
-
-        // Get Default Lookup Choices For No Form Submission
-        $data->data->alllkdomains = '.com';
-        $ns = new NameSuggest('array', $data);
-        $this->assertTrue(array('.com') == $ns->getTlds('alllkdomains'));
+        $expectedResult = array(
+            "lookup" => array(
+                "tlds" => $ns->defaulttld_allnsdomains
+                ),
+            "suggestion" => array(
+                "tlds" => array( '.com', '.net' )
+                )
+            );
+        $this->assertTrue($expectedResult == $ns->getTlds());
         // unset test value
         unset($data->data->alllkdomains);
 
 
-        // test default alllkdomains
+
+
+        // get selected tlds, specify both lookup and suggestion tlds
+        $data->data->nsselected = '.org';
+        $data->data->alllkdomains = '.com;.net';
         $ns = new NameSuggest('array', $data);
-        $this->assertTrue($ns->defaulttld_alllkdomains == $ns->getTlds('alllkdomains'));
+        $expectedResult = array(
+            "lookup" => array(
+                "tlds" => array( '.org' )
+                ),
+            "suggestion" => array(
+                "tlds" => array( '.com', '.net' )
+                )
+            );
+        $this->assertTrue($expectedResult == $ns->getTlds());
+        // unset test value
+        unset($data->data->nsselected);
+        unset($data->data->alllkdomains);
     }
 }

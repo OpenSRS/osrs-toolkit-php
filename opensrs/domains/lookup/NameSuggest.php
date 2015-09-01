@@ -12,9 +12,7 @@ class NameSuggest extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
 
-	public $defaulttld_nsselected = array (".com",".net",".org",".info",".biz",".us",".mobi");
-	public $defaulttld_lkselected = array ();
-	public $defaulttld_allnsdomains = array ();
+	public $defaulttld_allnsdomains = array (".com",".net",".org",".info",".biz",".us",".mobi");
 	public $defaulttld_alllkdomains = array (".com",".net",".ca",".us",".eu",".de",".co.uk");
 
 	public $resultFullRaw;
@@ -89,7 +87,7 @@ class NameSuggest extends Base {
 
 		if (count($arransSelected) == 0) {
 			if (count($arransAll) == 0){
-				$arransCall = $this->defaulttld_nsselected;
+				$arransCall = $this->defaulttld_allnsdomains;
 			} else {
 				$arransCall = $arransAll;
 			}
