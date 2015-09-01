@@ -95,7 +95,7 @@ class NameSuggest extends Base {
 			$arransCall = $arransSelected;
 		}
 
-                // If Lookup Choices Empty
+        // If Lookup Choices Empty
 		if (count($arralkSelected) == 0) {
 			if (count($arralkAll) == 0){
 				$arralkCall = $this->defaulttld_alllkdomains;

@@ -55,15 +55,33 @@ class NameSuggestTest extends PHPUnit_Framework_TestCase
 
 
 
-        // get selected tlds, specify only lookup tlds
-        $data->data->nsselected = '.com';
+        // get selected tlds, none are checked, pass only "all" tlds
+        $data->data->allnsdomains = '.com;.net;.org';
+        $data->data->alllkdomains = '.ca;.jp;.it';
+
         $ns = new NameSuggest('array', $data);
         $expectedResult = array(
             "lookup" => array(
-                "tlds" => array( '.com' )
+                "tlds" => array( '.com', '.net', '.org' )
                 ),
             "suggestion" => array(
-                "tlds" => $ns->defaulttld_alllkdomains
+                "tlds" => array( '.ca', '.jp', '.it' )
+                )
+            );
+        $this->assertTrue($expectedResult == $ns->getTlds());
+
+
+
+
+        // get selected tlds, specify suggestion tlds
+        $data->data->nsselected = '.com;.net';
+        $ns = new NameSuggest('array', $data);
+        $expectedResult = array(
+            "lookup" => array(
+                "tlds" => array( '.com', '.net' )
+                ),
+            "suggestion" => array(
+                "tlds" => array( '.ca', '.jp', '.it' )
                 )
             );
         $this->assertTrue($expectedResult == $ns->getTlds());
@@ -73,12 +91,12 @@ class NameSuggestTest extends PHPUnit_Framework_TestCase
 
 
 
-        // get selected tlds, specify suggestion tlds
-        $data->data->alllkdomains = '.com;.net';
+        // get selected tlds, specify both lookup and suggestion tlds
+        $data->data->lkselected = '.com;.net';
         $ns = new NameSuggest('array', $data);
         $expectedResult = array(
             "lookup" => array(
-                "tlds" => $ns->defaulttld_allnsdomains
+                "tlds" => array( '.com', '.net', '.org' )
                 ),
             "suggestion" => array(
                 "tlds" => array( '.com', '.net' )
@@ -86,14 +104,14 @@ class NameSuggestTest extends PHPUnit_Framework_TestCase
             );
         $this->assertTrue($expectedResult == $ns->getTlds());
         // unset test value
-        unset($data->data->alllkdomains);
+        unset($data->data->lkselected);
 
 
 
 
         // get selected tlds, specify both lookup and suggestion tlds
         $data->data->nsselected = '.org';
-        $data->data->alllkdomains = '.com;.net';
+        $data->data->lkselected = '.com;.net';
         $ns = new NameSuggest('array', $data);
         $expectedResult = array(
             "lookup" => array(
@@ -106,6 +124,6 @@ class NameSuggestTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($expectedResult == $ns->getTlds());
         // unset test value
         unset($data->data->nsselected);
-        unset($data->data->alllkdomains);
+        unset($data->data->lkselected);
     }
 }
