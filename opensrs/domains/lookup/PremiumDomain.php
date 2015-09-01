@@ -36,12 +36,12 @@ class PremiumDomain extends Base
         $domain = '';
 
         // search domain must be definded
-        if (!isset($this->dataObject->data->domain)) {
+        if (!$this->hasDomain()) { 
             throw new Exception('oSRS Error - Search domain string not defined.');
         }
 
         // Grab domain name
-        $domain = $this->dataObject->data->domain;
+        $domain = $this->getDomain();
 
         // get tlds
         $tlds = $this->getConfiguredTlds();

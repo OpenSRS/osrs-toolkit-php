@@ -315,4 +315,24 @@ class Base
         $this->dataObject = $dataObject;
         $this->dataFormat = $format;
     }
+
+    /**
+     * Does the dataObject have a domain set?
+     * 
+     * @return bool 
+     */
+    public function hasDomain()
+    {
+        return isset($this->dataObject->data->domain);
+    }
+
+    /**
+     * Get the domain from the dataObject
+     * 
+     * @return void
+     */
+    public function getDomain()
+    {
+        return $this->dataObject->data->domain; 
+    }
 }
