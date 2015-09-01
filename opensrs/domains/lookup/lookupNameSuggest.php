@@ -101,21 +101,21 @@ class lookupNameSuggest extends openSRS_base {
 				"service_override" => array(
 					"lookup" => array(
 						"tlds" => $lktlds
-					),
+						),
 					"suggestion" => array(
 						"tlds" => $nstlds
-					)
-				),
+						)
+					),
 				"services" => array(
 					"lookup","suggestion"
+					)
 				)
-			)
-		);
+			);
 
-                if(isSet($this->_dataObject->data->maximum) && $this->_dataObject->data->maximum != ""){
-                    $cmd['attributes']['service_override']['lookup']['maximum'] = $this->_dataObject->data->maximum;
-                    $cmd['attributes']['service_override']['suggestion']['maximum'] = $this->_dataObject->data->maximum;
-                }
+		if(isSet($this->_dataObject->data->maximum) && $this->_dataObject->data->maximum != ""){
+			$cmd['attributes']['service_override']['lookup']['maximum'] = $this->_dataObject->data->maximum;
+			$cmd['attributes']['service_override']['suggestion']['maximum'] = $this->_dataObject->data->maximum;
+		}
 
 
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
@@ -128,12 +128,12 @@ class lookupNameSuggest extends openSRS_base {
 		
 		if (isSet($arrayResult['attributes'])){
 
-                    $this->resultRaw = array (
-                            'lookup' => $arrayResult['attributes']['lookup']['items'],
-                            'suggestion' => $arrayResult['attributes']['suggestion']['items']
-                    );
+			$this->resultRaw = array (
+				'lookup' => $arrayResult['attributes']['lookup']['items'],
+				'suggestion' => $arrayResult['attributes']['suggestion']['items']
+				);
 
-                } else {
+		} else {
 			$this->resultRaw = $arrayResult;
 		}
 

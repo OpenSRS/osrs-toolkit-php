@@ -37,12 +37,6 @@ class NameSuggest extends Base {
 	// Validate the object
 	private function _validateObject(){
 		$domain = "";
-		$arransSelected = array();
-		$arralkSelected = array();
-		$arransAll = array();
-		$arralkAll = array();
-		$arransCall = array();
-		$arralkCall = array();
 
 		if (!isset($this->_dataObject->data->domain)) {
 			throw new Exception("oSRS Error - Search domain strinng not defined.");
@@ -53,44 +47,9 @@ class NameSuggest extends Base {
 		$tdom = explode (".", $tdomain);
 		$domain = $tdom[0];
 
-		// Select non-empty one
+		$serviceOverride = $this->getTlds();
 
-		// Name Suggestion Choice Check
-		$arransSelected = $this->getTlds( 'nsselected' );
-
-		// Lookup Choice Check
-		$arralkSelected = $this->getTlds( 'lkselected' );
-
-		// Get Default Name Suggestion Choices For No Form Submission
-		$arransAll =  $this->getTlds( 'allnsdomains' );
-
-		// Get Default Lookup Choices For No Form Submission
-		$arralkAll =  $this->getTlds( 'alllkdomains' );
-
-
-		// If Name Suggestion Choices Empty
-		if (empty($arransSelected)) {
-			if (empty($arransAll)) {
-				$arransCall = $this->getTlds( 'nsselected' );
-			} else {
-				$arransCall = $arransAll;
-			}
-		} else {
-			$arransCall = $arransSelected;
-		}
-
-		// If Lookup Choices Empty
-		if (empty($arralkSelected)) {
-			if (empty($arralkAll)){
-				$arralkCall = $this->getTlds( 'alllkdomain' );
-			} else {
-				$arralkCall = $arralkAll;
-			}
-		} else {
-			$arralkCall = $arralkSelected;
-		}
-
-		$resObject = $this->_domainTLD ($domain, $arransCall, $arralkCall);
+		$resObject = $this->_domainTLD ($domain, $serviceOverride);
 	}
 
 	/**
@@ -102,51 +61,74 @@ class NameSuggest extends Base {
 	* 
 	* @return array tlds 
 	*/
-	public function getTlds( $field = 'selected', $default = 'defaulttld' )
+	public function getTlds()
 	{
-		$arraSelected = array();
-		$arraAll = array();
-		$arraCall = array();
+		$arransSelected = array();
+		$arralkSelected = array();
+		$arransAll = array();
+		$arralkAll = array();
+		$arransCall = array();
+		$arralkCall = array();
+
+		$selected = array();
+		$suppliedDefaults = array();
 
 		// Select non empty one
-		if (isset($this->_dataObject->data->$field) && $this->_dataObject->data->$field != '') {
-			$arraSelected = explode(';', $this->_dataObject->data->$field);
-		}
 
-		if (count($arraSelected) == 0) {
-			if (count($arraAll) == 0) {
-				if(isset($this->$default)){
-					$arraCall = $this->$default;
-				}
-				elseif(isset($this->{$default."_".$field})) {
-					$arraCall = $this->{$default."_".$field};
-				}
+        // Name Suggestion Choice Check
+		if (isSet($this->_dataObject->data->nsselected) && $this->_dataObject->data->nsselected != "") $arransSelected = explode (";", $this->_dataObject->data->nsselected);
+
+        // Lookup Choice Check
+		if (isSet($this->_dataObject->data->lkselected) && $this->_dataObject->data->lkselected != "") $arralkSelected = explode (";", $this->_dataObject->data->lkselected);
+
+        // Get Default Name Suggestion Choices For No Form Submission
+		if (isSet($this->_dataObject->data->allnsdomains) && $this->_dataObject->data->allnsdomains != "") $arransAll = explode (";", $this->_dataObject->data->allnsdomains);
+
+        // Get Default Lookup Choices For No Form Submission
+		if (isSet($this->_dataObject->data->alllkdomains) && $this->_dataObject->data->alllkdomains != "") $arralkAll = explode (";", $this->_dataObject->data->alllkdomains);
+
+		if (count($arransSelected) == 0) {
+			if (count($arransAll) == 0){
+				$arransCall = $this->defaulttld_nsselected;
 			} else {
-				$arraCall = $arraAll;
+				$arransCall = $arransAll;
 			}
 		} else {
-			$arraCall = $arraSelected;
+			$arransCall = $arransSelected;
 		}
 
-		return $arraCall;
+                // If Lookup Choices Empty
+		if (count($arralkSelected) == 0) {
+			if (count($arralkAll) == 0){
+				$arralkCall = $this->defaulttld_alllkdomains;
+			} else {
+				$arralkCall = $arralkAll;
+			}
+		} else {
+			$arralkCall = $arralkSelected;
+		}
+
+		$serviceOverride = array(
+			"lookup" => array(
+				"tlds" => $arransCall
+				),
+			"suggestion" => array(
+				"tlds" => $arralkCall
+				)
+			);
+
+		return $serviceOverride;
 	}
 
 	// Selected / all TLD options
-	private function _domainTLD($domain, $nstlds, $lktlds){
+	private function _domainTLD($domain, $serviceOverride){
 		$cmd = array(
 			"protocol" => "XCP",
 			"action" => "name_suggest",
 			"object" => "domain",
 			"attributes" => array(
 				"searchstring" => $domain,
-				"service_override" => array(
-					"lookup" => array(
-						"tlds" => $lktlds
-						),
-					"suggestion" => array(
-						"tlds" => $nstlds
-						)
-					),
+				"service_override" => $serviceOverride,
 				"services" => array(
 					"lookup","suggestion"
 					)
