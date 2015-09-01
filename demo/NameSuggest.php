@@ -9,7 +9,7 @@ $callArray = array (
         // Only need to pass one of these 
         // <-----
             // Name Suggestion Choice Check
-            'nsselected' => '.com;.net;.org', 
+        'nsselected' => '.com;.net;.org', 
 
             // Lookup Choice Check
             // 'lkselected' => '.com;.net;.org', 
@@ -20,14 +20,14 @@ $callArray = array (
             // Get Default Lookup Choices For No Form Submission
             // 'alllkdomains' => '.com;.net;.org'
         // ----->
-    ),
-);
+        ),
+    );
 
 require __DIR__ . '/../vendor/autoload.php';
 use OpenSRS\Request;
 
 try {
-    $request = new Request();
+    $request = new Request('array', $callArray);
     $osrsHandler = $request->process('array', $callArray);
 
     var_dump($osrsHandler->resultRaw);

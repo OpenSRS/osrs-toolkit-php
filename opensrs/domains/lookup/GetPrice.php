@@ -34,20 +34,12 @@ class GetPrice extends Base {
 
 	// Validate the object
 	private function _validateObject (){
-		$allPassed = true;
-		
 		if (!isset($this->_dataObject->data->domain)) {
-			trigger_error ("oSRS Error - Domain is not defined.", E_USER_WARNING);
-			$allPassed = false;
+			throw new Exception("oSRS Error - Search domain strinng not defined.");
 		}
 
-		// Run the command
-		if ($allPassed) {
-			// Execute the command
-			$this->_processRequest ();
-		} else {
-			trigger_error ("oSRS Error - Incorrect call.", E_USER_WARNING);
-		}
+		// Execute the command
+		$this->_processRequest ();
 	}
 
 	// Post validation functions
@@ -58,22 +50,26 @@ class GetPrice extends Base {
 			"object" => "DOMAIN",
 			"attributes" => array (
 				'domain' => $this->_dataObject->data->domain
-			)
-		);
+				)
+			);
 		
 		// Command optional values
 		if (isset($this->_dataObject->data->period) && $this->_dataObject->data->period != "") $cmd['attributes']['period'] = $this->_dataObject->data->period;
 		if (isset($this->_dataObject->data->reg_type) && $this->_dataObject->data->reg_type != "") $cmd['attributes']['reg_type'] = $this->_dataObject->data->reg_type;
 
-		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
-		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
-		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
+		// Flip Array to XML
+		$xmlCMD = $this->_opsHandler->encode($cmd);
+		// Send XML
+		$XMLresult = $this->send_cmd($xmlCMD);
+		// FLip XML to Array
+		$arrayResult = $this->_opsHandler->decode($XMLresult);
 
 		// Results
 		$this->resultFullRaw = $arrayResult;
-            if (isset($arrayResult['attributes'])){
-                $this->resultRaw = $arrayResult['attributes'];
-        } else {
+		
+		if (isset($arrayResult['attributes'])){
+			$this->resultRaw = $arrayResult['attributes'];
+		} else {
 			$this->resultRaw = $arrayResult;
 		}
 		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);

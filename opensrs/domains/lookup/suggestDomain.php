@@ -72,17 +72,17 @@ class suggestDomain extends openSRS_base {
 				"service_override" => array(
 					"suggestion" => array(
 						"tlds" => $request
-					)
-				),
+						)
+					),
 				"services" => array(
 					"suggestion"
+					)
 				)
-			)
-		);
+			);
 
-                if(isSet($this->_dataObject->data->maximum) && $this->_dataObject->data->maximum != ""){
-                    $cmd['attributes']['service_override']['suggestion']['maximum'] = $this->_dataObject->data->maximum;
-                }
+		if(isSet($this->_dataObject->data->maximum) && $this->_dataObject->data->maximum != ""){
+			$cmd['attributes']['service_override']['suggestion']['maximum'] = $this->_dataObject->data->maximum;
+		}
 		
 //		print_r ($cmd);
 //		echo ("\n\n\n");

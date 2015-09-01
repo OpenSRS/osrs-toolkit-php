@@ -36,7 +36,7 @@ class AllInOneDomain extends Base {
 		$arraAll = array ();
 		$arraCall = array ();
 
-		if (isSet($this->_dataObject->data->domain)) {
+		if (isset($this->_dataObject->data->domain)) {
 			// Grab domain name
 			$tdomain = $this->_dataObject->data->domain;
 			$tdom = explode (".", $tdomain);
@@ -47,8 +47,8 @@ class AllInOneDomain extends Base {
 		}
 		
 		// Select non empty one
-		if (isSet($this->_dataObject->data->selected) && $this->_dataObject->data->selected != "") $arraSelected = explode (";", $this->_dataObject->data->selected);
-		if (isSet($this->_dataObject->data->defaulttld) && $this->_dataObject->data->defaulttld != "") $arraAll = explode (";", $this->_dataObject->data->defaulttld);
+		if (isset($this->_dataObject->data->selected) && $this->_dataObject->data->selected != "") $arraSelected = explode (";", $this->_dataObject->data->selected);
+		if (isset($this->_dataObject->data->defaulttld) && $this->_dataObject->data->defaulttld != "") $arraAll = explode (";", $this->_dataObject->data->defaulttld);
 		if (count($arraSelected) == 0) {
 			if (count($arraAll) == 0){
 				$arraCall = array (".com",".net",".org");
@@ -93,7 +93,7 @@ class AllInOneDomain extends Base {
 			)
 		);
 
-                if(isSet($this->_dataObject->data->maximum) && $this->_dataObject->data->maximum != ""){
+                if(isset($this->_dataObject->data->maximum) && $this->_dataObject->data->maximum != ""){
                     $cmd['attributes']['service_override']['lookup']['maximum'] = $this->_dataObject->data->maximum;
                     $cmd['attributes']['service_override']['premium']['maximum'] = $this->_dataObject->data->maximum;
                     $cmd['attributes']['service_override']['suggestion']['maximum'] = $this->_dataObject->data->maximum;
@@ -110,9 +110,9 @@ class AllInOneDomain extends Base {
 		// empty premium
 		$this->resultFullRaw = $arrayResult;
 
-		if (isSet($arrayResult['attributes'])){
+		if (isset($arrayResult['attributes'])){
 
-                    if (isSet($arrayResult['attributes']['premium']['items'])) {
+                    if (isset($arrayResult['attributes']['premium']['items'])) {
                             $tempHold = $arrayResult['attributes']['premium']['items'];
                     } else {
                             $tempHold = null;			// Null if there are no premium domains
@@ -128,7 +128,7 @@ class AllInOneDomain extends Base {
 			$this->resultRaw = $arrayResult;
 		}
 
-		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }
