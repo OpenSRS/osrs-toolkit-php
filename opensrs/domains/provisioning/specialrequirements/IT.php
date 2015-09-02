@@ -46,7 +46,7 @@ class IT extends Base {
 	}
 
 	public function setSpecialRequestFieldsForTld( $dataObject, $requestData ){
-		if (isset($dataObject->it_registrant_info->nationality_code) && $dataObject->it_registrant_info->nationality_code != ""){
+		if (isset($dataObject->it_registrant_info->nationality_code) && $dataObject->it_registrant_info->nationality_code != "") {
 			$requestData['attributes']['tld_data']['it_registrant_info']['nationality_code'] = $dataObject->it_registrant_info->nationality_code;
 		}
 

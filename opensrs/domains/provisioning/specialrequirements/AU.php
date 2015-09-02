@@ -72,8 +72,9 @@ class AU extends Base {
 
 	public function setSpecialRequestFieldsForTld( $dataObject, $requestData ){
 		foreach($this->requestFields as $reqData) {
-			if(isset($dataObject->au_registrant_info->$reqData) && $dataObject->au_registrant_info->$reqData != "")
+			if(isset($dataObject->au_registrant_info->$reqData) && $dataObject->au_registrant_info->$reqData != "") {
 				$requestData['attributes']['tld_data']['au_registrant_info'][$reqData] = $dataObject->au_registrant_info->$reqData;
+			}
 		}
 
 		return $requestData;

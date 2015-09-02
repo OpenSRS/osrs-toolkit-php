@@ -55,20 +55,25 @@ class CA extends Base {
 		$requestData['attributes']['lang_pref'] = $dataObject->data->lang_pref;
 		$requestData['attributes']['legal_type'] = strtoupper($dataObject->data->legal_type);
 
-		if (isset($dataObject->data->ca_link_domain) && $dataObject->data->ca_link_domain != "")
+		if (isset($dataObject->data->ca_link_domain) && $dataObject->data->ca_link_domain != "") {
 			$requestData['attributes']['ca_link_domain'] = $dataObject->data->ca_link_domain;
+		}
 
-		if (isset($dataObject->data->cwa) && $dataObject->data->cwa != "")
+		if (isset($dataObject->data->cwa) && $dataObject->data->cwa != "") {
 			$requestData['attributes']['cwa'] = $dataObject->data->cwa;
+		}
 
-		if (isset($dataObject->data->domain_description) && $dataObject->data->domain_description != "")
+		if (isset($dataObject->data->domain_description) && $dataObject->data->domain_description != "") {
 			$requestData['attributes']['domain_description'] = $dataObject->data->domain_description;
+		}
 
-		if (isset($dataObject->data->rant_agrees) && $dataObject->data->rant_agrees != "")
+		if (isset($dataObject->data->rant_agrees) && $dataObject->data->rant_agrees != "") {
 			$requestData['attributes']['rant_agrees'] = $dataObject->data->rant_agrees;
+		}
 
-		if (isset($dataObject->data->rant_no) && $dataObject->data->rant_no != "")
+		if (isset($dataObject->data->rant_no) && $dataObject->data->rant_no != "") {
 			$requestData['attributes']['rant_no'] = $dataObject->data->rant_no;
+		}
 
 		return $requestData;
 	}

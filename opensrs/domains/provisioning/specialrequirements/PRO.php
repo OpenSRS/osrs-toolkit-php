@@ -56,8 +56,9 @@ class NAME extends Base {
 
 	public function setSpecialRequestFieldsForTld( $dataObject, $requestData ){
 		foreach($this->requestFields as $reqData) {
-			if(isset($dataObject->professional_data->$reqData) && $dataObject->professional_data->$reqData != "")
+			if(isset($dataObject->professional_data->$reqData) && $dataObject->professional_data->$reqData != "") {
 				$requestData['attributes']['tld_data']['professional_data'][$reqData] = $dataObject->professional_data->$reqData;
+			}
 		}
 
 		return $requestData;
