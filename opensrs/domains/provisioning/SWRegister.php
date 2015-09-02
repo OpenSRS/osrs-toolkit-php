@@ -52,7 +52,7 @@ class SWRegister extends Base {
 		}
 	}
 
-	protected function meetsSpecialRequirementsForTld( $tld ){
+	public function meetsSpecialRequirementsForTld( $tld ){
 		$meetsRequirements = true;
 
 		$specialRequirementsClass = '\OpenSRS\domains\provisioning\specialrequirements\\' . strtoupper($tld);
