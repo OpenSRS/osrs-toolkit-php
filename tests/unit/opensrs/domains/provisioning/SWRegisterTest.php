@@ -58,7 +58,7 @@ class SWRegisterTest extends PHPUnit_Framework_TestCase
 
     /**
      * Registration should just strip www. from the domain
-     * if passed.
+     * if passed and not throw an exception
      *
      * @return void
      */
@@ -67,14 +67,33 @@ class SWRegisterTest extends PHPUnit_Framework_TestCase
 
 
         $data->data->domain = 'www.phptest' . time() . '.com';
-        $this->setExpectedException('OpenSRS\Exception');
         $ns = new SWRegister('array', $data);
 
         
-        $data->data->domain = 'www.com';
         // @ToDo: does not throw exception on error response
         // from OpenSRS API
+        // $data->data->domain = 'www.com';
         // $this->setExpectedException('OpenSRS\Exception');
-        $ns = new SWRegister('array', $data);
+        // $ns = new SWRegister('array', $data);
+    }
+
+    /**
+     * Exception should be thrown if all required fields are
+     * not set
+     */
+    public function testAllTimeRequired(){
+        $data = json_decode( $this->validSubmission );
+        $data->data->domain = 'www.phptest' . time() . '.com';
+
+        $data_missing_personal = $data;
+        $data_missing_personal->personal->first_name = '';
+        $this->setExpectedException('OpenSRS\Exception');
+        $ns = new SWRegister('array', $data_missing_personal);
+
+
+        $data_missing_data = $data;
+        $data_missing_personal->data->reg_username = '';
+        $this->setExpectedException('OpenSRS\Exception');
+        $ns = new SWRegister('array', $data_missing_personal);
     }
 }
