@@ -99,6 +99,10 @@ class RequestFactory
                 return new \OpenSRS\trust\ParseCSR($type, $dataObject); 
                 break;
 
+            case 'trustProcessPending':
+                return new \OpenSRS\trust\ProcessPending($type, $dataObject); 
+                break;
+
             default:
                 throw new Exception("OSRS Error - $func is unsupported.");
         }
