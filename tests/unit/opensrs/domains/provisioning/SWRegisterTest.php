@@ -58,7 +58,7 @@ class SWRegisterTest extends PHPUnit_Framework_TestCase
 
     /**
      * Registration should just strip www. from the domain
-     * if passed
+     * if passed.
      *
      * @return void
      */
@@ -76,7 +76,5 @@ class SWRegisterTest extends PHPUnit_Framework_TestCase
         // from OpenSRS API
         // $this->setExpectedException('OpenSRS\Exception');
         $ns = new SWRegister('array', $data);
-
-        print_r($ns->resultRaw);
     }
 }
