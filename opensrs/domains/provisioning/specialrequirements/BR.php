@@ -51,4 +51,10 @@ class BR extends Base {
 
 		return true;
 	}
+
+	public function setSpecialRequestFieldsForTld( $dataObject, $requestData ){
+		$requestData['attributes']['tld_data']['br_register_number'] = $dataObject->br_registrant_info->br_register_number;
+
+		return $requestData;
+	}
 }

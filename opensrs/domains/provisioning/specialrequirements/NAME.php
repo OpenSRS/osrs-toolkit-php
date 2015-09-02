@@ -47,4 +47,10 @@ class NAME extends Base {
 
 		return true;
 	}
+
+	public function setSpecialRequestFieldsForTld( $dataObject, $requestData ){
+		$requestData['attributes']['tld_data']['forwarding_email'] = $dataObject->data->forwarding_email;
+
+		return $requestData;
+	}
 }

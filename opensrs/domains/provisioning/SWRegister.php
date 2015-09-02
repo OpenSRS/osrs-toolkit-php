@@ -17,6 +17,7 @@ class SWRegister extends Base {
 	public $resultRaw;
 	public $resultFullFormatted;
 	public $resultFormatted;
+	protected $specialRequirements = null;
 
 	public function __construct ($formatString, $dataObject) {
 		parent::__construct();
@@ -52,18 +53,49 @@ class SWRegister extends Base {
 		}
 	}
 
+	public function getTldFriendlyName( $tld ){
+		return strtoupper(preg_replace("/[^a-z0-9]+/i", "_", $tld));
+	}
+
+	protected function loadSpecialRequirementsClass( $tld ){
+		$tldFriendlyName = $this->getTldFriendlyName( $tld );
+
+		$specialRequirementsClass = '\OpenSRS\domains\provisioning\specialrequirements\\' . $tldFriendlyName;
+
+		if(class_exists($specialRequirementsClass)){
+			$this->specialRequirements = new $specialRequirementsClass();
+		}
+		else {
+			$this->specialRequirements = false;
+		}
+	}
+
 	public function meetsSpecialRequirementsForTld( $tld ){
 		$meetsRequirements = true;
 
-		$specialRequirementsClass = '\OpenSRS\domains\provisioning\specialrequirements\\' . strtoupper($tld);
+		if(null === $this->specialRequirements){
+			$this->loadSpecialRequirementsClass( $tld );
+		}
 
-		if(class_exists($specialRequirementsClass)){
-			$specialRequirements = new $specialRequirementsClass();
-
-			$meetsRequirements = $specialRequirements->meetsSpecialRequirements( $this->_dataObject );
+		if($this->specialRequirements){
+			$meetsRequirements = $this->specialRequirements->meetsSpecialRequirements( $this->_dataObject );
 		}
 
 		return $meetsRequirements;
+	}
+
+	public function setSpecialRequestFieldsForTld( $tld, $requestData ){
+		$returnData = null;
+
+		if(null === $this->specialRequirements){
+			$this->loadSpecialRequirementsClass( $tld );
+		}
+
+		if($this->specialRequirements){
+			$returnData = $this->specialRequirements->setSpecialRequestFieldsForTld( $this->_dataObject, $requestData );
+		}
+
+		return $returnData ?: $requestData;
 	}
 
 	// Personal Information
@@ -142,96 +174,7 @@ class SWRegister extends Base {
 		}
 
 
-		// ccTLD specific
-		if ($ccTLD == "ca") {
-			$cmd['attributes']['isa_trademark'] = $this->_dataObject->data->isa_trademark;
-			$cmd['attributes']['lang_pref'] = $this->_dataObject->data->lang_pref;
-			$cmd['attributes']['legal_type'] = strtoupper($this->_dataObject->data->legal_type);
-
-			if (isset($this->_dataObject->data->ca_link_domain) && $this->_dataObject->data->ca_link_domain != "")
-				$cmd['attributes']['ca_link_domain'] = $this->_dataObject->data->ca_link_domain;
-
-			if (isset($this->_dataObject->data->cwa) && $this->_dataObject->data->cwa != "")
-				$cmd['attributes']['cwa'] = $this->_dataObject->data->cwa;
-
-			if (isset($this->_dataObject->data->domain_description) && $this->_dataObject->data->domain_description != "")
-				$cmd['attributes']['domain_description'] = $this->_dataObject->data->domain_description;
-
-			if (isset($this->_dataObject->data->rant_agrees) && $this->_dataObject->data->rant_agrees != "")
-				$cmd['attributes']['rant_agrees'] = $this->_dataObject->data->rant_agrees;
-
-			if (isset($this->_dataObject->data->rant_no) && $this->_dataObject->data->rant_no != "")
-				$cmd['attributes']['rant_no'] = $this->_dataObject->data->rant_no;
-		}
-
-		if ($ccTLD == "asia") {
-			$reqDatasASIA = array("contact_type", "id_number", "id_type", "legal_entity_type", "locality_country", "id_type_info", 
-				"legal_entity_type_info","locality_city", "locality_state_prov"
-				);
-
-			foreach($reqDatasASIA as $reqData) {
-				if(isset($this->_dataObject->cedinfo->$reqData) && $this->_dataObject->cedinfo->$reqData != "")
-					$cmd['attribugtes']['tld_data']['ced_info'][$reqData] = $this->_dataObject->cedinfo->$reqData;
-			}
-		}
-
-		if ($ccTLD == "au") {
-			$reqDatasAU = array("registrant_name", "eligibility_type", "registrant_id", "registrant_id_type", "eligibility_name", 
-				"eligibility_id", "eligibility_id_type", "eligibility_reason"
-				);
-
-			foreach($reqDatasAU as $reqData) {
-				if(isset($this->_dataObject->au_registrant_info->$reqData) && $this->_dataObject->au_registrant_info->$reqData != "")
-					$cmd['attributes']['tld_data']['au_registrant_info'][$reqData] = $this->_dataObject->au_registrant_info->$reqData;
-			}
-		}
-
-		if ($ccTLD == "it") {
-			if (isset($this->_dataObject->it_registrant_info->nationality_code) && $this->_dataObject->it_registrant_info->nationality_code != "")
-				$cmd['attributes']['tld_data']['it_registrant_info']['nationality_code'] = $this->_dataObject->it_registrant_info->nationality_code;
-
-			$cmd['attributes']['tld_data']['it_registrant_info']['reg_code'] = $this->_dataObject->it_registrant_info->reg_code;
-			$cmd['attributes']['tld_data']['it_registrant_info']['entity_type'] = $this->_dataObject->it_registrant_info->entity_type;
-		}
-
-
-		if ($ccTLD == "eu"){
-			$cmd['attributes']['country'] = strtoupper($this->_dataObject->data->eu_country);
-			$cmd['attributes']['lang'] = $this->_dataObject->data->lang;
-			$cmd['attributes']['owner_confirm_address'] = $this->_dataObject->data->owner_confirm_address;
-		}
-
-		if ($ccTLD == "be"){
-			$cmd['attributes']['lang'] = $this->_dataObject->data->lang;
-			$cmd['attributes']['owner_confirm_address'] = $this->_dataObject->data->owner_confirm_address;
-		}
-
-		if ($ccTLD == "br"){
-			$cmd['attributes']['tld_data']['br_register_number'] = $this->_dataObject->br_registrant_info->br_register_number;
-		}
-
-		if ($ccTLD == "de"){
-			$cmd['attributes']['owner_confirm_address'] = $this->_dataObject->data->owner_confirm_address;
-		}
-
-		if ($ccTLD == "name") {
-			$cmd['attributes']['tld_data']['forwarding_email'] = $this->_dataObject->data->forwarding_email;
-		}
-
-		if ($ccTLD == "us") {
-			$cmd['attributes']['tld_data']['nexus']['app_purpose'] = $this->_dataObject->nexus->app_purpose;
-			$cmd['attributes']['tld_data']['nexus']['category'] = $this->_dataObject->nexus->category;
-			if (isset($this->_dataObject->nexus->validator) && $this->_dataObject->nexus->validator != "") $cmd['attributes']['tld_data']['nexus']['validator'] = $this->_dataObject->nexus->validator;
-		}
-
-		if ($ccTLD == "pro") {
-			$reqDatasPRO = array("authority", "authority_website", "license_number", "profession");
-			foreach($reqDatasPRO as $reqData) {
-				if(isset($this->_dataObject->professional_data->$reqData) && $this->_dataObject->professional_data->$reqData != "")
-					$cmd['attributes']['tld_data']['professional_data'][$reqData] = $this->_dataObject->professional_data->$reqData;
-			}
-		}
-
+		$cmd = $this->setSpecialRequestFieldsForTld( $ccTLD, $cmd );
 
 		// Process the call
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML

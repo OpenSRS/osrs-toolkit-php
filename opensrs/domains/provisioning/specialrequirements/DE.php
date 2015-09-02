@@ -43,4 +43,10 @@ class DE extends Base {
 	public function needsSpecialRequirements( $dataObject ){
 		return false;
 	}
+
+	public function setSpecialRequestFieldsForTld( $dataObject, $requestData ){
+		$requestData['attributes']['owner_confirm_address'] = $dataObject->data->owner_confirm_address;
+
+		return $requestData;
+	}
 }

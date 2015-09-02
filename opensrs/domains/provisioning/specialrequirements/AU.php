@@ -19,6 +19,16 @@ class AU extends Base {
 		"registrant_id",
 		"registrant_id_type"
 		);
+	protected $requestFields = array(
+		"registrant_name",
+		"eligibility_type",
+		"registrant_id",
+		"registrant_id_type",
+		"eligibility_name", 
+		"eligibility_id",
+		"eligibility_id_type",
+		"eligibility_reason"
+		);
 
 	public function __construct(){
 		parent::__construct();
@@ -58,5 +68,14 @@ class AU extends Base {
 		// .asia, .it, .eu or .de
 
 		return true;
+	}
+
+	public function setSpecialRequestFieldsForTld( $dataObject, $requestData ){
+		foreach($this->requestFields as $reqData) {
+			if(isset($dataObject->au_registrant_info->$reqData) && $dataObject->au_registrant_info->$reqData != "")
+				$requestData['attributes']['tld_data']['au_registrant_info'][$reqData] = $dataObject->au_registrant_info->$reqData;
+		}
+
+		return $requestData;
 	}
 }

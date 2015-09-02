@@ -44,4 +44,15 @@ class IT extends Base {
 	public function needsSpecialRequirements( $dataObject ){
 		return false;
 	}
+
+	public function setSpecialRequestFieldsForTld( $dataObject, $requestData ){
+		if (isset($dataObject->it_registrant_info->nationality_code) && $dataObject->it_registrant_info->nationality_code != ""){
+			$requestData['attributes']['tld_data']['it_registrant_info']['nationality_code'] = $dataObject->it_registrant_info->nationality_code;
+		}
+
+		$requestData['attributes']['tld_data']['it_registrant_info']['reg_code'] = $dataObject->it_registrant_info->reg_code;
+		$requestData['attributes']['tld_data']['it_registrant_info']['entity_type'] = $dataObject->it_registrant_info->entity_type;
+
+		return $requestData;
+	}
 }

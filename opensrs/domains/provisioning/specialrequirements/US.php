@@ -48,4 +48,12 @@ class NAME extends Base {
 
 		return true;
 	}
+
+	public function setSpecialRequestFieldsForTld( $dataObject, $requestData ){
+		$requestData['attributes']['tld_data']['nexus']['app_purpose'] = $dataObject->nexus->app_purpose;
+		$requestData['attributes']['tld_data']['nexus']['category'] = $dataObject->nexus->category;
+		if (isset($dataObject->nexus->validator) && $dataObject->nexus->validator != "") $requestData['attributes']['tld_data']['nexus']['validator'] = $dataObject->nexus->validator;
+
+		return $requestData;
+	}
 }

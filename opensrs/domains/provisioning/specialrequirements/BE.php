@@ -48,4 +48,11 @@ class BE extends Base {
 
 		return true;
 	}
+
+	public function setSpecialRequestFieldsForTld( $dataObject, $requestData ){
+		$requestData['attributes']['lang'] = $dataObject->data->lang;
+		$requestData['attributes']['owner_confirm_address'] = $dataObject->data->owner_confirm_address;
+
+		return $requestData;
+	}
 }

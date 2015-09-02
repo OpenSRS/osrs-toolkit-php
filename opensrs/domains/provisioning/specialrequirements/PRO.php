@@ -14,6 +14,12 @@ class NAME extends Base {
 	protected $requiredFields = array(
 		"profession"
 		);
+	protected $requestFields = array(
+		"authority",
+		"authority_website",
+		"license_number",
+		"profession"
+		);
 
 	public function __construct(){
 		parent::__construct();
@@ -46,5 +52,14 @@ class NAME extends Base {
 		// .asia, .it, .eu or .de
 
 		return true;
+	}
+
+	public function setSpecialRequestFieldsForTld( $dataObject, $requestData ){
+		foreach($this->requestFields as $reqData) {
+			if(isset($dataObject->professional_data->$reqData) && $dataObject->professional_data->$reqData != "")
+				$requestData['attributes']['tld_data']['professional_data'][$reqData] = $dataObject->professional_data->$reqData;
+		}
+
+		return $requestData;
 	}
 }
