@@ -87,6 +87,10 @@ class RequestFactory
                 return new \OpenSRS\trust\CreateToken($type, $dataObject); 
                 break;
 
+            case 'trustGetOrderInfo':
+                return new \OpenSRS\trust\GetOrderInfo($type, $dataObject); 
+                break;
+
             default:
                 throw new Exception("OSRS Error - $func is unsupported.");
         }
