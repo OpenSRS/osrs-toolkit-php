@@ -83,6 +83,10 @@ class RequestFactory
                 return new \OpenSRS\trust\CancelOrder($type, $dataObject); 
                 break;
 
+            case 'trustCreateToken':
+                return new \OpenSRS\trust\CreateToken($type, $dataObject); 
+                break;
+
             default:
                 throw new Exception("OSRS Error - $func is unsupported.");
         }
