@@ -30,27 +30,25 @@ class SuggestDomain extends Base {
 
 	// Validate the object
 	private function _validateObject (){
-		$allPassed = true;
 		$domain = "";
-		$arraSelected = array ();
-		$arraAll = array ();
-		$arraCall = array ();
+		$arraSelected = array();
+		$arraAll = array();
+		$arraCall = array();
 
-		if (isSet($this->_dataObject->data->domain)) {
+		if (isset($this->_dataObject->data->domain)) {
 			// Grab domain name
 			$domain = $this->_dataObject->data->domain;
 			// $domain = htmlspecialchars($domain);
 		} else {
-			trigger_error ("oSRS Error - Search domain strinng not defined.", E_USER_WARNING);
-			$allPassed = false;
+			throw new Exception( "oSRS Error - Search domain strinng not defined.", E_USER_WARNING);
 		}
 
 		// Select non empty one
-		if (isSet($this->_dataObject->data->selected) && $this->_dataObject->data->selected != "") $arraSelected = explode (";", $this->_dataObject->data->selected);
-		if (isSet($this->_dataObject->data->defaulttld) && $this->_dataObject->data->defaulttld != "") $arraAll = explode (";", $this->_dataObject->data->defaulttld);
+		if (isset($this->_dataObject->data->selected) && $this->_dataObject->data->selected != "") $arraSelected = explode (";", $this->_dataObject->data->selected);
+		if (isset($this->_dataObject->data->defaulttld) && $this->_dataObject->data->defaulttld != "") $arraAll = explode (";", $this->_dataObject->data->defaulttld);
 		if (count($arraSelected) == 0) {
 			if (count($arraAll) == 0){
-				$arraCall = array (".com",".net",".org");
+				$arraCall = array(".com",".net",".org");
 			} else {
 				$arraCall = $arraAll;
 			}
@@ -58,12 +56,7 @@ class SuggestDomain extends Base {
 			$arraCall = $arraSelected;
 		}
 		
-		// Call function
-		if ($allPassed) {
-			$resObject = $this->_domainTLD ($domain, $arraCall);
-		} else {
-			trigger_error ("oSRS Error - Incorrect call.", E_USER_WARNING);
-		}
+		$resObject = $this->_domainTLD ($domain, $arraCall);
 	}
 
 	// Selected / all TLD options
@@ -77,33 +70,28 @@ class SuggestDomain extends Base {
 				"service_override" => array(
 					"suggestion" => array(
 						"tlds" => $request
-					)
-				),
+						)
+					),
 				"services" => array(
 					"suggestion"
+					)
 				)
-			)
-		);
+			);
 
-                if(isSet($this->_dataObject->data->maximum) && $this->_dataObject->data->maximum != ""){
-                    $cmd['attributes']['service_override']['suggestion']['maximum'] = $this->_dataObject->data->maximum;
-                }
+		if(isset($this->_dataObject->data->maximum) && $this->_dataObject->data->maximum != ""){
+			$cmd['attributes']['service_override']['suggestion']['maximum'] = $this->_dataObject->data->maximum;
+		}
 		
-//		print_r ($cmd);
-//		echo ("\n\n\n");
-		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
-//		echo ($xmlCMD);
-//		echo ("\n\n\n");
-		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
-//		echo ($XMLresult);
-//		echo ("\n\n\n");
-		$arrayResult = $this->_opsHandler->decode($XMLresult);		// FLip XML to Array
-//		print_r ($arrayResult);
-//		echo ("\n\n\n");
+		// Flip Array to XML
+		$xmlCMD = $this->_opsHandler->encode($cmd);
+		// Send XML
+		$XMLresult = $this->send_cmd($xmlCMD);
+		// FLip XML to Array
+		$arrayResult = $this->_opsHandler->decode($XMLresult);
 
 		// Results
 		$this->resultFullRaw = $arrayResult;
-		if (isSet($arrayResult['attributes']['suggestion']['items'])){
+		if (isset($arrayResult['attributes']['suggestion']['items'])){
 			$this->resultRaw = $arrayResult['attributes']['suggestion']['items'];
 		} else {
 			$this->resultRaw = $arrayResult;

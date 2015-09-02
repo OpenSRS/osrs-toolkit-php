@@ -36,7 +36,6 @@ class GetDomainsContacts extends Base {
 	private function _validateObject (){
 		if (!isset($this->_dataObject->data->domain_list)) {
 			throw new Exception ("oSRS Error - Domain list is not defined.");
-			$allPassed = false;
 		}
 
 		$this->_processRequest ();

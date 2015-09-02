@@ -34,25 +34,16 @@ class GetNotes extends Base {
 
 	// Validate the object
 	private function _validateObject (){
-		$allPassed = true;
-		
-		if (!isSet($this->_dataObject->data->domain)) {
-			trigger_error ("oSRS Error - domain is not defined.", E_USER_WARNING);
-			$allPassed = false;
+		if (!isset($this->_dataObject->data->domain)) {
+			throw new Exception( "oSRS Error - domain is not defined." );
 		}
 
-		if (!isSet($this->_dataObject->data->type)) {
-			trigger_error ("oSRS Error - type is not defined.", E_USER_WARNING);
-			$allPassed = false;
+		if (!isset($this->_dataObject->data->type)) {
+			throw new Exception( "oSRS Error - type is not defined." );
 		}
 
-		// Run the command
-		if ($allPassed) {
-			// Execute the command
-			$this->_processRequest ();
-		} else {
-			trigger_error ("oSRS Error - Incorrect call.", E_USER_WARNING);
-		}
+		// Execute the command
+		$this->_processRequest ();
 	}
 
 	// Post validation functions
@@ -64,14 +55,14 @@ class GetNotes extends Base {
 			"attributes" => array (
 				'domain' => $this->_dataObject->data->domain,
 				'type' => $this->_dataObject->data->type
-			)
-		);
+				)
+			);
 		
 		// Command optional values
-		if (isSet($this->_dataObject->data->page) && $this->_dataObject->data->page != "") $cmd['attributes']['page'] = $this->_dataObject->data->page;
-		if (isSet($this->_dataObject->data->limit) && $this->_dataObject->data->limit != "") $cmd['attributes']['limit'] = $this->_dataObject->data->limit;
-		if (isSet($this->_dataObject->data->order_id) && $this->_dataObject->data->order_id != "") $cmd['attributes']['order_id'] = $this->_dataObject->data->order_id;
-		if (isSet($this->_dataObject->data->transfer_id) && $this->_dataObject->data->transfer_id != "") $cmd['attributes']['transfer_id'] = $this->_dataObject->data->transfer_id;
+		if (isset($this->_dataObject->data->page) && $this->_dataObject->data->page != "") $cmd['attributes']['page'] = $this->_dataObject->data->page;
+		if (isset($this->_dataObject->data->limit) && $this->_dataObject->data->limit != "") $cmd['attributes']['limit'] = $this->_dataObject->data->limit;
+		if (isset($this->_dataObject->data->order_id) && $this->_dataObject->data->order_id != "") $cmd['attributes']['order_id'] = $this->_dataObject->data->order_id;
+		if (isset($this->_dataObject->data->transfer_id) && $this->_dataObject->data->transfer_id != "") $cmd['attributes']['transfer_id'] = $this->_dataObject->data->transfer_id;
 
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
@@ -79,9 +70,9 @@ class GetNotes extends Base {
 
 		// Results
 		$this->resultFullRaw = $arrayResult;
-                if (isSet($arrayResult['attributes'])){
-                    $this->resultRaw = $arrayResult['attributes'];
-                } else {
+		if (isset($arrayResult['attributes'])){
+			$this->resultRaw = $arrayResult['attributes'];
+		} else {
 			$this->resultRaw = $arrayResult;
 		}
 		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);

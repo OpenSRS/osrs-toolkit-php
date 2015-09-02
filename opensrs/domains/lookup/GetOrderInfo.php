@@ -34,20 +34,12 @@ class GetOrderInfo extends Base {
 
 	// Validate the object
 	private function _validateObject (){
-		$allPassed = true;
-		
-		if (!isSet($this->_dataObject->data->order_id)) {
-			trigger_error ("oSRS Error - order_id is not defined.", E_USER_WARNING);
-			$allPassed = false;
+		if (!isset($this->_dataObject->data->order_id)) {
+			throw new Exception( "oSRS Error - order_id is not defined.", E_USER_WARNING);
 		}
 
-		// Run the command
-		if ($allPassed) {
-			// Execute the command
-			$this->_processRequest ();
-		} else {
-			trigger_error ("oSRS Error - Incorrect call.", E_USER_WARNING);
-		}
+		// Execute the command
+		$this->_processRequest ();
 	}
 
 	// Post validation functions
@@ -58,14 +50,14 @@ class GetOrderInfo extends Base {
 			"object" => "DOMAIN",
 			"attributes" => array (
 				"order_id" => $this->_dataObject->data->order_id
-			)
-		);
+				)
+			);
 		
 		// Command optional values
-		if (isSet($this->_dataObject->data->page) && $this->_dataObject->data->page != "") $cmd['attributes']['page'] = $this->_dataObject->data->page;
-		if (isSet($this->_dataObject->data->limit) && $this->_dataObject->data->limit != "") $cmd['attributes']['limit'] = $this->_dataObject->data->limit;
-		if (isSet($this->_dataObject->data->order_id) && $this->_dataObject->data->order_id != "") $cmd['attributes']['order_id'] = $this->_dataObject->data->order_id;
-		if (isSet($this->_dataObject->data->transfer_id) && $this->_dataObject->data->transfer_id != "") $cmd['attributes']['transfer_id'] = $this->_dataObject->data->transfer_id;
+		if (isset($this->_dataObject->data->page) && $this->_dataObject->data->page != "") $cmd['attributes']['page'] = $this->_dataObject->data->page;
+		if (isset($this->_dataObject->data->limit) && $this->_dataObject->data->limit != "") $cmd['attributes']['limit'] = $this->_dataObject->data->limit;
+		if (isset($this->_dataObject->data->order_id) && $this->_dataObject->data->order_id != "") $cmd['attributes']['order_id'] = $this->_dataObject->data->order_id;
+		if (isset($this->_dataObject->data->transfer_id) && $this->_dataObject->data->transfer_id != "") $cmd['attributes']['transfer_id'] = $this->_dataObject->data->transfer_id;
 
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML

@@ -33,7 +33,7 @@ class LookupDomain extends Base
     {
         $domain = '';
 
-        // search domain must be definded
+        // search domain must be defined
         if (!$this->hasDomain()) {
             throw new Exception('oSRS Error - Search domain string not defined.');
         }
@@ -58,13 +58,13 @@ class LookupDomain extends Base
                 'service_override' => array(
                     'lookup' => array(
                         'tlds' => $request,
+                        ),
                     ),
-                ),
                 'services' => array(
                     'lookup',
+                    ),
                 ),
-            ),
-        );
+            );
 
         if (isset($this->dataObject->data->maximum) && $this->dataObject->data->maximum != '') {
             $cmd['attributes']['service_override']['lookup']['maximum'] = $this->dataObject->data->maximum;

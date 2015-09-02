@@ -7,8 +7,8 @@ use OpenSRS\Exception;
 
 class AllInOneDomain extends Base {
 	private $_domain = "";
-	private $_tldSelect = array ();
-	private $_tldAll = array ();
+	private $_tldSelect = array();
+	private $_tldAll = array();
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;
@@ -17,41 +17,45 @@ class AllInOneDomain extends Base {
 	public $resultFormatted;
 	public $result;
 
-	public function __construct ($formatString, $dataObject) {
+	public function __construct( $formatString, $dataObject ) {
 		parent::__construct();
 		$this->_dataObject = $dataObject;
 		$this->_formatHolder = $formatString;
-		$this->_validateObject ();
+		$this->_validateObject();
 	}
 
-	public function __destruct () {
+	public function __destruct() {
 		parent::__destruct();
 	}
 
 	// Validate the object
-	private function _validateObject (){
-		$allPassed = true;
+	private function _validateObject(){
 		$domain = "";
 		$arraSelected = array ();
 		$arraAll = array ();
 		$arraCall = array ();
 
-		if (isset($this->_dataObject->data->domain)) {
+		if ( isset( $this->_dataObject->data->domain ) ) {
 			// Grab domain name
 			$tdomain = $this->_dataObject->data->domain;
-			$tdom = explode (".", $tdomain);
+			$tdom = explode( ".", $tdomain );
 			$domain = $tdom[0];
 		} else {
-			trigger_error ("oSRS Error - Search domain strinng not defined.", E_USER_WARNING);
-			$allPassed = false;
+			throw new Exception( "oSRS Error - Search domain string not defined." );
 		}
 		
 		// Select non empty one
-		if (isset($this->_dataObject->data->selected) && $this->_dataObject->data->selected != "") $arraSelected = explode (";", $this->_dataObject->data->selected);
-		if (isset($this->_dataObject->data->defaulttld) && $this->_dataObject->data->defaulttld != "") $arraAll = explode (";", $this->_dataObject->data->defaulttld);
+		if (isset($this->_dataObject->data->selected) && $this->_dataObject->data->selected != "") {
+			$arraSelected = explode (";", $this->_dataObject->data->selected);
+		}
+
+		if (isset($this->_dataObject->data->defaulttld) && $this->_dataObject->data->defaulttld != "") {
+			$arraAll = explode (";", $this->_dataObject->data->defaulttld);
+		}
+
 		if (count($arraSelected) == 0) {
-			if (count($arraAll) == 0){
-				$arraCall = array (".com",".net",".org");
+			if (empty($arraAll)){
+				$arraCall = $this->defaultTlds;
 			} else {
 				$arraCall = $arraAll;
 			}
@@ -59,13 +63,8 @@ class AllInOneDomain extends Base {
 			$arraCall = $arraSelected;
 		}
 
-
 		// Call function
-		if ($allPassed) {
-			$resObject = $this->_domainTLD ($domain, $arraCall);
-		} else {
-			trigger_error ("oSRS Error - Incorrect call.", E_USER_WARNING);
-		}
+		$resObject = $this->_domainTLD($domain, $arraCall);
 	}
 
 	// Selected / all TLD options
@@ -79,25 +78,25 @@ class AllInOneDomain extends Base {
 				"service_override" => array(
 					"lookup" => array(
 						"tlds" => $request
-					),
+						),
 					"premium" => array(
 						"tlds" => $request
-					),
+						),
 					"suggestion" => array(
 						"tlds" => $request
-					)
-				),
+						)
+					),
 				"services" => array(
 					"lookup","premium","suggestion"
+					)
 				)
-			)
-		);
+			);
 
-                if(isset($this->_dataObject->data->maximum) && $this->_dataObject->data->maximum != ""){
-                    $cmd['attributes']['service_override']['lookup']['maximum'] = $this->_dataObject->data->maximum;
-                    $cmd['attributes']['service_override']['premium']['maximum'] = $this->_dataObject->data->maximum;
-                    $cmd['attributes']['service_override']['suggestion']['maximum'] = $this->_dataObject->data->maximum;
-                }
+		if(isset($this->_dataObject->data->maximum) && $this->_dataObject->data->maximum != ""){
+			$cmd['attributes']['service_override']['lookup']['maximum'] = $this->_dataObject->data->maximum;
+			$cmd['attributes']['service_override']['premium']['maximum'] = $this->_dataObject->data->maximum;
+			$cmd['attributes']['service_override']['suggestion']['maximum'] = $this->_dataObject->data->maximum;
+		}
 
 
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
@@ -112,23 +111,23 @@ class AllInOneDomain extends Base {
 
 		if (isset($arrayResult['attributes'])){
 
-                    if (isset($arrayResult['attributes']['premium']['items'])) {
-                            $tempHold = $arrayResult['attributes']['premium']['items'];
-                    } else {
-                            $tempHold = null;			// Null if there are no premium domains
-                    }
+			if (isset($arrayResult['attributes']['premium']['items'])) {
+				$tempHold = $arrayResult['attributes']['premium']['items'];
+			} else {
+                $tempHold = null;			// Null if there are no premium domains
+            }
 
-                    $this->resultRaw = array (
-                            'lookup' => $arrayResult['attributes']['lookup']['items'],
-                            'premium' => $tempHold,
-                            'suggestion' => $arrayResult['attributes']['suggestion']['items']
-                    );
+            $this->resultRaw = array (
+            	'lookup' => $arrayResult['attributes']['lookup']['items'],
+            	'premium' => $tempHold,
+            	'suggestion' => $arrayResult['attributes']['suggestion']['items']
+            	);
 
-                } else {
-			$this->resultRaw = $arrayResult;
-		}
+        } else {
+        	$this->resultRaw = $arrayResult;
+        }
 
-		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
-	}
+        $this->resultFullFormatted = $this->convertArray2Formatted($this->_formatHolder, $this->resultFullRaw);
+        $this->resultFormatted = $this->convertArray2Formatted($this->_formatHolder, $this->resultRaw);
+    }
 }

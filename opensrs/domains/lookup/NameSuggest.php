@@ -74,16 +74,16 @@ class NameSuggest extends Base {
 		// Select non empty one
 
         // Name Suggestion Choice Check
-		if (isSet($this->_dataObject->data->nsselected) && $this->_dataObject->data->nsselected != "") $arransSelected = explode (";", $this->_dataObject->data->nsselected);
+		if (isset($this->_dataObject->data->nsselected) && $this->_dataObject->data->nsselected != "") $arransSelected = explode (";", $this->_dataObject->data->nsselected);
 
         // Lookup Choice Check
-		if (isSet($this->_dataObject->data->lkselected) && $this->_dataObject->data->lkselected != "") $arralkSelected = explode (";", $this->_dataObject->data->lkselected);
+		if (isset($this->_dataObject->data->lkselected) && $this->_dataObject->data->lkselected != "") $arralkSelected = explode (";", $this->_dataObject->data->lkselected);
 
         // Get Default Name Suggestion Choices For No Form Submission
-		if (isSet($this->_dataObject->data->allnsdomains) && $this->_dataObject->data->allnsdomains != "") $arransAll = explode (";", $this->_dataObject->data->allnsdomains);
+		if (isset($this->_dataObject->data->allnsdomains) && $this->_dataObject->data->allnsdomains != "") $arransAll = explode (";", $this->_dataObject->data->allnsdomains);
 
         // Get Default Lookup Choices For No Form Submission
-		if (isSet($this->_dataObject->data->alllkdomains) && $this->_dataObject->data->alllkdomains != "") $arralkAll = explode (";", $this->_dataObject->data->alllkdomains);
+		if (isset($this->_dataObject->data->alllkdomains) && $this->_dataObject->data->alllkdomains != "") $arralkAll = explode (";", $this->_dataObject->data->alllkdomains);
 
 		if (count($arransSelected) == 0) {
 			if (count($arransAll) == 0){

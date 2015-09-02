@@ -31,20 +31,12 @@ class GetCaBlockerList extends Base {
 
 	// Validate the object
 	private function _validateObject(){
-		$allPassed = true;
-
 		if (!isset($this->_dataObject->data->domain)) {
-			trigger_error ("oSRS Error - Search domain strinng not defined.", E_USER_WARNING);
-			$allPassed = false;
+			throw new Exception("oSRS Error - Search domain string not defined." );
 		}
 
-		// Run the command
-		if ($allPassed) {
-			// Execute the command
-			$this->_processRequest();
-		} else {
-			trigger_error ("oSRS Error - Incorrect call.", E_USER_WARNING);
-		}
+		// Execute the command
+		$this->_processRequest();
 	}
 
 	// Post validation functions
@@ -58,14 +50,17 @@ class GetCaBlockerList extends Base {
 				)
 			);
 
-		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
-		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
-		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
+		// Flip Array to XML
+		$xmlCMD = $this->_opsHandler->encode($cmd);
+		// Send XML
+		$XMLresult = $this->send_cmd($xmlCMD);
+		// Flip XML to Array
+		$arrayResult = $this->_opsHandler->decode($XMLresult);
 
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
+		$this->resultFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
 	}
 }

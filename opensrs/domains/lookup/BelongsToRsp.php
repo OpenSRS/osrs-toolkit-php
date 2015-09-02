@@ -9,7 +9,7 @@ use OpenSRS\Exception;
  *  Required object values:
  *  data - domain
  */
- 
+
 class BelongsToRsp extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -18,45 +18,37 @@ class BelongsToRsp extends openSRS_base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
-	public function __construct ($formatString, $dataObject) {
+	public function __construct($formatString, $dataObject) {
 		parent::__construct();
 		$this->_dataObject = $dataObject;
 		$this->_formatHolder = $formatString;
-		$this->_validateObject ();
+		$this->_validateObject();
 	}
 
-	public function __destruct () {
+	public function __destruct() {
 		parent::__destruct();
 	}
 
 	// Validate the object
-	private function _validateObject (){
-		$allPassed = true;
-
-		if (!isSet($this->_dataObject->data->domain)) {
-			trigger_error ("oSRS Error - Search domain string not defined.", E_USER_WARNING);
-			$allPassed = false;
+	private function _validateObject(){
+		if (!isset($this->_dataObject->data->domain)) {
+			throw new Exception( "oSRS Error - Search domain string not defined." );
 		}
 
-		// Run the command
-		if ($allPassed) {
-			// Execute the command
-			$this->_processRequest ();
-		} else {
-			trigger_error ("oSRS Error - Incorrect call.", E_USER_WARNING);
-		}
+		// Execute the command
+		$this->_processRequest();
 	}
 
 	// Post validation functions
-	private function _processRequest (){
+	private function _processRequest(){
 		$cmd = array(
 			"protocol" => "XCP",
 			"action" => "belongs_to_rsp",
 			"object" => "domain",
 			"attributes" => array (
-			    "domain" => $this->_dataObject->data->domain
-			)
-		);
+				"domain" => $this->_dataObject->data->domain
+				)
+			);
 
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
@@ -65,9 +57,9 @@ class BelongsToRsp extends openSRS_base {
 		// Results
 		$this->resultFullRaw = $arrayResult;
 
-                if (isSet($arrayResult['attributes'])){
-                    $this->resultRaw = $arrayResult['attributes'];
-                } else {
+		if (isset($arrayResult['attributes'])){
+			$this->resultRaw = $arrayResult['attributes'];
+		} else {
 			$this->resultRaw = $arrayResult;
 		}
 		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);

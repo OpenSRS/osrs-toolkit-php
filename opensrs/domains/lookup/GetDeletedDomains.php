@@ -25,7 +25,7 @@ class GetDeletedDomains extends Base {
 		parent::__construct();
 		$this->_dataObject = $dataObject;
 		$this->_formatHolder = $formatString;
-		$this->_validateObject ();
+		$this->_validateObject();
 	}
 
 	public function __destruct() {
@@ -34,9 +34,7 @@ class GetDeletedDomains extends Base {
 
 	// Validate the object
 	private function _validateObject(){
-		$allPassed = true;
-
-// Maybe all attribute array should be compiled here
+		// Maybe all attribute array should be compiled here
 		if (isset($this->_dataObject->data->owner_email)) {
 			// Verify proper email
 		}
@@ -68,13 +66,8 @@ class GetDeletedDomains extends Base {
 			// verify format - postive number
 		}
 
-		// Run the command
-		if ($allPassed) {
-			// Execute the command
-			$this->_processRequest();
-		} else {
-			trigger_error("oSRS Error - Incorrect call.", E_USER_WARNING);
-		}
+		// Execute the command
+		$this->_processRequest();
 	}
 
 	// Post validation functions
@@ -84,32 +77,55 @@ class GetDeletedDomains extends Base {
 			"action" => "GET_DELETED_DOMAINS",
 			"object" => "domain",
 			"attributes" => array()
-		);
+			);
 		
 		// Command optional values
-		if (isset($this->_dataObject->data->owner_email) && $this->_dataObject->data->owner_email != "") $cmd['attributes']['owner_email'] = $this->_dataObject->data->owner_email;
-		if (isset($this->_dataObject->data->admin_email) && $this->_dataObject->data->admin_email != "") $cmd['attributes']['admin_email'] = $this->_dataObject->data->admin_email;
-		if (isset($this->_dataObject->data->billing_email) && $this->_dataObject->data->billing_email != "") $cmd['attributes']['billing_email'] = $this->_dataObject->data->billing_email;
-		if (isset($this->_dataObject->data->tech_email) && $this->_dataObject->data->tech_email != "") $cmd['attributes']['tech_email'] = $this->_dataObject->data->tech_email;
-		if (isset($this->_dataObject->data->del_from) && $this->_dataObject->data->del_from != "") $cmd['attributes']['del_from'] = $this->_dataObject->data->del_from;
-		if (isset($this->_dataObject->data->del_to) && $this->_dataObject->data->del_to != "") $cmd['attributes']['del_to'] = $this->_dataObject->data->del_to;
-		if (isset($this->_dataObject->data->exp_from) && $this->_dataObject->data->exp_from != "") $cmd['attributes']['exp_from'] = $this->_dataObject->data->exp_from;
-		if (isset($this->_dataObject->data->exp_to) && $this->_dataObject->data->exp_to != "") $cmd['attributes']['exp_to'] = $this->_dataObject->data->exp_to;
-		if (isset($this->_dataObject->data->page) && $this->_dataObject->data->page != "") $cmd['attributes']['page'] = $this->_dataObject->data->page;
-		if (isset($this->_dataObject->data->limit) && $this->_dataObject->data->limit != "") $cmd['attributes']['limit'] = $this->_dataObject->data->limit;
+		if (isset($this->_dataObject->data->owner_email) && $this->_dataObject->data->owner_email != "") {
+			$cmd['attributes']['owner_email'] = $this->_dataObject->data->owner_email;
+		}
+		if (isset($this->_dataObject->data->admin_email) && $this->_dataObject->data->admin_email != "") {
+			$cmd['attributes']['admin_email'] = $this->_dataObject->data->admin_email;
+		}
+		if (isset($this->_dataObject->data->billing_email) && $this->_dataObject->data->billing_email != "") {
+			$cmd['attributes']['billing_email'] = $this->_dataObject->data->billing_email;
+		}
+		if (isset($this->_dataObject->data->tech_email) && $this->_dataObject->data->tech_email != "") {
+			$cmd['attributes']['tech_email'] = $this->_dataObject->data->tech_email;
+		}
+		if (isset($this->_dataObject->data->del_from) && $this->_dataObject->data->del_from != "") {
+			$cmd['attributes']['del_from'] = $this->_dataObject->data->del_from;
+		}
+		if (isset($this->_dataObject->data->del_to) && $this->_dataObject->data->del_to != "") {
+			$cmd['attributes']['del_to'] = $this->_dataObject->data->del_to;
+		}
+		if (isset($this->_dataObject->data->exp_from) && $this->_dataObject->data->exp_from != "") {
+			$cmd['attributes']['exp_from'] = $this->_dataObject->data->exp_from;
+		}
+		if (isset($this->_dataObject->data->exp_to) && $this->_dataObject->data->exp_to != "") {
+			$cmd['attributes']['exp_to'] = $this->_dataObject->data->exp_to;
+		}
+		if (isset($this->_dataObject->data->page) && $this->_dataObject->data->page != "") {
+			$cmd['attributes']['page'] = $this->_dataObject->data->page;
+		}
+		if (isset($this->_dataObject->data->limit) && $this->_dataObject->data->limit != "") {
+			$cmd['attributes']['limit'] = $this->_dataObject->data->limit;
+		}
 
-		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
-		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
-		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
+		// Flip Array to XML
+		$xmlCMD = $this->_opsHandler->encode( $cmd );
+		// Send XML
+		$XMLresult = $this->send_cmd( $xmlCMD );
+		// Flip XML to Array
+		$arrayResult = $this->_opsHandler->decode( $XMLresult );
 
 		// Results
 		$this->resultFullRaw = $arrayResult;
-        if (isset($arrayResult['attributes'])){
-            $this->resultRaw = $arrayResult['attributes'];
-        } else {
+		if ( isset( $arrayResult['attributes'] ) ) {
+			$this->resultRaw = $arrayResult['attributes'];
+		} else {
 			$this->resultRaw = $arrayResult;
 		}
-		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
+		$this->resultFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
 	}
 }

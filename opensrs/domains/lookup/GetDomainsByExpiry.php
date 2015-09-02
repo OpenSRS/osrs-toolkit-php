@@ -34,25 +34,16 @@ class GetDomainsByExpiry extends Base {
 
 	// Validate the object
 	private function _validateObject (){
-		$allPassed = true;
-		
-		if (!isSet($this->_dataObject->data->exp_from)) {
-			trigger_error ("oSRS Error - exp_from is not defined.", E_USER_WARNING);
-			$allPassed = false;
+		if (!isset($this->_dataObject->data->exp_from)) {
+			throw new Exception( "oSRS Error - exp_from is not defined." );
 		}
 
-		if (!isSet($this->_dataObject->data->exp_to)) {
-			trigger_error ("oSRS Error - exp_to is not defined.", E_USER_WARNING);
-			$allPassed = false;
+		if (!isset($this->_dataObject->data->exp_to)) {
+			throw new Exception( "oSRS Error - exp_to is not defined." );
 		}
 
-		// Run the command
-		if ($allPassed) {
-			// Execute the command
-			$this->_processRequest ();
-		} else {
-			trigger_error ("oSRS Error - Incorrect call.", E_USER_WARNING);
-		}
+		// Execute the command
+		$this->_processRequest ();
 	}
 
 	// Post validation functions
@@ -64,12 +55,12 @@ class GetDomainsByExpiry extends Base {
 			"attributes" => array (
 				'exp_from' => $this->_dataObject->data->exp_from,
 				'exp_to' => $this->_dataObject->data->exp_to
-			)
-		);
+				)
+			);
 
 		// Command optional values
-		if (isSet($this->_dataObject->data->page) && $this->_dataObject->data->page != "") $cmd['attributes']['page'] = $this->_dataObject->data->page;
-		if (isSet($this->_dataObject->data->limit) && $this->_dataObject->data->limit != "") $cmd['attributes']['limit'] = $this->_dataObject->data->limit;
+		if (isset($this->_dataObject->data->page) && $this->_dataObject->data->page != "") $cmd['attributes']['page'] = $this->_dataObject->data->page;
+		if (isset($this->_dataObject->data->limit) && $this->_dataObject->data->limit != "") $cmd['attributes']['limit'] = $this->_dataObject->data->limit;
 
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
@@ -77,9 +68,9 @@ class GetDomainsByExpiry extends Base {
 
 		// Results
 		$this->resultFullRaw = $arrayResult;
-                if (isSet($arrayResult['attributes'])){
-                    $this->resultRaw = $arrayResult['attributes'];
-                } else {
+		if (isset($arrayResult['attributes'])){
+			$this->resultRaw = $arrayResult['attributes'];
+		} else {
 			$this->resultRaw = $arrayResult;
 		}
 		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
