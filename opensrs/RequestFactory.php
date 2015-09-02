@@ -119,6 +119,10 @@ class RequestFactory
                 return new \OpenSRS\trust\ResendCertEmail($type, $dataObject); 
                 break;
 
+            case 'trustUpdateOrder':
+                return new \OpenSRS\trust\UpdateOrder($type, $dataObject); 
+                break;
+
             default:
                 throw new Exception("OSRS Error - $func is unsupported.");
         }
