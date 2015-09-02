@@ -111,6 +111,10 @@ class RequestFactory
                 return new \OpenSRS\trust\RequestOnDemandScan($type, $dataObject); 
                 break;
 
+            case 'trustResendApproverEmail':
+                return new \OpenSRS\trust\ResendApproverEmail($type, $dataObject); 
+                break;
+
             default:
                 throw new Exception("OSRS Error - $func is unsupported.");
         }
