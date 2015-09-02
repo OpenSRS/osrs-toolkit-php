@@ -123,6 +123,10 @@ class RequestFactory
                 return new \OpenSRS\trust\UpdateOrder($type, $dataObject); 
                 break;
 
+            case 'trustUpdateProduct':
+                return new \OpenSRS\trust\UpdateProduct($type, $dataObject); 
+                break;
+
             default:
                 throw new Exception("OSRS Error - $func is unsupported.");
         }
