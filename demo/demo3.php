@@ -1,4 +1,4 @@
-<?
+<?php
 $callArray = array (
         "func" => "cookieSet",
         "data" => array (
