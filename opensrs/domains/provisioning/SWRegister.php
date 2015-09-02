@@ -241,10 +241,10 @@ class SWRegister extends Base {
 				'custom_tech_contact' => $this->_dataObject->data->custom_tech_contact,
 				'custom_nameservers' => $this->_dataObject->data->custom_nameservers,
 				'contact_set' => array(
-					'owner' => $this->_createUserData(),
-					'admin' => $this->_createUserData(),
-					'billing' => $this->_createUserData(),
-					'tech' => $this->_createUserData()
+					'owner' => $this->_createUserData( 'owner' ),
+					'admin' => $this->_createUserData( 'admin' ),
+					'billing' => $this->_createUserData( 'billing' ),
+					'tech' => $this->_createUserData('tech' )
 					)
 				)
 			);
@@ -401,7 +401,8 @@ class SWRegister extends Base {
 
     private function _createUserData( $contact_type = 'personal' ){
     	if(!isset($this->_dataObject->$contact_type)){
-    		throw new Exception( "Contact type '$contact_type' is not set");
+    		$contact_type = 'personal';
+    		// throw new Exception( "Contact type '$contact_type' is not set");
     	}
     	$userArray = array(
     		"first_name" => $this->_dataObject->$contact_type->first_name,
