@@ -95,6 +95,10 @@ class RequestFactory
                 return new \OpenSRS\trust\ProductInfo($type, $dataObject); 
                 break;
 
+            case 'trustParseCSR':
+                return new \OpenSRS\trust\ParseCSR($type, $dataObject); 
+                break;
+
             default:
                 throw new Exception("OSRS Error - $func is unsupported.");
         }
