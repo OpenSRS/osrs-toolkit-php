@@ -1,10 +1,10 @@
 <?php
 
 $callArray = array (
-    'func' => 'allinoneDomain',
+	'func' => 'lookupGetDomainsContacts',
 
     'data' => array (
-        'domain' => 'hockey.com',
+        'domain_list' => 'hockey.com,hockey1.com',
         ),
     );
 
@@ -12,7 +12,7 @@ require __DIR__ . '/../vendor/autoload.php';
 use OpenSRS\Request;
 
 try {
-    $request = new Request();
+    $request = new Request('array', $callArray);
     $osrsHandler = $request->process('array', $callArray);
 
     var_dump($osrsHandler->resultRaw);

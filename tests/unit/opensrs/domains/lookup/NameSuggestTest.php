@@ -69,7 +69,10 @@ class NameSuggestTest extends PHPUnit_Framework_TestCase
                 )
             );
         $this->assertTrue($expectedResult == $ns->getTlds());
-
+        // not unsetting these since we want to use them as
+        // the "all domains" setting for the rest of the tests
+        // unset( $data->data->allnsdomains = '.com;.net;.org' );
+        // unset( $data->data->alllkdomains = '.ca;.jp;.it' );
 
 
 
