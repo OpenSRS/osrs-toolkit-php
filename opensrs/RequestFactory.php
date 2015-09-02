@@ -103,6 +103,10 @@ class RequestFactory
                 return new \OpenSRS\trust\ProcessPending($type, $dataObject); 
                 break;
 
+            case 'trustQueryApproverList':
+                return new \OpenSRS\trust\QueryApproverList($type, $dataObject); 
+                break;
+
             default:
                 throw new Exception("OSRS Error - $func is unsupported.");
         }
