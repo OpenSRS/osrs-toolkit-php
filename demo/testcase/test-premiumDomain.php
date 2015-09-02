@@ -1,10 +1,15 @@
 <?php 
 
+require __DIR__ . '/../../vendor/autoload.php';
+
+use Spyc;
+use OpenSRS\Request;
+
 if (isSet($_POST['function'])) {
 
 
 // ONLY FOR TESTING PURPOSE!!!
-require_once dirname(__FILE__) . "/../../opensrs/spyc.php";
+// require_once dirname(__FILE__) . "/../../opensrs/spyc.php";
 
 // !!!!!!!! ---  Proper form values verification  --- !!!!!!!!!
 
@@ -35,25 +40,36 @@ $callArray = array (
 if ($formFormat == "json") $callstring = json_encode($callArray);
 if ($formFormat == "yaml") $callstring = Spyc::YAMLDump($callArray);
 
-
-
 // Open SRS Call -> Result
 require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
-$osrsHandler = processOpenSRS ($formFormat, $callstring);
 
+try {
+    $request = new Request();
+    $osrsHandler = $request->process('json', json_encode($callArray));
 
-// Print out the results
-echo (" In: ". $callstring ."<br>");
-echo ("Out: ". $osrsHandler->resultFormatted);
+    // var_dump($osrsHandler->resultRaw);
+    echo $osrsHandler->resultFormatted;
 
+}
+catch(\OpenSRS\Exception $e) {
+    var_dump($e->getMessage());
+}
 
-} else {
-	// Format
-	if (isSet($_GET['format'])) {
-		$tf = $_GET['format'];
-	} else {
-		$tf = "json";
-	}
+// $osrsHandler = processOpenSRS ($formFormat, $callstring);
+//
+//
+// // Print out the results
+// echo (" In: ". $callstring ."<br>");
+// echo ("Out: ". $osrsHandler->resultFormatted);
+//
+//
+// } else {
+// 	// Format
+// 	if (isSet($_GET['format'])) {
+// 		$tf = $_GET['format'];
+// 	} else {
+// 		$tf = "json";
+// 	}
 ?>
 
 
