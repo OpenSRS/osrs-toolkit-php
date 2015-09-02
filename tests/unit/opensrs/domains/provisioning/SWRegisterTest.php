@@ -51,9 +51,23 @@ class SWRegisterTest extends PHPUnit_Framework_TestCase
         
 
 
-        $data->data->domain = 'hockey.pro';
-        $this->setExpectedException('OpenSRS\Exception');
-        $ns = new SWRegister('array', $data);
+        // Check one domain for each possibility (in order) :
+        // 1. ccTLD missing a field
+        // 2. ccTLD with special requirements but does not meet
+        // 3. ccTLD with special requirements met
+        // 4. TLD with no special requirements
+
+        // has special requirements, but missing special field
+        $this->assertTrue(false == $ns->meetsSpecialRequirementsForTld( 'asia' ));
+
+        // has special requirements but does not meet them
+        $this->assertTrue(false == $ns->meetsSpecialRequirementsForTld( 'ca' ));
+
+        // meets special requirements
+        $this->assertTrue(true == $ns->meetsSpecialRequirementsForTld( 'de' ));
+
+        // TLD has no special requirements
+        $this->assertTrue(true == $ns->meetsSpecialRequirementsForTld( 'com' ));
     }
 
     /**
