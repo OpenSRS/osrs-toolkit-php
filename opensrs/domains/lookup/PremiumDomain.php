@@ -10,7 +10,6 @@ class PremiumDomain extends Base
     private $_domain = '';
     private $_tldSelect = array();
     private $_tldAll = array();
-    private $_dataObject;
     private $_formatHolder = '';
     public $resultFullRaw;
     public $resultRaw;
@@ -21,7 +20,7 @@ class PremiumDomain extends Base
     public function __construct($formatString, $dataObject)
     {
         parent::__construct();
-        $this->_dataObject = $dataObject;
+        $this->dataObject = $dataObject;
         $this->_formatHolder = $formatString;
         $this->_validateObject();
     }
@@ -37,54 +36,18 @@ class PremiumDomain extends Base
         $domain = '';
 
         // search domain must be definded
-        if (!isset($this->_dataObject->data->domain)) {
+        if (!$this->hasDomain()) { 
             throw new Exception('oSRS Error - Search domain string not defined.');
         }
 
         // Grab domain name
-        $domain = $this->_dataObject->data->domain;
+        $domain = $this->getDomain();
 
         // get tlds
-        $tlds = $this->getTlds();
+        $tlds = $this->getConfiguredTlds();
 
         // Call function
         $resObject = $this->_domainTLD($domain, $tlds);
-    }
-
-    /**
-     * Get tlds for domain call 
-     * Will use (in order of preference)... 
-     * 1. selected tlds 
-     * 2. supplied default tlds 
-     * 3. included default tlds
-     * 
-     * @return array tlds 
-     */
-    public function getTlds($includedDefaults = array('.com', '.net', '.org'))
-    {
-        $selected = array();
-        $suppliedDefaults = array();
-
-        // Select non empty one
-        if (isset($this->_dataObject->data->selected) && $this->_dataObject->data->selected != '') {
-            $selected = explode(';', $this->_dataObject->data->selected);
-        }
-        if (isset($this->_dataObject->data->defaulttld) && $this->_dataObject->data->defaulttld != '') {
-            $suppliedDefaults = explode(';', $this->_dataObject->data->defaulttld);
-        }
-
-        // use selected
-        if (count($selected) > 0) {
-            return $selected; 
-        }
-
-        // use supplied defaults
-        if (count($suppliedDefaults) > 0) {
-            return $suppliedDefaults; 
-        }
-
-        // use included defaults
-        return $includedDefaults;
     }
 
     // Selected / all TLD options
@@ -107,8 +70,8 @@ class PremiumDomain extends Base
             ),
         );
 
-        if (isset($this->_dataObject->data->maximum) && $this->_dataObject->data->maximum != '') {
-            $cmd['attributes']['service_override']['premium']['maximum'] = $this->_dataObject->data->maximum;
+        if (isset($this->dataObject->data->maximum) && $this->dataObject->data->maximum != '') {
+            $cmd['attributes']['service_override']['premium']['maximum'] = $this->dataObject->data->maximum;
         }
 
         $xmlCMD = $this->_opsHandler->encode($cmd);                    // Flip Array to XML
