@@ -54,6 +54,12 @@ class SWRegisterTest extends PHPUnit_Framework_TestCase
         $data->data->domain = 'hockey.pro';
         $this->setExpectedException('OpenSRS\Exception');
         $ns = new SWRegister('array', $data);
+        
+
+
+        $data->data->domain = 'hockey.ca';
+        $this->setExpectedException('OpenSRS\Exception');
+        $ns = new SWRegister('array', $data);
     }
 
     /**

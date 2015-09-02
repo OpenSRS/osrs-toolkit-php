@@ -38,43 +38,40 @@ class SWRegister extends Base {
 			$tld = end($tldarr);
 
 			// Data validation with all the additional options
-			$allPassed = true;
-			$allPassed = $this->_allTimeRequired();
+			$this->_allTimeRequired();
 
-			// The following TLDs require additional option values
-			$special_tlds = array("ca", "asia", "be", "de", "eu", "it", "name", "us", "au", "pro", "br");
-
-			if (in_array($tld, $special_tlds)) {
-				$_ccTLD = "_ccTLD_" . $tld;
-				$allPassed = $this->$_ccTLD();
-
-				if($tld != "asia" && $tld != "it" && $tld != "eu" && $tld != "de")
-				{
-					throw new Exception( $tld . " needs special requirements." );
-				}
+			if( !$this->meetsSpecialRequirementsForTld( $tld ) ){
+				throw new Exception( $tld . " needs special requirements." );
 			}
 
 			// Call the process function
-			if ($allPassed) {
-				$this->_processRequest ($tld);
-			} else {
-				throw new Exception( "oSRS Error - Incorrect call." );
-			}
+			$this->_processRequest ($tld);
 		} else {
 			throw new Exception( "oSRS Error - Domain is not defined." );
 			die();
 		}
 	}
 
+	protected function meetsSpecialRequirementsForTld( $tld ){
+		$meetsRequirements = true;
+
+		$specialRequirementsClass = '\OpenSRS\domains\provisioning\specialrequirements\\' . strtoupper($tld);
+
+		if(class_exists($specialRequirementsClass)){
+			$specialRequirements = new $specialRequirementsClass();
+
+			$meetsRequirements = $specialRequirements->meetsSpecialRequirements( $this->_dataObject );
+		}
+
+		return $meetsRequirements;
+	}
+
 	// Personal Information
 	private function _allTimeRequired(){
-		$subtest = true;
-
 		$reqPers = array("first_name", "last_name", "org_name", "address1", "city", "state", "country", "postal_code", "phone", "email", "lang_pref");
 		foreach ($reqPers as $reqPer) {
 			if ($this->_dataObject->personal->$reqPer == "") {
 				throw new Exception( "oSRS Error - ". $reqPer ." is not defined." );
-				$subtest = false;
 			}
 		}
 
@@ -82,11 +79,8 @@ class SWRegister extends Base {
 		foreach ($reqDatas as $reqData) {
 			if ($this->_dataObject->data->$reqData == "") {
 				throw new Exception( "oSRS Error - ". $reqData ." is not defined." );
-				$subtest = false;
 			}
 		}
-
-		return $subtest;
 	}
 
 
