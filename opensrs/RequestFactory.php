@@ -79,6 +79,10 @@ class RequestFactory
                 return new \OpenSRS\fastlookup\FastDomainLookup($type, $dataObject); 
                 break;
 
+            case 'trustCancelOrder':
+                return new \OpenSRS\trust\CancelOrder($type, $dataObject); 
+                break;
+
             default:
                 throw new Exception("OSRS Error - $func is unsupported.");
         }
