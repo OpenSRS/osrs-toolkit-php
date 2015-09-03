@@ -1,6 +1,6 @@
 <?php
 
-namespace opensrs\domains\forwarding;
+namespace opensrs\domains\nameserver;
 
 use OpenSRS\Base;
 use OpenSRS\Exception;
@@ -9,7 +9,7 @@ use OpenSRS\Exception;
  *  data -
  */
 
-class FwdSet extends Base {
+class AdvancedUpdate extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;
@@ -31,27 +31,28 @@ class FwdSet extends Base {
 	// Validate the object
 	private function _validateObject() {
 		// Command required values
-		if((!isset($this->_dataObject->data->cookie) || $this->_dataObject->data->cookie == "") &&(!isset($this->_dataObject->data->bypass) || $this->_dataObject->data->bypass == "" )) {
+		if(
+			( !isset($this->_dataObject->data->cookie ) ||
+				$this->_dataObject->data->cookie == "") &&
+			( !isset($this->_dataObject->data->bypass ) ||
+				$this->_dataObject->data->bypass == "")
+		) {
 			throw new Exception( "oSRS Error - cookie / bypass is not defined." );
 		}
 		if(
+			isset( $this->_dataObject->data->cookie ) &&
 			$this->_dataObject->data->cookie != "" &&
-			$this->_dataObject->data->bypass != ""
-		) {
+		  	isset( $this->_dataObject->data->bypass ) &&
+		  	$this->_dataObject->data->bypass != ""
+	  	) {
 			throw new Exception( "oSRS Error - Both cookie and bypass cannot be set in one call." );
 		}
 
 		if(
-			!isset( $this->_dataObject->data->domain ) ||
-			$this->_dataObject->data->domain == ""
+			!isset( $this->_dataObject->data->op_type ) ||
+			$this->_dataObject->data->op_type == ""
 		) {
-			throw new Exception( "oSRS Error - domain is not defined." );
-		}
-		if(
-			!isset( $this->_dataObject->data->subdomain ) ||
-			$this->_dataObject->data->subdomain == ""
-		) {
-			throw new Exception( "oSRS Error - subdomain is not defined." );
+			throw new Exception( "oSRS Error - op_type is not defined." );
 		}
 
 		// Execute the command
@@ -62,17 +63,11 @@ class FwdSet extends Base {
 	private function _processRequest() {
 		$cmd = array(
 			'protocol' => 'XCP',
-			'action' => 'set_domain_forwarding',
+			'action' => 'advanced_update_nameservers',
 			'object' => 'domain',
 //			'cookie' => $this->_dataObject->data->cookie,
 			'attributes' => array(
-				'domain' => $this->_dataObject->data->domain,
-				'forwarding' => array(
-					array(
-					'subdomain' => $this->_dataObject->data->subdomain
-					)
-
-				)
+				'op_type' => $this->_dataObject->data->op_type
 			)
 		);
 
@@ -92,40 +87,25 @@ class FwdSet extends Base {
 
 		// Command optional values
 		if(
-			isset( $this->_dataObject->data->description ) &&
-			$this->_dataObject->data->description != ""
+			isset( $this->_dataObject->data->add_ns ) &&
+			$this->_dataObject->data->add_ns != ""
 		) {
-			$cmd['attributes']['forwarding'][0]['description'] = $this->_dataObject->data->description;
+			$tempAdd = explode( ",", $this->_dataObject->data->add_ns );
+			$cmd['attributes']['add_ns'] = $tempAdd;
 		}
 		if(
-			isset( $this->_dataObject->data->destination_url ) &&
-			$this->_dataObject->data->destination_url != ""
+			isset( $this->_dataObject->data->assign_ns ) &&
+			$this->_dataObject->data->assign_ns != ""
 		) {
-			$cmd['attributes']['forwarding'][0]['destination_url'] = $this->_dataObject->data->destination_url;
+			$tempAdd = explode( ",", $this->_dataObject->data->assign_ns );
+			$cmd['attributes']['assign_ns'] = $tempAdd;
 		}
 		if(
-			isset( $this->_dataObject->data->enabled ) &&
-			$this->_dataObject->data->enabled != ""
+			isset( $this->_dataObject->data->remove_ns ) &&
+			$this->_dataObject->data->remove_ns != ""
 		) {
-			$cmd['attributes']['forwarding'][0]['enabled'] = $this->_dataObject->data->enabled;
-		}
-		if(
-			isset( $this->_dataObject->data->keywords ) &&
-			$this->_dataObject->data->keywords != ""
-		) {
-			$cmd['attributes']['forwarding'][0]['keywords'] = $this->_dataObject->data->keywords;
-		}
-		if(
-			isset( $this->_dataObject->data->masked ) &&
-			$this->_dataObject->data->masked != ""
-		) {
-			$cmd['attributes']['forwarding'][0]['masked'] = $this->_dataObject->data->masked;
-		}
-		if(
-			isset( $this->_dataObject->data->title ) &&
-			$this->_dataObject->data->title != ""
-		) {
-			$cmd['attributes']['forwarding'][0]['title'] = $this->_dataObject->data->title;
+			$tempAdd = explode( ",", $this->_dataObject->data->remove_ns );
+			$cmd['attributes']['remove_ns'] = $tempAdd;
 		}
 
 		// Flip Array to XML

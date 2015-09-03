@@ -1,6 +1,6 @@
 <?php
 
-namespace opensrs\domains\forwarding;
+namespace opensrs\domains\nameserver;
 
 use OpenSRS\Base;
 use OpenSRS\Exception;
@@ -9,7 +9,7 @@ use OpenSRS\Exception;
  *  data -
  */
 
-class FwdGet extends Base {
+class RegistryAdd extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;
@@ -32,24 +32,24 @@ class FwdGet extends Base {
 	private function _validateObject() {
 		// Command required values
 		if(
-			( !isset($this->_dataObject->data->cookie) || $this->_dataObject->data->cookie == "" ) &&
-			( !isset($this->_dataObject->data->bypass) || $this->_dataObject->data->bypass == "" )
+			!isset( $this->_dataObject->data->fqdn ) ||
+			$this->_dataObject->data->fqdn == ""
 		) {
-			throw new Exception( "oSRS Error - cookie / bypass is not defined." );
+			throw new Exception( "oSRS Error - fqdn is not defined." );
 		}
 		if(
-			$this->_dataObject->data->cookie != "" &&
-			$this->_dataObject->data->bypass != ""
+			!isset( $this->_dataObject->data->tld ) ||
+			$this->_dataObject->data->tld == ""
 		) {
-			throw new Exception( "oSRS Error - Both cookie and bypass cannot be set in one call." );
+			throw new Exception( "oSRS Error - tld is not defined." );
+		}
+		if(
+			!isset( $this->_dataObject->data->all ) ||
+			$this->_dataObject->data->all == ""
+		) {
+			throw new Exception( "oSRS Error - all is not defined." );
 		}
 
-		if(
-			!isset( $this->_dataObject->data->domain ) ||
-			$this->_dataObject->data->domain == ""
-		) {
-			throw new Exception( "oSRS Error - domain is not defined." );
-		}
 		// Execute the command
 		$this->_processRequest();
 	}
@@ -58,27 +58,14 @@ class FwdGet extends Base {
 	private function _processRequest() {
 		$cmd = array(
 			'protocol' => 'XCP',
-			'action' => 'get_domain_forwarding',
-			'object' => 'domain',
-//			'cookie' => $this->_dataObject->data->cookie,
+			'action' => 'registry_add_ns',
+			'object' => 'nameserver',
 			'attributes' => array(
-				'domain' => $this->_dataObject->data->domain
+				'fqdn' => $this->_dataObject->data->fqdn,
+				'tld' => $this->_dataObject->data->tld,
+				'all' => $this->_dataObject->data->all
 			)
 		);
-
-		// Cookie / bypass
-		if(
-			isset( $this->_dataObject->data->cookie ) &&
-			$this->_dataObject->data->cookie != ""
-		) {
-			$cmd['cookie'] = $this->_dataObject->data->cookie;
-		}
-		if(
-			isset( $this->_dataObject->data->bypass ) &&
-			$this->_dataObject->data->bypass != ""
-		) {
-			$cmd['domain'] = $this->_dataObject->data->bypass;
-		}
 
 		// Flip Array to XML
 		$xmlCMD = $this->_opsHandler->encode( $cmd );
@@ -89,7 +76,13 @@ class FwdGet extends Base {
 
 		// Results
 		$this->resultFullRaw = $arrayResult;
-		$this->resultRaw = $arrayResult['attributes'];
+
+        if( isset($arrayResult['attributes'] )) {
+            $this->resultRaw = $arrayResult['attributes'];
+        } else {
+			$this->resultRaw = $arrayResult;
+		}
+		
 		$this->resultFullFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
 		$this->resultFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
 	}

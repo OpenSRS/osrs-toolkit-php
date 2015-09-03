@@ -167,6 +167,34 @@ class RequestFactory
                 return new \OpenSRS\domains\forwarding\FwdSet( $type, $dataObject );
                 break;
 
+            case 'nsAdvancedUpdt':
+                return new \OpenSRS\domains\nameserver\AdvancedUpdate( $type, $dataObject );
+                break;
+
+            case 'nsCreate':
+                return new \OpenSRS\domains\nameserver\Create( $type, $dataObject );
+                break;
+
+            case 'nsDelete':
+                return new \OpenSRS\domains\nameserver\Delete( $type, $dataObject );
+                break;
+
+            case 'nsGet':
+                return new \OpenSRS\domains\nameserver\Get( $type, $dataObject );
+                break;
+
+            case 'nsModify':
+                return new \OpenSRS\domains\nameserver\Modify( $type, $dataObject );
+                break;
+
+            case 'nsRegistryAdd':
+                return new \OpenSRS\domains\nameserver\RegistryAdd( $type, $dataObject );
+                break;
+
+            case 'nsRegistryCheck':
+                return new \OpenSRS\domains\nameserver\RegistryCheck( $type, $dataObject );
+                break;
+
             case 'trustCancelOrder':
                 return new \OpenSRS\trust\CancelOrder( $type, $dataObject );
                 break;

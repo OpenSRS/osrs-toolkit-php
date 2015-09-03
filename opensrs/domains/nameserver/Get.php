@@ -1,6 +1,6 @@
 <?php
 
-namespace opensrs\domains\forwarding;
+namespace opensrs\domains\nameserver;
 
 use OpenSRS\Base;
 use OpenSRS\Exception;
@@ -9,7 +9,7 @@ use OpenSRS\Exception;
  *  data -
  */
 
-class FwdGet extends Base {
+class Get extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;
@@ -32,24 +32,28 @@ class FwdGet extends Base {
 	private function _validateObject() {
 		// Command required values
 		if(
-			( !isset($this->_dataObject->data->cookie) || $this->_dataObject->data->cookie == "" ) &&
-			( !isset($this->_dataObject->data->bypass) || $this->_dataObject->data->bypass == "" )
+			( !isset($this->_dataObject->data->cookie ) ||
+				$this->_dataObject->data->cookie == "") &&
+			( !isset($this->_dataObject->data->bypass ) ||
+				$this->_dataObject->data->bypass == "")
 		) {
-			throw new Exception( "oSRS Error - cookie / bypass is not defined." );
+			 throw new Exception( "oSRS Error - cookie / bypass is not defined." );
 		}
 		if(
+			isset( $this->_dataObject->data->cookie ) &&
 			$this->_dataObject->data->cookie != "" &&
-			$this->_dataObject->data->bypass != ""
+	  		isset( $this->_dataObject->data->bypass ) &&
+	  		$this->_dataObject->data->bypass != ""
+  		) {
+			 throw new Exception( "oSRS Error - Both cookie and bypass cannot be set in one call." );
+		}
+		if(
+			!isset( $this->_dataObject->data->name ) ||
+			$this->_dataObject->data->name == ""
 		) {
-			throw new Exception( "oSRS Error - Both cookie and bypass cannot be set in one call." );
+			 throw new Exception( "oSRS Error - name is not defined." );
 		}
 
-		if(
-			!isset( $this->_dataObject->data->domain ) ||
-			$this->_dataObject->data->domain == ""
-		) {
-			throw new Exception( "oSRS Error - domain is not defined." );
-		}
 		// Execute the command
 		$this->_processRequest();
 	}
@@ -58,11 +62,12 @@ class FwdGet extends Base {
 	private function _processRequest() {
 		$cmd = array(
 			'protocol' => 'XCP',
-			'action' => 'get_domain_forwarding',
-			'object' => 'domain',
+			'action' => 'get',
+			'object' => 'nameserver',
 //			'cookie' => $this->_dataObject->data->cookie,
+//			'registrant_ip' => '12.34.56.78',
 			'attributes' => array(
-				'domain' => $this->_dataObject->data->domain
+				'name' => $this->_dataObject->data->name
 			)
 		);
 
@@ -89,8 +94,14 @@ class FwdGet extends Base {
 
 		// Results
 		$this->resultFullRaw = $arrayResult;
-		$this->resultRaw = $arrayResult['attributes'];
-		$this->resultFullFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
-		$this->resultFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
+		if(
+			isset( $arrayResult['attributes'] )
+		) {
+			$this->resultRaw = $arrayResult['attributes'];
+		} else {
+			$this->resultRaw = $arrayResult;
+		}
+		$this->resultFullFormatted = convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
+		$this->resultFormatted = convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
 	}
 }

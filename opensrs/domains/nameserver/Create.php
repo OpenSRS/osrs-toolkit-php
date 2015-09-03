@@ -1,6 +1,6 @@
 <?php
 
-namespace opensrs\domains\forwarding;
+namespace opensrs\domains\nameserver;
 
 use OpenSRS\Base;
 use OpenSRS\Exception;
@@ -9,7 +9,7 @@ use OpenSRS\Exception;
  *  data -
  */
 
-class FwdGet extends Base {
+class Create extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;
@@ -32,24 +32,34 @@ class FwdGet extends Base {
 	private function _validateObject() {
 		// Command required values
 		if(
-			( !isset($this->_dataObject->data->cookie) || $this->_dataObject->data->cookie == "" ) &&
-			( !isset($this->_dataObject->data->bypass) || $this->_dataObject->data->bypass == "" )
+			( !isset($this->_dataObject->data->cookie ) ||
+				$this->_dataObject->data->cookie == "") &&
+			( !isset($this->_dataObject->data->bypass ) ||
+				$this->_dataObject->data->bypass == "")
 		) {
 			throw new Exception( "oSRS Error - cookie / bypass is not defined." );
 		}
 		if(
+			isset( $this->_dataObject->data->cookie ) &&
 			$this->_dataObject->data->cookie != "" &&
+			isset( $this->_dataObject->data->bypass ) &&
 			$this->_dataObject->data->bypass != ""
 		) {
 			throw new Exception( "oSRS Error - Both cookie and bypass cannot be set in one call." );
 		}
-
 		if(
-			!isset( $this->_dataObject->data->domain ) ||
-			$this->_dataObject->data->domain == ""
+			!isset( $this->_dataObject->data->name ) ||
+			$this->_dataObject->data->name == ""
 		) {
-			throw new Exception( "oSRS Error - domain is not defined." );
+			throw new Exception( "oSRS Error - name is not defined." );
 		}
+		if(
+			!isset( $this->_dataObject->data->ipaddress ) ||
+			$this->_dataObject->data->ipaddress == ""
+		) {
+			throw new Exception( "oSRS Error - ipaddress is not defined." );
+		}
+
 		// Execute the command
 		$this->_processRequest();
 	}
@@ -58,11 +68,13 @@ class FwdGet extends Base {
 	private function _processRequest() {
 		$cmd = array(
 			'protocol' => 'XCP',
-			'action' => 'get_domain_forwarding',
-			'object' => 'domain',
-//			'cookie' => $this->_dataObject->data->cookie,
+			'action' => 'create',
+			'object' => 'nameserver',
+// 			'cookie' => $this->_dataObject->data->cookie,
+//			'registrant_ip' => '12.34.56.78',
 			'attributes' => array(
-				'domain' => $this->_dataObject->data->domain
+				'name' => $this->_dataObject->data->name,
+				'ipaddress' => $this->_dataObject->data->ipaddress
 			)
 		);
 
@@ -80,6 +92,14 @@ class FwdGet extends Base {
 			$cmd['domain'] = $this->_dataObject->data->bypass;
 		}
 
+		// Command optional values
+		if(
+			isset( $this->_dataObject->data->add_to_all_registry ) &&
+			$this->_dataObject->data->add_to_all_registry != ""
+		) {
+			$cmd['attributes']['add_to_all_registry'] = $this->_dataObject->data->add_to_all_registry;
+		}
+
 		// Flip Array to XML
 		$xmlCMD = $this->_opsHandler->encode( $cmd );
 		// Send XML
@@ -89,7 +109,7 @@ class FwdGet extends Base {
 
 		// Results
 		$this->resultFullRaw = $arrayResult;
-		$this->resultRaw = $arrayResult['attributes'];
+		$this->resultRaw = $arrayResult;
 		$this->resultFullFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
 		$this->resultFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
 	}

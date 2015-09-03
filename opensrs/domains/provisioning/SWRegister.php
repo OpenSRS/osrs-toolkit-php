@@ -117,7 +117,7 @@ class SWRegister extends Base {
 
 	// Post validation functions
 	private function _processRequest( $ccTLD ) {
-		// Compile the command	
+		// Compile the command
 		$cmd = array(
 			'protocol' => 'XCP',
 			'action' => 'SW_REGISTER',
