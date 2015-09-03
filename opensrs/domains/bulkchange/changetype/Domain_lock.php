@@ -6,7 +6,7 @@ use OpenSRS\Base;
 use OpenSRS\Exception;
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
 
 class Domain_lock extends Base {
@@ -15,27 +15,27 @@ class Domain_lock extends Base {
 		'op_type'
 		);
 
-	public function __construct(){
+	public function __construct() {
 		parent::__construct();
 	}
 
-	public function __deconstruct(){
+	public function __deconstruct() {
 		parent::__deconstruct();
 	}
 
-	public function validateChangeType( $dataObject ){
+	public function validateChangeType( $dataObject ) {
 		foreach( $this->checkFields as $field ) {
-			if( !isset($dataObject->data->$field) || !$dataObject->data->$field ) {
-				throw new Exception("oSRS Error - change type is {$this->change_type} but $field is not defined.");
+			if( !isset( $dataObject->data->$field ) || !$dataObject->data->$field ) {
+				throw new Exception( "oSRS Error - change type is {$this->change_type} but $field is not defined." );
 			}
 		}
 
 		return true;
 	}
-	
+
 	public function setChangeTypeRequestFields( $dataObject, $requestData ) {
-		if (
-			isset($dataObject->data->op_type) &&
+		if(
+			isset( $dataObject->data->op_type ) &&
 			$dataObject->data->op_type!= ""
 		) {
 			$requestData['attributes']['op_type'] = $dataObject->data->op_type;

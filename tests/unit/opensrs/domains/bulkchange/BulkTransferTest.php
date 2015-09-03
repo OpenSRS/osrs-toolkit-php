@@ -25,10 +25,10 @@ class BulkTransferTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function testValidSubmission(){
-        $data = json_decode($this->validSubmission);
+    public function testValidSubmission() {
+        $data = json_decode( $this->validSubmission );
 
-        $ns = new BulkTransfer('array', $data);
+        $ns = new BulkTransfer( 'array', $data );
     }
 
     /**
@@ -37,23 +37,23 @@ class BulkTransferTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function testSubmissionMissingFields(){
-        $data = json_decode($this->validSubmission);
-        unset($data->data->reg_password);
-        
-        $this->setExpectedException('OpenSRS\Exception');
-        $ns = new BulkTransfer('array', $data);
+    public function testSubmissionMissingFields() {
+        $data = json_decode( $this->validSubmission );
+        unset( $data->data->reg_password );
 
-        unset($data->data->reg_username);
-        $this->setExpectedException('OpenSRS\Exception');
-        $ns = new BulkTransfer('array', $data);
+        $this->setExpectedException( 'OpenSRS\Exception' );
+        $ns = new BulkTransfer( 'array', $data );
 
-        unset($data->data->domain_list);
-        $this->setExpectedException('OpenSRS\Exception');
-        $ns = new BulkTransfer('array', $data);
+        unset( $data->data->reg_username );
+        $this->setExpectedException( 'OpenSRS\Exception' );
+        $ns = new BulkTransfer( 'array', $data );
 
-        unset($data->data->custom_tech_contact);
-        $this->setExpectedException('OpenSRS\Exception');
-        $ns = new BulkTransfer('array', $data);
+        unset( $data->data->domain_list );
+        $this->setExpectedException( 'OpenSRS\Exception' );
+        $ns = new BulkTransfer( 'array', $data );
+
+        unset( $data->data->custom_tech_contact );
+        $this->setExpectedException( 'OpenSRS\Exception' );
+        $ns = new BulkTransfer( 'array', $data );
     }
 }

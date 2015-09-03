@@ -7,9 +7,9 @@ use OpenSRS\Exception;
 
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class SendAuthcode extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -18,7 +18,7 @@ class SendAuthcode extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
-	public function __construct ($formatString, $dataObject) {
+	public function __construct( $formatString, $dataObject ) {
 		parent::__construct();
 		$this->_dataObject = $dataObject;
 		$this->_formatHolder = $formatString;
@@ -30,9 +30,9 @@ class SendAuthcode extends Base {
 	}
 
 	// Validate the object
-	private function _validateObject(){
-		if (!isset($this->_dataObject->data->domain_name)) {
-			throw new Exception("oSRS Error - Domain name is not defined.");
+	private function _validateObject() {
+		if( !isset($this->_dataObject->data->domain_name ) ) {
+			throw new Exception( "oSRS Error - Domain name is not defined." );
 			$allPassed = false;
 		}
 
@@ -41,27 +41,27 @@ class SendAuthcode extends Base {
 	}
 
 	// Post validation functions
-	private function _processRequest(){
+	private function _processRequest() {
 		$cmd = array(
 			"protocol" => "XCP",
 			"action" => "SEND_AUTHCODE",
 			"object" => "DOMAIN",
-			"attributes" => array (
+			"attributes" => array(
 				"domain_name" => $this->_dataObject->data->domain_name
 			)
 		);
-		
+
 		// Flip Array to XML
-		$xmlCMD = $this->_opsHandler->encode($cmd);
+		$xmlCMD = $this->_opsHandler->encode( $cmd );
 		// Send XML
-		$XMLresult = $this->send_cmd($xmlCMD);
+		$XMLresult = $this->send_cmd( $xmlCMD );
 		// Flip XML to Array
-		$arrayResult = $this->_opsHandler->decode($XMLresult);
+		$arrayResult = $this->_opsHandler->decode( $XMLresult );
 
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
+		$this->resultFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
 	}
 }

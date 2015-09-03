@@ -7,9 +7,9 @@ use OpenSRS\Exception;
 
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class BulkChange extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -20,7 +20,7 @@ class BulkChange extends Base {
 
 	protected $changeTypeHandle = null;
 
-	public function __construct($formatString, $dataObject) {
+	public function __construct( $formatString, $dataObject ) {
 		parent::__construct();
 		$this->_dataObject = $dataObject;
 		$this->_formatHolder = $formatString;
@@ -32,30 +32,36 @@ class BulkChange extends Base {
 	}
 
 	// Validate the object
-	private function _validateObject(){
+	private function _validateObject() {
 		// Command required values
-		if(!isset($this->_dataObject->data->change_items) || $this->_dataObject->data->change_items == "") {
-			throw new Exception("oSRS Error - change_items is not defined.");
+		if(
+			!isset( $this->_dataObject->data->change_items ) ||
+			$this->_dataObject->data->change_items == ""
+		) {
+			throw new Exception( "oSRS Error - change_items is not defined." );
 		}
 
-		if(!isset($this->_dataObject->data->change_type) || $this->_dataObject->data->change_type == "") {
-			throw new Exception("oSRS Error - change_type is not defined.");
+		if(
+			!isset( $this->_dataObject->data->change_type ) ||
+			$this->_dataObject->data->change_type == ""
+		) {
+			throw new Exception( "oSRS Error - change_type is not defined." );
 		}
 
 		// Execute the command
 		$this->_processRequest();
 	}
 
-	public function getFriendlyClassName( $string ){
-		return ucwords(strtolower(preg_replace("/[^a-z0-9]+/i", "_", $string)));
+	public function getFriendlyClassName( $string ) {
+		return ucwords( strtolower( preg_replace( "/[^a-z0-9]+/i", "_", $string ) ) );
 	}
 
-	public function loadChangeTypeClass( $change_type ){
+	public function loadChangeTypeClass( $change_type ) {
 		$changeTypeClassName = $this->getFriendlyClassName( $change_type );
 
 		$changeTypeClass = '\OpenSRS\domains\bulkchange\changetype\\' . $changeTypeClassName;
 
-		if(class_exists($changeTypeClass)){
+		if( class_exists($changeTypeClass ) ) {
 			$this->changeTypeHandle = new $changeTypeClass();
 		}
 		else {
@@ -63,8 +69,8 @@ class BulkChange extends Base {
 		}
 	}
 
-	public function validateChangeType( $string ){
-		if(null === $this->changeTypeHandle){
+	public function validateChangeType( $string ) {
+		if( null === $this->changeTypeHandle ) {
 			$this->loadChangeTypeClass( $string );
 		}
 
@@ -72,7 +78,7 @@ class BulkChange extends Base {
 	}
 
 	public function setChangeTypeRequestFields( $string, $requestData ) {
-		if(null === $this->changeTypeHandle){
+		if( null === $this->changeTypeHandle ) {
 			$this->loadChangeTypeClass( $string );
 		}
 
@@ -80,8 +86,8 @@ class BulkChange extends Base {
 	}
 
 	// Post validation functions
-	private function _processRequest(){
-		$this->_dataObject->data->change_items = explode(",", $this->_dataObject->data->change_items);
+	private function _processRequest() {
+		$this->_dataObject->data->change_items = explode( ",", $this->_dataObject->data->change_items );
 	
 		$cmd = array(
 			'protocol' => 'XCP',
@@ -95,19 +101,19 @@ class BulkChange extends Base {
 		
 		// Command optional values
 		if(
-			isset($this->_dataObject->data->apply_to_locked_domains) &&
+			isset( $this->_dataObject->data->apply_to_locked_domains ) &&
 			$this->_dataObject->data->apply_to_locked_domains != ""
 		) {
 			$cmd['attributes']['apply_to_locked_domains'] = $this->_dataObject->data->apply_to_locked_domains;
 		}
 		if(
-			isset($this->_dataObject->data->contact_email) &&
+			isset( $this->_dataObject->data->contact_email ) &&
 			$this->_dataObject->data->contact_email != ""
 		) {
 			$cmd['attributes']['contact_email'] = $this->_dataObject->data->contact_email;
 		}
 		if(
-			isset($this->_dataObject->data->apply_to_all_reseller_items) &&
+			isset( $this->_dataObject->data->apply_to_all_reseller_items ) &&
 			$this->_dataObject->data->apply_to_all_reseller_items!= ""
 		) {
 			$cmd['attributes']['apply_to_all_reseller_items'] = $this->_dataObject->data->apply_to_all_reseller_items;
@@ -116,20 +122,20 @@ class BulkChange extends Base {
 		$cmd = $this->setChangeTypeRequestFields( $this->_dataObject->data->change_type, $cmd );
 	
 		// Flip Array to XML
-		$xmlCMD = $this->_opsHandler->encode($cmd);
+		$xmlCMD = $this->_opsHandler->encode( $cmd );
 		// Send XML
-		$XMLresult = $this->send_cmd($xmlCMD);
+		$XMLresult = $this->send_cmd( $xmlCMD );
 		// Flip XML to Array
-		$arrayResult = $this->_opsHandler->decode($XMLresult);		
+		$arrayResult = $this->_opsHandler->decode( $XMLresult );		
 
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = $this->convertArray2Formatted($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = $this->convertArray2Formatted($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
+		$this->resultFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
 	}
 
-	private function _createUserData(){
+	private function _createUserData() {
 		$userArray = array(
 			"first_name" => $this->_dataObject->personal->first_name,
 			"last_name" => $this->_dataObject->personal->last_name,

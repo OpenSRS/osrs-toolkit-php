@@ -24,10 +24,10 @@ class BulkChangeTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function testValidSubmission(){
-        $data = json_decode($this->validSubmission);
-        
-        $ns = new BulkChange('array', $data);
+    public function testValidSubmission() {
+        $data = json_decode( $this->validSubmission );
+
+        $ns = new BulkChange( 'array', $data );
     }
 
     /**
@@ -36,16 +36,16 @@ class BulkChangeTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function testSubmissionMissingFields(){
-        $data = json_decode($this->validSubmission);
-        unset($data->data->change_type);
-        
-        $this->setExpectedException('OpenSRS\Exception');
-        $ns = new BulkChange('array', $data);
+    public function testSubmissionMissingFields() {
+        $data = json_decode( $this->validSubmission );
+        unset( $data->data->change_type );
 
-        unset($data->data->change_items);
-        $this->setExpectedException('OpenSRS\Exception');
-        $ns = new BulkChange('array', $data);
+        $this->setExpectedException( 'OpenSRS\Exception' );
+        $ns = new BulkChange( 'array', $data );
+
+        unset( $data->data->change_items );
+        $this->setExpectedException( 'OpenSRS\Exception' );
+        $ns = new BulkChange( 'array', $data );
     }
 
     /**
@@ -53,19 +53,19 @@ class BulkChangeTest extends PHPUnit_Framework_TestCase
      * each change_type correctly and that the
      * classes load without error
      * Correct values stored in $this->change_types
-     * array, index is change_type, value is 
+     * array, index is change_type, value is
      * expected class name
      *
      * @return void
      */
-    public function testLoadingChangeTypeClasses(){
-        $data = json_decode($this->validSubmission);
-        $ns = new BulkChange('array', $data);
+    public function testLoadingChangeTypeClasses() {
+        $data = json_decode( $this->validSubmission );
+        $ns = new BulkChange( 'array', $data );
 
-        foreach($this->change_types as $change_type => $class_name) {
+        foreach( $this->change_types as $change_type => $class_name ) {
         	$changeTypeClassName = $ns->getFriendlyClassName( $change_type );
 	        $this->assertTrue( $changeTypeClassName == $class_name );
-        	$ns->loadChangeTypeClass($changeTypeClassName);
+        	$ns->loadChangeTypeClass( $changeTypeClassName );
         }
     }
 }

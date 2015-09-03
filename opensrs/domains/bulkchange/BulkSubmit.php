@@ -6,9 +6,9 @@ use OpenSRS\Base;
 use OpenSRS\Exception;
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class BulkSubmit extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -17,7 +17,7 @@ class BulkSubmit extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
-	public function __construct($formatString, $dataObject) {
+	public function __construct( $formatString, $dataObject ) {
 		parent::__construct();
 		$this->_dataObject = $dataObject;
 		$this->_formatHolder = $formatString;
@@ -29,24 +29,24 @@ class BulkSubmit extends Base {
 	}
 
 	// Validate the object
-	private function _validateObject(){
+	private function _validateObject() {
 		// Command required values
 		if(
-			!isset($this->_dataObject->data->change_items) ||
+			!isset( $this->_dataObject->data->change_items ) ||
 			$this->_dataObject->data->change_items == ""
 		) {
 			throw new Exception( "oSRS Error - change_items is not defined." );
 		}
 				
 		if(
-			!isset($this->_dataObject->data->change_type) ||
+			!isset( $this->_dataObject->data->change_type ) ||
 			$this->_dataObject->data->change_type == ""
 		) {
 			throw new Exception( "oSRS Error - change_type is not defined." );
 		}
 
 		if(
-			!isset($this->_dataObject->data->op_type) ||
+			!isset( $this->_dataObject->data->op_type ) ||
 			$this->_dataObject->data->op_type == ""
 		) {
 			throw new Exception( "oSRS Error - op_type is not defined." );
@@ -58,9 +58,9 @@ class BulkSubmit extends Base {
 
 	// Post validation functions
 
-	private function _processRequest(){
+	private function _processRequest() {
 
-        $this->_dataObject->data->change_items = explode(",", $this->_dataObject->data->change_items);
+        $this->_dataObject->data->change_items = explode( ",", $this->_dataObject->data->change_items );
 
 		$cmd = array(
 			'protocol' => 'XCP',
@@ -68,31 +68,31 @@ class BulkSubmit extends Base {
 			'object' => 'bulk_change',
 			'attributes' => array(
 				'change_items' => $this->_dataObject->data->change_items,
-				'change_type' => $this->_dataObject->data->change_type, 
+				'change_type' => $this->_dataObject->data->change_type,
 				'op_type' => $this->_dataObject->data->op_type,
 			)
 		);
 		
 		// Command optional values
 		if(
-			isset($this->_dataObject->data->contact_email) &&
+			isset( $this->_dataObject->data->contact_email ) &&
 			$this->_dataObject->data->contact_email != ""
 		) {
 				$cmd['attributes']['contact_email'] = $this->_dataObject->data->contact_email;
 		}
 		if(
-			isset($this->_dataObject->data->apply_to_locked_domains) &&
+			isset( $this->_dataObject->data->apply_to_locked_domains ) &&
 			$this->_dataObject->data->apply_to_locked_domains != ""
 		) {
 				$cmd['attributes']['apply_to_locked_domains'] = $this->_dataObject->data->apply_to_locked_domains;
 		}
 
 		// Flip Array to XML
-		$xmlCMD = $this->_opsHandler->encode($cmd);
+		$xmlCMD = $this->_opsHandler->encode( $cmd );
 		// Send XML
-		$XMLresult = $this->send_cmd($xmlCMD);
+		$XMLresult = $this->send_cmd( $xmlCMD );
 		// Flip XML to Array
-		$arrayResult = $this->_opsHandler->decode($XMLresult);		
+		$arrayResult = $this->_opsHandler->decode( $XMLresult );		
 
 		// Results
 		$this->resultFullRaw = $arrayResult;

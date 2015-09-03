@@ -25,10 +25,10 @@ class BulkSubmitTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function testValidSubmission(){
-        $data = json_decode($this->validSubmission);
+    public function testValidSubmission() {
+        $data = json_decode( $this->validSubmission );
 
-        $ns = new BulkSubmit('array', $data);
+        $ns = new BulkSubmit( 'array', $data );
     }
 
     /**
@@ -37,19 +37,19 @@ class BulkSubmitTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function testSubmissionMissingFields(){
-        $data = json_decode($this->validSubmission);
-        unset($data->data->op_type);
-        
-        $this->setExpectedException('OpenSRS\Exception');
-        $ns = new BulkSubmit('array', $data);
+    public function testSubmissionMissingFields() {
+        $data = json_decode( $this->validSubmission );
+        unset( $data->data->op_type );
 
-        unset($data->data->change_type);
-        $this->setExpectedException('OpenSRS\Exception');
-        $ns = new BulkSubmit('array', $data);
+        $this->setExpectedException( 'OpenSRS\Exception' );
+        $ns = new BulkSubmit( 'array', $data );
 
-        unset($data->data->change_items);
-        $this->setExpectedException('OpenSRS\Exception');
-        $ns = new BulkSubmit('array', $data);
+        unset( $data->data->change_type );
+        $this->setExpectedException( 'OpenSRS\Exception' );
+        $ns = new BulkSubmit( 'array', $data );
+
+        unset( $data->data->change_items );
+        $this->setExpectedException( 'OpenSRS\Exception' );
+        $ns = new BulkSubmit( 'array', $data );
     }
 }

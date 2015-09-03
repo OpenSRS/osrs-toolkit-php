@@ -7,9 +7,9 @@ use OpenSRS\Exception;
 
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class ChangeOwnership extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -18,7 +18,7 @@ class ChangeOwnership extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
-	public function __construct($formatString, $dataObject) {
+	public function __construct( $formatString, $dataObject ) {
 		parent::__construct();
 		$this->_dataObject = $dataObject;
 		$this->_formatHolder = $formatString;
@@ -30,25 +30,25 @@ class ChangeOwnership extends Base {
 	}
 
 	// Validate the object
-	private function _validateObject(){
-		if (!isset($this->_dataObject->data->cookie)) {
-			throw new Exception("oSRS Error - Cookie string not defined.");
+	private function _validateObject() {
+		if( !isset($this->_dataObject->data->cookie ) ) {
+			throw new Exception( "oSRS Error - Cookie string not defined." );
 		}
 
-		if (!isset($this->_dataObject->data->username)) {
-			throw new Exception("oSRS Error - Username string not defined.");
+		if( !isset($this->_dataObject->data->username ) ) {
+			throw new Exception( oSRS Error - Username string not defined. );
 		}
 
-		if (!isset($this->_dataObject->data->password)) {
-			throw new Exception("oSRS Error - Password string not defined.");
+		if( !isset($this->_dataObject->data->password ) ) {
+			throw new Exception( "oSRS Error - Password string not defined." );
 		}
-		
+
 		// Execute the command
 			$this->_processRequest();
 	}
 
 	// Post validation functions
-	private function _processRequest(){
+	private function _processRequest() {
 		$cmd = array(
 			"protocol" => "XCP",
 			"action" => "CHANGE",
@@ -62,20 +62,30 @@ class ChangeOwnership extends Base {
 		);
 
 		// Command optional values
-		if (isset($this->_dataObject->data->move_all) && $this->_dataObject->data->move_all != "") $cmd['attributes']['move_all'] = $this->_dataObject->data->move_all;
-		if (isset($this->_dataObject->data->reg_domain) && $this->_dataObject->data->reg_domain != "") $cmd['attributes']['reg_domain'] = $this->_dataObject->data->reg_domain;
-		
+		if(
+			isset( $this->_dataObject->data->move_all ) &&
+			$this->_dataObject->data->move_all != ""
+		) {
+			$cmd['attributes']['move_all'] = $this->_dataObject->data->move_all;
+		}
+		if(
+			isset( $this->_dataObject->data->reg_domain ) &&
+			$this->_dataObject->data->reg_domain != ""
+		) {
+			$cmd['attributes']['reg_domain'] = $this->_dataObject->data->reg_domain;
+		}
+
 		// Flip Array to XML
-		$xmlCMD = $this->_opsHandler->encode($cmd);
+		$xmlCMD = $this->_opsHandler->encode( $cmd );
 		// Send XML
-		$XMLresult = $this->send_cmd($xmlCMD);
+		$XMLresult = $this->send_cmd( $xmlCMD );
 		// Flip XML to Array
-		$arrayResult = $this->_opsHandler->decode($XMLresult);		
+		$arrayResult = $this->_opsHandler->decode( $XMLresult );
 
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = $this->convertArray2Formatted($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = $this->convertArray2Formatted($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
+		$this->resultFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
 	}
 }
