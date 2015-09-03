@@ -95,7 +95,7 @@ class SWRegister extends Base {
 			$returnData = $this->specialRequirements->setSpecialRequestFieldsForTld( $this->_dataObject, $requestData );
 		}
 
-		return $returnData ?: $requestData;
+		return !is_null($returnData) ? $returnData : $requestData;
 	}
 
 	// Personal Information
