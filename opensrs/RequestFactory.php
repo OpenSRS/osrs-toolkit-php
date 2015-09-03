@@ -79,8 +79,29 @@ class RequestFactory
                 return new \OpenSRS\fastlookup\FastDomainLookup($type, $dataObject); 
                 break;
 
+            case 'authChangeOwnership':
+                return new \OpenSRS\domains\authentication\ChangeOwnership($type, $dataObject);
+                break;
+                
+            case 'authChangePassword':
+                return new \OpenSRS\domains\authentication\ChangePassword($type, $dataObject);
+                break;
+                
+            case 'authCheckVersion':
+                return new \OpenSRS\domains\authentication\CheckVersion($type, $dataObject);
+                break;
+
+            case 'authSendAuthcode':
+                return new \OpenSRS\domains\authentication\SendAuthcode($type, $dataObject);
+                break;
+                
+            case 'authSendPassword':
+                return new \OpenSRS\domains\authentication\SendPassword($type, $dataObject);
+                break;
+                
             default:
                 throw new Exception("OSRS Error - $func is unsupported.");
+                break;
         }
     }
 }
