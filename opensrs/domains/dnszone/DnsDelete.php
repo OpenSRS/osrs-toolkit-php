@@ -30,24 +30,16 @@ class DnsDelete extends Base {
 
 	// Validate the object
 	private function _validateObject() {
-		$allPassed = true;
-
 		// Command required values
 		if(
 			!isset( $this->_dataObject->data->domain ) ||
 			$this->_dataObject->data->domain == ""
 		) {
 			throw new Exception("oSRS Error - domain is not defined." );
-			$allPassed = false;
 		}
 
-		// Run the command
-		if( $allPassed ) {
-			// Execute the command
-			$this->_processRequest();
-		} else {
-			throw new Exception("oSRS Error - Incorrect call." );
-		}
+		// Execute the command
+		$this->_processRequest();
 	}
 
 	// Post validation functions

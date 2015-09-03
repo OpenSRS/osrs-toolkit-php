@@ -30,13 +30,11 @@ class DnsCreate extends Base {
 
 	// Validate the object
 	private function _validateObject() {
-		// Command required values
 		if(
 			!isset( $this->_dataObject->data->domain ) ||
 			$this->_dataObject->data->domain == ""
 		) {
 			throw new Exception( "oSRS Error - domain is not defined." );
-			$allPassed = false;
 		}
 
 		// Execute the command
