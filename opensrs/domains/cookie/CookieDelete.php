@@ -1,15 +1,16 @@
 <?php
 
-namespace opensrs\domains\dnszone;
+namespace opensrs\domains\cookie;
 
 use OpenSRS\Base;
 use OpenSRS\Exception;
+
 /*
  *  Required object values:
  *  data -
  */
 
-class DnsDelete extends Base {
+class CookieDelete extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;
@@ -30,34 +31,23 @@ class DnsDelete extends Base {
 
 	// Validate the object
 	private function _validateObject() {
-		$allPassed = true;
-
-		// Command required values
-		if(
-			!isset( $this->_dataObject->data->domain ) ||
-			$this->_dataObject->data->domain == ""
-		) {
-			throw new Exception("oSRS Error - domain is not defined." );
-			$allPassed = false;
+		if( !isset($this->_dataObject->data->cookie ) ) {
+			throw new Exception( "oSRS Error - Cookie code not defined." );
 		}
 
-		// Run the command
-		if( $allPassed ) {
-			// Execute the command
-			$this->_processRequest();
-		} else {
-			throw new Exception("oSRS Error - Incorrect call." );
-		}
+		// Execute the command
+		$this->_processRequest();
 	}
 
 	// Post validation functions
 	private function _processRequest() {
 		$cmd = array(
-			'protocol' => 'XCP',
-			'action' => 'delete_dns_zone',
-			'object' => 'domain',
-			'attributes' => array(
-				'domain' => $this->_dataObject->data->domain
+			"protocol" => "XCP",
+			"action" => "delete",
+			"object" => "cookie",
+//			"registrant_ip" => "12.34.56.78",
+			"attributes" => array(
+				"cookie" => $this->_dataObject->data->cookie
 			)
 		);
 
@@ -71,7 +61,7 @@ class DnsDelete extends Base {
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
-		$this->resultFormatted = convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
+		$this->resultFullFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
+		$this->resultFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
 	}
 }

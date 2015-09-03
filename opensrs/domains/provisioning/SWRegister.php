@@ -176,10 +176,12 @@ class SWRegister extends Base {
 
 		$cmd = $this->setSpecialRequestFieldsForTld( $ccTLD, $cmd );
 
-		// Process the call
-		$xmlCMD = $this->_opsHandler->encode( $cmd );					// Flip Array to XML
-		$XMLresult = $this->send_cmd( $xmlCMD );						// Send XML
-		$arrayResult = $this->_opsHandler->decode( $XMLresult );		// Flip XML to Array
+		// Flip Array to XML
+		$xmlCMD = $this->_opsHandler->encode( $cmd );
+		// Send XML
+		$XMLresult = $this->send_cmd( $xmlCMD );
+		// Flip XML to Array
+		$arrayResult = $this->_opsHandler->decode( $XMLresult );
 
 		/* Added by BC : NG : 16-7-2014 : To set error message for Insufficient Funds */
 		if( isset( $arrayResult['attributes']['forced_pending'] ) and $arrayResult['attributes']['forced_pending'] != "" and $arrayResult['is_success'] == 1 )
