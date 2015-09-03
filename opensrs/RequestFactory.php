@@ -112,43 +112,59 @@ class RequestFactory
                 break;
 
             case 'cookieDelete':
-                return new \OpenSRS\domains\bulkchange\CookieDelete( $type, $dataObject );
+                return new \OpenSRS\domains\cookie\CookieDelete( $type, $dataObject );
                 break;
 
             case 'CookieQuit':
-                return new \OpenSRS\domains\bulkchange\CookieQuit( $type, $dataObject );
+                return new \OpenSRS\domains\cookie\CookieQuit( $type, $dataObject );
                 break;
 
             case 'cookieSet':
-                return new \OpenSRS\domains\bulkchange\CookieSet( $type, $dataObject );
+                return new \OpenSRS\domains\cookie\CookieSet( $type, $dataObject );
                 break;
 
             case 'cookieUpdate':
-                return new \OpenSRS\domains\bulkchange\CookieUpdate( $type, $dataObject );
+                return new \OpenSRS\domains\cookie\CookieUpdate( $type, $dataObject );
                 break;
 
             case 'dnsCreate':
-                return new \OpenSRS\domains\bulkchange\DnsCreate( $type, $dataObject );
+                return new \OpenSRS\domains\dnszone\DnsCreate( $type, $dataObject );
                 break;
 
             case 'dnsDelete':
-                return new \OpenSRS\domains\bulkchange\DnsDelete( $type, $dataObject );
+                return new \OpenSRS\domains\dnszone\DnsDelete( $type, $dataObject );
                 break;
 
             case 'dnsForce':
-                return new \OpenSRS\domains\bulkchange\DnsForce( $type, $dataObject );
+                return new \OpenSRS\domains\dnszone\DnsForce( $type, $dataObject );
                 break;
 
             case 'dnsGet':
-                return new \OpenSRS\domains\bulkchange\DnsGet( $type, $dataObject );
+                return new \OpenSRS\domains\dnszone\DnsGet( $type, $dataObject );
                 break;
 
             case 'dnsReset':
-                return new \OpenSRS\domains\bulkchange\DnsReset( $type, $dataObject );
+                return new \OpenSRS\domains\dnszone\DnsReset( $type, $dataObject );
                 break;
 
             case 'dnsSet':
-                return new \OpenSRS\domains\bulkchange\DnsSet( $type, $dataObject );
+                return new \OpenSRS\domains\dnszone\DnsSet( $type, $dataObject );
+                break;
+
+            case 'fwdCreate':
+                return new \OpenSRS\domains\forwarding\FwdCreate( $type, $dataObject );
+                break;
+
+            case 'fwdDelete':
+                return new \OpenSRS\domains\forwarding\FwdDelete( $type, $dataObject );
+                break;
+
+            case 'fwdGet':
+                return new \OpenSRS\domains\forwarding\FwdGet( $type, $dataObject );
+                break;
+
+            case 'fwdSet':
+                return new \OpenSRS\domains\forwarding\FwdSet( $type, $dataObject );
                 break;
 
             case 'trustCancelOrder':
