@@ -6,21 +6,21 @@ class openSRS_LoaderTest extends PHPUnit_Framework_TestCase
     /**
      * Should give an exception when data is ommited 
      */
-    public function testloadNoData()
-    {
-        $this->setExpectedException('PHPUNIT_Framework_Error');
-        processOpenSRS('array');
-    }
+    // public function testloadNoData()
+    // {
+    //     $this->setExpectedException('PHPUNIT_Framework_Error');
+    //     processOpenSRS('array');
+    // }
 
     /**
      * Should give an exception when func does not exist
      * 
      */
-    public function testloadFunctionNotFound()
-    {
-        $this->setExpectedException('PHPUNIT_Framework_Error');
-        processOpenSRS('array', array('func' => 'xxx', 'data' => array()));
-    }
+    // public function testloadFunctionNotFound()
+    // {
+    //     $this->setExpectedException('PHPUNIT_Framework_Error');
+    //     processOpenSRS('array', array('func' => 'xxx', 'data' => array()));
+    // }
 
     /**
      * processOpenSRS should return an object of 
@@ -28,22 +28,22 @@ class openSRS_LoaderTest extends PHPUnit_Framework_TestCase
      * 
      * @return void
      */
-    public function testProcess()
-    {
-        $data = array(
-            'func' => 'premiumDomain',
-            'data' => array(
-                'domain' => 'hockey.com',
-                'selected' => '.com',
-                'alldomains' => '.com'
-            )
-        );
-
-        $this->assertInstanceOf(
-            $data['func'],
-            processOpenSRS('array', $data)
-        );
-    }
+    // public function testProcess()
+    // {
+    //     $data = array(
+    //         'func' => 'premiumDomain',
+    //         'data' => array(
+    //             'domain' => 'hockey.com',
+    //             'selected' => '.com',
+    //             'alldomains' => '.com'
+    //         )
+    //     );
+    //
+    //     $this->assertInstanceOf(
+    //         $data['func'],
+    //         processOpenSRS('array', $data)
+    //     );
+    // }
 
     /**
      * Should remove empty elements from an array recursively 

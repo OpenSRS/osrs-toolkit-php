@@ -99,6 +99,54 @@ class RequestFactory
                 return new \OpenSRS\domains\authentication\SendPassword($type, $dataObject);
                 break;
                 
+            case 'trustCancelOrder':
+                return new \OpenSRS\trust\CancelOrder($type, $dataObject); 
+                break;
+
+            case 'trustCreateToken':
+                return new \OpenSRS\trust\CreateToken($type, $dataObject); 
+                break;
+
+            case 'trustGetOrderInfo':
+                return new \OpenSRS\trust\GetOrderInfo($type, $dataObject); 
+                break;
+
+            case 'trustProductInfo':
+                return new \OpenSRS\trust\ProductInfo($type, $dataObject); 
+                break;
+
+            case 'trustParseCSR':
+                return new \OpenSRS\trust\ParseCSR($type, $dataObject); 
+                break;
+
+            case 'trustProcessPending':
+                return new \OpenSRS\trust\ProcessPending($type, $dataObject); 
+                break;
+
+            case 'trustQueryApproverList':
+                return new \OpenSRS\trust\QueryApproverList($type, $dataObject); 
+                break;
+
+            case 'trustRequestOnDemandScan':
+                return new \OpenSRS\trust\RequestOnDemandScan($type, $dataObject); 
+                break;
+
+            case 'trustResendApproverEmail':
+                return new \OpenSRS\trust\ResendApproverEmail($type, $dataObject); 
+                break;
+
+            case 'trustResendCertEmail':
+                return new \OpenSRS\trust\ResendCertEmail($type, $dataObject); 
+                break;
+
+            case 'trustUpdateOrder':
+                return new \OpenSRS\trust\UpdateOrder($type, $dataObject); 
+                break;
+
+            case 'trustUpdateProduct':
+                return new \OpenSRS\trust\UpdateProduct($type, $dataObject); 
+                break;
+
             default:
                 throw new Exception("OSRS Error - $func is unsupported.");
                 break;
