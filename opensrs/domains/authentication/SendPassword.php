@@ -9,7 +9,7 @@ use OpenSRS\Exception;
  *  Required object values:
  *  data - 
  */
- 
+
 class SendPassword extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -52,10 +52,13 @@ class SendPassword extends Base {
 				"sub_user" => $this->_dataObject->data->sub_user
 			)
 		);
-		
-		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
-		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
-		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
+
+		// Flip Array to XML
+		$xmlCMD = $this->_opsHandler->encode($cmd);
+		// Send XML
+		$XMLresult = $this->send_cmd($xmlCMD);
+		// Flip XML to Array
+		$arrayResult = $this->_opsHandler->decode($XMLresult);		
 
 		// Results
 		$this->resultFullRaw = $arrayResult;

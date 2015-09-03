@@ -55,9 +55,12 @@ class ChangePassword extends Base {
 		if (isset($this->_dataObject->data->cookie) && $this->_dataObject->data->cookie != "") $cmd['cookie'] = $this->_dataObject->data->cookie;
 		if (isset($this->_dataObject->data->domain) && $this->_dataObject->data->domain != "") $cmd['domain'] = $this->_dataObject->data->domain;
 		
-		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
-		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
-		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
+		// Flip Array to XML
+		$xmlCMD = $this->_opsHandler->encode($cmd);
+		// Send XML
+		$XMLresult = $this->send_cmd($xmlCMD);
+		// Flip XML to Array
+		$arrayResult = $this->_opsHandler->decode($XMLresult);		
 
 		// Results
 		$this->resultFullRaw = $arrayResult;

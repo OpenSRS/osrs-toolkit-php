@@ -65,9 +65,12 @@ class ChangeOwnership extends Base {
 		if (isset($this->_dataObject->data->move_all) && $this->_dataObject->data->move_all != "") $cmd['attributes']['move_all'] = $this->_dataObject->data->move_all;
 		if (isset($this->_dataObject->data->reg_domain) && $this->_dataObject->data->reg_domain != "") $cmd['attributes']['reg_domain'] = $this->_dataObject->data->reg_domain;
 		
-		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
-		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
-		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
+		// Flip Array to XML
+		$xmlCMD = $this->_opsHandler->encode($cmd);
+		// Send XML
+		$XMLresult = $this->send_cmd($xmlCMD);
+		// Flip XML to Array
+		$arrayResult = $this->_opsHandler->decode($XMLresult);		
 
 		// Results
 		$this->resultFullRaw = $arrayResult;

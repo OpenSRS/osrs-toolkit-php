@@ -30,10 +30,30 @@ class Domain_contacts extends Base {
 			}
 		}
 		
-		if (!isset($this->_dataObject->personal) || $this->_dataObject->personal == "") {
+		if (!isset($dataObject->personal) || $dataObject->personal == "") {
 			throw new Exception("oSRS Error - change type is {$this->change_type} but personal is not defined.");
 		}
 
 		return true;
+	}
+	public function setChangeTypeRequestFields( $dataObject, $requestData ) {
+		if (
+			isset($dataObject->data->type) && $dataObject->data->type!= "" && 
+		    isset($dataObject->personal) && $dataObject->personal!= ""
+	    ){
+
+			$contact_types=explode (",", $dataObject->data->type);
+
+			$i=0;
+
+			foreach($contact_types as $contact_type){
+				$requestData['attributes']['contacts'][$i]['type'] = $contact_type;
+				$requestData['attributes']['contacts'][$i]['set'] = $this->_createUserData();
+				
+				$i++;
+			}
+		}
+
+		return $requestData;
 	}
 }

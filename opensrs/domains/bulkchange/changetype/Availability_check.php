@@ -25,4 +25,10 @@ class Availability_check extends Base {
 		// to do
 		return true;
 	}
+
+	public function setChangeTypeRequestFields( $dataObject, $requestData ) {
+		// Availability_check does not currently have
+		// any special request fields
+		return $requestData;
+	}
 }

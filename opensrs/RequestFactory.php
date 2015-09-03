@@ -99,6 +99,10 @@ class RequestFactory
                 return new \OpenSRS\domains\authentication\SendPassword($type, $dataObject);
                 break;
                 
+            case 'bulkChange':
+                return new \OpenSRS\domains\bulkchange\BulkChange($type, $dataObject);
+                break;
+                
             case 'trustCancelOrder':
                 return new \OpenSRS\trust\CancelOrder($type, $dataObject); 
                 break;

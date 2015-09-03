@@ -1,7 +1,7 @@
 <?php 
 
 if (isSet($_POST['function'])) {
-	require_once dirname(__FILE__) . "/../../opensrs/spyc.php";
+//	require_once dirname(__FILE__) . "/../../opensrs/spyc.php";
 
 	// Form data capture
 	$formFormat = $_POST["format"];
@@ -41,6 +41,7 @@ if (isSet($_POST['function'])) {
 	
 	if ($formFormat == "json") $callstring = json_encode($callArray);
 	if ($formFormat == "yaml") $callstring = Spyc::YAMLDump($callArray);
+
 
 
 	// Open SRS Call -> Result
