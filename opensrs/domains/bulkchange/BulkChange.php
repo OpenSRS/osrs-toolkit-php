@@ -20,7 +20,7 @@ class BulkChange extends Base {
 
 	protected $changeTypeHandle = null;
 
-	public function __construct ($formatString, $dataObject) {
+	public function __construct($formatString, $dataObject) {
 		parent::__construct();
 		$this->_dataObject = $dataObject;
 		$this->_formatHolder = $formatString;
@@ -80,14 +80,14 @@ class BulkChange extends Base {
 	}
 
 	// Post validation functions
-	private function _processRequest (){
-		$this->_dataObject->data->change_items = explode (",", $this->_dataObject->data->change_items);
+	private function _processRequest(){
+		$this->_dataObject->data->change_items = explode(",", $this->_dataObject->data->change_items);
 	
 		$cmd = array(
 			'protocol' => 'XCP',
 			'action' => 'submit_bulk_change',
 			'object' => 'bulk_change',
-			'attributes' => array (
+			'attributes' => array(
 				'change_type' => $this->_dataObject->data->change_type,
 				'change_items' => $this->_dataObject->data->change_items
 			)

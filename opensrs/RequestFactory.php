@@ -103,6 +103,14 @@ class RequestFactory
                 return new \OpenSRS\domains\bulkchange\BulkChange($type, $dataObject);
                 break;
                 
+            case 'bulkSubmit':
+                return new \OpenSRS\domains\bulkchange\BulkSubmit($type, $dataObject);
+                break;
+                
+            case 'bulkTransfer':
+                return new \OpenSRS\domains\bulkchange\BulkTransfer($type, $dataObject);
+                break;
+                
             case 'trustCancelOrder':
                 return new \OpenSRS\trust\CancelOrder($type, $dataObject); 
                 break;

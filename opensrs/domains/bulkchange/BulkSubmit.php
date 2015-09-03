@@ -1,6 +1,6 @@
 <?php
 
-namespace opensrs\domains\bulkchange\changetype;
+namespace opensrs\domains\bulkchange;
 
 use OpenSRS\Base;
 use OpenSRS\Exception;
@@ -17,7 +17,7 @@ class BulkSubmit extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
-	public function __construct ($formatString, $dataObject) {
+	public function __construct($formatString, $dataObject) {
 		parent::__construct();
 		$this->_dataObject = $dataObject;
 		$this->_formatHolder = $formatString;
@@ -31,21 +31,21 @@ class BulkSubmit extends Base {
 	// Validate the object
 	private function _validateObject(){
 		// Command required values
-		if (
+		if(
 			!isset($this->_dataObject->data->change_items) ||
 			$this->_dataObject->data->change_items == ""
 		) {
 			throw new Exception( "oSRS Error - change_items is not defined." );
 		}
 				
-		if (
+		if(
 			!isset($this->_dataObject->data->change_type) ||
 			$this->_dataObject->data->change_type == ""
 		) {
 			throw new Exception( "oSRS Error - change_type is not defined." );
 		}
 
-		if (
+		if(
 			!isset($this->_dataObject->data->op_type) ||
 			$this->_dataObject->data->op_type == ""
 		) {
@@ -66,7 +66,7 @@ class BulkSubmit extends Base {
 			'protocol' => 'XCP',
 			'action' => 'submit',
 			'object' => 'bulk_change',
-			'attributes' => array (
+			'attributes' => array(
 				'change_items' => $this->_dataObject->data->change_items,
 				'change_type' => $this->_dataObject->data->change_type, 
 				'op_type' => $this->_dataObject->data->op_type,
@@ -74,13 +74,13 @@ class BulkSubmit extends Base {
 		);
 		
 		// Command optional values
-		if (
+		if(
 			isset($this->_dataObject->data->contact_email) &&
 			$this->_dataObject->data->contact_email != ""
 		) {
 				$cmd['attributes']['contact_email'] = $this->_dataObject->data->contact_email;
 		}
-		if (
+		if(
 			isset($this->_dataObject->data->apply_to_locked_domains) &&
 			$this->_dataObject->data->apply_to_locked_domains != ""
 		) {
@@ -97,7 +97,7 @@ class BulkSubmit extends Base {
 		// Results
 		$this->resultFullRaw = $arrayResult;
 		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
-		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
+		$this->resultFullFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
+		$this->resultFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
 	}
 }

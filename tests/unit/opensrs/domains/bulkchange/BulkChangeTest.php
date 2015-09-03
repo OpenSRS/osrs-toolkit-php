@@ -26,8 +26,6 @@ class BulkChangeTest extends PHPUnit_Framework_TestCase
      */
     public function testValidSubmission(){
         $data = json_decode($this->validSubmission);
-        $data->data->change_items = 'phptest'.time().'.com';
-        $data->data->change_type = 'availability_check';
         
         $ns = new BulkChange('array', $data);
     }
