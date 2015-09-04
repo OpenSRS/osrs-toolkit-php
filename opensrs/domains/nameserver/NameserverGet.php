@@ -9,7 +9,7 @@ use OpenSRS\Exception;
  *  data -
  */
 
-class Delete extends Base {
+class NameserverGet extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;
@@ -37,21 +37,21 @@ class Delete extends Base {
 			( !isset($this->_dataObject->data->bypass ) ||
 				$this->_dataObject->data->bypass == "")
 		) {
-			throw new Exception( "oSRS Error - cookie / bypass is not defined." );
+			 throw new Exception( "oSRS Error - cookie / bypass is not defined." );
 		}
 		if(
 			isset( $this->_dataObject->data->cookie ) &&
 			$this->_dataObject->data->cookie != "" &&
-			isset( $this->_dataObject->data->bypass ) &&
-			$this->_dataObject->data->bypass != ""
-		) {
-			throw new Exception( "oSRS Error - Both cookie and bypass cannot be set in one call." );
+	  		isset( $this->_dataObject->data->bypass ) &&
+	  		$this->_dataObject->data->bypass != ""
+  		) {
+			 throw new Exception( "oSRS Error - Both cookie and bypass cannot be set in one call." );
 		}
 		if(
 			!isset( $this->_dataObject->data->name ) ||
 			$this->_dataObject->data->name == ""
 		) {
-			throw new Exception( "oSRS Error - name is not defined." );
+			 throw new Exception( "oSRS Error - name is not defined." );
 		}
 
 		// Execute the command
@@ -62,13 +62,12 @@ class Delete extends Base {
 	private function _processRequest() {
 		$cmd = array(
 			'protocol' => 'XCP',
-			'action' => 'delete',
+			'action' => 'get',
 			'object' => 'nameserver',
 //			'cookie' => $this->_dataObject->data->cookie,
 //			'registrant_ip' => '12.34.56.78',
 			'attributes' => array(
-				'name' => $this->_dataObject->data->name,
-				'ipaddress' => $this->_dataObject->data->ipaddress
+				'name' => $this->_dataObject->data->name
 			)
 		);
 
@@ -95,8 +94,14 @@ class Delete extends Base {
 
 		// Results
 		$this->resultFullRaw = $arrayResult;
-		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
-		$this->resultFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
+		if(
+			isset( $arrayResult['attributes'] )
+		) {
+			$this->resultRaw = $arrayResult['attributes'];
+		} else {
+			$this->resultRaw = $arrayResult;
+		}
+		$this->resultFullFormatted = convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
+		$this->resultFormatted = convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
 	}
 }

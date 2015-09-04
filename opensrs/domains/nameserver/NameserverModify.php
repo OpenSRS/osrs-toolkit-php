@@ -9,7 +9,7 @@ use OpenSRS\Exception;
  *  data -
  */
 
-class Create extends Base {
+class NameserverModify extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;
@@ -42,22 +42,21 @@ class Create extends Base {
 		if(
 			isset( $this->_dataObject->data->cookie ) &&
 			$this->_dataObject->data->cookie != "" &&
-			isset( $this->_dataObject->data->bypass ) &&
-			$this->_dataObject->data->bypass != ""
-		) {
+	  		isset( $this->_dataObject->data->bypass ) && $this->_dataObject->data->bypass != ""
+  		) {
 			throw new Exception( "oSRS Error - Both cookie and bypass cannot be set in one call." );
-		}
-		if(
-			!isset( $this->_dataObject->data->name ) ||
-			$this->_dataObject->data->name == ""
-		) {
-			throw new Exception( "oSRS Error - name is not defined." );
 		}
 		if(
 			!isset( $this->_dataObject->data->ipaddress ) ||
 			$this->_dataObject->data->ipaddress == ""
 		) {
 			throw new Exception( "oSRS Error - ipaddress is not defined." );
+		}
+		if(
+			!isset( $this->_dataObject->data->name ) ||
+			$this->_dataObject->data->name == ""
+		) {
+			throw new Exception( "oSRS Error - name is not defined." );
 		}
 
 		// Execute the command
@@ -68,13 +67,13 @@ class Create extends Base {
 	private function _processRequest() {
 		$cmd = array(
 			'protocol' => 'XCP',
-			'action' => 'create',
+			'action' => 'modify',
 			'object' => 'nameserver',
-// 			'cookie' => $this->_dataObject->data->cookie,
+//			'cookie' => $this->_dataObject->data->cookie,
 //			'registrant_ip' => '12.34.56.78',
 			'attributes' => array(
-				'name' => $this->_dataObject->data->name,
-				'ipaddress' => $this->_dataObject->data->ipaddress
+				'ipaddress' => $this->_dataObject->data->ipaddress,
+				'name' => $this->_dataObject->data->name
 			)
 		);
 
@@ -94,10 +93,10 @@ class Create extends Base {
 
 		// Command optional values
 		if(
-			isset( $this->_dataObject->data->add_to_all_registry ) &&
-			$this->_dataObject->data->add_to_all_registry != ""
+			isset( $this->_dataObject->data->new_name ) &&
+			$this->_dataObject->data->new_name != ""
 		) {
-			$cmd['attributes']['add_to_all_registry'] = $this->_dataObject->data->add_to_all_registry;
+			$cmd['attributes']['new_name'] = $this->_dataObject->data->new_name;
 		}
 
 		// Flip Array to XML

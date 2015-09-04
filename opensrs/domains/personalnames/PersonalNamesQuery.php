@@ -1,6 +1,6 @@
 <?php
 
-namespace opensrs\domains\nameserver;
+namespace opensrs\domains\personalnames;
 
 use OpenSRS\Base;
 use OpenSRS\Exception;
@@ -9,7 +9,7 @@ use OpenSRS\Exception;
  *  data -
  */
 
-class RegistryCheck extends Base {
+class PersonalNamesQuery extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;
@@ -32,16 +32,10 @@ class RegistryCheck extends Base {
 	private function _validateObject() {
 		// Command required values
 		if(
-			!isset( $this->_dataObject->data->fqdn ) ||
-			$this->_dataObject->data->fqdn == ""
+			!isset( $this->_dataObject->data->domain ) ||
+			$this->_dataObject->data->domain == ""
 		) {
-			throw new Exception( "oSRS Error - fqdn is not defined." );
-		}
-		if(
-			!isset( $this->_dataObject->data->tld ) ||
-			$this->_dataObject->data->tld == ""
-		) {
-			throw new Exception( "oSRS Error - tld is not defined." );
+			throw new Exception( "oSRS Error - domain is not defined." );
 		}
 
 		// Execute the command
@@ -52,17 +46,33 @@ class RegistryCheck extends Base {
 	private function _processRequest() {
 		$cmd = array(
 			'protocol' => 'XCP',
-			'action' => 'REGISTRY_CHECK_NAMESERVER',
-			'object' => 'NAMESERVER',
+			'action' => 'QUERY',
+			'object' => 'SURNAME',
 			'attributes' => array(
-				'fqdn' => $this->_dataObject->data->fqdn,
-				'tld' => $this->_dataObject->data->tld
+				'domain' => $this->_dataObject->data->domain
 			)
 		);
 
-		$xmlCMD = $this->_opsHandler->encode( $cmd );					// Flip Array to XML
-		$XMLresult = $this->send_cmd( $xmlCMD );						// Send XML
-		$arrayResult = $this->_opsHandler->decode( $XMLresult );		// Flip XML to Array
+		// Command optional values
+		if(
+			isset( $this->_dataObject->data->query_dns ) &&
+			$this->_dataObject->data->query_dns != ""
+		) {
+			$cmd['attributes']['query_dns'] = $this->_dataObject->data->query_dns;
+		}
+		if(
+			isset( $this->_dataObject->data->query_email ) &&
+			$this->_dataObject->data->query_email != ""
+		) {
+			$cmd['attributes']['query_email'] = $this->_dataObject->data->query_email;
+		}
+
+		// Flip Array to XML
+		$xmlCMD = $this->_opsHandler->encode( $cmd );
+		// Send XML
+		$XMLresult = $this->send_cmd( $xmlCMD );
+		// Flip XML to Array
+		$arrayResult = $this->_opsHandler->decode( $XMLresult );
 
 		// Results
 		$this->resultFullRaw = $arrayResult;

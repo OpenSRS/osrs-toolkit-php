@@ -9,7 +9,7 @@ use OpenSRS\Exception;
  *  data -
  */
 
-class Modify extends Base {
+class NameserverDelete extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;
@@ -42,15 +42,10 @@ class Modify extends Base {
 		if(
 			isset( $this->_dataObject->data->cookie ) &&
 			$this->_dataObject->data->cookie != "" &&
-	  		isset( $this->_dataObject->data->bypass ) && $this->_dataObject->data->bypass != ""
-  		) {
-			throw new Exception( "oSRS Error - Both cookie and bypass cannot be set in one call." );
-		}
-		if(
-			!isset( $this->_dataObject->data->ipaddress ) ||
-			$this->_dataObject->data->ipaddress == ""
+			isset( $this->_dataObject->data->bypass ) &&
+			$this->_dataObject->data->bypass != ""
 		) {
-			throw new Exception( "oSRS Error - ipaddress is not defined." );
+			throw new Exception( "oSRS Error - Both cookie and bypass cannot be set in one call." );
 		}
 		if(
 			!isset( $this->_dataObject->data->name ) ||
@@ -67,13 +62,13 @@ class Modify extends Base {
 	private function _processRequest() {
 		$cmd = array(
 			'protocol' => 'XCP',
-			'action' => 'modify',
+			'action' => 'delete',
 			'object' => 'nameserver',
 //			'cookie' => $this->_dataObject->data->cookie,
 //			'registrant_ip' => '12.34.56.78',
 			'attributes' => array(
-				'ipaddress' => $this->_dataObject->data->ipaddress,
-				'name' => $this->_dataObject->data->name
+				'name' => $this->_dataObject->data->name,
+				'ipaddress' => $this->_dataObject->data->ipaddress
 			)
 		);
 
@@ -89,14 +84,6 @@ class Modify extends Base {
 			$this->_dataObject->data->bypass != ""
 		) {
 			$cmd['domain'] = $this->_dataObject->data->bypass;
-		}
-
-		// Command optional values
-		if(
-			isset( $this->_dataObject->data->new_name ) &&
-			$this->_dataObject->data->new_name != ""
-		) {
-			$cmd['attributes']['new_name'] = $this->_dataObject->data->new_name;
 		}
 
 		// Flip Array to XML

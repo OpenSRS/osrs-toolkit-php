@@ -9,7 +9,7 @@ use OpenSRS\Exception;
  *  data -
  */
 
-class AdvancedUpdate extends Base {
+class NameserverAdvancedUpdate extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;

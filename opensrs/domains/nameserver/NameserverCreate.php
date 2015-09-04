@@ -9,7 +9,7 @@ use OpenSRS\Exception;
  *  data -
  */
 
-class Get extends Base {
+class NameserverCreate extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;
@@ -37,21 +37,27 @@ class Get extends Base {
 			( !isset($this->_dataObject->data->bypass ) ||
 				$this->_dataObject->data->bypass == "")
 		) {
-			 throw new Exception( "oSRS Error - cookie / bypass is not defined." );
+			throw new Exception( "oSRS Error - cookie / bypass is not defined." );
 		}
 		if(
 			isset( $this->_dataObject->data->cookie ) &&
 			$this->_dataObject->data->cookie != "" &&
-	  		isset( $this->_dataObject->data->bypass ) &&
-	  		$this->_dataObject->data->bypass != ""
-  		) {
-			 throw new Exception( "oSRS Error - Both cookie and bypass cannot be set in one call." );
+			isset( $this->_dataObject->data->bypass ) &&
+			$this->_dataObject->data->bypass != ""
+		) {
+			throw new Exception( "oSRS Error - Both cookie and bypass cannot be set in one call." );
 		}
 		if(
 			!isset( $this->_dataObject->data->name ) ||
 			$this->_dataObject->data->name == ""
 		) {
-			 throw new Exception( "oSRS Error - name is not defined." );
+			throw new Exception( "oSRS Error - name is not defined." );
+		}
+		if(
+			!isset( $this->_dataObject->data->ipaddress ) ||
+			$this->_dataObject->data->ipaddress == ""
+		) {
+			throw new Exception( "oSRS Error - ipaddress is not defined." );
 		}
 
 		// Execute the command
@@ -62,12 +68,13 @@ class Get extends Base {
 	private function _processRequest() {
 		$cmd = array(
 			'protocol' => 'XCP',
-			'action' => 'get',
+			'action' => 'create',
 			'object' => 'nameserver',
-//			'cookie' => $this->_dataObject->data->cookie,
+// 			'cookie' => $this->_dataObject->data->cookie,
 //			'registrant_ip' => '12.34.56.78',
 			'attributes' => array(
-				'name' => $this->_dataObject->data->name
+				'name' => $this->_dataObject->data->name,
+				'ipaddress' => $this->_dataObject->data->ipaddress
 			)
 		);
 
@@ -85,6 +92,14 @@ class Get extends Base {
 			$cmd['domain'] = $this->_dataObject->data->bypass;
 		}
 
+		// Command optional values
+		if(
+			isset( $this->_dataObject->data->add_to_all_registry ) &&
+			$this->_dataObject->data->add_to_all_registry != ""
+		) {
+			$cmd['attributes']['add_to_all_registry'] = $this->_dataObject->data->add_to_all_registry;
+		}
+
 		// Flip Array to XML
 		$xmlCMD = $this->_opsHandler->encode( $cmd );
 		// Send XML
@@ -94,14 +109,8 @@ class Get extends Base {
 
 		// Results
 		$this->resultFullRaw = $arrayResult;
-		if(
-			isset( $arrayResult['attributes'] )
-		) {
-			$this->resultRaw = $arrayResult['attributes'];
-		} else {
-			$this->resultRaw = $arrayResult;
-		}
-		$this->resultFullFormatted = convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
-		$this->resultFormatted = convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
+		$this->resultRaw = $arrayResult;
+		$this->resultFullFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
+		$this->resultFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
 	}
 }

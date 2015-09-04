@@ -168,51 +168,51 @@ class RequestFactory
                 break;
 
             case 'nsAdvancedUpdt':
-                return new \OpenSRS\domains\nameserver\AdvancedUpdate( $type, $dataObject );
+                return new \OpenSRS\domains\nameserver\NameserverAdvancedUpdate( $type, $dataObject );
                 break;
 
             case 'nsCreate':
-                return new \OpenSRS\domains\nameserver\Create( $type, $dataObject );
+                return new \OpenSRS\domains\nameserver\NameserverCreate( $type, $dataObject );
                 break;
 
             case 'nsDelete':
-                return new \OpenSRS\domains\nameserver\Delete( $type, $dataObject );
+                return new \OpenSRS\domains\nameserver\NameserverDelete( $type, $dataObject );
                 break;
 
             case 'nsGet':
-                return new \OpenSRS\domains\nameserver\Get( $type, $dataObject );
+                return new \OpenSRS\domains\nameserver\NameserverGet( $type, $dataObject );
                 break;
 
             case 'nsModify':
-                return new \OpenSRS\domains\nameserver\Modify( $type, $dataObject );
+                return new \OpenSRS\domains\nameserver\NameserverModify( $type, $dataObject );
                 break;
 
             case 'nsRegistryAdd':
-                return new \OpenSRS\domains\nameserver\RegistryAdd( $type, $dataObject );
+                return new \OpenSRS\domains\nameserver\NameserverRegistryAdd( $type, $dataObject );
                 break;
 
             case 'nsRegistryCheck':
-                return new \OpenSRS\domains\nameserver\RegistryCheck( $type, $dataObject );
+                return new \OpenSRS\domains\nameserver\NameserverRegistryCheck( $type, $dataObject );
                 break;
 
             case 'persDelete':
-                return new \OpenSRS\domains\personalnames\Delete( $type, $dataObject );
+                return new \OpenSRS\domains\personalnames\PersonalNamesDelete( $type, $dataObject );
                 break;
 
             case 'persNameSuggest':
-                return new \OpenSRS\domains\personalnames\NameSuggest( $type, $dataObject );
+                return new \OpenSRS\domains\personalnames\PersonalNamesNameSuggest( $type, $dataObject );
                 break;
 
             case 'persQuery':
-                return new \OpenSRS\domains\personalnames\Query( $type, $dataObject );
+                return new \OpenSRS\domains\personalnames\PersonalNamesQuery( $type, $dataObject );
                 break;
 
             case 'persSUregister':
-                return new \OpenSRS\domains\personalnames\SURegister( $type, $dataObject );
+                return new \OpenSRS\domains\personalnames\PersonalNamesSURegister( $type, $dataObject );
                 break;
 
             case 'persUpdate':
-                return new \OpenSRS\domains\personalnames\Update( $type, $dataObject );
+                return new \OpenSRS\domains\personalnames\PersonalNamesUpdate( $type, $dataObject );
                 break;
 
             case 'trustCancelOrder':
