@@ -10,7 +10,7 @@ use OpenSRS\Exception;
  *  data -
  */
 
-class CheckVersion extends Base {
+class AuthenticationSendPassword extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;
@@ -31,6 +31,11 @@ class CheckVersion extends Base {
 
 	// Validate the object
 	private function _validateObject() {
+		if( !isset($this->_dataObject->data->domain_name )) {
+			throw new Exception( "oSRS Error - Domain name is not defined." );
+			$allPassed = false;
+		}
+
 		// Execute the command
 		$this->_processRequest();
 	}
@@ -39,12 +44,12 @@ class CheckVersion extends Base {
 	private function _processRequest() {
 		$cmd = array(
 			"protocol" => "XCP",
-			"action" => "CHECK",
-			"object" => "VERSION",
+			"action" => "SEND_PASSWORD",
+			"object" => "DOMAIN",
 			"attributes" => array(
-				"sender" => "OpenSRS SERVER",
-				"version" => "2.32",
-				"state" => "ready"
+				"domain_name" => $this->_dataObject->data->domain_name,
+				"send_to" => $this->_dataObject->data->send_to,
+				"sub_user" => $this->_dataObject->data->sub_user
 			)
 		);
 
@@ -53,7 +58,7 @@ class CheckVersion extends Base {
 		// Send XML
 		$XMLresult = $this->send_cmd( $xmlCMD );
 		// Flip XML to Array
-		$arrayResult = $this->_opsHandler->decode( $XMLresult );
+		$arrayResult = $this->_opsHandler->decode( $XMLresult );		
 
 		// Results
 		$this->resultFullRaw = $arrayResult;

@@ -1,15 +1,16 @@
 <?php
 
-namespace opensrs\domains\personalnames;
+namespace opensrs\domains\authentication;
 
 use OpenSRS\Base;
 use OpenSRS\Exception;
+
 /*
  *  Required object values:
  *  data -
  */
 
-class NameSuggest extends Base {
+class AuthenticationCheckVersion extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;
@@ -30,14 +31,6 @@ class NameSuggest extends Base {
 
 	// Validate the object
 	private function _validateObject() {
-		// Command required values
-		if(
-			!isset($this->_dataObject->data->searchstring) ||
-			$this->_dataObject->data->searchstring == ""
-		) {
-			throw new Exception( "oSRS Error - searchstring is not defined." );
-		}
-
 		// Execute the command
 		$this->_processRequest();
 	}
@@ -45,11 +38,13 @@ class NameSuggest extends Base {
 	// Post validation functions
 	private function _processRequest() {
 		$cmd = array(
-			'protocol' => 'XCP',
-			'object' => 'SURNAME',
-			'action' => 'NAME_SUGGEST',
-			'attributes' => array(
-				'searchstring' => $this->_dataObject->data->searchstring
+			"protocol" => "XCP",
+			"action" => "CHECK",
+			"object" => "VERSION",
+			"attributes" => array(
+				"sender" => "OpenSRS SERVER",
+				"version" => "2.32",
+				"state" => "ready"
 			)
 		);
 
@@ -62,12 +57,7 @@ class NameSuggest extends Base {
 
 		// Results
 		$this->resultFullRaw = $arrayResult;
-		
-        if( isset($arrayResult['attributes'] )) {
-            $this->resultRaw = $arrayResult['attributes'];
-        } else {
-			$this->resultRaw = $arrayResult;
-		}
+		$this->resultRaw = $arrayResult;
 		$this->resultFullFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
 		$this->resultFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
 	}

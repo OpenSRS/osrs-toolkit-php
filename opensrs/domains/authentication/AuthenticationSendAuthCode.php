@@ -10,7 +10,7 @@ use OpenSRS\Exception;
  *  data -
  */
 
-class ChangePassword extends Base {
+class AuthenticationSendAuthCode extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;
@@ -31,8 +31,9 @@ class ChangePassword extends Base {
 
 	// Validate the object
 	private function _validateObject() {
-		if( !isset($this->_dataObject->data->reg_password ) ) {
-			throw new Exception( "oSRS Error - New Password is not defined." );
+		if( !isset($this->_dataObject->data->domain_name ) ) {
+			throw new Exception( "oSRS Error - Domain name is not defined." );
+			$allPassed = false;
 		}
 
 		// Execute the command
@@ -43,27 +44,12 @@ class ChangePassword extends Base {
 	private function _processRequest() {
 		$cmd = array(
 			"protocol" => "XCP",
-			"action" => "CHANGE",
-			"object" => "PASSWORD",
-//			"registrant_ip" => "12.34.56.78",
+			"action" => "SEND_AUTHCODE",
+			"object" => "DOMAIN",
 			"attributes" => array(
-				"reg_password" => $this->_dataObject->data->reg_password
+				"domain_name" => $this->_dataObject->data->domain_name
 			)
 		);
-
-		// Command optional values
-		if(
-			isset( $this->_dataObject->data->cookie ) &&
-			$this->_dataObject->data->cookie != ""
-		) {
-			$cmd['cookie'] = $this->_dataObject->data->cookie;
-		}
-		if(
-			isset( $this->_dataObject->data->domain ) &&
-			$this->_dataObject->data->domain != ""
-		) {
-			$cmd['domain'] = $this->_dataObject->data->domain;
-		}
 
 		// Flip Array to XML
 		$xmlCMD = $this->_opsHandler->encode( $cmd );

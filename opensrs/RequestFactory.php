@@ -80,23 +80,23 @@ class RequestFactory
                 break;
 
             case 'authChangeOwnership':
-                return new \OpenSRS\domains\authentication\ChangeOwnership( $type, $dataObject );
+                return new \OpenSRS\domains\authentication\AuthenticationChangeOwnership( $type, $dataObject );
                 break;
 
             case 'authChangePassword':
-                return new \OpenSRS\domains\authentication\ChangePassword( $type, $dataObject );
+                return new \OpenSRS\domains\authentication\AuthenticationChangePassword( $type, $dataObject );
                 break;
 
             case 'authCheckVersion':
-                return new \OpenSRS\domains\authentication\CheckVersion( $type, $dataObject );
+                return new \OpenSRS\domains\authentication\AuthenticationCheckVersion( $type, $dataObject );
                 break;
 
             case 'authSendAuthcode':
-                return new \OpenSRS\domains\authentication\SendAuthcode( $type, $dataObject );
+                return new \OpenSRS\domains\authentication\AuthenticationSendAuthCode( $type, $dataObject );
                 break;
 
             case 'authSendPassword':
-                return new \OpenSRS\domains\authentication\SendPassword( $type, $dataObject );
+                return new \OpenSRS\domains\authentication\AuthenticationSendPassword( $type, $dataObject );
                 break;
 
             case 'bulkChange':
@@ -152,19 +152,19 @@ class RequestFactory
                 break;
 
             case 'fwdCreate':
-                return new \OpenSRS\domains\forwarding\FwdCreate( $type, $dataObject );
+                return new \OpenSRS\domains\forwarding\ForwardingCreate( $type, $dataObject );
                 break;
 
             case 'fwdDelete':
-                return new \OpenSRS\domains\forwarding\FwdDelete( $type, $dataObject );
+                return new \OpenSRS\domains\forwarding\ForwardingDelete( $type, $dataObject );
                 break;
 
             case 'fwdGet':
-                return new \OpenSRS\domains\forwarding\FwdGet( $type, $dataObject );
+                return new \OpenSRS\domains\forwarding\ForwardingGet( $type, $dataObject );
                 break;
 
             case 'fwdSet':
-                return new \OpenSRS\domains\forwarding\FwdSet( $type, $dataObject );
+                return new \OpenSRS\domains\forwarding\ForwardingSet( $type, $dataObject );
                 break;
 
             case 'nsAdvancedUpdt':

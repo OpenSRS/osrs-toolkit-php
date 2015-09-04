@@ -1,16 +1,15 @@
 <?php
 
-namespace opensrs\domains\authentication;
+namespace opensrs\domains\forwarding;
 
 use OpenSRS\Base;
 use OpenSRS\Exception;
-
 /*
  *  Required object values:
  *  data -
  */
 
-class SendAuthcode extends Base {
+class ForwardingCreate extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;
@@ -31,11 +30,6 @@ class SendAuthcode extends Base {
 
 	// Validate the object
 	private function _validateObject() {
-		if( !isset($this->_dataObject->data->domain_name ) ) {
-			throw new Exception( "oSRS Error - Domain name is not defined." );
-			$allPassed = false;
-		}
-
 		// Execute the command
 		$this->_processRequest();
 	}
@@ -43,13 +37,19 @@ class SendAuthcode extends Base {
 	// Post validation functions
 	private function _processRequest() {
 		$cmd = array(
-			"protocol" => "XCP",
-			"action" => "SEND_AUTHCODE",
-			"object" => "DOMAIN",
-			"attributes" => array(
-				"domain_name" => $this->_dataObject->data->domain_name
-			)
+			'protocol' => 'XCP',
+			'action' => 'create_domain_forwarding',
+			'object' => 'domain',
+			'attributes' => array()
 		);
+
+		// Command optional values
+		if(
+			isset($this->_dataObject->data->domain) &&
+			$this->_dataObject->data->domain != ""
+		) {
+			$cmd['attributes']['domain'] = $this->_dataObject->data->domain;
+		}
 
 		// Flip Array to XML
 		$xmlCMD = $this->_opsHandler->encode( $cmd );

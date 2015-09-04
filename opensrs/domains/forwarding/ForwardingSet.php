@@ -9,7 +9,7 @@ use OpenSRS\Exception;
  *  data -
  */
 
-class FwdSet extends Base {
+class ForwardingSet extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;

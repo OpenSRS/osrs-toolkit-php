@@ -1,15 +1,16 @@
 <?php
 
-namespace opensrs\domains\personalnames;
+namespace opensrs\domains\authentication;
 
 use OpenSRS\Base;
 use OpenSRS\Exception;
+
 /*
  *  Required object values:
  *  data -
  */
 
-class Delete extends Base {
+class AuthenticationChangeOwnership extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;
@@ -30,29 +31,49 @@ class Delete extends Base {
 
 	// Validate the object
 	private function _validateObject() {
-		// Command required values
-		if(
-			!isset( $this->_dataObject->data->domain ) ||
-			$this->_dataObject->data->domain == ""
-		) {
-			throw new Exception( "oSRS Error - domain is not defined." );
-			$allPassed = false;
+		if( !isset($this->_dataObject->data->cookie ) ) {
+			throw new Exception( "oSRS Error - Cookie string not defined." );
+		}
+
+		if( !isset($this->_dataObject->data->username ) ) {
+			throw new Exception( "oSRS Error - Username string not defined." );
+		}
+
+		if( !isset($this->_dataObject->data->password ) ) {
+			throw new Exception( "oSRS Error - Password string not defined." );
 		}
 
 		// Execute the command
-		$this->_processRequest();
+			$this->_processRequest();
 	}
 
 	// Post validation functions
 	private function _processRequest() {
 		$cmd = array(
-			'protocol' => 'XCP',
-			'action' => 'DELETE',
-			'object' => 'SURNAME',
-			'attributes' => array(
-				'domain' => $this->_dataObject->data->domain
+			"protocol" => "XCP",
+			"action" => "CHANGE",
+			"object" => "OWNERSHIP",
+			"cookie" => $this->_dataObject->data->cookie,
+//			"registrant_ip" => "12.34.56.78",
+			"attributes" => array(
+				"username" => $this->_dataObject->data->username,
+				"password" => $this->_dataObject->data->password
 			)
 		);
+
+		// Command optional values
+		if(
+			isset( $this->_dataObject->data->move_all ) &&
+			$this->_dataObject->data->move_all != ""
+		) {
+			$cmd['attributes']['move_all'] = $this->_dataObject->data->move_all;
+		}
+		if(
+			isset( $this->_dataObject->data->reg_domain ) &&
+			$this->_dataObject->data->reg_domain != ""
+		) {
+			$cmd['attributes']['reg_domain'] = $this->_dataObject->data->reg_domain;
+		}
 
 		// Flip Array to XML
 		$xmlCMD = $this->_opsHandler->encode( $cmd );

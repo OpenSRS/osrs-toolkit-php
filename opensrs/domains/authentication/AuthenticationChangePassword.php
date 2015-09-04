@@ -1,15 +1,16 @@
 <?php
 
-namespace opensrs\domains\personalnames;
+namespace opensrs\domains\authentication;
 
 use OpenSRS\Base;
 use OpenSRS\Exception;
+
 /*
  *  Required object values:
  *  data -
  */
 
-class Query extends Base {
+class AuthenticationChangePassword extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;
@@ -30,12 +31,8 @@ class Query extends Base {
 
 	// Validate the object
 	private function _validateObject() {
-		// Command required values
-		if(
-			!isset( $this->_dataObject->data->domain ) ||
-			$this->_dataObject->data->domain == ""
-		) {
-			throw new Exception( "oSRS Error - domain is not defined." );
+		if( !isset($this->_dataObject->data->reg_password ) ) {
+			throw new Exception( "oSRS Error - New Password is not defined." );
 		}
 
 		// Execute the command
@@ -45,26 +42,27 @@ class Query extends Base {
 	// Post validation functions
 	private function _processRequest() {
 		$cmd = array(
-			'protocol' => 'XCP',
-			'action' => 'QUERY',
-			'object' => 'SURNAME',
-			'attributes' => array(
-				'domain' => $this->_dataObject->data->domain
+			"protocol" => "XCP",
+			"action" => "CHANGE",
+			"object" => "PASSWORD",
+//			"registrant_ip" => "12.34.56.78",
+			"attributes" => array(
+				"reg_password" => $this->_dataObject->data->reg_password
 			)
 		);
 
 		// Command optional values
 		if(
-			isset( $this->_dataObject->data->query_dns ) &&
-			$this->_dataObject->data->query_dns != ""
+			isset( $this->_dataObject->data->cookie ) &&
+			$this->_dataObject->data->cookie != ""
 		) {
-			$cmd['attributes']['query_dns'] = $this->_dataObject->data->query_dns;
+			$cmd['cookie'] = $this->_dataObject->data->cookie;
 		}
 		if(
-			isset( $this->_dataObject->data->query_email ) &&
-			$this->_dataObject->data->query_email != ""
+			isset( $this->_dataObject->data->domain ) &&
+			$this->_dataObject->data->domain != ""
 		) {
-			$cmd['attributes']['query_email'] = $this->_dataObject->data->query_email;
+			$cmd['domain'] = $this->_dataObject->data->domain;
 		}
 
 		// Flip Array to XML

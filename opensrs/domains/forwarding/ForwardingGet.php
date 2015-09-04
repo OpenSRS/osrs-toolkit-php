@@ -9,7 +9,7 @@ use OpenSRS\Exception;
  *  data -
  */
 
-class FwdCreate extends Base {
+class ForwardingGet extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;
@@ -30,6 +30,26 @@ class FwdCreate extends Base {
 
 	// Validate the object
 	private function _validateObject() {
+		// Command required values
+		if(
+			( !isset($this->_dataObject->data->cookie) || $this->_dataObject->data->cookie == "" ) &&
+			( !isset($this->_dataObject->data->bypass) || $this->_dataObject->data->bypass == "" )
+		) {
+			throw new Exception( "oSRS Error - cookie / bypass is not defined." );
+		}
+		if(
+			$this->_dataObject->data->cookie != "" &&
+			$this->_dataObject->data->bypass != ""
+		) {
+			throw new Exception( "oSRS Error - Both cookie and bypass cannot be set in one call." );
+		}
+
+		if(
+			!isset( $this->_dataObject->data->domain ) ||
+			$this->_dataObject->data->domain == ""
+		) {
+			throw new Exception( "oSRS Error - domain is not defined." );
+		}
 		// Execute the command
 		$this->_processRequest();
 	}
@@ -38,17 +58,26 @@ class FwdCreate extends Base {
 	private function _processRequest() {
 		$cmd = array(
 			'protocol' => 'XCP',
-			'action' => 'create_domain_forwarding',
+			'action' => 'get_domain_forwarding',
 			'object' => 'domain',
-			'attributes' => array()
+//			'cookie' => $this->_dataObject->data->cookie,
+			'attributes' => array(
+				'domain' => $this->_dataObject->data->domain
+			)
 		);
 
-		// Command optional values
+		// Cookie / bypass
 		if(
-			isset($this->_dataObject->data->domain) &&
-			$this->_dataObject->data->domain != ""
+			isset( $this->_dataObject->data->cookie ) &&
+			$this->_dataObject->data->cookie != ""
 		) {
-			$cmd['attributes']['domain'] = $this->_dataObject->data->domain;
+			$cmd['cookie'] = $this->_dataObject->data->cookie;
+		}
+		if(
+			isset( $this->_dataObject->data->bypass ) &&
+			$this->_dataObject->data->bypass != ""
+		) {
+			$cmd['domain'] = $this->_dataObject->data->bypass;
 		}
 
 		// Flip Array to XML
@@ -60,7 +89,7 @@ class FwdCreate extends Base {
 
 		// Results
 		$this->resultFullRaw = $arrayResult;
-		$this->resultRaw = $arrayResult;
+		$this->resultRaw = $arrayResult['attributes'];
 		$this->resultFullFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
 		$this->resultFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
 	}
