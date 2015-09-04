@@ -36,6 +36,7 @@ class Domain_contacts extends Base {
 
 		return true;
 	}
+	
 	public function setChangeTypeRequestFields( $dataObject, $requestData ) {
 		if(
 			isset( $dataObject->data->type ) && $dataObject->data->type!= "" &&

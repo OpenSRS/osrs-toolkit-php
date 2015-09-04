@@ -195,6 +195,26 @@ class RequestFactory
                 return new \OpenSRS\domains\nameserver\RegistryCheck( $type, $dataObject );
                 break;
 
+            case 'persDelete':
+                return new \OpenSRS\domains\personalnames\Delete( $type, $dataObject );
+                break;
+
+            case 'persNameSuggest':
+                return new \OpenSRS\domains\personalnames\NameSuggest( $type, $dataObject );
+                break;
+
+            case 'persQuery':
+                return new \OpenSRS\domains\personalnames\Query( $type, $dataObject );
+                break;
+
+            case 'persSUregister':
+                return new \OpenSRS\domains\personalnames\SURegister( $type, $dataObject );
+                break;
+
+            case 'persUpdate':
+                return new \OpenSRS\domains\personalnames\Update( $type, $dataObject );
+                break;
+
             case 'trustCancelOrder':
                 return new \OpenSRS\trust\CancelOrder( $type, $dataObject );
                 break;
