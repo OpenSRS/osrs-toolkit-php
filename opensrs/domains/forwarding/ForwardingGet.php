@@ -38,6 +38,8 @@ class ForwardingGet extends Base {
 			throw new Exception( "oSRS Error - cookie / bypass is not defined." );
 		}
 		if(
+			isset($this->_dataObject->data->cookie) &&
+			isset($this->_dataObject->data->bypass) &&
 			$this->_dataObject->data->cookie != "" &&
 			$this->_dataObject->data->bypass != ""
 		) {
@@ -89,7 +91,13 @@ class ForwardingGet extends Base {
 
 		// Results
 		$this->resultFullRaw = $arrayResult;
-		$this->resultRaw = $arrayResult['attributes'];
+
+		if(isset($arrayResult['attributes'])){
+			$this->resultRaw = $arrayResult['attributes'];
+		}
+		else{
+			$this->resultRaw = $arrayResult;
+		}
 		$this->resultFullFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
 		$this->resultFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
 	}

@@ -51,7 +51,7 @@ class PersonalNamesDeleteTest extends PHPUnit_Framework_TestCase
 
 
 
-        // no fqdn sent
+        // no domain sent
         unset( $data->data->domain );
         $ns = new PersonalNamesDelete( 'array', $data );
     }

@@ -99,5 +99,11 @@ class NameserverDeleteTest extends PHPUnit_Framework_TestCase
         // no cookie sent
         unset( $data->data->cookie );
         $ns = new NameserverDelete( 'array', $data );
+
+
+
+        // no domain sent
+        unset( $data->data->domain );
+        $ns = new NameserverDelete( 'array', $data );
     }
 }
