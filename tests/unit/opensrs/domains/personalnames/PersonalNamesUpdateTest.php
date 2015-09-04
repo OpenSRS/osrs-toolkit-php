@@ -7,11 +7,11 @@ use OpenSRS\domains\personalnames\PersonalNamesUpdate;
  */
 class PersonalNamesUpdateTest extends PHPUnit_Framework_TestCase
 {
-    protected $func = 'persSUregister';
+    protected $func = 'persUpdate';
 
     protected $validSubmission = array(
         "data" => array(
-            "func" => "persSUregister",
+            "func" => "persUpdate",
 
             /**
              * Required
