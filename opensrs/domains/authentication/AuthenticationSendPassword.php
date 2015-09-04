@@ -33,7 +33,6 @@ class AuthenticationSendPassword extends Base {
 	private function _validateObject() {
 		if( !isset($this->_dataObject->data->domain_name )) {
 			throw new Exception( "oSRS Error - Domain name is not defined." );
-			$allPassed = false;
 		}
 
 		// Execute the command
