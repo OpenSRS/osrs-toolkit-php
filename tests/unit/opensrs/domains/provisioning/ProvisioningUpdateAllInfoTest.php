@@ -163,6 +163,8 @@ class ProvisioningUpdateAllInfoTest extends PHPUnit_Framework_TestCase
                                       long2ip(mt_rand());
 
         $ns = new ProvisioningUpdateAllInfo( 'array', $data );
+
+        $this->assertTrue( $ns instanceof ProvisioningUpdateAllInfo );
     }
 
     /**
@@ -213,7 +215,6 @@ class ProvisioningUpdateAllInfoTest extends PHPUnit_Framework_TestCase
         // nameserver_names and _ips
         $data->data->nameserver_ips = long2ip(mt_rand());
         $ns = new ProvisioningUpdateAllInfo( 'array', $data );
-        $this->assertTrue( false );
 
 
 

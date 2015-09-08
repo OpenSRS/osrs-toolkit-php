@@ -35,5 +35,7 @@ class ForwardingCreateTest extends PHPUnit_Framework_TestCase
         $data->data->domain = "phptest" . time() . ".com";
 
         $ns = new ForwardingCreate( 'array', $data );
+
+        $this->assertTrue( $ns instanceof ForwardingCreate );
     }
 }

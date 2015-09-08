@@ -40,6 +40,8 @@ class CookieSetTest extends PHPUnit_Framework_TestCase
         $data->data->reg_password = "password12345";
 
         $ns = new CookieSet( 'array', $data );
+
+        $this->assertTrue( $ns instanceof CookieSet );
     }
 
     /**

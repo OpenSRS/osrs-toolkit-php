@@ -41,7 +41,8 @@ class ProvisioningQueryQueuedRequestTest extends PHPUnit_Framework_TestCase
         // sending request with order_id only
         $data->data->request_id = time();
         $ns = new ProvisioningQueryQueuedRequest( 'array', $data );
-        unset( $data->data->order_id );
+
+        $this->assertTrue( $ns instanceof ProvisioningQueryQueuedRequest );
     }
 
     /**

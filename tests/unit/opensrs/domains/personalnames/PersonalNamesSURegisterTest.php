@@ -64,6 +64,8 @@ class PersonalNamesSURegisterSuggestTest extends PHPUnit_Framework_TestCase
 
 
         $ns = new PersonalNamesSURegister( 'array', $data );
+
+        $this->assertTrue( $ns instanceof PersonalNamesSURegister );
     }
 
     /**

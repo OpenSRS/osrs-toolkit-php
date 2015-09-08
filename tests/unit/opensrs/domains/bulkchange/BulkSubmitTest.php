@@ -1,7 +1,10 @@
 <?php
 
 use OpenSRS\domains\bulkchange\BulkSubmit;
-
+/**
+ * @group bulkchange
+ * @group BulkSubmit
+ */
 class BulkSubmitTest extends PHPUnit_Framework_TestCase
 {
 	protected $change_types = array(
@@ -29,6 +32,8 @@ class BulkSubmitTest extends PHPUnit_Framework_TestCase
         $data = json_decode( $this->validSubmission );
 
         $ns = new BulkSubmit( 'array', $data );
+
+        $this->assertTrue( $ns instanceof BulkSubmit );
     }
 
     /**

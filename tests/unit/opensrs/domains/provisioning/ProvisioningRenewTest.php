@@ -81,6 +81,8 @@ class ProvisioningRenewTest extends PHPUnit_Framework_TestCase
         $data->data->period = "1";
 
         $ns = new ProvisioningRenew( 'array', $data );
+
+        $this->assertTrue( $ns instanceof ProvisioningRenew );
     }
 
     /**

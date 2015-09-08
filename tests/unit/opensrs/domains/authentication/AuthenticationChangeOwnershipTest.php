@@ -62,6 +62,8 @@ class AuthenticationChangeOwnershipTest extends PHPUnit_Framework_TestCase
         $data = json_decode( json_encode ($this->validSubmission) );
 
         $ns = new AuthenticationChangeOwnership( 'array', $data );
+
+        $this->assertTrue( $ns instanceof AuthenticationChangeOwnership );
     }
 
     /**

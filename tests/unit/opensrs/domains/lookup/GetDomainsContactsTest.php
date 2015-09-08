@@ -1,7 +1,10 @@
 <?php
 
 use OpenSRS\domains\lookup\GetDomainsContacts;
-
+/**
+ * @group lookup
+ * @group GetDomainsContacts
+ */
 class GetDomainsContactsTest extends PHPUnit_Framework_TestCase
 {
     /**
@@ -21,5 +24,7 @@ class GetDomainsContactsTest extends PHPUnit_Framework_TestCase
 
         $this->setExpectedException('OpenSRS\Exception');
         $ns = new GetDomainsContacts('array', $data);
+
+        $this->assertTrue( $ns instanceof GetDomainsContacts );
     }
 }

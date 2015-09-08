@@ -39,6 +39,8 @@ class ProvisioningSendCIRAApprovalTest extends PHPUnit_Framework_TestCase
         // sending request with order_id only
         $data->data->domain = "phptest" . time() . ".com";
         $ns = new ProvisioningSendCIRAApproval( 'array', $data );
+
+        $this->assertTrue( $ns instanceof ProvisioningSendCIRAApproval );
     }
 
     /**

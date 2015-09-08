@@ -43,6 +43,8 @@ class ProvisioningActivateTest extends PHPUnit_Framework_TestCase
         $data->data->domainname = "phptest" . time() . ".com";
 
         $ns = new ProvisioningActivate( 'array', $data );
+
+        $this->assertTrue( $ns instanceof ProvisioningActivate );
     }
 
     /**

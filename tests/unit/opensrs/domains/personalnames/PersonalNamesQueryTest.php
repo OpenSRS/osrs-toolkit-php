@@ -48,6 +48,8 @@ class PersonalNamesQueryTest extends PHPUnit_Framework_TestCase
         $data->data->domain = "john.smith.net";
 
         $ns = new PersonalNamesQuery( 'array', $data );
+
+        $this->assertTrue( $ns instanceof PersonalNamesQuery );
     }
 
     /**

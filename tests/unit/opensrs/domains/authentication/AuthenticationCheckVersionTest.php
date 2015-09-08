@@ -22,5 +22,7 @@ class AuthenticationCheckVersionTest extends PHPUnit_Framework_TestCase
         $data = json_decode( $this->validSubmission );
 
         $ns = new AuthenticationCheckVersion( 'array', $data );
+
+        $this->assertTrue( $ns instanceof AuthenticationCheckVersion );
     }
 }

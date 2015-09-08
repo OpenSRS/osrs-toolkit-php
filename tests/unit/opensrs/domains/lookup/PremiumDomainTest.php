@@ -1,7 +1,10 @@
 <?php
 
 use OpenSRS\domains\lookup\PremiumDomain;
-
+/**
+ * @group nameserver
+ * @group PremiumDomain
+ */
 class PremiumDomainTest extends PHPUnit_Framework_TestCase
 {
     /**

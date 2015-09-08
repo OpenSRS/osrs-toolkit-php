@@ -49,6 +49,8 @@ class ProvisioningRevokeTest extends PHPUnit_Framework_TestCase
         $data->data->reseller = "reseller_username";
 
         $ns = new ProvisioningRevoke( 'array', $data );
+
+        $this->assertTrue( $ns instanceof ProvisioningRevoke );
     }
 
     /**

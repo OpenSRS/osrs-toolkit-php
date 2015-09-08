@@ -37,5 +37,7 @@ class DnsGetTest extends PHPUnit_Framework_TestCase
         $data->data->domain = 'phptest'.time().'.com';
 
         $ns = new DnsGet( 'array', $data );
+
+        $this->assertTrue( $ns instanceof DnsGet );
     }
 }

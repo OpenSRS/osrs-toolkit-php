@@ -70,6 +70,8 @@ class ProvisioningModifyTest extends PHPUnit_Framework_TestCase
 
 
         $ns = new ProvisioningModify( 'array', $data );
+
+        $this->assertTrue( $ns instanceof ProvisioningModify );
     }
 
     /**

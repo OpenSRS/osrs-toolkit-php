@@ -41,6 +41,8 @@ class NameserverRegistryCheckTest extends PHPUnit_Framework_TestCase
         $data->data->tld = ".com";
 
         $ns = new NameserverRegistryCheck( 'array', $data );
+
+        $this->assertTrue( $ns instanceof NameserverRegistryCheck );
     }
 
     /**
