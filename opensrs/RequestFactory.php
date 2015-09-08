@@ -247,6 +247,10 @@ class RequestFactory
                 return new \OpenSRS\publishing\Disable( $type, $dataObject );
                 break;
 
+            case 'pubEnable':
+                return new \OpenSRS\publishing\Enable( $type, $dataObject );
+                break;
+
             case 'trustCancelOrder':
                 return new \OpenSRS\trust\CancelOrder( $type, $dataObject );
                 break;

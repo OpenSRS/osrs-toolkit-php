@@ -59,7 +59,7 @@ if (isSet($_POST['function'])) {
 			<td width="100%"><span class="headLine">service_type** </span> <input type="text" name="service_type" value="gomobi" class="frontBox"></td>
 		</tr>
 		<tr>
-			<td><input value="Disable" type="submit"></td>
+			<td><input value="Enable" type="submit"></td>
 		</tr>
 	</table>
 </form>
