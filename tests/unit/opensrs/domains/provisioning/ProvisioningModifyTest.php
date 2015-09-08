@@ -19,9 +19,13 @@ class ProvisioningModifyTest extends PHPUnit_Framework_TestCase
              * cookie: cookie to be changed
              * domain: relevant domain, required
              *   only if cookie is not sent
+             *   NOTE: class uses domain_name
+             *         and not "domain" for this
+             *         field's name
              */
             "cookie" => "",
-            "domain" => "",
+            // "domain" => "",
+            "domain_name" => "",
 
             /**
              * Required
@@ -66,7 +70,6 @@ class ProvisioningModifyTest extends PHPUnit_Framework_TestCase
 
 
         $ns = new ProvisioningModify( 'array', $data );
-        unset( $data->data->order_id );
     }
 
     /**
@@ -78,7 +81,7 @@ class ProvisioningModifyTest extends PHPUnit_Framework_TestCase
      */
     public function testInvalidSubmissionFieldsMissing() {
         $data = json_decode( json_encode($this->validSubmission) );
-        
+
         $this->setExpectedException( 'OpenSRS\Exception' );
 
         $data->data->domain = "phptest" . time() . ".com";
@@ -92,6 +95,5 @@ class ProvisioningModifyTest extends PHPUnit_Framework_TestCase
         // no change_type (data->data) sent
         unset( $data->data->data );
         $ns = new ProvisioningModify( 'array', $data );
-        unset( $data->data->order_id );
      }
 }
