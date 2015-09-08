@@ -271,6 +271,10 @@ class RequestFactory
                 return new \OpenSRS\publishing\LetExpire( $type, $dataObject );
                 break;
 
+            case 'pubUpdate':
+                return new \OpenSRS\publishing\Update( $type, $dataObject );
+                break;
+
             case 'trustCancelOrder':
                 return new \OpenSRS\trust\CancelOrder( $type, $dataObject );
                 break;
