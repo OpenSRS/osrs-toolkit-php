@@ -74,7 +74,7 @@ class ProvisioningProcessPendingTest extends PHPUnit_Framework_TestCase
 
 
 
-        // no cookie sent
+        // no order_id sent
         unset( $data->data->order_id );
         $ns = new ProvisioningProcessPending( 'array', $data );
      }
