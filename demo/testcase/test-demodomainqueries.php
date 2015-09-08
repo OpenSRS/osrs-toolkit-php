@@ -3,8 +3,7 @@
 if (isSet($_POST['function'])) {
 
 
-// ONLY FOR TESTING PURPOSE!!!
-	require_once dirname(__FILE__) . "/../../opensrs/spyc.php";
+require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
 
 // !!!!!!!! ---  Proper form values verification  --- !!!!!!!!!
 
@@ -37,7 +36,6 @@ if ($formFormat == "yaml") $callstring = Spyc::YAMLDump($callArray);
 
 
 // Open SRS Call -> Result
-require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
 $osrsHandler = processOpenSRS ($formFormat, $callstring);
 $capArray = convertFormatted2array ($formFormat, $osrsHandler->resultFormatted); 
 

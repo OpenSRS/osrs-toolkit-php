@@ -1,6 +1,8 @@
 <?php 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+	require_once dirname(__FILE__) . "/../../opensrs/openSRS_loader.php";
+
 	// Put the data to the Formatted array
 	$callArray = array(
 		"criteria" => array(
@@ -22,8 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 		$callArray["token"] = $_POST["token"];
 	}
 	// Open SRS Call -> Result
-	require_once dirname(__FILE__) . "/../../opensrs/openSRS_loader.php";
-	$response = SearchAdmins::call(array_filter_recursive($callArray));
+
+
+$response = SearchAdmins::call(array_filter_recursive($callArray));
 
 	// Print out the results
 	echo (" In: ". json_encode($callArray) ."<br>");
