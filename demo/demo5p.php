@@ -1,8 +1,7 @@
 <?php 
 
 if (isSet($_POST['func'])) {
-	// ONLY FOR TESTING PURPOSE!!!
-	require_once("../opensrs/spyc.php");
+	require_once ("../opensrs/openSRS_loader.php");
 	
 	// !!!!!!!! ---  Proper form values verification  --- !!!!!!!!!
 	
@@ -25,7 +24,6 @@ if (isSet($_POST['func'])) {
 	if ($format == "yaml") $callstring = Spyc::YAMLDump($callArray);
 	
 	// Open SRS Call -> Result
-	require_once ("../opensrs/openSRS_loader.php");
 	$osrsHandler = processOpenSRS($format, $callstring);
 
 	$jsonRet = $osrsHandler->resultRaw;
