@@ -259,6 +259,10 @@ class RequestFactory
                 return new \OpenSRS\publishing\GenerateRedirectionCode( $type, $dataObject );
                 break;
 
+            case 'pubGetControlPanelUrl':
+                return new \OpenSRS\publishing\GetControlPanelUrl( $type, $dataObject );
+                break;
+
             case 'trustCancelOrder':
                 return new \OpenSRS\trust\CancelOrder( $type, $dataObject );
                 break;
