@@ -99,6 +99,10 @@ class RequestFactory
                 return new \OpenSRS\domains\provisioning\ProvisioningQueryQueuedRequest( $type, $dataObject );
                 break;
 
+            case 'provRenew':
+                return new \OpenSRS\domains\provisioning\ProvisioningRenew( $type, $dataObject );
+                break;
+
             case 'fastDomainLookup':
                 return new \OpenSRS\fastlookup\FastDomainLookup( $type, $dataObject );
                 break;
