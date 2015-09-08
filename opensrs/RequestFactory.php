@@ -91,6 +91,10 @@ class RequestFactory
                 return new \OpenSRS\domains\provisioning\ProvisioningModify( $type, $dataObject );
                 break;
 
+            case 'provProcessPending':
+                return new \OpenSRS\domains\provisioning\ProvisioningProcessPending( $type, $dataObject );
+                break;
+
             case 'fastDomainLookup':
                 return new \OpenSRS\fastlookup\FastDomainLookup( $type, $dataObject );
                 break;
