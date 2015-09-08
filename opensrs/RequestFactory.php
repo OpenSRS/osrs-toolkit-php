@@ -75,6 +75,22 @@ class RequestFactory
                 return new \OpenSRS\domains\provisioning\SWRegister( $type, $dataObject );
                 break;
 
+            case 'provActivate':
+                return new \OpenSRS\domains\provisioning\ProvisioningActivate( $type, $dataObject );
+                break;
+
+            case 'provCancelActivate':
+                return new \OpenSRS\domains\provisioning\ProvisioningCancelActivate( $type, $dataObject );
+                break;
+
+            case 'provCancelPending':
+                return new \OpenSRS\domains\provisioning\ProvisioningCancelPending( $type, $dataObject );
+                break;
+
+            case 'provModify':
+                return new \OpenSRS\domains\provisioning\ProvisioningModify( $type, $dataObject );
+                break;
+
             case 'fastDomainLookup':
                 return new \OpenSRS\fastlookup\FastDomainLookup( $type, $dataObject );
                 break;
