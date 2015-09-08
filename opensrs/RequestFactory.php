@@ -215,6 +215,10 @@ class RequestFactory
                 return new \OpenSRS\domains\personalnames\PersonalNamesUpdate( $type, $dataObject );
                 break;
 
+            case 'pubCreate':
+                return new \OpenSRS\publishing\Create( $type, $dataObject );
+                break;
+
             case 'trustCancelOrder':
                 return new \OpenSRS\trust\CancelOrder( $type, $dataObject );
                 break;
