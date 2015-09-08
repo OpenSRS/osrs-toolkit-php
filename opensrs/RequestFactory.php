@@ -255,6 +255,10 @@ class RequestFactory
                 return new \OpenSRS\publishing\Enable( $type, $dataObject );
                 break;
 
+            case 'pubGenerateRedirectionCode':
+                return new \OpenSRS\publishing\GenerateRedirectionCode( $type, $dataObject );
+                break;
+
             case 'trustCancelOrder':
                 return new \OpenSRS\trust\CancelOrder( $type, $dataObject );
                 break;
