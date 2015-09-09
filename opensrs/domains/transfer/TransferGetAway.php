@@ -46,85 +46,85 @@ class TransferGetAway extends Base {
 		
 		// Command optional values
 		if (
-			isSet($this->_dataObject->data->domain) && 
+			isset($this->_dataObject->data->domain) && 
 			$this->_dataObject->data->domain != ""
 		) {
 			$cmd['attributes']['domain'] = $this->_dataObject->data->domain;
 		}
 		if (
-			isSet($this->_dataObject->data->gaining_registrar) && 
+			isset($this->_dataObject->data->gaining_registrar) && 
 			$this->_dataObject->data->gaining_registrar != ""
 		) {
 			$cmd['attributes']['gaining_registrar'] = $this->_dataObject->data->gaining_registrar;
 		}
 		if (
-			isSet($this->_dataObject->data->limit) && 
+			isset($this->_dataObject->data->limit) && 
 			$this->_dataObject->data->limit != ""
 		) {
 			$cmd['attributes']['limit'] = $this->_dataObject->data->limit;
 		}
 		if (
-			isSet($this->_dataObject->data->owner_confirm_from) && 
+			isset($this->_dataObject->data->owner_confirm_from) && 
 			$this->_dataObject->data->owner_confirm_from != ""
 		) {
 			$cmd['attributes']['owner_confirm_from'] = $this->_dataObject->data->owner_confirm_from;
 		}
 		if (
-			isSet($this->_dataObject->data->owner_confirm_ip) && 
+			isset($this->_dataObject->data->owner_confirm_ip) && 
 			$this->_dataObject->data->owner_confirm_ip != ""
 		) {
 			$cmd['attributes']['owner_confirm_ip'] = $this->_dataObject->data->owner_confirm_ip;
 		}
 		if (
-			isSet($this->_dataObject->data->owner_confirm_to) && 
+			isset($this->_dataObject->data->owner_confirm_to) && 
 			$this->_dataObject->data->owner_confirm_to != ""
 		) {
 			$cmd['attributes']['owner_confirm_to'] = $this->_dataObject->data->owner_confirm_to;
 		}
 		if (
-			isSet($this->_dataObject->data->owner_request_from) && 
+			isset($this->_dataObject->data->owner_request_from) && 
 			$this->_dataObject->data->owner_request_from != ""
 		) {
 			$cmd['attributes']['owner_request_from'] = $this->_dataObject->data->owner_request_from;
 		}
 		if (
-			isSet($this->_dataObject->data->owner_request_to) && 
+			isset($this->_dataObject->data->owner_request_to) && 
 			$this->_dataObject->data->owner_request_to != ""
 		) {
 			$cmd['attributes']['owner_request_to'] = $this->_dataObject->data->owner_request_to;
 		}
 		if (
-			isSet($this->_dataObject->data->page) && 
+			isset($this->_dataObject->data->page) && 
 			$this->_dataObject->data->page != ""
 		) {
 			$cmd['attributes']['page'] = $this->_dataObject->data->page;
 		}
 		if (
-			isSet($this->_dataObject->data->req_from) && 
+			isset($this->_dataObject->data->req_from) && 
 			$this->_dataObject->data->req_from != ""
 		) {
 			$cmd['attributes']['req_from'] = $this->_dataObject->data->req_from;
 		}
 		if (
-			isSet($this->_dataObject->data->req_to) && 
+			isset($this->_dataObject->data->req_to) && 
 			$this->_dataObject->data->req_to != ""
 		) {
 			$cmd['attributes']['req_to'] = $this->_dataObject->data->req_to;
 		}
 		if (
-			isSet($this->_dataObject->data->status) && 
+			isset($this->_dataObject->data->status) && 
 			$this->_dataObject->data->status != ""
 		) {
 			$cmd['attributes']['status'] = $this->_dataObject->data->status;
 		}
 		if (
-			isSet($this->_dataObject->data->registry_request_date) && 
+			isset($this->_dataObject->data->registry_request_date) && 
 			$this->_dataObject->data->registry_request_date != ""
 		) {
 			$cmd['attributes']['registry_request_date'] = $this->_dataObject->data->registry_request_date;
 		}
 		if (
-			isSet($this->_dataObject->data->request_address) && 
+			isset($this->_dataObject->data->request_address) && 
 			$this->_dataObject->data->request_address != ""
 		) {
 			$cmd['attributes']['request_address'] = $this->_dataObject->data->request_address;
@@ -139,7 +139,7 @@ class TransferGetAway extends Base {
 
 		// Results
 		$this->resultFullRaw = $arrayResult;
-                if (isSet($arrayResult['attributes'])){
+                if (isset($arrayResult['attributes'])){
                     $this->resultRaw = $arrayResult['attributes'];
                 } else {
 			$this->resultRaw = $arrayResult;
