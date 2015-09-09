@@ -111,6 +111,30 @@ class RequestFactory
                 return new \OpenSRS\domains\provisioning\ProvisioningSendCIRAApproval( $type, $dataObject );
                 break;
 
+            case 'provUpdateAllInfo':
+                return new \OpenSRS\domains\provisioning\ProvisioningUpdateAllInfo( $type, $dataObject );
+                break;
+
+            case 'provUpdateContacts':
+                return new \OpenSRS\domains\provisioning\ProvisioningUpdateContacts( $type, $dataObject );
+                break;
+
+            case 'subresCreate':
+                return new \OpenSRS\domains\provisioning\SubresellerCreate( $type, $dataObject );
+                break;
+
+            case 'subresGet':
+                return new \OpenSRS\domains\provisioning\SubresellerGet( $type, $dataObject );
+                break;
+
+            case 'subresModify':
+                return new \OpenSRS\domains\provisioning\SubresellerModify( $type, $dataObject );
+                break;
+
+            case 'subresPay':
+                return new \OpenSRS\domains\provisioning\SubresellerPay( $type, $dataObject );
+                break;
+
             case 'fastDomainLookup':
                 return new \OpenSRS\fastlookup\FastDomainLookup( $type, $dataObject );
                 break;
