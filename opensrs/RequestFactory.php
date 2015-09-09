@@ -475,6 +475,10 @@ class RequestFactory
                 return new \OpenSRS\mail\GetDomainMailboxLimits( $type, $dataObject );
                 break;
 
+            case 'mailGetDomain':
+                return new \OpenSRS\mail\GetDomain( $type, $dataObject );
+                break;
+
 
             default:
                 throw new Exception( "OSRS Error - $func is unsupported." );
