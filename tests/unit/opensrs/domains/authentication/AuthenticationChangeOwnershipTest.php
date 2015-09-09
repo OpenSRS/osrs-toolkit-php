@@ -12,8 +12,6 @@ class AuthenticationChangeOwnershipTest extends PHPUnit_Framework_TestCase
 
     protected $validSubmission = array(
         "data" => array(
-            "func" => "authChangeOwnership",
-
             /**
              * Required: one of 'cookie' or 'domain'
              *
@@ -30,7 +28,7 @@ class AuthenticationChangeOwnershipTest extends PHPUnit_Framework_TestCase
              */
             "username" => "",
             "password" => "",
-            
+
             /**
              * Optional
              * If not submitted, only the domain(s)
