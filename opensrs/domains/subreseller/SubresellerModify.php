@@ -30,14 +30,14 @@ class SubresellerModify extends Base {
 	}
 
 	// Validate the object
-	private function _validateObject(){
+	private function _validateObject() {
 		$reqPers = array(
 			"first_name", "last_name", "org_name", "address1",
 			"city", "state", "country", "postal_code",
 			"phone", "email", "lang_pref"
 			);
 
-		for( $i = 0; $i < count($reqPers); $i++ ){
+		for( $i = 0; $i < count($reqPers); $i++ ) {
 			if(
 				!isset($this->_dataObject->personal->$reqPers[$i]) ||
 				$this->_dataObject->personal->$reqPers[$i] == ""
@@ -52,7 +52,7 @@ class SubresellerModify extends Base {
 			"username"
 			);
 
-		for( $i = 0; $i < count($reqData); $i++ ){
+		for( $i = 0; $i < count($reqData); $i++ ) {
 			if(
 				!isset($this->_dataObject->data->$reqData[$i]) ||
 				$this->_dataObject->data->$reqData[$i] == ""
@@ -66,7 +66,7 @@ class SubresellerModify extends Base {
 	}
 
 	// Post validation functions
-	private function _processRequest(){
+	private function _processRequest() {
 		$cmd = array(
 			'protocol' => 'XCP',
 			'action' => 'MODIFY',
@@ -90,31 +90,31 @@ class SubresellerModify extends Base {
 
 		// Command optional values
 		if(
-			isSet( $this->_dataObject->data->payment_email ) &&
+			isset( $this->_dataObject->data->payment_email ) &&
 			$this->_dataObject->data->payment_email != ""
 		) {
 			$cmd['attributes']['payment_email'] = $this->_dataObject->data->payment_email;
 		}
 		if(
-			isSet( $this->_dataObject->data->url ) &&
+			isset( $this->_dataObject->data->url ) &&
 			$this->_dataObject->data->url != ""
 		) {
 			$cmd['attributes']['url'] = $this->_dataObject->data->url;
 		}
 		if(
-			isSet( $this->_dataObject->data->storefront_rwi ) &&
+			isset( $this->_dataObject->data->storefront_rwi ) &&
 			$this->_dataObject->data->storefront_rwi != ""
 		) {
 			$cmd['attributes']['storefront_rwi'] = $this->_dataObject->data->storefront_rwi;
 		}
 		if(
-			isSet( $this->_dataObject->data->nameservers ) &&
+			isset( $this->_dataObject->data->nameservers ) &&
 			$this->_dataObject->data->nameservers != ""
 		) {
 			// 'fqdn1' => 'parking1.mdnsservice.com'
 			$tmpArray = explode( ",", $this->_dataObject->data->nameservers );
 
-			for( $i=0; $i<count($tmpArray); $i++ ){
+			for( $i=0; $i<count($tmpArray); $i++ ) {
 				$cmd['attributes']['nameservers']['fqdn'. ( $i+1 )] = $tmpArray[$i];
 			}
 		}
@@ -134,7 +134,7 @@ class SubresellerModify extends Base {
 	}
 
 
-	private function _createUserData(){
+	private function _createUserData() {
 		$userArray = array(
 			"first_name" => $this->_dataObject->personal->first_name,
 			"last_name" => $this->_dataObject->personal->last_name,
