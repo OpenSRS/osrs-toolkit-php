@@ -16,7 +16,7 @@ class TransferProcessTest extends PHPUnit_Framework_TestCase
              *
              * order_id: ID of the order to be
              *   resubmitted
-             * reserller: reseller username
+             * reseller: reseller username
              */
             "order_id" => "",
             "reseller" => "",
