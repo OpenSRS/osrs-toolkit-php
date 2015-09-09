@@ -499,6 +499,10 @@ class RequestFactory
                 return new \OpenSRS\mail\SetDomainDisabledStatus( $type, $dataObject );
                 break;
 
+            case 'mailSetDomainMailboxLimits':
+                return new \OpenSRS\mail\SetDomainMailboxLimits( $type, $dataObject );
+                break;
+
             default:
                 throw new Exception( "OSRS Error - $func is unsupported." );
                 break;
