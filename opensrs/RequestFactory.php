@@ -359,6 +359,10 @@ class RequestFactory
                 return new \OpenSRS\trust\UpdateProduct( $type, $dataObject );
                 break;
 
+            case 'mailAuthentication':
+                return new \OpenSRS\mail\Authentication( $type, $dataObject );
+                break;
+
             default:
                 throw new Exception( "OSRS Error - $func is unsupported." );
                 break;

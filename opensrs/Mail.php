@@ -4,6 +4,12 @@ namespace OpenSRS;
 
 class Mail
 {
+
+    public function __construct()
+    {
+    
+    }
+
     // Class functions
     public function makeCall($sequence)
     {
