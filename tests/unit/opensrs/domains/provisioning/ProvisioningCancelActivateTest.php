@@ -50,6 +50,16 @@ class ProvisioningCancelActivateTest extends PHPUnit_Framework_TestCase
         // // sending request with domain only -- CLASS NOT SET UP TO ACCEPT THIS AS VALID
         // $data->data->domain = "phptest" . time() . ".com";
         // $ns = new ProvisioningCancelActivate( 'array', $data );
+        // $this->assertTrue( $ns instanceof ProvisioningCancelActivate );
+    }
+
+    /**
+     * Data Provider for Invalid Submission test
+     */
+    function submissionFields() {
+        return array(
+            'missing order_id' => array('order_id'),
+            );
     }
 
     /**
@@ -57,26 +67,29 @@ class ProvisioningCancelActivateTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      *
+     * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing() {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data' ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
         $data->data->order_id = time();
-        // $data->data->domain = "phptest" . time() . ".com";
 
-        $this->setExpectedException( 'OpenSRS\Exception' );
-
-
-
-        // // no domain sent -- CLASS NOT SET UP TO ACCEPT THIS AS VALID
-        // unset( $data->data->domain );
-        // $ns = new ProvisioningCancelActivate( 'array', $data );
+        $this->setExpectedExceptionRegExp(
+            'OpenSRS\Exception',
+            "/$field.*not defined/"
+            );
 
 
 
-        // no cookie sent
-        unset( $data->data->order_id );
+        // clear field being tested
+        if(is_null($parent)){
+            unset( $data->$field );
+        }
+        else{
+            unset( $data->$parent->$field );
+        }
+
         $ns = new ProvisioningCancelActivate( 'array', $data );
      }
 }

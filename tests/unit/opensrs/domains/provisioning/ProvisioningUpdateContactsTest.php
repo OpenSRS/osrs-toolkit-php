@@ -35,10 +35,10 @@ class ProvisioningUpdateContactsTest extends PHPUnit_Framework_TestCase
          * admin: associative array
          *   containing contact information for
          *   domain admin contact
-         * tech_contact: associative array
+         * tech: associative array
          *   containing contact information for
          *   domain technical contact
-         * billing_contact: associative array
+         * billing: associative array
          *   containing contact information for
          *   domain billing contact
          */
@@ -121,12 +121,73 @@ class ProvisioningUpdateContactsTest extends PHPUnit_Framework_TestCase
         );
 
     /**
-     * Valid submission should complete with no
-     * exception thrown
+     * Data Provider for Invalid Submission test
+     */
+    function submissionFields() {
+        return array(
+            'missing domain' => array('domain'),
+            'missing personal' => array('personal', null),
+            'missing admin' => array('admin', null),
+            'missing tech' => array('tech', null),
+            'missing billing' => array('billing', null),
+
+            'missing personal->first_name' => array('first_name', 'personal'),
+            'missing personal->last_name' => array('last_name', 'personal'),
+            'missing personal->org_name' => array('org_name', 'personal'),
+            'missing personal->address1' => array('address1', 'personal'),
+            'missing personal->city' => array('city', 'personal'),
+            'missing personal->state' => array('state', 'personal'),
+            'missing personal->country' => array('country', 'personal'),
+            'missing personal->postal_code' => array('postal_code', 'personal'),
+            'missing personal->phone' => array('phone', 'personal'),
+            'missing personal->email' => array('email', 'personal'),
+            'missing personal->lang_pref' => array('lang_pref', 'personal'),
+
+            'missing admin->first_name' => array('first_name', 'admin'),
+            'missing admin->last_name' => array('last_name', 'admin'),
+            'missing admin->org_name' => array('org_name', 'admin'),
+            'missing admin->address1' => array('address1', 'admin'),
+            'missing admin->city' => array('city', 'admin'),
+            'missing admin->state' => array('state', 'admin'),
+            'missing admin->country' => array('country', 'admin'),
+            'missing admin->postal_code' => array('postal_code', 'admin'),
+            'missing admin->phone' => array('phone', 'admin'),
+            'missing admin->email' => array('email', 'admin'),
+            'missing admin->lang_pref' => array('lang_pref', 'admin'),
+
+            'missing tech->first_name' => array('first_name', 'tech'),
+            'missing tech->last_name' => array('last_name', 'tech'),
+            'missing tech->org_name' => array('org_name', 'tech'),
+            'missing tech->address1' => array('address1', 'tech'),
+            'missing tech->city' => array('city', 'tech'),
+            'missing tech->state' => array('state', 'tech'),
+            'missing tech->country' => array('country', 'tech'),
+            'missing tech->postal_code' => array('postal_code', 'tech'),
+            'missing tech->phone' => array('phone', 'tech'),
+            'missing tech->email' => array('email', 'tech'),
+            'missing tech->lang_pref' => array('lang_pref', 'tech'),
+
+            'missing billing->first_name' => array('first_name', 'billing'),
+            'missing billing->last_name' => array('last_name', 'billing'),
+            'missing billing->org_name' => array('org_name', 'billing'),
+            'missing billing->address1' => array('address1', 'billing'),
+            'missing billing->city' => array('city', 'billing'),
+            'missing billing->state' => array('state', 'billing'),
+            'missing billing->country' => array('country', 'billing'),
+            'missing billing->postal_code' => array('postal_code', 'billing'),
+            'missing billing->phone' => array('phone', 'billing'),
+            'missing billing->email' => array('email', 'billing'),
+            'missing billing->lang_pref' => array('lang_pref', 'billing'),
+            );
+    }
+
+    /**
+     * Invalid submission should throw an exception
      *
      * @return void
      *
-     * @group validsubmission
+     * @dataProvider submissionFields
+     * @group invalidsubmission
      */
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
@@ -167,7 +228,15 @@ class ProvisioningUpdateContactsTest extends PHPUnit_Framework_TestCase
      *
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing() {
+    /**
+     * Invalid submission should throw an exception
+     *
+     * @return void
+     *
+     * @dataProvider submissionFields
+     * @group invalidsubmission
+     */
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
         $data->data->domain = "phptest" . time() . ".com";
@@ -194,12 +263,29 @@ class ProvisioningUpdateContactsTest extends PHPUnit_Framework_TestCase
         $data->tech = $data->personal;
         $data->billing = $data->personal;
 
-        $this->setExpectedException( 'OpenSRS\Exception' );
+        if(is_null($message)){
+          $this->setExpectedExceptionRegExp(
+              'OpenSRS\Exception',
+              "/$field.*not defined/"
+              );
+        }
+        else {
+          $this->setExpectedExceptionRegExp(
+              'OpenSRS\Exception',
+              "/$message/"
+              );
+        }
 
 
 
-        // not sending domain
-        unset($data->data->domain);
+        // clear field being tested
+        if(is_null($parent)){
+            unset( $data->$field );
+        }
+        else{
+            unset( $data->$parent->$field );
+        }
+
         $ns = new ProvisioningUpdateContacts( 'array', $data );
-     }
+    }
 }

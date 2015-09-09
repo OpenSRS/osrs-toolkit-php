@@ -11,8 +11,6 @@ class ProvisioningRenewTest extends PHPUnit_Framework_TestCase
 
     protected $validSubmission = array(
         "data" => array(
-            "func" => "provRenew",
-
             /**
              * Required
              *
@@ -86,13 +84,27 @@ class ProvisioningRenewTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Data Provider for Invalid Submission test
+     */
+    function submissionFields() {
+        return array(
+            'missing period' => array('domain'),
+            'missing handle' => array('handle'),
+            'missing domain' => array('domain'),
+            'missing currentexpirationyear' => array('currentexpirationyear'),
+            'missing auto_renew' => array('auto_renew'),
+            );
+    }
+
+    /**
      * Invalid submission should throw an exception
      *
      * @return void
      *
+     * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing() {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data' ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
         $data->data->auto_renew = "Y";
@@ -101,36 +113,21 @@ class ProvisioningRenewTest extends PHPUnit_Framework_TestCase
         $data->data->handle = "save";
         $data->data->period = "1";
 
-        $this->setExpectedException( 'OpenSRS\Exception' );
+        $this->setExpectedExceptionRegExp(
+            'OpenSRS\Exception',
+            "/$field.*not defined/"
+            );
 
 
 
-        // no period sent
-        unset( $data->data->period );
-        $ns = new ProvisioningRenew( 'array', $data );
+        // clear field being tested
+        if(is_null($parent)){
+            unset( $data->$field );
+        }
+        else{
+            unset( $data->$parent->$field );
+        }
 
-
-
-        // no handle sent
-        unset( $data->data->handle );
-        $ns = new ProvisioningRenew( 'array', $data );
-
-
-
-        // no domain sent
-        unset( $data->data->domain );
-        $ns = new ProvisioningRenew( 'array', $data );
-
-
-
-        // no currentexpirationyear sent
-        unset( $data->data->currentexpirationyear );
-        $ns = new ProvisioningRenew( 'array', $data );
-
-
-
-        // no auto_renew sent
-        unset( $data->data->auto_renew );
         $ns = new ProvisioningRenew( 'array', $data );
      }
 }

@@ -11,8 +11,6 @@ class ProvisioningCancelPendingTest extends PHPUnit_Framework_TestCase
 
     protected $validSubmission = array(
         "data" => array(
-            "func" => "provCancelPending",
-
             /**
              * Required
              *
@@ -63,23 +61,42 @@ class ProvisioningCancelPendingTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Data Provider for Invalid Submission test
+     */
+    function submissionFields() {
+        return array(
+            'missing to_date' => array('to_date'),
+            );
+    }
+
+    /**
      * Invalid submission should throw an exception
      *
      * @return void
      *
+     * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing() {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data' ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
         $data->data->to_date = time();
 
-        $this->setExpectedException( 'OpenSRS\Exception' );
+        $this->setExpectedExceptionRegExp(
+            'OpenSRS\Exception',
+            "/$field.*not defined/"
+            );
 
 
-        
-        // no to_date sent
-        unset( $data->data->to_date );
+
+        // clear field being tested
+        if(is_null($parent)){
+            unset( $data->$field );
+        }
+        else{
+            unset( $data->$parent->$field );
+        }
+
         $ns = new ProvisioningCancelPending( 'array', $data );
      }
 }

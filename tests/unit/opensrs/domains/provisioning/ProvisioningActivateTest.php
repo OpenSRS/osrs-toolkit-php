@@ -11,8 +11,6 @@ class ProvisioningActivateTest extends PHPUnit_Framework_TestCase
 
     protected $validSubmission = array(
         "data" => array(
-            "func" => "provActivate",
-
             /**
              * Required: 1 of 2
              *
@@ -47,6 +45,49 @@ class ProvisioningActivateTest extends PHPUnit_Framework_TestCase
         $this->assertTrue( $ns instanceof ProvisioningActivate );
     }
 
+
+    /**
+     * Data Provider for Invalid Submission test
+     */
+    function submissionFields() {
+        return array(
+            'missing cookie' => array('cookie'),
+            'missing domainname' => array('domainname'),
+            );
+    }
+
+    /**
+     * Invalid submission should throw an exception
+     *
+     * @return void
+     *
+     * @dataProvider submissionFields
+     * @group invalidsubmission
+     */
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data' ) {
+        $data = json_decode( json_encode($this->validSubmission) );
+
+        $data->data->cookie = md5(time());
+        $data->data->domainname = "phptest" . time() . ".com";
+
+        $this->setExpectedExceptionRegExp(
+            'OpenSRS\Exception',
+            "/$field.*not defined/"
+            );
+
+
+
+        // clear field being tested
+        if(is_null($parent)){
+            unset( $data->$field );
+        }
+        else{
+            unset( $data->$parent->$field );
+        }
+
+        $ns = new ProvisioningActivate( 'array', $data );
+     }
+
     /**
      * Invalid submission should throw an exception
      *
@@ -54,19 +95,16 @@ class ProvisioningActivateTest extends PHPUnit_Framework_TestCase
      *
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing() {
+    public function testInvalidSubmissionFieldsBypassAndCookieSent() {
         $data = json_decode( json_encode($this->validSubmission) );
 
         $data->data->cookie = md5(time());
         $data->data->domainname = "phptest" . time() . ".com";
 
-        $this->setExpectedException( 'OpenSRS\Exception' );
-
-
-
-        // no domainname sent
-        unset( $data->data->domainname );
-        $ns = new ProvisioningActivate( 'array', $data );
+        $this->setExpectedExceptionRegExp(
+            'OpenSRS\Exception',
+            "/cookie and bypass.*one call/"
+            );
 
 
 
@@ -76,11 +114,5 @@ class ProvisioningActivateTest extends PHPUnit_Framework_TestCase
         $ns = new ProvisioningActivate( 'array', $data );
         // removing bypass
         unset( $data->data->bypass );
-
-
-
-        // no cookie sent
-        unset( $data->data->cookie );
-        $ns = new ProvisioningActivate( 'array', $data );
      }
 }

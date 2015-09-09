@@ -11,8 +11,6 @@ class ProvisioningModifyTest extends PHPUnit_Framework_TestCase
 
     protected $validSubmission = array(
         "data" => array(
-            "func" => "provModify",
-
             /**
              * Required: 1 of 2
              *
@@ -75,16 +73,25 @@ class ProvisioningModifyTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Data Provider for Invalid Submission test
+     */
+    function submissionFields() {
+        return array(
+            'missing affect_domains' => array('affect_domains'),
+            'missing data' => array('data'),
+            );
+    }
+
+    /**
      * Invalid submission should throw an exception
      *
      * @return void
      *
+     * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing() {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data' ) {
         $data = json_decode( json_encode($this->validSubmission) );
-
-        $this->setExpectedException( 'OpenSRS\Exception' );
 
         $data->data->domain = "phptest" . time() . ".com";
         $data->data->affect_domains = "0";
@@ -93,9 +100,21 @@ class ProvisioningModifyTest extends PHPUnit_Framework_TestCase
         $data->data->lock_state = "locked";
         $data->data->domain_name = $data->data->domain;
 
+        $this->setExpectedExceptionRegExp(
+            'OpenSRS\Exception',
+            "/$field.*not defined/"
+            );
 
-        // no change_type (data->data) sent
-        unset( $data->data->data );
+
+
+        // clear field being tested
+        if(is_null($parent)){
+            unset( $data->$field );
+        }
+        else{
+            unset( $data->$parent->$field );
+        }
+
         $ns = new ProvisioningModify( 'array', $data );
      }
 }
