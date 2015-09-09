@@ -383,6 +383,15 @@ class RequestFactory
                 return new \OpenSRS\mail\Authentication( $type, $dataObject );
                 break;
 
+            case 'mailChangeDomain':
+                return new \OpenSRS\mail\ChangeDomain( $type, $dataObject );
+                break;
+
+            case 'mailCreateDomainAlias':
+                return new \OpenSRS\mail\CreateDomainAlias( $type, $dataObject );
+                break;
+
+
             default:
                 throw new Exception( "OSRS Error - $func is unsupported." );
                 break;
