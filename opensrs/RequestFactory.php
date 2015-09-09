@@ -399,6 +399,10 @@ class RequestFactory
                 return new \OpenSRS\mail\CreateDomainWelcomeEmail( $type, $dataObject );
                 break;
 
+            case 'mailCreateMailboxForwardOnly':
+                return new \OpenSRS\mail\CreateMailboxForwardOnly( $type, $dataObject );
+                break;
+
             default:
                 throw new Exception( "OSRS Error - $func is unsupported." );
                 break;
