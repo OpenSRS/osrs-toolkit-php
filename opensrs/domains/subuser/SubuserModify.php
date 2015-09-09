@@ -10,7 +10,7 @@ use OpenSRS\Exception;
  *  data -
  */
 
-class SubuserDelete extends Base {
+class SubuserModify extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;
@@ -41,9 +41,7 @@ class SubuserDelete extends Base {
 			throw new Exception( "oSRS Error - cookie / bypass is not defined." );
 		}
 		if(
-			isset($this->_dataObject->data->cookie) &&
 			$this->_dataObject->data->cookie != "" &&
-			isset($this->_dataObject->data->bypass) &&
 			$this->_dataObject->data->bypass != ""
 		) {
 			throw new Exception( "oSRS Error - Both cookie and bypass cannot be set in one call." );
@@ -54,6 +52,24 @@ class SubuserDelete extends Base {
 			$this->_dataObject->data->username == ""
 		) {
 			throw new Exception( "oSRS Error - username is not defined." );
+		}
+		if(
+			!isset( $this->_dataObject->data->sub_username ) ||
+			$this->_dataObject->data->sub_username == ""
+		) {
+			throw new Exception( "oSRS Error - sub_username is not defined." );
+		}
+		if(
+			!isset( $this->_dataObject->data->sub_permission ) ||
+			$this->_dataObject->data->sub_permission == ""
+		) {
+			throw new Exception( "oSRS Error - sub_permission is not defined." );
+		}
+		if(
+			!isset( $this->_dataObject->data->sub_password ) ||
+			$this->_dataObject->data->sub_password == ""
+		) {
+			throw new Exception( "oSRS Error - sub_password is not defined." );
 		}
 		if(
 			!isset( $this->_dataObject->data->sub_id ) ||
@@ -70,17 +86,22 @@ class SubuserDelete extends Base {
 	private function _processRequest() {
 		$cmd = array(
 			'protocol' => 'XCP',
-			'action' => 'delete',
+			'action' => 'modify',
 			'object' => 'subuser',
 //			'cookie' => $this->_dataObject->data->cookie,
 			'username' => $this->_dataObject->data->username,
+//			'registrant_ip' => '12.34.56.78',
 			'attributes' => array(
+				'sub_username' => $this->_dataObject->data->sub_username,
+				'sub_permission' => $this->_dataObject->data->sub_permission,
+				'sub_password' => $this->_dataObject->data->sub_password,
 				'sub_id' => $this->_dataObject->data->sub_id
 			)
 		);
 
 		// Cookie / bypass
-		if( isset($this->_dataObject->data->cookie ) &&
+		if(
+			isset( $this->_dataObject->data->cookie ) &&
 			$this->_dataObject->data->cookie != ""
 		) {
 			$cmd['cookie'] = $this->_dataObject->data->cookie;

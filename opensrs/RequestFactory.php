@@ -135,6 +135,26 @@ class RequestFactory
                 return new \OpenSRS\domains\provisioning\SubresellerPay( $type, $dataObject );
                 break;
 
+            case 'subuserAdd':
+                return new \OpenSRS\domains\provisioning\SubuserAdd( $type, $dataObject );
+                break;
+
+            case 'subuserDelete':
+                return new \OpenSRS\domains\provisioning\SubuserDelete( $type, $dataObject );
+                break;
+
+            case 'subuserGet':
+                return new \OpenSRS\domains\provisioning\SubuserGet( $type, $dataObject );
+                break;
+
+            case 'subuserGetInfo':
+                return new \OpenSRS\domains\provisioning\SubuserGetInfo( $type, $dataObject );
+                break;
+
+            case 'subuserModify':
+                return new \OpenSRS\domains\provisioning\SubuserModify( $type, $dataObject );
+                break;
+
             case 'fastDomainLookup':
                 return new \OpenSRS\fastlookup\FastDomainLookup( $type, $dataObject );
                 break;

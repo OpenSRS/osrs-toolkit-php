@@ -10,7 +10,7 @@ use OpenSRS\Exception;
  *  data -
  */
 
-class SubuserDelete extends Base {
+class SubuserGet extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;
@@ -37,13 +37,13 @@ class SubuserDelete extends Base {
 				$this->_dataObject->data->cookie == "") &&
 			( !isset($this->_dataObject->data->bypass ) ||
 				$this->_dataObject->data->bypass == "")
-		) {
+			) {
 			throw new Exception( "oSRS Error - cookie / bypass is not defined." );
 		}
 		if(
-			isset($this->_dataObject->data->cookie) &&
+			isset( $this->_dataObject->data->cookie ) &&
 			$this->_dataObject->data->cookie != "" &&
-			isset($this->_dataObject->data->bypass) &&
+			isset( $this->_dataObject->data->bypass ) &&
 			$this->_dataObject->data->bypass != ""
 		) {
 			throw new Exception( "oSRS Error - Both cookie and bypass cannot be set in one call." );
@@ -55,12 +55,6 @@ class SubuserDelete extends Base {
 		) {
 			throw new Exception( "oSRS Error - username is not defined." );
 		}
-		if(
-			!isset( $this->_dataObject->data->sub_id ) ||
-			$this->_dataObject->data->sub_id == ""
-		) {
-			throw new Exception( "oSRS Error - sub_id is not defined." );
-		}
 
 		// Execute the command
 		$this->_processRequest();
@@ -70,17 +64,16 @@ class SubuserDelete extends Base {
 	private function _processRequest() {
 		$cmd = array(
 			'protocol' => 'XCP',
-			'action' => 'delete',
+			'action' => 'get',
 			'object' => 'subuser',
+//			'registrant_ip' => '12.34.56.78',
 //			'cookie' => $this->_dataObject->data->cookie,
-			'username' => $this->_dataObject->data->username,
-			'attributes' => array(
-				'sub_id' => $this->_dataObject->data->sub_id
-			)
+			'username' => $this->_dataObject->data->username
 		);
 
 		// Cookie / bypass
-		if( isset($this->_dataObject->data->cookie ) &&
+		if(
+			isset( $this->_dataObject->data->cookie ) &&
 			$this->_dataObject->data->cookie != ""
 		) {
 			$cmd['cookie'] = $this->_dataObject->data->cookie;
