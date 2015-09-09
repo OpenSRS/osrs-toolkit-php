@@ -1,5 +1,9 @@
 <?php 
 
+require __DIR__ . '/../../vendor/autoload.php';
+
+use OpenSRS\OMA\ChangeDomainBulletin;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	require_once dirname(__FILE__) . "/../../opensrs/openSRS_loader.php";
 
