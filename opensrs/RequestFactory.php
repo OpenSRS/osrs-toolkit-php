@@ -447,6 +447,10 @@ class RequestFactory
                 return new \OpenSRS\mail\DeleteDomain( $type, $dataObject );
                 break;
 
+            case 'mailDeleteDomainWelcomeEmail':
+                return new \OpenSRS\mail\DeleteDomainWelcomeEmail( $type, $dataObject );
+                break;
+
 
             default:
                 throw new Exception( "OSRS Error - $func is unsupported." );
