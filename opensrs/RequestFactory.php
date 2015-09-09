@@ -443,6 +443,10 @@ class RequestFactory
                 return new \OpenSRS\mail\DeleteDomainAlias( $type, $dataObject );
                 break;
 
+            case 'mailDeleteDomain':
+                return new \OpenSRS\mail\DeleteDomain( $type, $dataObject );
+                break;
+
 
             default:
                 throw new Exception( "OSRS Error - $func is unsupported." );
