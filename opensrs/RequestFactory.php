@@ -487,6 +487,10 @@ class RequestFactory
                 return new \OpenSRS\mail\SetDomainAdmin( $type, $dataObject );
                 break;
 
+            case 'mailSetDomainAllowList':
+                return new \OpenSRS\mail\SetDomainAllowList( $type, $dataObject );
+                break;
+
 
             default:
                 throw new Exception( "OSRS Error - $func is unsupported." );
