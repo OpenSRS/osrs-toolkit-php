@@ -1,5 +1,7 @@
 <?php 
 
+require __DIR__ . '/../../vendor/autoload.php';
+
 if (isSet($_POST['function'])) {
 	require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
 
