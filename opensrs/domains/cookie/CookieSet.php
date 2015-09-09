@@ -32,15 +32,15 @@ class CookieSet extends Base {
 	// Validate the object
 	private function _validateObject() {
 		if( !isset($this->_dataObject->data->reg_username ) ) {
-			throw new Exception( "oSRS Error - Username string not defined." );
+			throw new Exception( "oSRS Error - reg_username is not defined." );
 		}
 
 		if( !isset($this->_dataObject->data->reg_password ) ) {
-			throw new Exception( "oSRS Error - Password string not defined." );
+			throw new Exception( "oSRS Error - reg_password is not defined." );
 		}
 
 		if( !isset($this->_dataObject->data->domain ) ) {
-			throw new Exception( "oSRS Error - Search domain string not defined." );
+			throw new Exception( "oSRS Error - domain is not defined." );
 		}
 
 		// Execute the command

@@ -11,8 +11,6 @@ class PersonalNamesSURegisterSuggestTest extends PHPUnit_Framework_TestCase
 
     protected $validSubmission = array(
         "data" => array(
-            "func" => "persSUregister",
-
             /**
              * Required
              *
@@ -54,6 +52,8 @@ class PersonalNamesSURegisterSuggestTest extends PHPUnit_Framework_TestCase
      * exception thrown
      *
      * @return void
+     *
+     * @group validsubmission
      */
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );

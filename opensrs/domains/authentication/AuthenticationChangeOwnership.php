@@ -32,15 +32,15 @@ class AuthenticationChangeOwnership extends Base {
 	// Validate the object
 	private function _validateObject() {
 		if( !isset($this->_dataObject->data->cookie ) ) {
-			throw new Exception( "oSRS Error - Cookie string not defined." );
+			throw new Exception( "oSRS Error - cookie is not defined." );
 		}
 
 		if( !isset($this->_dataObject->data->username ) ) {
-			throw new Exception( "oSRS Error - Username string not defined." );
+			throw new Exception( "oSRS Error - username is not defined." );
 		}
 
 		if( !isset($this->_dataObject->data->password ) ) {
-			throw new Exception( "oSRS Error - Password string not defined." );
+			throw new Exception( "oSRS Error - password is not defined." );
 		}
 
 		// Execute the command

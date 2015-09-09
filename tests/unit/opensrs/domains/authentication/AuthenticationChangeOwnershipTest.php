@@ -26,6 +26,12 @@ class AuthenticationChangeOwnershipTest extends PHPUnit_Framework_TestCase
             "domain" => "",
 
             /**
+             * Required
+             */
+            "username" => "",
+            "password" => "",
+            
+            /**
              * Optional
              * If not submitted, only the domain(s)
              * identified by 'cookie' are moved
@@ -35,12 +41,6 @@ class AuthenticationChangeOwnershipTest extends PHPUnit_Framework_TestCase
              */
             "move_all" => "",
 
-            /**
-             * Required: both
-             */
-            "username" => "",
-            "password" => "",
-            
             /**
              * Optional
              * If included, user can change domain from
@@ -57,6 +57,8 @@ class AuthenticationChangeOwnershipTest extends PHPUnit_Framework_TestCase
      * exception thrown
      *
      * @return void
+     *
+     * @group validsubmission
      */
     public function testValidSubmission() {
         $data = json_decode( json_encode ($this->validSubmission) );
@@ -66,28 +68,50 @@ class AuthenticationChangeOwnershipTest extends PHPUnit_Framework_TestCase
         $this->assertTrue( $ns instanceof AuthenticationChangeOwnership );
     }
 
+    function submissionFields() {
+        return array(
+            'missing cookie' => array('cookie'),
+            'missing username' => array('username'),
+            'missing password' => array('password'),
+            );
+    }
+
     /**
      * Invalid submission should throw an exception
      *
      * @return void
+     *
+     * @dataProvider submissionFields
+     * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing() {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
-        $this->setExpectedException( 'OpenSRS\Exception' );
+
+        $data->data->cookie = md5(time());
+
+        if(is_null($message)){
+          $this->setExpectedExceptionRegExp(
+              'OpenSRS\Exception',
+              "/$field.*not defined/"
+              );
+        }
+        else {
+          $this->setExpectedExceptionRegExp(
+              'OpenSRS\Exception',
+              "/$message/"
+              );
+        }
 
 
-        // no password sent
-        unset( $data->data->password );
-        $ns = new AuthenticationChangeOwnership( 'array', $data );
 
-        
-        // no username sent
-        unset( $data->data->username );
-        $ns = new AuthenticationChangeOwnership( 'array', $data );
+        // clear field being tested
+        if(is_null($parent)){
+            unset( $data->$field );
+        }
+        else{
+            unset( $data->$parent->$field );
+        }
 
-        
-        // no cookie sent
-        unset( $data->data->cookie );
         $ns = new AuthenticationChangeOwnership( 'array', $data );
     }
 }

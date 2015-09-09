@@ -32,7 +32,7 @@ class CookieDelete extends Base {
 	// Validate the object
 	private function _validateObject() {
 		if( !isset($this->_dataObject->data->cookie ) ) {
-			throw new Exception( "oSRS Error - Cookie code not defined." );
+			throw new Exception( "oSRS Error - cookie is not defined." );
 		}
 
 		// Execute the command

@@ -12,17 +12,12 @@ class CookieDeleteTest extends PHPUnit_Framework_TestCase
 
     protected $validSubmission = array(
         "data" => array(
-            "func" => "cookieDelete",
-
             /**
-             * Required: 1 of 2
+             * Required
              *
              * cookie: cookie to be deleted
-             * domain: relevant domain, required
-             *   only if cookie is not sent
              */
             "cookie" => "",
-            "domain" => "",
             )
         );
 
@@ -31,11 +26,12 @@ class CookieDeleteTest extends PHPUnit_Framework_TestCase
      * exception thrown
      *
      * @return void
+     *
+     * @group validsubmission
      */
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
         $data->data->cookie = md5(time());
-        $data->data->domain = "phptest" . time() . ".com";
 
         $ns = new CookieDelete( 'array', $data );
 
@@ -43,17 +39,50 @@ class CookieDeleteTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Data Provider for Invalid Submission test
+     */
+    function submissionFields() {
+        return array(
+            'missing cookie' => array('cookie'),
+            );
+    }
+
+    /**
      * Invalid submission should throw an exception
      *
      * @return void
+     *
+     * @dataProvider submissionFields
+     * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing() {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
-        $this->setExpectedException( 'OpenSRS\Exception' );
+
+        $data->data->cookie = md5(time());
+
+        if(is_null($message)){
+          $this->setExpectedExceptionRegExp(
+              'OpenSRS\Exception',
+              "/$field.*not defined/"
+              );
+        }
+        else {
+          $this->setExpectedExceptionRegExp(
+              'OpenSRS\Exception',
+              "/$message/"
+              );
+        }
 
 
-        // no cookie sent
-        unset( $data->data->cookie );
+
+        // clear field being tested
+        if(is_null($parent)){
+            unset( $data->$field );
+        }
+        else{
+            unset( $data->$parent->$field );
+        }
+
         $ns = new CookieDelete( 'array', $data );
     }
 }

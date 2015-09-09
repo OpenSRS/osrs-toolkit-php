@@ -32,23 +32,23 @@ class CookieUpdate extends Base {
 	// Validate the object
 	private function _validateObject() {
 		if( !isset($this->_dataObject->data->reg_username ) ) {
-			throw new Exception( "oSRS Error - Username string not defined." );
+			throw new Exception( "oSRS Error - reg_username is not defined." );
 		}
 
 		if( !isset($this->_dataObject->data->reg_password ) ) {
-			throw new Exception( "oSRS Error - Password string not defined." );
+			throw new Exception( "oSRS Error - reg_password is not defined." );
 		}
 
 		if( !isset($this->_dataObject->data->domain ) ) {
-			throw new Exception( "oSRS Error - Existing domain strinng not defined." );
+			throw new Exception( "oSRS Error - domain is not defined." );
 		}
 
 		if( !isset($this->_dataObject->data->domain_new ) ) {
-			throw new Exception( "oSRS Error - New domain strinng not defined." );
+			throw new Exception( "oSRS Error - domain_new is not defined." );
 		}
 
 		if( !isset($this->_dataObject->data->cookie ) ) {
-			throw new Exception( "oSRS Error - Cookie code not defined." );
+			throw new Exception( "oSRS Error - cookie is not defined." );
 		}
 
 		// Execute the command

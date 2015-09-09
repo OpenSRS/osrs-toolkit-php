@@ -11,8 +11,6 @@ class ProvisioningCancelActivateTest extends PHPUnit_Framework_TestCase
 
     protected $validSubmission = array(
         "data" => array(
-            "func" => "provCancelActivate",
-
             /**
              * Required: 1 of 2
              *

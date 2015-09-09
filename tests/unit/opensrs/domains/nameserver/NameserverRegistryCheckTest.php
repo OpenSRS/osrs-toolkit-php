@@ -11,8 +11,6 @@ class NameserverRegistryCheckTest extends PHPUnit_Framework_TestCase
 
     protected $validSubmission = array(
         "data" => array(
-            "func" => "nsRegistryAdd",
-
             /**
              * Required
              *
@@ -33,6 +31,8 @@ class NameserverRegistryCheckTest extends PHPUnit_Framework_TestCase
      * exception thrown
      *
      * @return void
+     *
+     * @group validsubmission
      */
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
@@ -46,28 +46,52 @@ class NameserverRegistryCheckTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Data Provider for Invalid Submission test
+     */
+    function submissionFields() {
+        return array(
+            'missing fqdn' => array('fqdn'),
+            'missing tld' => array('tld'),
+            );
+    }
+
+    /**
      * Invalid submission should throw an exception
      *
      * @return void
+     *
+     * @dataProvider submissionFields
+     * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing() {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
         $data->data->fqdn = "ns1." . "phptest" . time() . ".com";
         $data->data->tld = ".com";
 
-        $this->setExpectedException( 'OpenSRS\Exception' );
+        if(is_null($message)){
+          $this->setExpectedExceptionRegExp(
+              'OpenSRS\Exception',
+              "/$field.*not defined/"
+              );
+        }
+        else {
+          $this->setExpectedExceptionRegExp(
+              'OpenSRS\Exception',
+              "/$message/"
+              );
+        }
 
 
 
-        // no fqdn sent
-        unset( $data->data->fqdn );
-        $ns = new NameserverRegistryCheck( 'array', $data );
+        // clear field being tested
+        if(is_null($parent)){
+            unset( $data->$field );
+        }
+        else{
+            unset( $data->$parent->$field );
+        }
 
-
-
-        // no tld sent
-        unset( $data->data->tld );
         $ns = new NameserverRegistryCheck( 'array', $data );
     }
 }

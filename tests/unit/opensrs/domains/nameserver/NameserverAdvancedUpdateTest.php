@@ -11,19 +11,17 @@ class NameserverAdvancedUpdateTest extends PHPUnit_Framework_TestCase
     
     protected $validSubmission = array(
         "data" => array(
-            "func" => "nsAdvancedUpdt",
-
             /**
              * Required
              *
-             * domain: relevant domain, required
+             * bypass: relevant domain, required
              *   only if cookie is not set
              * op_type: 'assign' when submitting
              *   assign_ns, 'add_remove' when
              *   submitting 'add_ns' or 'remove_ns'
              */
             "cookie" => "",
-            "domain" => "",
+            "bypass" => "",
             "op_type" => "",
 
             /**
@@ -39,9 +37,9 @@ class NameserverAdvancedUpdateTest extends PHPUnit_Framework_TestCase
              *   * cannot be submitted in same request
              *     as assign_ns
              */
-            "add_ns" => "password12345",
-            "assign_ns" => "password12345",
-            "remove_ns" => "password12345",
+            "add_ns" => "",
+            "assign_ns" => "",
+            "remove_ns" => "",
             )
         );
 
@@ -50,22 +48,25 @@ class NameserverAdvancedUpdateTest extends PHPUnit_Framework_TestCase
      * exception thrown
      *
      * @return void
+     *
+     * @group validsubmission
      */
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
 
         // assign_ns request
-        $data->data->cookie = md5(time());
-        $data->data->domain = "phptest" . time() . ".com";
+        $data->data->bypass = "phptest" . time() . ".com";
         $data->data->op_type = "assign";
-        $data->data->assign_ns = "ns1." . $data->data->domain . ";ns2." . $data->data->domain;
+        $data->data->assign_ns = "ns1." . $data->data->bypass . ";" .
+                                 "ns2." . $data->data->bypass;
 
         $ns = new NameserverAdvancedUpdate( 'array', $data );
+
+        $this->assertTrue( $ns instanceof NameserverAdvancedUpdate );
 
 
 
         // add_ns request
-        $data->data->cookie = md5(time());
         $data->data->op_type = "add_remove";
         $data->data->add_ns = $data->data->assign_ns;
 
@@ -75,10 +76,11 @@ class NameserverAdvancedUpdateTest extends PHPUnit_Framework_TestCase
 
         $ns = new NameserverAdvancedUpdate( 'array', $data );
 
+        $this->assertTrue( $ns instanceof NameserverAdvancedUpdate );
+
 
 
         // remove_ns request
-        $data->data->cookie = md5(time());
         $data->data->op_type = "add_remove";
         $data->data->remove_ns = $data->data->add_ns;
 
@@ -92,36 +94,80 @@ class NameserverAdvancedUpdateTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Data Provider for Invalid Submission test
+     */
+    function submissionFields() {
+        return array(
+            'missing bypass' => array('bypass'),
+            'missing op_type' => array('op_type'),
+            );
+    }
+
+    /**
      * Invalid submission should throw an exception
      *
      * @return void
+     *
+     * @dataProvider submissionFields
+     * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing() {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
-        $data->data->cookie = md5(time());
-        $data->data->domain = "phptest" . time() . ".com";
+
+        // assign_ns request
+        $data->data->bypass = "phptest" . time() . ".com";
         $data->data->op_type = "assign";
-        $data->data->assign_ns = "ns1." . $data->data->domain . ";ns2." . $data->data->domain;
+        $data->data->assign_ns = "ns1." . $data->data->bypass . ";" .
+                                 "ns2." . $data->data->bypass;
 
-        $this->setExpectedException( 'OpenSRS\Exception' );
+        if(is_null($message)){
+          $this->setExpectedExceptionRegExp(
+              'OpenSRS\Exception',
+              "/$field.*not defined/"
+              );
+        }
+        else {
+          $this->setExpectedExceptionRegExp(
+              'OpenSRS\Exception',
+              "/$message/"
+              );
+        }
 
 
 
-        // no op_type sent
-        unset( $data->data->op_type );
+        // clear field being tested
+        if(is_null($parent)){
+            unset( $data->$field );
+        }
+        else{
+            unset( $data->$parent->$field );
+        }
+
         $ns = new NameserverAdvancedUpdate( 'array', $data );
+    }
 
+    /**
+     * Invalid submission should throw an exception
+     *
+     * @return void
+     *
+     * @group invalidsubmission
+     */
+    public function testInvalidSubmissionFieldsCookieAndBypassSent() {
+        $data = json_decode( json_encode($this->validSubmission) );
 
+        // assign_ns request
+        $data->data->cookie = md5(time());
+        $data->data->bypass = "phptest" . time() . ".com";
+        $data->data->op_type = "assign";
+        $data->data->assign_ns = "ns1." . $data->data->bypass . ";" .
+                                 "ns2." . $data->data->bypass;
 
-        // setting cookie and bypass in the
-        // same request
-        $data->data->bypass = $data->data->cookie;
-        $ns = new NameserverAdvancedUpdate( 'array', $data );
-        unset( $data->data->bypass );
+        $this->setExpectedExceptionRegExp(
+          'OpenSRS\Exception',
+        "/.*cookie.*bypass.*cannot.*one.*call.*/"
+          );
 
-
-        // no cookie sent
-        unset( $data->data->cookie );
         $ns = new NameserverAdvancedUpdate( 'array', $data );
     }
 }

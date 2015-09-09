@@ -11,15 +11,15 @@ class CookieQuitTest extends PHPUnit_Framework_TestCase
 
     // no additional parameters required
     // as quit action is not authenticated
-    protected $validSubmission = array(
-        "fund" => 'cookieQuit'
-        );
+    protected $validSubmission = array();
 
     /**
      * Valid submission should complete with no
      * exception thrown
      *
      * @return void
+     *
+     * @group validsubmission
      */
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
