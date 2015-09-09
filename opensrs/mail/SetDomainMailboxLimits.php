@@ -2,7 +2,7 @@
 
 namespace opensrs\mail;
 
-use OpenSRS\Base;
+use OpenSRS\Mail;
 use OpenSRS\Exception;
 
 /*
@@ -10,7 +10,7 @@ use OpenSRS\Exception;
  *  data -
  */
 
-class SetDomainMailboxLimits extends Base {
+class SetDomainMailboxLimits extends Mail {
 	private $_dataObject;
 	private $_formatHolder = "";
 	private $_osrsm;
