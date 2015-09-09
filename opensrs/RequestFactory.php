@@ -491,6 +491,10 @@ class RequestFactory
                 return new \OpenSRS\mail\SetDomainAllowList( $type, $dataObject );
                 break;
 
+            case 'mailSetDomainBlockList':
+                return new \OpenSRS\mail\SetDomainBlockList( $type, $dataObject );
+                break;
+
 
             default:
                 throw new Exception( "OSRS Error - $func is unsupported." );
