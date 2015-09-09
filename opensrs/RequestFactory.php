@@ -155,6 +155,38 @@ class RequestFactory
                 return new \OpenSRS\domains\provisioning\SubuserModify( $type, $dataObject );
                 break;
 
+            case 'transCancel':
+                return new \OpenSRS\domains\transfer\TransferCancel( $type, $dataObject );
+                break;
+
+            case 'transCheck':
+                return new \OpenSRS\domains\transfer\TransferCheck( $type, $dataObject );
+                break;
+
+            case 'transGetAway':
+                return new \OpenSRS\domains\transfer\TransferGetAway( $type, $dataObject );
+                break;
+
+            case 'transGetIn':
+                return new \OpenSRS\domains\transfer\TransferGetIn( $type, $dataObject );
+                break;
+
+            case 'transProcess':
+                return new \OpenSRS\domains\transfer\TransferProcess( $type, $dataObject );
+                break;
+
+            case 'transRsp2Rsp':
+                return new \OpenSRS\domains\transfer\TransferRsp2Rsp( $type, $dataObject );
+                break;
+
+            case 'transSendPass':
+                return new \OpenSRS\domains\transfer\TransferSendPassword( $type, $dataObject );
+                break;
+
+            case 'transTradeDomain':
+                return new \OpenSRS\domains\transfer\TransferTradeDomain( $type, $dataObject );
+                break;
+
             case 'fastDomainLookup':
                 return new \OpenSRS\fastlookup\FastDomainLookup( $type, $dataObject );
                 break;
