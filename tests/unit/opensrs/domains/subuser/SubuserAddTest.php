@@ -94,7 +94,7 @@ class SubuserAddTest extends PHPUnit_Framework_TestCase
 
         $data->data->bypass = "phptest" . time() . ".com";
 
-        $data->data->username = "phptest" . time() . ".com";
+        $data->data->username = "phptest" . time();
         $data->data->sub_username = "phptestuser" . time();
         $data->data->sub_permission = "2";
         $data->data->sub_password = "password1234";
@@ -138,7 +138,7 @@ class SubuserAddTest extends PHPUnit_Framework_TestCase
         $data->data->cookie = md5(time());
         $data->data->bypass = "phptest" . time() . ".com";
 
-        $data->data->username = "phptest" . time() . ".com";
+        $data->data->username = "phptest" . time();
         $data->data->sub_username = "phptestuser" . time();
         $data->data->sub_permission = "2";
         $data->data->sub_password = "password1234";
