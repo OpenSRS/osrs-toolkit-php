@@ -126,13 +126,43 @@ class SubresellerCreateTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Data Provider for Invalid Submission test
+     */
+    function submissionFields() {
+        return array(
+            'missing username' => array('username'),
+            'missing password' => array('password'),
+            'missing ccp_enabled' => array('ccp_enabled'),
+            'missing pricing_plan' => array('pricing_plan'),
+            'missing status' => array('status'),
+            'missing low_balance_email' => array('low_balance_email'),
+            'missing system_status_email' => array('system_status_email'),
+            'missing amount' => array('password'),
+
+            // data->personal fields
+            'missing first_name' => array('first_name', 'personal'),
+            'missing last_name' => array('last_name', 'personal'),
+            'missing org_name' => array('org_name', 'personal'),
+            'missing address1' => array('address1', 'personal'),
+            'missing city' => array('city', 'personal'),
+            'missing state' => array('state', 'personal'),
+            'missing country' => array('country', 'personal'),
+            'missing postal_code' => array('postal_code', 'personal'),
+            'missing phone' => array('phone', 'personal'),
+            'missing email' => array('email', 'personal'),
+            'missing lang_pref' => array('lang_pref', 'personal'),
+            );
+    }
+
+    /**
      * Invalid submission should throw an exception
      *
      * @return void
      *
+     * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing() {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data' ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
         $data->data->username = "subreseller" . time();
@@ -157,15 +187,21 @@ class SubresellerCreateTest extends PHPUnit_Framework_TestCase
         $data->personal->email = "phptoolkit@tucows.com";
         $data->personal->lang_pref = "EN";
 
-        $this->setExpectedException( 'OpenSRS\Exception' );
-
-
-
-        // not sending username or password
-        unset(
-            $data->data->username,
-            $data->data->password
+        $this->setExpectedExceptionRegExp(
+            'OpenSRS\Exception',
+            "/$field.*not defined/"
             );
+
+
+
+        // clear field being tested
+        if(is_null($parent)){
+            unset( $data->$field );
+        }
+        else{
+            unset( $data->$parent->$field );
+        }
+
         $ns = new SubresellerCreate( 'array', $data );
      }
 }
