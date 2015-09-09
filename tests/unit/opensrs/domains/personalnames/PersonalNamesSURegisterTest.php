@@ -69,35 +69,54 @@ class PersonalNamesSURegisterSuggestTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Data Provider for Invalid Submission test
+     */
+    function submissionFields() {
+        return array(
+            'missing domain' => array('domain'),
+            'missing mailbox_type' => array('mailbox_type'),
+            'missing password' => array('password'),
+            );
+    }
+
+    /**
      * Invalid submission should throw an exception
      *
      * @return void
+     *
+     * @dataProvider submissionFields
+     * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing() {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
         $data->data->domain = "phptest" . time() . ".com";
         $data->data->mailbox_type = "MAILBOX";
         $data->data->password = "password12345";
 
-        $this->setExpectedException( 'OpenSRS\Exception' );
+        if(is_null($message)){
+          $this->setExpectedExceptionRegExp(
+              'OpenSRS\Exception',
+              "/$field.*not defined/"
+              );
+        }
+        else {
+          $this->setExpectedExceptionRegExp(
+              'OpenSRS\Exception',
+              "/$message/"
+              );
+        }
 
 
 
-        // no domain sent
-        unset( $data->data->domain );
-        $ns = new PersonalNamesSURegister( 'array', $data );
+        // clear field being tested
+        if(is_null($parent)){
+            unset( $data->$field );
+        }
+        else{
+            unset( $data->$parent->$field );
+        }
 
-
-
-        // no mailbox_type sent
-        unset( $data->data->mailbox_type );
-        $ns = new PersonalNamesSURegister( 'array', $data );
-
-
-
-        // no password sent
-        unset( $data->data->password );
         $ns = new PersonalNamesSURegister( 'array', $data );
     }
 }

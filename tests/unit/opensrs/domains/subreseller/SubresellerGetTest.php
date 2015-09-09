@@ -39,23 +39,43 @@ class SubresellerGetTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Data Provider for Invalid Submission test
+     */
+    function submissionFields() {
+        return array(
+            'missing username' => array('username'),
+            );
+    }
+
+    /**
      * Invalid submission should throw an exception
      *
      * @return void
      *
+     * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing() {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data' ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
         $data->data->username = "subreseller" . time();
+        $data->data->amount = "10.00";
 
-        $this->setExpectedException( 'OpenSRS\Exception' );
+        $this->setExpectedExceptionRegExp(
+            'OpenSRS\Exception',
+            "/$field.*not defined/"
+            );
 
 
 
-        // not sending username or password
-        unset( $data->data->username );
+        // clear field being tested
+        if(is_null($parent)){
+            unset( $data->$field );
+        }
+        else{
+            unset( $data->$parent->$field );
+        }
+
         $ns = new SubresellerGet( 'array', $data );
      }
 }

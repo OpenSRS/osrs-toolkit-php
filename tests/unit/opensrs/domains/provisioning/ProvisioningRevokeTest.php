@@ -11,8 +11,6 @@ class ProvisioningRevokeTest extends PHPUnit_Framework_TestCase
 
     protected $validSubmission = array(
         "data" => array(
-            "func" => "provRevoke",
-
             /**
              * Required
              *
@@ -54,30 +52,44 @@ class ProvisioningRevokeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Data Provider for Invalid Submission test
+     */
+    function submissionFields() {
+        return array(
+            'missing domain' => array('domain'),
+            'missing reseller' => array('reseller'),
+            );
+    }
+
+    /**
      * Invalid submission should throw an exception
      *
      * @return void
      *
+     * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing() {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data' ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
         $data->data->domain = "phptest" . time() . ".com";
         $data->data->reseller = "reseller_username";
 
-        $this->setExpectedException( 'OpenSRS\Exception' );
+        $this->setExpectedExceptionRegExp(
+            'OpenSRS\Exception',
+            "/$field.*not defined/"
+            );
 
 
 
-        // no domain sent
-        unset( $data->data->domain );
-        $ns = new ProvisioningRevoke( 'array', $data );
+        // clear field being tested
+        if(is_null($parent)){
+            unset( $data->$field );
+        }
+        else{
+            unset( $data->$parent->$field );
+        }
 
-
-
-        // no reseller sent
-        unset( $data->data->reseller );
         $ns = new ProvisioningRevoke( 'array', $data );
      }
 }

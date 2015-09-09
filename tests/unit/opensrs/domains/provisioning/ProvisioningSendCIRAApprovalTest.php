@@ -11,8 +11,6 @@ class ProvisioningSendCIRAApprovalTest extends PHPUnit_Framework_TestCase
 
     protected $validSubmission = array(
         "data" => array(
-            "func" => "provSendCIRAApproval",
-
             /**
              * Required
              *
@@ -44,23 +42,42 @@ class ProvisioningSendCIRAApprovalTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Data Provider for Invalid Submission test
+     */
+    function submissionFields() {
+        return array(
+            'missing domain' => array('domain'),
+            );
+    }
+
+    /**
      * Invalid submission should throw an exception
      *
      * @return void
      *
+     * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing() {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data' ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
         $data->data->domain = "phptest" . time() . ".com";
 
-        $this->setExpectedException( 'OpenSRS\Exception' );
+        $this->setExpectedExceptionRegExp(
+            'OpenSRS\Exception',
+            "/$field.*not defined/"
+            );
 
 
 
-        // no domain sent
-        unset( $data->data->domain );
+        // clear field being tested
+        if(is_null($parent)){
+            unset( $data->$field );
+        }
+        else{
+            unset( $data->$parent->$field );
+        }
+
         $ns = new ProvisioningSendCIRAApproval( 'array', $data );
      }
 }

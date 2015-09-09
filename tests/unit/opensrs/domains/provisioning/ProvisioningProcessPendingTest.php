@@ -11,8 +11,6 @@ class ProvisioningProcessPendingTest extends PHPUnit_Framework_TestCase
 
     protected $validSubmission = array(
         "data" => array(
-            "func" => "provProcessPending",
-
             /**
              * Required: 1 of 2
              *
@@ -53,30 +51,42 @@ class ProvisioningProcessPendingTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Data Provider for Invalid Submission test
+     */
+    function submissionFields() {
+        return array(
+            'missing order_id' => array('order_id'),
+            );
+    }
+
+    /**
      * Invalid submission should throw an exception
      *
      * @return void
      *
+     * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing() {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data' ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
         $data->data->order_id = time();
-        // $data->data->domain = "phptest" . time() . ".com";
 
-        $this->setExpectedException( 'OpenSRS\Exception' );
-
-
-
-        // // no domain sent -- CLASS NOT SET UP TO ACCEPT THIS AS VALID
-        // unset( $data->data->domain );
-        // $ns = new ProvisioningProcessPending( 'array', $data );
+        $this->setExpectedExceptionRegExp(
+            'OpenSRS\Exception',
+            "/$field.*not defined/"
+            );
 
 
 
-        // no order_id sent
-        unset( $data->data->order_id );
+        // clear field being tested
+        if(is_null($parent)){
+            unset( $data->$field );
+        }
+        else{
+            unset( $data->$parent->$field );
+        }
+
         $ns = new ProvisioningProcessPending( 'array', $data );
      }
 }

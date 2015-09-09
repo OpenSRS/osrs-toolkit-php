@@ -43,16 +43,26 @@ class SubresellerPayTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue( $ns instanceof SubresellerPay );
     }
+    
+    /**
+     * Data Provider for Invalid Submission test
+     */
+    function submissionFields() {
+        return array(
+            'missing username' => array('username'),
+            'missing amount' => array('amount'),
+            );
+    }
 
     /**
      * Invalid submission should throw an exception
      *
      * @return void
      *
+     * @dataProvider submissionFields
      * @group invalidsubmission
-     * @group missingusername
      */
-    public function testInvalidSubmissionMissingUsername() {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data' ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
         $data->data->username = "subreseller" . time();
@@ -60,39 +70,19 @@ class SubresellerPayTest extends PHPUnit_Framework_TestCase
 
         $this->setExpectedExceptionRegExp(
             'OpenSRS\Exception',
-            '/username.*not defined/'
+            "/$field.*not defined/"
             );
 
 
 
-        // not sending username
-        unset( $data->data->username );
-        $ns = new SubresellerPay( 'array', $data );
-     }
+        // clear field being tested
+        if(is_null($parent)){
+            unset( $data->$field );
+        }
+        else{
+            unset( $data->$parent->$field );
+        }
 
-    /**
-     * Invalid submission should throw an exception
-     *
-     * @return void
-     *
-     * @group invalidsubmission
-     * @group missingamount
-     */
-    public function testInvalidSubmissionMissingAmount() {
-        $data = json_decode( json_encode($this->validSubmission) );
-
-        $data->data->username = "subreseller" . time();
-        $data->data->amount = "10.00";
-
-        $this->setExpectedExceptionRegExp(
-            'OpenSRS\Exception',
-            '/amount.*not defined/'
-            );
-
-
-
-        // not sending amount
-        unset( $data->data->amount );
         $ns = new SubresellerPay( 'array', $data );
      }
 }

@@ -33,7 +33,10 @@ class SubresellerCreate extends Base {
 	private function _validateObject() {
 		$reqPers = array( "first_name", "last_name", "org_name", "address1", "city", "state", "country", "postal_code", "phone", "email", "lang_pref" );
 		for( $i = 0; $i < count($reqPers); $i++ ) {
-			if( $this->_dataObject->personal->$reqPers[$i] == "" ) {
+			if( 
+				!isset($this->_dataObject->personal->$reqPers[$i]) ||
+				$this->_dataObject->personal->$reqPers[$i] == ""
+			) {
 				throw new Exception( "oSRS Error - ". $reqPers[$i] ." is not defined." );
 			}
 		}
@@ -43,7 +46,7 @@ class SubresellerCreate extends Base {
 			if(
 				!isset($this->_dataObject->data->$reqData[$i]) ||
 				$this->_dataObject->data->$reqData[$i] == ""
-				) {
+			) {
 				throw new Exception( "oSRS Error - ". $reqData[$i] ." is not defined." );
 			}
 		}

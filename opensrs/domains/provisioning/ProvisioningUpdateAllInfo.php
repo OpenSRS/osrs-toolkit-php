@@ -115,7 +115,10 @@ class ProvisioningUpdateAllInfo extends Base {
 		// Check Contact information
 		$reqPers = array( "first_name", "last_name", "org_name", "address1", "city", "state", "country", "postal_code", "phone", "email", "lang_pref" );
 		for( $i = 0; $i < count($reqPers); $i++ ) {
-			if( $this->_dataObject->data->$contact->$reqPers[$i] == "" ) {
+			if(
+				!isset($this->_dataObject->data->$contact->$reqPers[$i]) ||
+				$this->_dataObject->data->$contact->$reqPers[$i] == ""
+			) {
 				throw new Exception( "oSRS Error -  ". $reqPers[$i] ." is not defined in $contact contact set." );
 			}
 		}

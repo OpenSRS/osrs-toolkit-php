@@ -46,18 +46,37 @@ class ProvisioningUpdateContacts extends Base {
             $reqPers = array( "first_name", "last_name", "org_name", "address1", "city", "state", "country", "postal_code", "phone", "email", "lang_pref" );
         }
         /* End : To resolve issue for tld .NL  */
-		for( $i = 0; $i < count($reqPers); $i++ ) {
-			if( $this->_dataObject->personal->$reqPers[$i] == "" ) {
-				throw new Exception( "oSRS Error - ". $reqPers[$i] ." is not defined." );
-			}
-		}
 
-		$reqData = array( "domain", "types" );
-		for( $i = 0; $i < count($reqData); $i++ ) {
-			if( $this->_dataObject->data->$reqData[$i] == "" ) {
-				throw new Exception( "oSRS Error - ". $reqData[$i] ." is not defined." );
-			}
-		}
+        if(!isset($this->_dataObject->personal)){
+                throw new Exception( "oSRS Error - personal is not defined." );
+        }
+
+        $contact_types = array( 'personal', 'admin', 'tech', 'billing' );
+
+        for( $c = 0; $c < count($contact_types); $c++) {
+            $contact_type = $contact_types[$c];
+
+            if(!isset($this->_dataObject->$contact_type)){
+                    throw new Exception( "oSRS Error - $contact_type is not defined." );
+            }
+
+    		for( $i = 0; $i < count($reqPers); $i++ ) {
+    			if(
+                    !isset($this->_dataObject->$contact_type->$reqPers[$i]) ||
+                    $this->_dataObject->personal->$reqPers[$i] == ""
+                ) {
+    				throw new Exception( "oSRS Error - ". $reqPers[$i] ." is not defined." );
+    			}
+    		}
+
+        }
+
+        $reqData = array( "domain", "types" );
+        for( $i = 0; $i < count($reqData); $i++ ) {
+            if( $this->_dataObject->data->$reqData[$i] == "" ) {
+                throw new Exception( "oSRS Error - ". $reqData[$i] ." is not defined." );
+            }
+        }
 
 		// Execute the command
 		$this->processRequest();
