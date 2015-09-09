@@ -435,6 +435,74 @@ class RequestFactory
                 return new \OpenSRS\mail\CreateMailboxForwardOnly( $type, $dataObject );
                 break;
 
+            case 'mailCreateMailbox':
+                return new \OpenSRS\mail\CreateMailbox( $type, $dataObject );
+                break;
+
+            case 'mailDeleteDomainAlias':
+                return new \OpenSRS\mail\DeleteDomainAlias( $type, $dataObject );
+                break;
+
+            case 'mailDeleteDomain':
+                return new \OpenSRS\mail\DeleteDomain( $type, $dataObject );
+                break;
+
+            case 'mailDeleteDomainWelcomeEmail':
+                return new \OpenSRS\mail\DeleteDomainWelcomeEmail( $type, $dataObject );
+                break;
+
+            case 'mailDeleteMailbox':
+                return new \OpenSRS\mail\DeleteMailbox( $type, $dataObject );
+                break;
+
+            case 'mailGetCompanyDomains':
+                return new \OpenSRS\mail\GetCompanyDomains( $type, $dataObject );
+                break;
+
+            case 'mailGetDomainAllowList':
+                return new \OpenSRS\mail\GetDomainAllowList( $type, $dataObject );
+                break;
+
+            case 'mailGetDomainBlockList':
+                return new \OpenSRS\mail\GetDomainBlockList( $type, $dataObject );
+                break;
+
+            case 'mailGetDomainMailboxes':
+                return new \OpenSRS\mail\GetDomainMailboxes( $type, $dataObject );
+                break;
+
+            case 'mailGetDomainMailboxLimits':
+                return new \OpenSRS\mail\GetDomainMailboxLimits( $type, $dataObject );
+                break;
+
+            case 'mailGetDomain':
+                return new \OpenSRS\mail\GetDomain( $type, $dataObject );
+                break;
+
+            case 'mailGetNumDomainMailboxes':
+                return new \OpenSRS\mail\GetNumDomainMailboxes( $type, $dataObject );
+                break;
+
+            case 'mailSetDomainAdmin':
+                return new \OpenSRS\mail\SetDomainAdmin( $type, $dataObject );
+                break;
+
+            case 'mailSetDomainAllowList':
+                return new \OpenSRS\mail\SetDomainAllowList( $type, $dataObject );
+                break;
+
+            case 'mailSetDomainBlockList':
+                return new \OpenSRS\mail\SetDomainBlockList( $type, $dataObject );
+                break;
+
+            case 'mailSetDomainDisabledStatus':
+                return new \OpenSRS\mail\SetDomainDisabledStatus( $type, $dataObject );
+                break;
+
+            case 'mailSetDomainMailboxLimits':
+                return new \OpenSRS\mail\SetDomainMailboxLimits( $type, $dataObject );
+                break;
+
             default:
                 throw new Exception( "OSRS Error - $func is unsupported." );
                 break;

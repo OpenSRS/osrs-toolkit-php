@@ -9,7 +9,7 @@ use OpenSRS\Mail;
  *  data - 
  */
 
-class SetDomainMailboxLimits extends Mail
+class SetDomainBlockList extends Mail
 {
     private $_dataObject;
     private $_formatHolder = '';
@@ -72,22 +72,11 @@ class SetDomainMailboxLimits extends Mail
         } else {
             $compile .= ' domain="'.$this->_dataObject->data->domain.'"';
         }
-
-        // Command optional values
-        if (isset($this->_dataObject->data->mailbox) || $this->_dataObject->data->mailbox != '') {
-            $compile .= ' mailbox="'.$this->_dataObject->data->mailbox.'"';
-        }
-        if (isset($this->_dataObject->data->filter_only) || $this->_dataObject->data->filter_only != '') {
-            $compile .= ' filter_only="'.$this->_dataObject->data->filter_only.'"';
-        }
-        if (isset($this->_dataObject->data->alias) || $this->_dataObject->data->alias != '') {
-            $compile .= ' alias="'.$this->_dataObject->data->alias.'"';
-        }
-        if (isset($this->_dataObject->data->forward_only) || $this->_dataObject->data->forward_only != '') {
-            $compile .= ' forward_only="'.$this->_dataObject->data->forward_only.'"';
-        }
-        if (isset($this->_dataObject->data->mailing_list) || $this->_dataObject->data->mailing_list != '') {
-            $compile .= ' mailing_list="'.$this->_dataObject->data->mailing_list.'"';
+        if (!isset($this->_dataObject->data->list) || $this->_dataObject->data->list == '') {
+            trigger_error('oSRS-eMail Error - list is not defined.', E_USER_WARNING);
+            $allPassed = false;
+        } else {
+            $compile .= ' list="'.$this->_dataObject->data->list.'"';
         }
 
         // Run the command
@@ -105,7 +94,7 @@ class SetDomainMailboxLimits extends Mail
         $sequence = array(
             0 => 'ver ver="3.4"',
             1 => 'login user="'.$this->_dataObject->data->admin_username.'" domain="'.$this->_dataObject->data->admin_domain.'" password="'.$this->_dataObject->data->admin_password.'"',
-            2 => 'set_domain_mailbox_limits'.$command,
+            2 => 'set_domain_block_list'.$command,
             3 => 'quit',
         );
         $tucRes = $this->makeCall($sequence);

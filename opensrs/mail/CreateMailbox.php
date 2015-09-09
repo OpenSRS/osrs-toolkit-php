@@ -9,7 +9,7 @@ use OpenSRS\Mail;
  *  data - 
  */
 
-class SetDomainMailboxLimits extends Mail
+class CreateMailbox extends Mail
 {
     private $_dataObject;
     private $_formatHolder = '';
@@ -73,21 +73,70 @@ class SetDomainMailboxLimits extends Mail
             $compile .= ' domain="'.$this->_dataObject->data->domain.'"';
         }
 
-        // Command optional values
-        if (isset($this->_dataObject->data->mailbox) || $this->_dataObject->data->mailbox != '') {
+        if (!isset($this->_dataObject->data->workgroup) || $this->_dataObject->data->workgroup == '') {
+            trigger_error('oSRS-eMail Error - workgroup is not defined.', E_USER_WARNING);
+            $allPassed = false;
+        } else {
+            $compile .= ' workgroup="'.$this->_dataObject->data->workgroup.'"';
+        }
+
+        if (!isset($this->_dataObject->data->mailbox) || $this->_dataObject->data->mailbox == '') {
+            trigger_error('oSRS-eMail Error - mailbox is not defined.', E_USER_WARNING);
+            $allPassed = false;
+        } else {
             $compile .= ' mailbox="'.$this->_dataObject->data->mailbox.'"';
         }
-        if (isset($this->_dataObject->data->filter_only) || $this->_dataObject->data->filter_only != '') {
-            $compile .= ' filter_only="'.$this->_dataObject->data->filter_only.'"';
+
+        if (!isset($this->_dataObject->data->password) || $this->_dataObject->data->password == '') {
+            trigger_error('oSRS-eMail Error - password is not defined.', E_USER_WARNING);
+            $allPassed = false;
+        } else {
+            $compile .= ' password="'.$this->_dataObject->data->password.'"';
         }
-        if (isset($this->_dataObject->data->alias) || $this->_dataObject->data->alias != '') {
-            $compile .= ' alias="'.$this->_dataObject->data->alias.'"';
+
+        // Command optional values
+        if (isset($this->_dataObject->data->first_name) && $this->_dataObject->data->first_name != '') {
+            $compile .= ' first_name="'.$this->_dataObject->data->first_name.'"';
         }
-        if (isset($this->_dataObject->data->forward_only) || $this->_dataObject->data->forward_only != '') {
-            $compile .= ' forward_only="'.$this->_dataObject->data->forward_only.'"';
+
+        if (isset($this->_dataObject->data->last_name) && $this->_dataObject->data->last_name != '') {
+            $compile .= ' last_name="'.$this->_dataObject->data->last_name.'"';
         }
-        if (isset($this->_dataObject->data->mailing_list) || $this->_dataObject->data->mailing_list != '') {
-            $compile .= ' mailing_list="'.$this->_dataObject->data->mailing_list.'"';
+
+        if (isset($this->_dataObject->data->title) && $this->_dataObject->data->title != '') {
+            $compile .= ' title="'.$this->_dataObject->data->title.'"';
+        }
+
+        if (isset($this->_dataObject->data->phone) && $this->_dataObject->data->phone != '') {
+            $compile .= ' phone="'.$this->_dataObject->data->phone.'"';
+        }
+
+        if (isset($this->_dataObject->data->fax) && $this->_dataObject->data->fax != '') {
+            $compile .= ' fax="'.$this->_dataObject->data->fax.'"';
+        }
+
+        if (isset($this->_dataObject->data->timezone) && $this->_dataObject->data->timezone != '') {
+            $compile .= ' timezone="'.$this->_dataObject->data->timezone.'"';
+        }
+
+        if (isset($this->_dataObject->data->language) && $this->_dataObject->data->language != '') {
+            $compile .= ' language="'.$this->_dataObject->data->language.'"';
+        }
+
+        if (isset($this->_dataObject->data->filteronly) && $this->_dataObject->data->filteronly != '') {
+            $compile .= ' filteronly="'.$this->_dataObject->data->filteronly.'"';
+        }
+
+        if (isset($this->_dataObject->data->spam_tag) && $this->_dataObject->data->spam_tag != '') {
+            $compile .= ' spam_tag="'.$this->_dataObject->data->spam_tag.'"';
+        }
+
+        if (isset($this->_dataObject->data->spam_folder) && $this->_dataObject->data->spam_folder != '') {
+            $compile .= ' spam_folder="'.$this->_dataObject->data->spam_folder.'"';
+        }
+
+        if (isset($this->_dataObject->data->spam_level) && $this->_dataObject->data->spam_level != '') {
+            $compile .= ' spam_level="'.$this->_dataObject->data->spam_level.'"';
         }
 
         // Run the command
@@ -105,7 +154,7 @@ class SetDomainMailboxLimits extends Mail
         $sequence = array(
             0 => 'ver ver="3.4"',
             1 => 'login user="'.$this->_dataObject->data->admin_username.'" domain="'.$this->_dataObject->data->admin_domain.'" password="'.$this->_dataObject->data->admin_password.'"',
-            2 => 'set_domain_mailbox_limits'.$command,
+            2 => 'create_mailbox'.$command,
             3 => 'quit',
         );
         $tucRes = $this->makeCall($sequence);

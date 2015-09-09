@@ -3,6 +3,7 @@
 namespace OpenSRS\mail;
 
 use OpenSRS\Mail;
+
 /*
  *  Required object values:
  *  data - 

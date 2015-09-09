@@ -9,7 +9,7 @@ use OpenSRS\Mail;
  *  data - 
  */
 
-class SetDomainMailboxLimits extends Mail
+class DeleteDomainAlias extends Mail
 {
     private $_dataObject;
     private $_formatHolder = '';
@@ -66,28 +66,11 @@ class SetDomainMailboxLimits extends Mail
         }
 
         // Command required values
-        if (!isset($this->_dataObject->data->domain) || $this->_dataObject->data->domain == '') {
-            trigger_error('oSRS-eMail Error - domain is not defined.', E_USER_WARNING);
+        if (!isset($this->_dataObject->data->alias) || $this->_dataObject->data->alias == '') {
+            trigger_error('oSRS-eMail Error - alias is not defined.', E_USER_WARNING);
             $allPassed = false;
         } else {
-            $compile .= ' domain="'.$this->_dataObject->data->domain.'"';
-        }
-
-        // Command optional values
-        if (isset($this->_dataObject->data->mailbox) || $this->_dataObject->data->mailbox != '') {
-            $compile .= ' mailbox="'.$this->_dataObject->data->mailbox.'"';
-        }
-        if (isset($this->_dataObject->data->filter_only) || $this->_dataObject->data->filter_only != '') {
-            $compile .= ' filter_only="'.$this->_dataObject->data->filter_only.'"';
-        }
-        if (isset($this->_dataObject->data->alias) || $this->_dataObject->data->alias != '') {
             $compile .= ' alias="'.$this->_dataObject->data->alias.'"';
-        }
-        if (isset($this->_dataObject->data->forward_only) || $this->_dataObject->data->forward_only != '') {
-            $compile .= ' forward_only="'.$this->_dataObject->data->forward_only.'"';
-        }
-        if (isset($this->_dataObject->data->mailing_list) || $this->_dataObject->data->mailing_list != '') {
-            $compile .= ' mailing_list="'.$this->_dataObject->data->mailing_list.'"';
         }
 
         // Run the command
@@ -105,7 +88,7 @@ class SetDomainMailboxLimits extends Mail
         $sequence = array(
             0 => 'ver ver="3.4"',
             1 => 'login user="'.$this->_dataObject->data->admin_username.'" domain="'.$this->_dataObject->data->admin_domain.'" password="'.$this->_dataObject->data->admin_password.'"',
-            2 => 'set_domain_mailbox_limits'.$command,
+            2 => 'delete_domain_alias'.$command,
             3 => 'quit',
         );
         $tucRes = $this->makeCall($sequence);
