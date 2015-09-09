@@ -56,6 +56,8 @@ class NameserverDeleteTest extends PHPUnit_Framework_TestCase
         $data->data->name = "ns1." . $data->data->domain;
 
         $ns = new NameserverDelete( 'array', $data );
+
+        $this->assertTrue( $ns instanceof NameserverDelete );
     }
 
     /**

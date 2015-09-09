@@ -35,6 +35,8 @@ class PersonalNamesDeleteTest extends PHPUnit_Framework_TestCase
         $data->data->domain = "john.smith.net";
 
         $ns = new PersonalNamesDelete( 'array', $data );
+
+        $this->assertTrue( $ns instanceof PersonalNamesDelete );
     }
 
     /**

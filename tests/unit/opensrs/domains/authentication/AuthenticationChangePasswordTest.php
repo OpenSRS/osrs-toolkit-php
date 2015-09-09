@@ -46,6 +46,8 @@ class AuthenticationChangePasswordTest extends PHPUnit_Framework_TestCase
         $data->data->domain = "phptest" . time() . ".com";
 
         $ns = new AuthenticationChangePassword( 'array', $data );
+
+        $this->assertTrue( $ns instanceof AuthenticationChangePassword );
     }
 
     /**

@@ -47,6 +47,8 @@ class AuthenticationSendPasswordTest extends PHPUnit_Framework_TestCase
         $data->data->domain_name = "phptest" . time() . ".com";
 
         $ns = new AuthenticationSendPassword( 'array', $data );
+
+        $this->assertTrue( $ns instanceof AuthenticationSendPassword );
     }
 
     /**

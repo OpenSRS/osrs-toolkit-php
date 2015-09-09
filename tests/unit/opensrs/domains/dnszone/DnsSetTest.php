@@ -37,5 +37,7 @@ class DnsSetTest extends PHPUnit_Framework_TestCase
         $data->data->domain = 'phptest'.time().'.com';
 
         $ns = new DnsSet( 'array', $data );
+
+        $this->assertTrue( $ns instanceof DnsSet );
     }
 }

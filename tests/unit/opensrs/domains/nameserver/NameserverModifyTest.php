@@ -65,6 +65,8 @@ class NameserverModifyTest extends PHPUnit_Framework_TestCase
         $data->data->ne_name = "new_ns1." . $data->data->domain;
 
         $ns = new NameserverModify( 'array', $data );
+
+        $this->assertTrue( $ns instanceof NameserverModify );
     }
 
     /**

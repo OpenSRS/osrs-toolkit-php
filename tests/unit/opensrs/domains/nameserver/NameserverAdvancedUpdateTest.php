@@ -87,6 +87,8 @@ class NameserverAdvancedUpdateTest extends PHPUnit_Framework_TestCase
         unset($data->data->add_ns);
 
         $ns = new NameserverAdvancedUpdate( 'array', $data );
+
+        $this->assertTrue( $ns instanceof NameserverAdvancedUpdate );
     }
 
     /**

@@ -35,6 +35,8 @@ class AuthenticationSendAuthCodeTest extends PHPUnit_Framework_TestCase
         $data->data->domain_name = "phptest" . time() . ".com";
 
         $ns = new AuthenticationSendAuthCode( 'array', $data );
+
+        $this->assertTrue( $ns instanceof AuthenticationSendAuthCode );
     }
 
     /**

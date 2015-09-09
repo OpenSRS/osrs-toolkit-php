@@ -35,5 +35,7 @@ class ForwardingDeleteTest extends PHPUnit_Framework_TestCase
         $data->data->domain = "phptest" . time() . ".com";
 
         $ns = new ForwardingDelete( 'array', $data );
+
+        $this->assertTrue( $ns instanceof ForwardingDelete );
     }
 }

@@ -53,7 +53,8 @@ class ProvisioningCancelPendingTest extends PHPUnit_Framework_TestCase
         // sending request with order_id only
         $data->data->to_date = time();
         $ns = new ProvisioningCancelPending( 'array', $data );
-        unset( $data->data->to_date );
+
+        $this->assertTrue( $ns instanceof ProvisioningCancelPending );
 
 
         // // sending request with domain only -- CLASS NOT SET UP TO ACCEPT THIS AS VALID

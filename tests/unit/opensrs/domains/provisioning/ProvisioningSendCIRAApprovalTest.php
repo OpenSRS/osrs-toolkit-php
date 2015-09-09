@@ -1,27 +1,25 @@
 <?php
 
-use OpenSRS\domains\provisioning\ProvisioningQueryQueuedRequest;
+use OpenSRS\domains\provisioning\ProvisioningSendCIRAApproval;
 /**
  * @group provisioning
- * @group ProvisioningQueryQueuedRequest
+ * @group ProvisioningSendCIRAApproval
  */
-class ProvisioningQueryQueuedRequestTest extends PHPUnit_Framework_TestCase
+class ProvisioningSendCIRAApprovalTest extends PHPUnit_Framework_TestCase
 {
-    protected $func = 'provProcessPending';
+    protected $func = 'provSendCIRAApproval';
 
     protected $validSubmission = array(
         "data" => array(
-            "func" => "provProcessPending",
+            "func" => "provSendCIRAApproval",
 
             /**
              * Required
              *
-             * request_id: ID of the queued
-             *   request; queue_request_id is
-             *   returned when an order is
-             *   queued
+             * domain: domain for which the CIRA
+             *   approval email is to be sent
              */
-            "request_id" => "",
+            "domain" => "",
             )
         );
 
@@ -39,10 +37,10 @@ class ProvisioningQueryQueuedRequestTest extends PHPUnit_Framework_TestCase
 
 
         // sending request with order_id only
-        $data->data->request_id = time();
-        $ns = new ProvisioningQueryQueuedRequest( 'array', $data );
+        $data->data->domain = "phptest" . time() . ".com";
+        $ns = new ProvisioningSendCIRAApproval( 'array', $data );
 
-        $this->assertTrue( $ns instanceof ProvisioningQueryQueuedRequest );
+        $this->assertTrue( $ns instanceof ProvisioningSendCIRAApproval );
     }
 
     /**
@@ -55,14 +53,14 @@ class ProvisioningQueryQueuedRequestTest extends PHPUnit_Framework_TestCase
     public function testInvalidSubmissionFieldsMissing() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->request_id = time();
+        $data->data->domain = "phptest" . time() . ".com";
 
         $this->setExpectedException( 'OpenSRS\Exception' );
 
 
 
-        // no request_id sent
-        unset( $data->data->request_id );
-        $ns = new ProvisioningQueryQueuedRequest( 'array', $data );
+        // no domain sent
+        unset( $data->data->domain );
+        $ns = new ProvisioningSendCIRAApproval( 'array', $data );
      }
 }

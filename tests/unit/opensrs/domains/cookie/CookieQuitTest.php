@@ -25,5 +25,7 @@ class CookieQuitTest extends PHPUnit_Framework_TestCase
         $data = json_decode( json_encode($this->validSubmission) );
 
         $ns = new CookieQuit( 'array', $data );
+
+        $this->assertTrue( $ns instanceof CookieQuit );
     }
 }

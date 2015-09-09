@@ -35,6 +35,8 @@ class PersonalNamesNameSuggestTest extends PHPUnit_Framework_TestCase
         $data->data->searchstring = "john smith";
 
         $ns = new PersonalNamesNameSuggest( 'array', $data );
+
+        $this->assertTrue( $ns instanceof PersonalNamesNameSuggest );
     }
 
     /**

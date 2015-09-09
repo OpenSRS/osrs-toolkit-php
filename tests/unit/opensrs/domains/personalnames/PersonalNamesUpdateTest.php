@@ -78,6 +78,8 @@ class PersonalNamesUpdateTest extends PHPUnit_Framework_TestCase
         $data->data->domain = "john.smith.net";
 
         $ns = new PersonalNamesUpdate( 'array', $data );
+
+        $this->assertTrue( $ns instanceof PersonalNamesUpdate );
     }
 
     /**

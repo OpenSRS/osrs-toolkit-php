@@ -1,7 +1,10 @@
 <?php
 
 use OpenSRS\domains\lookup\NameSuggest;
-
+/**
+ * @group lookup
+ * @group NameSuggest
+ */
 class NameSuggestTest extends PHPUnit_Framework_TestCase
 {
     /**

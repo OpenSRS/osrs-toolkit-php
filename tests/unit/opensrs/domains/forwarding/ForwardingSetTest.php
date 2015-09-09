@@ -86,6 +86,8 @@ class ForwardingSetTest extends PHPUnit_Framework_TestCase
         $data->data->subdomain = "null";
 
         $ns = new ForwardingSet( 'array', $data );
+
+        $this->assertTrue( $ns instanceof ForwardingSet );
     }
 
     /**

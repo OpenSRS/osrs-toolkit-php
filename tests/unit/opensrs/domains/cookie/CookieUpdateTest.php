@@ -36,7 +36,7 @@ class CookieUpdateTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function testValidateMissingDomainList()
+    public function testValidSubmission()
     {
         $data = json_decode( json_encode($this->validSubmission) );
         $data->data->cookie = md5(time());
@@ -46,15 +46,16 @@ class CookieUpdateTest extends PHPUnit_Framework_TestCase
         $data->data->reg_password = "password12345";
 
         $ns = new CookieUpdate( 'array', $data );
+
+        $this->assertTrue( $ns instanceof CookieUpdate );
     }
 
     /**
-     * Valid submission should complete with no
-     * exception thrown
+     * Invalid submission should throw an exception
      *
      * @return void
      */
-    public function testValidSubmission() {
+    public function testInvalidSubmissionFieldsMissing() {
         $data = json_decode( json_encode($this->validSubmission) );
         $data->data->cookie = md5(time());
         $data->data->domain = "phptest" . time() . ".com";
