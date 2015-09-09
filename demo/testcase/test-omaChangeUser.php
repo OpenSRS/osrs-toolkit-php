@@ -1,5 +1,10 @@
 <?php 
 
+require __DIR__ . '/../../vendor/autoload.php';
+
+use OpenSRS\OMA\ChangeUser;
+use OpenSRS\Util;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	require_once dirname(__FILE__) . "/../../opensrs/openSRS_loader.php";
 

@@ -1,5 +1,7 @@
 <?php
 
+namespace OpenSRS;
+
 /**
  * OpenSRS OMA (OpenSRS Mail provisioning API) class
  *
@@ -22,6 +24,7 @@ class OMA {
 	* @since   3.3
 	*/	
 	public static function send_cmd($meth, $req){
+            var_dump('parent send');
 		$res = OMA::call($meth, $req);
 		return $res;
 	}
@@ -68,6 +71,9 @@ class OMA {
 		    'Content-Length: ' . strlen($data_string))                                                                       
 		);                                                                                                                    
 		$response = curl_exec($ch);
+
+        var_dump($response);
+        var_dump($ch);
 
 		if(curl_errno($ch)) {
     		trigger_error('Curl error: ' . curl_error($ch));
