@@ -41,7 +41,9 @@ class SubuserModify extends Base {
 			throw new Exception( "oSRS Error - cookie / bypass is not defined." );
 		}
 		if(
+			isset($this->_dataObject->data->cookie) &&
 			$this->_dataObject->data->cookie != "" &&
+			isset($this->_dataObject->data->bypass) &&
 			$this->_dataObject->data->bypass != ""
 		) {
 			throw new Exception( "oSRS Error - Both cookie and bypass cannot be set in one call." );
