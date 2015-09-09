@@ -1,7 +1,11 @@
 <?php 
 
+require __DIR__ . '/../../vendor/autoload.php';
+
+use OpenSRS\OMA\AddRole;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-	require_once dirname(__FILE__) . "/../../opensrs/openSRS_loader.php";
+	// require_once dirname(__FILE__) . "/../../opensrs/openSRS_loader.php";
 	// Put the data to the Formatted array
 	$callArray = array(
 		"user" => $_POST["user"],
@@ -52,7 +56,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	
 </body>
 </html>
-
-<?php 
-}
-?>

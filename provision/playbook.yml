@@ -14,6 +14,7 @@
         - php5-mysql
         - php5-fpm
         - php5-xdebug
+        - php5-curl
     - name: enable mcrypt
       command: php5enmod mcrypt
     - name: configure nginx

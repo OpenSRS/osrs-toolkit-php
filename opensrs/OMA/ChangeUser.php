@@ -1,5 +1,9 @@
 <?php
 
+namespace OpenSRS\OMA;
+
+use OpenSRS\OMA;
+
 // command: change_user
 // Create a new user or change the attributes of an existing user. 
 class ChangeUser {

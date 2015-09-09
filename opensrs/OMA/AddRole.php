@@ -1,11 +1,16 @@
 <?php
 
+namespace OpenSRS\OMA;
+
+use OpenSRS\OMA;
+
 // command: add_role
 // Add a role to a user.
 
 class AddRole {
 
 	public static function call($data) {
+        var_dump('calling');
 		if (self::validate($data)){
     		return OMA::send_cmd("add_role", $data);
     	}
