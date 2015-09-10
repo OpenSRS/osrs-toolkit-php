@@ -1,0 +1,26 @@
+{
+    "name": "opensrs/osrs-toolkit-php",
+    "description": "OpenSRS PHP Toolkit",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Colin Campbell",
+            "email": "ccampbell@tucows.com"
+        },
+        {
+            "name": "Kris Atkinson",
+            "email": "katkinson@tucows.com"
+        }
+    ],
+    "require": {
+        "mustangostang/spyc": "^0.5.1",
+        "phpunit/phpunit": "^4.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "OpenSRS\\": "opensrs"
+        }
+    },
+    "minimum-stability" : "dev",
+    "prefer-stable" : true
+}
