@@ -32,7 +32,7 @@ class AuthenticationChangePassword extends Base {
 	// Validate the object
 	private function _validateObject() {
 		if( !isset($this->_dataObject->data->reg_password ) ) {
-			throw new Exception( "oSRS Error - New Password is not defined." );
+			throw new Exception( "oSRS Error - reg_password is not defined." );
 		}
 
 		// Execute the command

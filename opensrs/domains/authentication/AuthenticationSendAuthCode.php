@@ -32,7 +32,7 @@ class AuthenticationSendAuthCode extends Base {
 	// Validate the object
 	private function _validateObject() {
 		if( !isset($this->_dataObject->data->domain_name ) ) {
-			throw new Exception( "oSRS Error - Domain name is not defined." );
+			throw new Exception( "oSRS Error - domain_name is not defined." );
 			$allPassed = false;
 		}
 

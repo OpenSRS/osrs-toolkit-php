@@ -27,6 +27,8 @@ class BulkSubmitTest extends PHPUnit_Framework_TestCase
      * exception thrown
      *
      * @return void
+     *
+     * @group validsubmission
      */
     public function testValidSubmission() {
         $data = json_decode( $this->validSubmission );
@@ -37,24 +39,50 @@ class BulkSubmitTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Testing invalid submission should fail and
-     * throw exception as required fields are missing
+     * Data Provider for Invalid Submission test
+     */
+    function submissionFields() {
+        return array(
+            'missing op_type' => array('op_type'),
+            'missing change_type' => array('change_type'),
+            'missing change_items' => array('change_items'),
+            );
+    }
+
+    /**
+     * Invalid submission should throw an exception
      *
      * @return void
+     *
+     * @dataProvider submissionFields
+     * @group invalidsubmission
      */
-    public function testSubmissionMissingFields() {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
         $data = json_decode( $this->validSubmission );
-        unset( $data->data->op_type );
 
-        $this->setExpectedException( 'OpenSRS\Exception' );
-        $ns = new BulkSubmit( 'array', $data );
+        if(is_null($message)){
+          $this->setExpectedExceptionRegExp(
+              'OpenSRS\Exception',
+              "/$field.*not defined/"
+              );
+        }
+        else {
+          $this->setExpectedExceptionRegExp(
+              'OpenSRS\Exception',
+              "/$message/"
+              );
+        }
 
-        unset( $data->data->change_type );
-        $this->setExpectedException( 'OpenSRS\Exception' );
-        $ns = new BulkSubmit( 'array', $data );
 
-        unset( $data->data->change_items );
-        $this->setExpectedException( 'OpenSRS\Exception' );
+
+        // clear field being tested
+        if(is_null($parent)){
+            unset( $data->$field );
+        }
+        else{
+            unset( $data->$parent->$field );
+        }
+
         $ns = new BulkSubmit( 'array', $data );
     }
 }

@@ -26,6 +26,8 @@ class BulkChangeTest extends PHPUnit_Framework_TestCase
      * exception thrown
      *
      * @return void
+     *
+     * @group validsubmission
      */
     public function testValidSubmission() {
         $data = json_decode( $this->validSubmission );
@@ -36,20 +38,51 @@ class BulkChangeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Testing invalid submission should fail and
-     * throw exception as required fields are missing
+     * Data Provider for Invalid Submission test
+     */
+    function submissionFields() {
+        return array(
+            'missing change_type' => array('change_type'),
+            'missing change_items' => array('change_items'),
+            );
+    }
+
+    /**
+     * Invalid submission should throw an exception
      *
      * @return void
+     *
+     * @dataProvider submissionFields
+     * @group invalidsubmission
      */
-    public function testSubmissionMissingFields() {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
         $data = json_decode( $this->validSubmission );
-        unset( $data->data->change_type );
 
-        $this->setExpectedException( 'OpenSRS\Exception' );
-        $ns = new BulkChange( 'array', $data );
+        $data->data->domain_name = "phptest" . time() . ".com";
 
-        unset( $data->data->change_items );
-        $this->setExpectedException( 'OpenSRS\Exception' );
+        if(is_null($message)){
+          $this->setExpectedExceptionRegExp(
+              'OpenSRS\Exception',
+              "/$field.*not defined/"
+              );
+        }
+        else {
+          $this->setExpectedExceptionRegExp(
+              'OpenSRS\Exception',
+              "/$message/"
+              );
+        }
+
+
+
+        // clear field being tested
+        if(is_null($parent)){
+            unset( $data->$field );
+        }
+        else{
+            unset( $data->$parent->$field );
+        }
+
         $ns = new BulkChange( 'array', $data );
     }
 

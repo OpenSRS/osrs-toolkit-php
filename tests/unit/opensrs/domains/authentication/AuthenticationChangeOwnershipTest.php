@@ -66,6 +66,9 @@ class AuthenticationChangeOwnershipTest extends PHPUnit_Framework_TestCase
         $this->assertTrue( $ns instanceof AuthenticationChangeOwnership );
     }
 
+    /**
+     * Data Provider for Invalid Submission test
+     */
     function submissionFields() {
         return array(
             'missing cookie' => array('cookie'),

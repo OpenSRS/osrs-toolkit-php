@@ -10,7 +10,7 @@ class AuthenticationCheckVersionTest extends PHPUnit_Framework_TestCase
 {
     protected $func = 'authCheckVersion';
 
-    protected $validSubmission = '{"func":"authCheckVersion"}';
+    protected $validSubmission = array();
 
     /**
      * Valid submission should complete with no
@@ -19,7 +19,7 @@ class AuthenticationCheckVersionTest extends PHPUnit_Framework_TestCase
      * @return void
      */
     public function testValidSubmission() {
-        $data = json_decode( $this->validSubmission );
+        $data = json_decode( json_encode($this->validSubmission) );
 
         $ns = new AuthenticationCheckVersion( 'array', $data );
 

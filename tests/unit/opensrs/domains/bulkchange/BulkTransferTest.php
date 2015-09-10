@@ -27,6 +27,8 @@ class BulkTransferTest extends PHPUnit_Framework_TestCase
      * exception thrown
      *
      * @return void
+     *
+     * @group validsubmission
      */
     public function testValidSubmission() {
         $data = json_decode( $this->validSubmission );
@@ -37,28 +39,51 @@ class BulkTransferTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Testing invalid submission should fail and
-     * throw exception as required fields are missing
+     * Data Provider for Invalid Submission test
+     */
+    function submissionFields() {
+        return array(
+            'missing reg_password' => array('reg_password'),
+            'missing reg_username' => array('reg_username'),
+            'missing domain_list' => array('domain_list'),
+            'missing custom_tech_contact' => array('custom_tech_contact'),
+            );
+    }
+
+    /**
+     * Invalid submission should throw an exception
      *
      * @return void
+     *
+     * @dataProvider submissionFields
+     * @group invalidsubmission
      */
-    public function testSubmissionMissingFields() {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
         $data = json_decode( $this->validSubmission );
-        unset( $data->data->reg_password );
 
-        $this->setExpectedException( 'OpenSRS\Exception' );
-        $ns = new BulkTransfer( 'array', $data );
+        if(is_null($message)){
+          $this->setExpectedExceptionRegExp(
+              'OpenSRS\Exception',
+              "/$field.*not defined/"
+              );
+        }
+        else {
+          $this->setExpectedExceptionRegExp(
+              'OpenSRS\Exception',
+              "/$message/"
+              );
+        }
 
-        unset( $data->data->reg_username );
-        $this->setExpectedException( 'OpenSRS\Exception' );
-        $ns = new BulkTransfer( 'array', $data );
 
-        unset( $data->data->domain_list );
-        $this->setExpectedException( 'OpenSRS\Exception' );
-        $ns = new BulkTransfer( 'array', $data );
 
-        unset( $data->data->custom_tech_contact );
-        $this->setExpectedException( 'OpenSRS\Exception' );
+        // clear field being tested
+        if(is_null($parent)){
+            unset( $data->$field );
+        }
+        else{
+            unset( $data->$parent->$field );
+        }
+
         $ns = new BulkTransfer( 'array', $data );
     }
 }
