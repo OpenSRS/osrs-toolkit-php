@@ -9,8 +9,8 @@ use OpenSRS\Exception;
  *  data - 
  */
 
-class NAME extends Base {
-	protected $tld = 'name';
+class US extends Base {
+	protected $tld = 'us';
 	protected $requiredFields = array(
 		"app_purpose",
 		"category"
