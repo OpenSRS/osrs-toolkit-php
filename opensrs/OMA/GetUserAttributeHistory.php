@@ -19,9 +19,9 @@ class GetUserAttributeHistory
     public static function validate($data)
     {
         if (empty($data['user']) || empty($data['attribute'])) {
-            trigger_error("oSRS Error - User/Attribute required\n", E_USER_WARNING);
-        } else {
-            return true;
+            throw new Exception("oSRS Error - User/Attribute required");
         }
+
+        return true;
     }
 }

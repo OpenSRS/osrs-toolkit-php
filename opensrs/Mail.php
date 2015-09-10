@@ -1,7 +1,6 @@
 <?php
 
 namespace OpenSRS;
-
 use OpenSRS\Exception;
 
 class Mail

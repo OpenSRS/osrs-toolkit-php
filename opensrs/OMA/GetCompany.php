@@ -19,7 +19,7 @@ class GetCompany
     public static function validate($data)
     {
         if (empty($data['company'])) {
-            trigger_error("oSRS Error - Company required\n", E_USER_WARNING);
+            throw new Exception("oSRS Error - Company required");
         } else {
             return true;
         }

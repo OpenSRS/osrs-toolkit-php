@@ -19,9 +19,9 @@ class MoveUserMessages
     public static function validate($data)
     {
         if (empty($data['user']) || empty($data['ids'])) {
-            trigger_error("oSRS Error - User/IDs required\n", E_USER_WARNING);
-        } else {
-            return true;
+            throw new Exception("oSRS Error - User/IDs required");
         }
+        
+        return true;
     }
 }

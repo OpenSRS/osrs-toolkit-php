@@ -20,9 +20,9 @@ class MigrationTrace
     public static function validate($data)
     {
         if (empty($data['job']) || empty($data['user'])) {
-            trigger_error("oSRS Error - Job/User required\n", E_USER_WARNING);
-        } else {
-            return true;
+            throw new Exception("oSRS Error - Job/User required");
         }
+        
+        return true;
     }
 }

@@ -3,6 +3,7 @@
 namespace OpenSRS\OMA;
 
 use OpenSRS\OMA;
+use OpenSRS\Exception;
 
 // command: search_domain
 // Retrieve a list of admins in a company. 
@@ -22,7 +23,7 @@ class SearchAdmins
         if (!empty($data['criteria']['type'])) {
             foreach ($data['criteria']['type'] as $type) {
                 if (!in_array(strtolower($type), array('company', 'company_view', 'domain', 'mail', 'workgroup'))) {
-                    trigger_error("oSRS Error - one or more of company, company_view, domain, mail, and workgroup required\n", E_USER_WARNING);
+                    throw new Exception("oSRS Error - one or more of company, company_view, domain, mail, and workgroup required");
 
                     return false;
                 }

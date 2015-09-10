@@ -39,7 +39,7 @@ class SWRegister extends Base {
 			// Execute the command			
 			$this->_processRequest ();
 		} else {			
-			trigger_error ("oSRS Error - Incorrect call.", E_USER_WARNING);
+			throw new Exception ("oSRS Error - Incorrect call.");
 		}
 	} // end of private function _validateObject()
 
@@ -50,7 +50,7 @@ class SWRegister extends Base {
 		// $reqPers = array ("first_name", "last_name", "org_name", "address1", "city", "state", "country", "postal_code", "phone", "email");
 		// 	for ($i = 0; $i < count($reqPers); $i++){
 		// 		if ($this->_dataObject->personal->$reqPers[$i] == "") {
-		// 			trigger_error ("oSRS Error - ". $reqPers[$i] ." is not defined.", E_USER_WARNING);
+		// 			throw new Exception ("oSRS Error - ". $reqPers[$i] ." is not defined.");
 		// 			$subtest = false;
 		// 		}
 		// 	}
@@ -58,7 +58,7 @@ class SWRegister extends Base {
 		$reqData = array ("reg_type", "product_type");
 		for ($i = 0; $i < count($reqData); $i++){
 			if ($this->_dataObject->data->{$reqData[$i]} == "") {
-				trigger_error ("oSRS Error - ". $reqData[$i] ." is not defined.", E_USER_WARNING);
+				throw new Exception ("oSRS Error - ". $reqData[$i] ." is not defined.");
 				$subtest = false;
 			}
 		}

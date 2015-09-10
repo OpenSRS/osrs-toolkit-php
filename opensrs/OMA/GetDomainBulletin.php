@@ -20,9 +20,9 @@ class GetDomainBulletin
     public static function validate($data)
     {
         if (empty($data['domain']) || empty($data['bulletin']) || empty($data['type'])) {
-            trigger_error("oSRS Error - Domain/Bulletin/Type required\n", E_USER_WARNING);
-        } else {
-            return true;
+            throw new Exception("oSRS Error - Domain/Bulletin/Type required");
         }
+
+        return true;
     }
 }

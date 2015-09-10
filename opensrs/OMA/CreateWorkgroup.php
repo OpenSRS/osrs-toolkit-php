@@ -20,7 +20,7 @@ class CreateWorkgroup
     public static function validate($data)
     {
         if (empty($data['workgroup']) || empty($data['domain'])) {
-            trigger_error("oSRS Error - Workgroup/Domain required\n", E_USER_WARNING);
+            throw new Exception("oSRS Error - Workgroup/Domain required");
         } else {
             return true;
         }

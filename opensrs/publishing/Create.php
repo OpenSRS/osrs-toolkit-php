@@ -41,12 +41,12 @@ class Create extends Base
         $allPassed = true;
 
         if (!isset($this->_dataObject->data->domain)) {
-            trigger_error('oSRS Error - domain is not defined.', E_USER_WARNING);
+            throw new Exception('oSRS Error - domain is not defined.');
             $allPassed = false;
         }
 
         if (!isset($this->_dataObject->data->service_type)) {
-            trigger_error('oSRS Error - service_type is not defined.', E_USER_WARNING);
+            throw new Exception('oSRS Error - service_type is not defined.');
             $allPassed = false;
         }
         // Run the command
@@ -54,7 +54,7 @@ class Create extends Base
             // Execute the command
             $this->_processRequest();
         } else {
-            trigger_error('oSRS Error - Incorrect call.', E_USER_WARNING);
+            throw new Exception('oSRS Error - Incorrect call.');
         }
     }
 
@@ -85,7 +85,7 @@ class Create extends Base
         // Results
         $this->resultFullRaw = $arrayResult;
         $this->resultRaw = $arrayResult;
-        $this->resultFullFormatted = convertArray2Formatted($this->_formatHolder, $this->resultFullRaw);
-        $this->resultFormatted = convertArray2Formatted($this->_formatHolder, $this->resultRaw);
+        $this->resultFullFormatted = $this->convertArray2Formatted($this->_formatHolder, $this->resultFullRaw);
+        $this->resultFormatted = $this->convertArray2Formatted($this->_formatHolder, $this->resultRaw);
     }
 }
