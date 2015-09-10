@@ -6,6 +6,10 @@
         {
             "name": "Colin Campbell",
             "email": "ccampbell@tucows.com"
+        },
+        {
+            "name": "Kris Atkinson",
+            "email": "katkinson@tucows.com"
         }
     ],
     "require": {
@@ -17,4 +21,6 @@
             "OpenSRS\\": "opensrs"
         }
     }
+    "minimum-stability" : "dev",
+    "prefer-stable" : true
 }
