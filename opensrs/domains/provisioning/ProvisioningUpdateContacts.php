@@ -62,8 +62,8 @@ class ProvisioningUpdateContacts extends Base {
 
     		for( $i = 0; $i < count($reqPers); $i++ ) {
     			if(
-                    !isset($this->_dataObject->$contact_type->$reqPers[$i]) ||
-                    $this->_dataObject->personal->$reqPers[$i] == ""
+                    !isset($this->_dataObject->$contact_type->{$reqPers[$i]}) ||
+                    $this->_dataObject->personal->{$reqPers[$i]} == ""
                 ) {
     				throw new Exception( "oSRS Error - ". $reqPers[$i] ." is not defined." );
     			}
@@ -73,7 +73,7 @@ class ProvisioningUpdateContacts extends Base {
 
         $reqData = array( "domain", "types" );
         for( $i = 0; $i < count($reqData); $i++ ) {
-            if( $this->_dataObject->data->$reqData[$i] == "" ) {
+            if( $this->_dataObject->data->{$reqData[$i]} == "" ) {
                 throw new Exception( "oSRS Error - ". $reqData[$i] ." is not defined." );
             }
         }
