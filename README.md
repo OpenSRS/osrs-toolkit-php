@@ -21,6 +21,7 @@ Getting Started
         "url": "https://github.com/OpenSRS/osrs-toolkit-php.git"
     }
 ]
+```
 
 ```json
     "OpenSRS/osrs-toolkit-php": "dev-develop"
