@@ -6,172 +6,172 @@ class RequestFactory
 {
     public static function build( $func, $type, $dataObject )
     {
-        switch( $func ) {
-            case 'premiumDomain':
+        switch( strtolower($func) ) {
+            case 'premiumdomain':
                 return new \OpenSRS\domains\lookup\PremiumDomain( $type, $dataObject );
                 break;
 
-            case 'lookupDomain':
+            case 'lookupdomain':
                 return new \OpenSRS\domains\lookup\LookupDomain( $type, $dataObject );
                 break;
 
-            case 'lookupGetDomain':
+            case 'lookupgetdomain':
                 return new \OpenSRS\domains\lookup\GetDomain( $type, $dataObject );
                 break;
 
-            case 'lookupGetBalance':
+            case 'lookupgetbalance':
                 return new \OpenSRS\domains\lookup\GetBalance( $type, $dataObject );
                 break;
 
-            case 'lookupGetDeletedDomains':
+            case 'lookupgetdeleteddomains':
                 return new \OpenSRS\domains\lookup\GetDeletedDomains( $type, $dataObject );
                 break;
 
-            case 'lookupGetDomansByExpiry':
+            case 'lookupgetdomansbyexpiry':
                 return new \OpenSRS\domains\lookup\GetDomansByExpiry( $type, $dataObject );
                 break;
 
-            case 'lookupGetDomainsContacts':
+            case 'lookupgetdomainscontacts':
                 return new \OpenSRS\domains\lookup\GetDomainsContacts( $type, $dataObject );
                 break;
 
-            case 'lookupGetNotes':
+            case 'lookupgetnotes':
                 return new \OpenSRS\domains\lookup\GetNotes( $type, $dataObject );
                 break;
 
-            case 'lookupGetOrderInfo':
+            case 'lookupgetorderinfo':
                 return new \OpenSRS\domains\lookup\GetOrderInfo( $type, $dataObject );
                 break;
 
-            case 'lookupGetOrdersByDomain':
+            case 'lookupgetordersbydomain':
                 return new \OpenSRS\domains\lookup\GetOrdersByDomain( $type, $dataObject );
                 break;
 
-            case 'lookupGetPrice':
+            case 'lookupgetprice':
                 return new \OpenSRS\domains\lookup\GetPrice( $type, $dataObject );
                 break;
 
-            case 'lookupNameSuggest':
+            case 'lookupnamesuggest':
                 return new \OpenSRS\domains\lookup\NameSuggest( $type, $dataObject );
                 break;
 
-            case 'suggestDomain':
+            case 'suggestdomain':
                 return new \OpenSRS\domains\lookup\SuggestDomain( $type, $dataObject );
                 break;
 
-            case 'lookupBelongsToRsp':
+            case 'lookupbelongstorsp':
                 return new \OpenSRS\domains\lookup\BelongsToRsp( $type, $dataObject );
                 break;
 
-            case 'allinoneDomain':
+            case 'allinonedomain':
                 return new \OpenSRS\domains\lookup\AllInOneDomain( $type, $dataObject );
                 break;
 
-            case 'lookupGetCaBlockerList':
+            case 'lookupgetcablockerlist':
                 return new \OpenSRS\domains\lookup\GetCaBlockerList( $type, $dataObject );
                 break;
 
-            case 'provSWregister':
+            case 'provswregister':
                 return new \OpenSRS\domains\provisioning\SWRegister( $type, $dataObject );
                 break;
 
-            case 'provActivate':
+            case 'provactivate':
                 return new \OpenSRS\domains\provisioning\ProvisioningActivate( $type, $dataObject );
                 break;
 
-            case 'provCancelActivate':
+            case 'provcancelactivate':
                 return new \OpenSRS\domains\provisioning\ProvisioningCancelActivate( $type, $dataObject );
                 break;
 
-            case 'provCancelPending':
+            case 'provcancelpending':
                 return new \OpenSRS\domains\provisioning\ProvisioningCancelPending( $type, $dataObject );
                 break;
 
-            case 'provModify':
+            case 'provmodify':
                 return new \OpenSRS\domains\provisioning\ProvisioningModify( $type, $dataObject );
                 break;
 
-            case 'provProcessPending':
+            case 'provprocesspending':
                 return new \OpenSRS\domains\provisioning\ProvisioningProcessPending( $type, $dataObject );
                 break;
 
-            case 'provQueryQueuedRequest':
+            case 'provqueryqueuedrequest':
                 return new \OpenSRS\domains\provisioning\ProvisioningQueryQueuedRequest( $type, $dataObject );
                 break;
 
-            case 'provRenew':
+            case 'provrenew':
                 return new \OpenSRS\domains\provisioning\ProvisioningRenew( $type, $dataObject );
                 break;
 
-            case 'provRevoke':
+            case 'provrevoke':
                 return new \OpenSRS\domains\provisioning\ProvisioningRevoke( $type, $dataObject );
                 break;
 
-            case 'provSendCIRAapproval':
+            case 'provsendciraapproval':
                 return new \OpenSRS\domains\provisioning\ProvisioningSendCIRAApproval( $type, $dataObject );
                 break;
 
-            case 'provUpdateAllInfo':
+            case 'provupdateallinfo':
                 return new \OpenSRS\domains\provisioning\ProvisioningUpdateAllInfo( $type, $dataObject );
                 break;
 
-            case 'provUpdateContacts':
+            case 'provupdatecontacts':
                 return new \OpenSRS\domains\provisioning\ProvisioningUpdateContacts( $type, $dataObject );
                 break;
 
-            case 'subresCreate':
+            case 'subrescreate':
                 return new \OpenSRS\domains\subreseller\SubresellerCreate( $type, $dataObject );
                 break;
 
-            case 'subresGet':
+            case 'subresget':
                 return new \OpenSRS\domains\subreseller\SubresellerGet( $type, $dataObject );
                 break;
 
-            case 'subresModify':
+            case 'subresmodify':
                 return new \OpenSRS\domains\subreseller\SubresellerModify( $type, $dataObject );
                 break;
 
-            case 'subresPay':
+            case 'subrespay':
                 return new \OpenSRS\domains\subreseller\SubresellerPay( $type, $dataObject );
                 break;
 
-            case 'subuserAdd':
+            case 'subuseradd':
                 return new \OpenSRS\domains\subuser\SubuserAdd( $type, $dataObject );
                 break;
 
-            case 'subuserDelete':
+            case 'subuserdelete':
                 return new \OpenSRS\domains\subuser\SubuserDelete( $type, $dataObject );
                 break;
 
-            case 'subuserGet':
+            case 'subuserget':
                 return new \OpenSRS\domains\subuser\SubuserGet( $type, $dataObject );
                 break;
 
-            case 'subuserGetInfo':
+            case 'subusergetinfo':
                 return new \OpenSRS\domains\subuser\SubuserGetInfo( $type, $dataObject );
                 break;
 
-            case 'subuserModify':
+            case 'subusermodify':
                 return new \OpenSRS\domains\subuser\SubuserModify( $type, $dataObject );
                 break;
 
-            case 'transCancel':
+            case 'transcancel':
                 return new \OpenSRS\domains\transfer\TransferCancel( $type, $dataObject );
                 break;
 
-            case 'transCheck':
+            case 'transcheck':
                 return new \OpenSRS\domains\transfer\TransferCheck( $type, $dataObject );
                 break;
 
-            case 'transGetAway':
+            case 'transgetaway':
                 return new \OpenSRS\domains\transfer\TransferGetAway( $type, $dataObject );
                 break;
 
-            case 'transGetIn':
+            case 'transgetin':
                 return new \OpenSRS\domains\transfer\TransferGetIn( $type, $dataObject );
                 break;
 
-            case 'transProcess':
+            case 'transprocess':
                 return new \OpenSRS\domains\transfer\TransferProcess( $type, $dataObject );
                 break;
 
@@ -179,327 +179,327 @@ class RequestFactory
                 return new \OpenSRS\domains\transfer\TransferRsp2Rsp( $type, $dataObject );
                 break;
 
-            case 'transSendPass':
+            case 'transsendpass':
                 return new \OpenSRS\domains\transfer\TransferSendPassword( $type, $dataObject );
                 break;
 
-            case 'transTradeDomain':
+            case 'transtradedomain':
                 return new \OpenSRS\domains\transfer\TransferTradeDomain( $type, $dataObject );
                 break;
 
-            case 'fastDomainLookup':
+            case 'fastdomainlookup':
                 return new \OpenSRS\fastlookup\FastDomainLookup( $type, $dataObject );
                 break;
 
-            case 'authChangeOwnership':
+            case 'authchangeownership':
                 return new \OpenSRS\domains\authentication\AuthenticationChangeOwnership( $type, $dataObject );
                 break;
 
-            case 'authChangePassword':
+            case 'authchangepassword':
                 return new \OpenSRS\domains\authentication\AuthenticationChangePassword( $type, $dataObject );
                 break;
 
-            case 'authCheckVersion':
+            case 'authcheckversion':
                 return new \OpenSRS\domains\authentication\AuthenticationCheckVersion( $type, $dataObject );
                 break;
 
-            case 'authSendAuthcode':
+            case 'authsendauthcode':
                 return new \OpenSRS\domains\authentication\AuthenticationSendAuthCode( $type, $dataObject );
                 break;
 
-            case 'authSendPassword':
+            case 'authsendpassword':
                 return new \OpenSRS\domains\authentication\AuthenticationSendPassword( $type, $dataObject );
                 break;
 
-            case 'bulkChange':
+            case 'bulkchange':
                 return new \OpenSRS\domains\bulkchange\BulkChange( $type, $dataObject );
                 break;
 
-            case 'bulkSubmit':
+            case 'bulksubmit':
                 return new \OpenSRS\domains\bulkchange\BulkSubmit( $type, $dataObject );
                 break;
 
-            case 'bulkTransfer':
+            case 'bulktransfer':
                 return new \OpenSRS\domains\bulkchange\BulkTransfer( $type, $dataObject );
                 break;
 
-            case 'cookieDelete':
+            case 'cookiedelete':
                 return new \OpenSRS\domains\cookie\CookieDelete( $type, $dataObject );
                 break;
 
-            case 'CookieQuit':
+            case 'cookiequit':
                 return new \OpenSRS\domains\cookie\CookieQuit( $type, $dataObject );
                 break;
 
-            case 'cookieSet':
+            case 'cookieset':
                 return new \OpenSRS\domains\cookie\CookieSet( $type, $dataObject );
                 break;
 
-            case 'cookieUpdate':
+            case 'cookieupdate':
                 return new \OpenSRS\domains\cookie\CookieUpdate( $type, $dataObject );
                 break;
 
-            case 'dnsCreate':
+            case 'dnscreate':
                 return new \OpenSRS\domains\dnszone\DnsCreate( $type, $dataObject );
                 break;
 
-            case 'dnsDelete':
+            case 'dnsdelete':
                 return new \OpenSRS\domains\dnszone\DnsDelete( $type, $dataObject );
                 break;
 
-            case 'dnsForce':
+            case 'dnsforce':
                 return new \OpenSRS\domains\dnszone\DnsForce( $type, $dataObject );
                 break;
 
-            case 'dnsGet':
+            case 'dnsget':
                 return new \OpenSRS\domains\dnszone\DnsGet( $type, $dataObject );
                 break;
 
-            case 'dnsReset':
+            case 'dnsreset':
                 return new \OpenSRS\domains\dnszone\DnsReset( $type, $dataObject );
                 break;
 
-            case 'dnsSet':
+            case 'dnsset':
                 return new \OpenSRS\domains\dnszone\DnsSet( $type, $dataObject );
                 break;
 
-            case 'fwdCreate':
+            case 'fwdcreate':
                 return new \OpenSRS\domains\forwarding\ForwardingCreate( $type, $dataObject );
                 break;
 
-            case 'fwdDelete':
+            case 'fwddelete':
                 return new \OpenSRS\domains\forwarding\ForwardingDelete( $type, $dataObject );
                 break;
 
-            case 'fwdGet':
+            case 'fwdget':
                 return new \OpenSRS\domains\forwarding\ForwardingGet( $type, $dataObject );
                 break;
 
-            case 'fwdSet':
+            case 'fwdset':
                 return new \OpenSRS\domains\forwarding\ForwardingSet( $type, $dataObject );
                 break;
 
-            case 'nsAdvancedUpdt':
+            case 'nsadvancedupdt':
                 return new \OpenSRS\domains\nameserver\NameserverAdvancedUpdate( $type, $dataObject );
                 break;
 
-            case 'nsCreate':
+            case 'nscreate':
                 return new \OpenSRS\domains\nameserver\NameserverCreate( $type, $dataObject );
                 break;
 
-            case 'nsDelete':
+            case 'nsdelete':
                 return new \OpenSRS\domains\nameserver\NameserverDelete( $type, $dataObject );
                 break;
 
-            case 'nsGet':
+            case 'nsget':
                 return new \OpenSRS\domains\nameserver\NameserverGet( $type, $dataObject );
                 break;
 
-            case 'nsModify':
+            case 'nsmodify':
                 return new \OpenSRS\domains\nameserver\NameserverModify( $type, $dataObject );
                 break;
 
-            case 'nsRegistryAdd':
+            case 'nsregistryadd':
                 return new \OpenSRS\domains\nameserver\NameserverRegistryAdd( $type, $dataObject );
                 break;
 
-            case 'nsRegistryCheck':
+            case 'nsregistrycheck':
                 return new \OpenSRS\domains\nameserver\NameserverRegistryCheck( $type, $dataObject );
                 break;
 
-            case 'persDelete':
+            case 'persdelete':
                 return new \OpenSRS\domains\personalnames\PersonalNamesDelete( $type, $dataObject );
                 break;
 
-            case 'persNameSuggest':
+            case 'persnamesuggest':
                 return new \OpenSRS\domains\personalnames\PersonalNamesNameSuggest( $type, $dataObject );
                 break;
 
-            case 'persQuery':
+            case 'persquery':
                 return new \OpenSRS\domains\personalnames\PersonalNamesQuery( $type, $dataObject );
                 break;
 
-            case 'persSUregister':
+            case 'perssuregister':
                 return new \OpenSRS\domains\personalnames\PersonalNamesSURegister( $type, $dataObject );
                 break;
 
-            case 'persUpdate':
+            case 'persupdate':
                 return new \OpenSRS\domains\personalnames\PersonalNamesUpdate( $type, $dataObject );
                 break;
 
-            case 'pubCreate':
+            case 'pubcreate':
                 return new \OpenSRS\publishing\Create( $type, $dataObject );
                 break;
 
-            case 'pubDelete':
+            case 'pubdelete':
                 return new \OpenSRS\publishing\Delete( $type, $dataObject );
                 break;
 
-            case 'pubDisable':
+            case 'pubdisable':
                 return new \OpenSRS\publishing\Disable( $type, $dataObject );
                 break;
 
-            case 'pubEnable':
+            case 'pubenable':
                 return new \OpenSRS\publishing\Enable( $type, $dataObject );
                 break;
 
-            case 'pubGenerateRedirectionCode':
+            case 'pubgenerateredirectioncode':
                 return new \OpenSRS\publishing\GenerateRedirectionCode( $type, $dataObject );
                 break;
 
-            case 'pubGetControlPanelUrl':
+            case 'pubgetcontrolpanelurl':
                 return new \OpenSRS\publishing\GetControlPanelUrl( $type, $dataObject );
                 break;
 
-            case 'pubGetServiceInfo':
+            case 'pubgetserviceinfo':
                 return new \OpenSRS\publishing\GetServiceInfo( $type, $dataObject );
                 break;
 
-            case 'pubLetExpire':
+            case 'publetexpire':
                 return new \OpenSRS\publishing\LetExpire( $type, $dataObject );
                 break;
 
-            case 'pubUpdate':
+            case 'pubupdate':
                 return new \OpenSRS\publishing\Update( $type, $dataObject );
                 break;
 
-            case 'trustCancelOrder':
+            case 'trustcancelorder':
                 return new \OpenSRS\trust\CancelOrder( $type, $dataObject );
                 break;
 
-            case 'trustCreateToken':
+            case 'trustcreatetoken':
                 return new \OpenSRS\trust\CreateToken( $type, $dataObject );
                 break;
 
-            case 'trustGetOrderInfo':
+            case 'trustgetorderinfo':
                 return new \OpenSRS\trust\GetOrderInfo( $type, $dataObject );
                 break;
 
-            case 'trustProductInfo':
+            case 'trustproductinfo':
                 return new \OpenSRS\trust\ProductInfo( $type, $dataObject );
                 break;
 
-            case 'trustParseCSR':
+            case 'trustparsecsr':
                 return new \OpenSRS\trust\ParseCSR( $type, $dataObject );
                 break;
 
-            case 'trustProcessPending':
+            case 'trustprocesspending':
                 return new \OpenSRS\trust\ProcessPending( $type, $dataObject );
                 break;
 
-            case 'trustQueryApproverList':
+            case 'trustqueryapproverlist':
                 return new \OpenSRS\trust\QueryApproverList( $type, $dataObject );
                 break;
 
-            case 'trustRequestOnDemandScan':
+            case 'trustrequestondemandscan':
                 return new \OpenSRS\trust\RequestOnDemandScan( $type, $dataObject );
                 break;
 
-            case 'trustResendApproverEmail':
+            case 'trustresendapproveremail':
                 return new \OpenSRS\trust\ResendApproverEmail( $type, $dataObject );
                 break;
 
-            case 'trustResendCertEmail':
+            case 'trustresendcertemail':
                 return new \OpenSRS\trust\ResendCertEmail( $type, $dataObject );
                 break;
 
-            case 'trustUpdateOrder':
+            case 'trustupdateorder':
                 return new \OpenSRS\trust\UpdateOrder( $type, $dataObject );
                 break;
 
-            case 'trustUpdateProduct':
+            case 'trustupdateproduct':
                 return new \OpenSRS\trust\UpdateProduct( $type, $dataObject );
                 break;
 
-            case 'mailAuthentication':
+            case 'mailauthentication':
                 return new \OpenSRS\mail\Authentication( $type, $dataObject );
                 break;
 
-            case 'mailChangeDomain':
+            case 'mailchangedomain':
                 return new \OpenSRS\mail\ChangeDomain( $type, $dataObject );
                 break;
 
-            case 'mailCreateDomainAlias':
+            case 'mailcreatedomainalias':
                 return new \OpenSRS\mail\CreateDomainAlias( $type, $dataObject );
                 break;
 
-            case 'mailCreateDomain':
+            case 'mailcreatedomain':
                 return new \OpenSRS\mail\CreateDomain( $type, $dataObject );
                 break;
                 
-            case 'mailCreateDomainWelcomeEmail':
+            case 'mailcreatedomainwelcomeemail':
                 return new \OpenSRS\mail\CreateDomainWelcomeEmail( $type, $dataObject );
                 break;
 
-            case 'mailCreateMailboxForwardOnly':
+            case 'mailcreatemailboxforwardonly':
                 return new \OpenSRS\mail\CreateMailboxForwardOnly( $type, $dataObject );
                 break;
 
-            case 'mailCreateMailbox':
+            case 'mailcreatemailbox':
                 return new \OpenSRS\mail\CreateMailbox( $type, $dataObject );
                 break;
 
-            case 'mailDeleteDomainAlias':
+            case 'maildeletedomainalias':
                 return new \OpenSRS\mail\DeleteDomainAlias( $type, $dataObject );
                 break;
 
-            case 'mailDeleteDomain':
+            case 'maildeletedomain':
                 return new \OpenSRS\mail\DeleteDomain( $type, $dataObject );
                 break;
 
-            case 'mailDeleteDomainWelcomeEmail':
+            case 'maildeletedomainwelcomeemail':
                 return new \OpenSRS\mail\DeleteDomainWelcomeEmail( $type, $dataObject );
                 break;
 
-            case 'mailDeleteMailbox':
+            case 'maildeletemailbox':
                 return new \OpenSRS\mail\DeleteMailbox( $type, $dataObject );
                 break;
 
-            case 'mailGetCompanyDomains':
+            case 'mailgetcompanydomains':
                 return new \OpenSRS\mail\GetCompanyDomains( $type, $dataObject );
                 break;
 
-            case 'mailGetDomainAllowList':
+            case 'mailgetdomainallowlist':
                 return new \OpenSRS\mail\GetDomainAllowList( $type, $dataObject );
                 break;
 
-            case 'mailGetDomainBlockList':
+            case 'mailgetdomainblocklist':
                 return new \OpenSRS\mail\GetDomainBlockList( $type, $dataObject );
                 break;
 
-            case 'mailGetDomainMailboxes':
+            case 'mailgetdomainmailboxes':
                 return new \OpenSRS\mail\GetDomainMailboxes( $type, $dataObject );
                 break;
 
-            case 'mailGetDomainMailboxLimits':
+            case 'mailgetdomainmailboxlimits':
                 return new \OpenSRS\mail\GetDomainMailboxLimits( $type, $dataObject );
                 break;
 
-            case 'mailGetDomain':
+            case 'mailgetdomain':
                 return new \OpenSRS\mail\GetDomain( $type, $dataObject );
                 break;
 
-            case 'mailGetNumDomainMailboxes':
+            case 'mailgetnumdomainmailboxes':
                 return new \OpenSRS\mail\GetNumDomainMailboxes( $type, $dataObject );
                 break;
 
-            case 'mailSetDomainAdmin':
+            case 'mailsetdomainadmin':
                 return new \OpenSRS\mail\SetDomainAdmin( $type, $dataObject );
                 break;
 
-            case 'mailSetDomainAllowList':
+            case 'mailsetdomainallowlist':
                 return new \OpenSRS\mail\SetDomainAllowList( $type, $dataObject );
                 break;
 
-            case 'mailSetDomainBlockList':
+            case 'mailsetdomainblocklist':
                 return new \OpenSRS\mail\SetDomainBlockList( $type, $dataObject );
                 break;
 
-            case 'mailSetDomainDisabledStatus':
+            case 'mailsetdomaindisabledstatus':
                 return new \OpenSRS\mail\SetDomainDisabledStatus( $type, $dataObject );
                 break;
 
-            case 'mailSetDomainMailboxLimits':
+            case 'mailsetdomainmailboxlimits':
                 return new \OpenSRS\mail\SetDomainMailboxLimits( $type, $dataObject );
                 break;
 
