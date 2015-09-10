@@ -2,6 +2,8 @@
 
 namespace OpenSRS;
 
+use OpenSRS\Exception;
+
 class Mail
 {
 
@@ -19,47 +21,47 @@ class Mail
         $fp = pfsockopen(APP_MAIL_HOST, APP_MAIL_PORT, $errno, $errstr, APP_MAIL_PORTWAIT);
 
         if (!$fp) {
-            trigger_error("oSRS Error - $errstr ($errno)<br />\n");            // Something went wrong
-        } else {
-            // Send commands to APP server
-            for ($i = 0; $i < count($sequence); ++$i) {
-                $servCatch = '';
+            throw new Exception("oSRS Error - $errstr ($errno)");            // Something went wrong
+        } 
+        
+        // Send commands to APP server
+        for ($i = 0; $i < count($sequence); ++$i) {
+            $servCatch = '';
 
-                // Write the port
-                $writeStr = $sequence[$i]."\r\n";
-                $fwrite = fwrite($fp, $writeStr);
-                if (!$fwrite) {
-                    trigger_error('oSRS - Mail System Write Error, please check if your network allows connection to the server.');
-                }
-
-                $dotStr = ".\r\n";
-                $fwrite = fwrite($fp, $dotStr);
-                if (!$fwrite) {
-                    trigger_error('oSRS - Mail System Write Error, please check if your network allows connection to the server.');
-                }
-
-                            // read the port rightaway
-                // Last line of command has be done with different type of reading
-                if ($i == (count($sequence) - 1)) {
-                    // Loop until End of transmission
-                    while (!feof($fp)) {
-                        $servCatch .= fgets($fp, 128);
-                    }
-                } else {
-                    // Plain buffer read with big data packet
-                    $servCatch .= fread($fp, 8192);
-                }
-
-                // Possible parsing and additional validation will be here
-                // If error accours in the communication than the script should quit rightaway
-                // $servCatch
-
-                $result .= $servCatch;
+            // Write the port
+            $writeStr = $sequence[$i]."\r\n";
+            $fwrite = fwrite($fp, $writeStr);
+            if (!$fwrite) {
+                throw new Exception('oSRS - Mail System Write Error, please check if your network allows connection to the server.');
             }
+
+            $dotStr = ".\r\n";
+            $fwrite = fwrite($fp, $dotStr);
+            if (!$fwrite) {
+                throw new Exception('oSRS - Mail System Write Error, please check if your network allows connection to the server.');
+            }
+
+                        // read the port rightaway
+            // Last line of command has be done with different type of reading
+            if ($i == (count($sequence) - 1)) {
+                // Loop until End of transmission
+                while (!feof($fp)) {
+                    $servCatch .= fgets($fp, 128);
+                }
+            } else {
+                // Plain buffer read with big data packet
+                $servCatch .= fread($fp, 8192);
+            }
+
+            // Possible parsing and additional validation will be here
+            // If error accours in the communication than the script should quit rightaway
+            // $servCatch
+
+            $result .= $servCatch;
         }
 
-        //Close the socket
-        fclose($fp);
+    //Close the socket
+    fclose($fp);
 
         return $result;
     }
