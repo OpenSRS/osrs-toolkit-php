@@ -24,8 +24,7 @@ class AddRole {
     		return false;
     	}
     	if(empty($data['user']) || empty($data['object']) ){
-			throw new Exception("oSRS Error - User/Role/Object required\n", E_USER_WARNING);
-			return false;
+			throw new Exception("oSRS Error - User/Role/Object required\n"); return false;
 		} 	
 		return true;
   	}
