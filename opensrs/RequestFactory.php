@@ -120,39 +120,39 @@ class RequestFactory
                 break;
 
             case 'subresCreate':
-                return new \OpenSRS\domains\provisioning\SubresellerCreate( $type, $dataObject );
+                return new \OpenSRS\domains\subreseller\SubresellerCreate( $type, $dataObject );
                 break;
 
             case 'subresGet':
-                return new \OpenSRS\domains\provisioning\SubresellerGet( $type, $dataObject );
+                return new \OpenSRS\domains\subreseller\SubresellerGet( $type, $dataObject );
                 break;
 
             case 'subresModify':
-                return new \OpenSRS\domains\provisioning\SubresellerModify( $type, $dataObject );
+                return new \OpenSRS\domains\subreseller\SubresellerModify( $type, $dataObject );
                 break;
 
             case 'subresPay':
-                return new \OpenSRS\domains\provisioning\SubresellerPay( $type, $dataObject );
+                return new \OpenSRS\domains\subreseller\SubresellerPay( $type, $dataObject );
                 break;
 
             case 'subuserAdd':
-                return new \OpenSRS\domains\provisioning\SubuserAdd( $type, $dataObject );
+                return new \OpenSRS\domains\subuser\SubuserAdd( $type, $dataObject );
                 break;
 
             case 'subuserDelete':
-                return new \OpenSRS\domains\provisioning\SubuserDelete( $type, $dataObject );
+                return new \OpenSRS\domains\subuser\SubuserDelete( $type, $dataObject );
                 break;
 
             case 'subuserGet':
-                return new \OpenSRS\domains\provisioning\SubuserGet( $type, $dataObject );
+                return new \OpenSRS\domains\subuser\SubuserGet( $type, $dataObject );
                 break;
 
             case 'subuserGetInfo':
-                return new \OpenSRS\domains\provisioning\SubuserGetInfo( $type, $dataObject );
+                return new \OpenSRS\domains\subuser\SubuserGetInfo( $type, $dataObject );
                 break;
 
             case 'subuserModify':
-                return new \OpenSRS\domains\provisioning\SubuserModify( $type, $dataObject );
+                return new \OpenSRS\domains\subuser\SubuserModify( $type, $dataObject );
                 break;
 
             case 'transCancel':
