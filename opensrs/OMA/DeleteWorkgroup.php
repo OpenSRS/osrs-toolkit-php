@@ -20,9 +20,9 @@ class DeleteWorkgroup
     public static function validate($data)
     {
         if (empty($data['domain']) || empty($data['workgroup'])) {
-            trigger_error("oSRS Error - Domain/Workgroup required\n", E_USER_WARNING);
-        } else {
-            return true;
+            throw new Exception("oSRS Error - Domain/Workgroup required");
         }
+        
+        return true;
     }
 }

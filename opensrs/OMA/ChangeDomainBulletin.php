@@ -20,9 +20,9 @@ class ChangeDomainBulletin
     public static function validate($data)
     {
         if (empty($data['domain']) || empty($data['bulletin']) || empty($data['type']) || empty($data['bulletin_text'])) {
-            trigger_error("oSRS Error - Company/Bulletin/Type/Bulletin Text required\n", E_USER_WARNING);
-        } else {
-            return true;
+            throw new Exception("oSRS Error - Company/Bulletin/Type/Bulletin Text required");
         }
+        
+        return true;
     }
 }

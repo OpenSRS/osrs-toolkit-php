@@ -20,13 +20,13 @@ class GetCompanyBulletin
     public static function validate($data)
     {
         if (empty($data['company']) || empty($data['bulletin']) || empty($data['type'])) {
-            trigger_error("oSRS Error - Company/Bulletin/Type required\n", E_USER_WARNING);
+            throw new Exception("oSRS Error - Company/Bulletin/Type required");
         } else {
             if (!in_array(strtolower($data['type']), array('auto', 'manual'))) {
-                trigger_error("oSRS Error - Type supports auto or manual only\n", E_USER_WARNING);
+                throw new Exception("oSRS Error - Type supports auto or manual only");
             }
-
-            return true;
         }
+
+        return true;
     }
 }

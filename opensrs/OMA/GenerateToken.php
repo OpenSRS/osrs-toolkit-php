@@ -19,9 +19,9 @@ class GenerateToken
     public static function validate($data)
     {
         if (empty($data['user']) || empty($data['reason'])) {
-            trigger_error("oSRS Error - User/Reason required\n", E_USER_WARNING);
-        } else {
-            return true;
+            throw new Exception("oSRS Error - User/Reason required");
         }
+
+        return true;
     }
 }

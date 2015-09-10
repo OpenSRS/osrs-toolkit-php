@@ -19,9 +19,9 @@ class GetDomain
     public static function validate($data)
     {
         if (empty($data['domain'])) {
-            trigger_error("oSRS Error - Domain required\n", E_USER_WARNING);
-        } else {
-            return true;
+            throw new Exception("oSRS Error - Domain required");
         }
+        
+        return true;
     }
 }

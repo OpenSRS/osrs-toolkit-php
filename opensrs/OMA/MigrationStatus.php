@@ -19,9 +19,9 @@ class MigrationStatus
     public static function validate($data)
     {
         if (empty($data['job'])) {
-            trigger_error("oSRS Error - Job required\n", E_USER_WARNING);
-        } else {
-            return true;
+            throw new Exception("oSRS Error - Job required");
         }
+
+        return true;
     }
 }
