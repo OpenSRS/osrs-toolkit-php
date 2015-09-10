@@ -39,8 +39,8 @@ class SubresellerModify extends Base {
 
 		for( $i = 0; $i < count($reqPers); $i++ ) {
 			if(
-				!isset($this->_dataObject->personal->$reqPers[$i]) ||
-				$this->_dataObject->personal->$reqPers[$i] == ""
+				!isset($this->_dataObject->personal->{$reqPers[$i]}) ||
+				$this->_dataObject->personal->{$reqPers[$i]} == ""
 			) {
 				throw new Exception( "oSRS Error - ". $reqPers[$i] ." is not defined." );
 			}
@@ -54,8 +54,8 @@ class SubresellerModify extends Base {
 
 		for( $i = 0; $i < count($reqData); $i++ ) {
 			if(
-				!isset($this->_dataObject->data->$reqData[$i]) ||
-				$this->_dataObject->data->$reqData[$i] == ""
+				!isset($this->_dataObject->data->{$reqData[$i]}) ||
+				$this->_dataObject->data->{$reqData[$i]} == ""
 			) {
 				throw new Exception( "oSRS Error - ". $reqData[$i] ." is not defined." );
 			}
