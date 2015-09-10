@@ -9,6 +9,21 @@ communication markup languages such as JSON and YAML.
 
 Getting Started
 ---------------
+
+### With Composer
+
+``json
+"repositories": [
+    {
+        "type": "vcs",
+        "url": "https://github.com/openSRS/osrs-toolkit-php.git"
+    }
+]
+
+```json
+    "maestro": "dev-develop"
+```
+
 1. Download and install the toolkit
 
 2. In opensrs directory, rename/copy the openSRS_config.php.template to openSRS_config.php

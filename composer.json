@@ -20,7 +20,7 @@
         "psr-4": {
             "OpenSRS\\": "opensrs"
         }
-    }
+    },
     "minimum-stability" : "dev",
     "prefer-stable" : true
 }
