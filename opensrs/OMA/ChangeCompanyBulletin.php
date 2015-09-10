@@ -20,10 +20,10 @@ class ChangeCompanyBulletin
     public static function validate($data)
     {
         if (empty($data['company']) || empty($data['bulletin']) || empty($data['type']) || empty($data['bulletin_text'])) {
-            trigger_error("oSRS Error - Domain/Bulletin/Type/Bulletin Text required\n", E_USER_WARNING);
+            throw new Exception("oSRS Error - Domain/Bulletin/Type/Bulletin Text required\n");
         } else {
             if (!in_array(strtolower($data['type']), array('auto', 'manual'))) {
-                trigger_error("oSRS Error - Type supports auto or manual only\n", E_USER_WARNING);
+                throw new Exception("oSRS Error - Type supports auto or manual only\n");
             }
 
             return true;

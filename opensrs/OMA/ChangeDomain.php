@@ -20,7 +20,7 @@ class ChangeDomain
     public static function validate($data)
     {
         if (empty($data['domain'])) {
-            trigger_error("oSRS Error - Domain required\n", E_USER_WARNING);
+            throw new Exception("oSRS Error - Domain required\n");
         } else {
             return true;
         }

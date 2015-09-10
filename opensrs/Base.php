@@ -1,6 +1,7 @@
 <?php
 
 namespace OpenSRS;
+use OpenSRS\Exception;
 
 defined('OPENSRSURI') or die;
 
@@ -61,11 +62,11 @@ class Base
 	private function _verifySystemProperties () {
 		if (!function_exists('version_compare') || version_compare('4.3', phpversion(), '>=')) {
 			$error_message = "PHP version must be v4.3+ (current version is ". phpversion() .") to use \"SSL\" encryption";
-			trigger_error ($error_message, E_USER_WARNING);
+			throw new Exception ($error_message);
 			die();
 		} elseif (!function_exists('openssl_open')) {
 			$error_message = "PHP must be compiled using --with-openssl to use \"SSL\" encryption";
-			trigger_error ($error_message, E_USER_WARNING);
+			throw new Exception ($error_message);
 			die();
 		}
 	}
@@ -82,7 +83,7 @@ class Base
 	public function send_cmd($request) {
 		// make or get the socket filehandle
 		if (!$this->init_socket() ) {
-			trigger_error ("oSRS Error - Unable to establish socket: (". $this->_socketErrorNum .") ". $this->_socketErrorMsg, E_USER_WARNING);
+			throw new Exception ("oSRS Error - Unable to establish socket: (". $this->_socketErrorNum .") ". $this->_socketErrorMsg);
 			die();
 		}
 
@@ -92,7 +93,7 @@ class Base
 		$num_matches = preg_match('/<item key="response_code">401<\/item>/', $data, $matches);
 
 		if ($num_matches > 0)
-			trigger_error("oSRS Error - Reseller username or OSRS_KEY is incorrect, please check your config file.");
+			throw new Exception("oSRS Error - Reseller username or OSRS_KEY is incorrect, please check your config file.");
 
 		return $data;
 	}
@@ -147,7 +148,7 @@ class Base
 	private function read_data() {
 		$buf = $this->readData($this->_socket, $this->_socketReadTimeout);
 		if (!$buf) {
-			trigger_error ("oSRS Error - Read buffer is empty.  Please make sure IP is whitelisted in RWI. Check the OSRS_KEY and OSRS_USERNAME in the config file as well.", E_USER_WARNING);
+			throw new Exception ("oSRS Error - Read buffer is empty.  Please make sure IP is whitelisted in RWI. Check the OSRS_KEY and OSRS_USERNAME in the config file as well.");
 			$data = "";
 		} else {
 			$data = $buf;
@@ -204,7 +205,7 @@ class Base
 		$line = fgets($fh, 4000);
 		$http_log .= $line;
 		if (!preg_match('/^HTTP\/1.1 ([0-9]{0,3}) (.*)\r\n$/',$line, $matches)) {
-			trigger_error ("oSRS Error - UNEXPECTED READ: Unable to parse HTTP response code. Please make sure IP is whitelisted in RWI.", E_USER_WARNING);
+			throw new Exception ("oSRS Error - UNEXPECTED READ: Unable to parse HTTP response code. Please make sure IP is whitelisted in RWI.");
 			return false;
 		}
 		$header['http_response_code'] = $matches[1];
@@ -214,7 +215,7 @@ class Base
 			$line = fgets($fh, 4000);
 			$http_log .= $line;
 			if (feof($fh)) {
-				trigger_error ("oSRS Error - UNEXPECTED READ: Error reading HTTP header.", E_USER_WARNING);
+				throw new Exception ("oSRS Error - UNEXPECTED READ: Error reading HTTP header.");
 				return false;
 			}
 			$matches = explode(': ', $line, 2);
@@ -239,7 +240,7 @@ class Base
 		socket_set_timeout($fh, $timeout);
 		$header = $this->readHeader($fh, $timeout);
 		if (!$header || !isset($header{'content-length'}) || (empty($header{'content-length'}))) {
-			trigger_error ("oSRS Error - UNEXPECTED ERROR: No Content-Length header provided! Please make sure IP is whitelisted in RWI.", E_USER_WARNING);
+			throw new Exception ("oSRS Error - UNEXPECTED ERROR: No Content-Length header provided! Please make sure IP is whitelisted in RWI.");
 		}
 
 		$len = (int)$header{'content-length'};

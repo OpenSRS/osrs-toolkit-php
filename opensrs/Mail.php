@@ -1,6 +1,7 @@
 <?php
 
 namespace OpenSRS;
+use OpenSRS\Exception;
 
 class Mail
 {
@@ -19,7 +20,7 @@ class Mail
         $fp = pfsockopen(APP_MAIL_HOST, APP_MAIL_PORT, $errno, $errstr, APP_MAIL_PORTWAIT);
 
         if (!$fp) {
-            trigger_error("oSRS Error - $errstr ($errno)<br />\n");            // Something went wrong
+            throw new Exception("oSRS Error - $errstr ($errno)<br />\n");            // Something went wrong
         } else {
             // Send commands to APP server
             for ($i = 0; $i < count($sequence); ++$i) {
@@ -29,13 +30,13 @@ class Mail
                 $writeStr = $sequence[$i]."\r\n";
                 $fwrite = fwrite($fp, $writeStr);
                 if (!$fwrite) {
-                    trigger_error('oSRS - Mail System Write Error, please check if your network allows connection to the server.');
+                    throw new Exception('oSRS - Mail System Write Error, please check if your network allows connection to the server.');
                 }
 
                 $dotStr = ".\r\n";
                 $fwrite = fwrite($fp, $dotStr);
                 if (!$fwrite) {
-                    trigger_error('oSRS - Mail System Write Error, please check if your network allows connection to the server.');
+                    throw new Exception('oSRS - Mail System Write Error, please check if your network allows connection to the server.');
                 }
 
                             // read the port rightaway

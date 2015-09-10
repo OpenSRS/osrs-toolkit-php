@@ -1,6 +1,7 @@
 <?php
 
 namespace OpenSRS;
+use OpenSRS\Exception;
 
 /**
  * OpenSRS OMA (OpenSRS Mail provisioning API) class.
@@ -80,7 +81,7 @@ class OMA
         var_dump($ch);
 
         if (curl_errno($ch)) {
-            trigger_error('Curl error: '.curl_error($ch));
+            throw new Exception('Curl error: '.curl_error($ch));
         }
         curl_close($ch);
 
