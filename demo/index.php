@@ -92,6 +92,18 @@
 	<a href="testcase/test-transSendPass.php?format=json">transSendPass</a><br/>
 	<a href="testcase/test-transTradeDomain.php?format=json">transTradeDomain</a><br/>
 </div>
+<div class="span3">
+    <b>Publishing Commands</b><br/>
+    <a href="testcase/test-pubCreate.php">Create</a><br/>
+    <a href="testcase/test-pubDelete.php">Delete</a><br/>
+    <a href="testcase/test-pubDisable.php">Disable</a><br/>
+    <a href="testcase/test-pubEnable.php">Enable</a><br/>
+    <a href="testcase/test-pubGenerateRedirection.php">GenerateRedirection</a><br/>
+    <a href="testcase/test-pubGetControlPanelUrl.php">GetControlPanelUrl</a><br/>
+    <a href="testcase/test-pubGetServiceInfo.php">GetServiceInfo</a><br/>
+    <a href="testcase/test-pubLetExpire.php">LetExpire</a><br/>
+    <a href="testcase/test-pubUpdate.php">Update</a><br/>
+</div>
 </div>
 </div>
 

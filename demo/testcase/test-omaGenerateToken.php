@@ -1,6 +1,12 @@
 <?php 
 
+require __DIR__ . '/../../vendor/autoload.php';
+
+use OpenSRS\OMA\GenerateToken;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+	require_once dirname(__FILE__) . "/../../opensrs/openSRS_loader.php";
+
 	// Put the data to the Formatted array
 	$callArray = array(
 		"user" => $_POST["user"],
@@ -14,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	);
 
 	// Open SRS Call -> Result
-	require_once dirname(__FILE__) . "/../../opensrs/openSRS_loader.php";
 	$response = GenerateToken::call($callArray);
 
 	// Print out the results

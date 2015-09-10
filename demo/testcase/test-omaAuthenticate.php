@@ -1,6 +1,11 @@
 <?php 
 
+require __DIR__ . '/../../vendor/autoload.php';
+
+use OpenSRS\OMA\Authenticate;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+	require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
 
 	$callArray = array(
 		"token" => $_POST["token"],
@@ -12,7 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	$callArray = array_filter($callArray);
 
 	// Open SRS Call -> Result
-	require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
 	$response = Authenticate::call($callArray);
 
 	// Print out the results

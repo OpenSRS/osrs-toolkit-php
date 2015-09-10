@@ -1,6 +1,8 @@
 <?php 
 
 if (isSet($_POST['function'])) {
+	require_once ("../opensrs/openSRS_loader.php");
+
 	$callstring = "";
 
 	$firstname = trim($_POST["firstname"]);
@@ -16,7 +18,6 @@ if (isSet($_POST['function'])) {
 
 	$callstring = json_encode($callArray);	
 	// Open SRS Call -> Result
-	require_once ("../opensrs/openSRS_loader.php");
 	$osrsHandler = processOpenSRS ("json", $callstring);
 	$json_out = $osrsHandler->resultFormatted;
 

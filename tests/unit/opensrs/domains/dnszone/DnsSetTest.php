@@ -1,0 +1,202 @@
+<?php
+
+use OpenSRS\domains\dnszone\DnsSet;
+/**
+ * @group dnszone
+ * @group DnsSet
+ */
+class DnsSetTest extends PHPUnit_Framework_TestCase
+{
+    protected $func = 'dnsSet';
+
+    protected $validSubmission = array(
+        'data' => array(
+            /**
+             * Required
+             *
+             * domain: the domain for which you want
+             *   to define DNS records
+             */
+            'domain' => '',
+
+            /**
+             * Optional
+             *
+             * dns_template: specify the name of the
+             *   DNS template you want to use to enable
+             *   DNS and assign initial records
+             */
+            'dns_template' => '',
+
+            /**
+             * Required: DNS records
+             *
+             * List of record types defined for the
+             * domain, each entry includes settings for
+             * that record. Required, but may be empty
+             *
+             * 
+             */
+            // array of 'A' records to add
+            'a' => array(
+                array(
+                    // third level of the domain
+                    // name, such as www or ftp
+                    'subdomain' => '',
+
+                    // IPv4 address to point the
+                    // above subdomain to
+                    'ip_address' => '',
+                    )
+                ),
+
+            // array of 'AAAA' (IPv6) records
+            // to add
+            'aaaa' => array(
+                array(
+                    // third level of the domain
+                    // name, such as www or ftp
+                    'subdomain' => '',
+
+                    // the IPv6 address to point
+                    // the above subdomain to
+                    'ipv6_address' => '',
+                    ),
+                ),
+
+            // array of CNAME records to add
+            'cname' => array(
+                array(
+                    // third level of the domain
+                    // name, such as www or ftp
+                    'subdomain' => '',
+
+                    // FQDN of the domain that you
+                    // want to access
+                    'hostname' => '',
+                    ),
+                ),
+
+            // array of MX records to add
+            'mx' => array(
+                array(
+                    // third level of the domain
+                    // name, such as www or ftp
+                    'subdomain' => '',
+
+                    // FQDN of the domain that you
+                    // want to access
+                    'hostname' => '',
+
+                    // priority of the target host,
+                    // lower value means more preferred
+                    'priority' => '',
+                    )
+                ),
+
+            // array of SRV records to add
+            'srv' => array(
+                array(
+                    // third level of the domain
+                    // name, such as www or ftp
+                    'subdomain' => '',
+
+                    // FQDN of the domain that you
+                    // want to access
+                    'hostname' => '',
+
+                    // priority of the target host,
+                    // lower value means more preferred
+                    'priority' => '',
+
+                    // relative weight for records with
+                    // the same priority
+                    'weight' => '',
+
+                    // the TCP or UDP port on which the
+                    // service is found
+                    'port' => '',
+                    ),
+                ),
+
+            // array of TXT records to add
+            'txt' => array(
+                array(
+                    // third level of the domain
+                    // name, such as www or ftp
+                    'subdomain' => '',
+
+                    // comments that you want to
+                    // include
+                    'text' => '',
+                    ),
+                ),
+            ),
+        );
+
+    /**
+     * Valid submission should complete with no
+     * exception thrown
+     *
+     * @return void
+     *
+     * @group validsubmission
+     */
+    public function testValidSubmission() {
+        $data = json_decode( json_encode($this->validSubmission) );
+
+        $data->data->domain = 'phptest'.time().'.com';
+
+        $ns = new DnsSet( 'array', $data );
+
+        $this->assertTrue( $ns instanceof DnsSet );
+    }
+
+    /**
+     * Data Provider for Invalid Submission test
+     */
+    function submissionFields() {
+        return array(
+            'missing domain' => array('domain'),
+            );
+    }
+
+    /**
+     * Invalid submission should throw an exception
+     *
+     * @return void
+     *
+     * @dataProvider submissionFields
+     * @group invalidsubmission
+     */
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
+        $data = json_decode( json_encode($this->validSubmission) );
+
+        $data->data->domain = 'phptest'.time().'.com';
+
+        if(is_null($message)){
+          $this->setExpectedExceptionRegExp(
+              'OpenSRS\Exception',
+              "/$field.*not defined/"
+              );
+        }
+        else {
+          $this->setExpectedExceptionRegExp(
+              'OpenSRS\Exception',
+              "/$message/"
+              );
+        }
+
+
+
+        // clear field being tested
+        if(is_null($parent)){
+            unset( $data->$field );
+        }
+        else{
+            unset( $data->$parent->$field );
+        }
+
+        $ns = new DnsSet( 'array', $data );
+    }
+}

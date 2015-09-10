@@ -1,8 +1,7 @@
 <?php 
 
 if (isSet($_POST['function'])) {
-	// ONLY FOR TESTING PURPOSE!!!
-	require_once dirname(__FILE__) . "/../../opensrs/spyc.php";
+	require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
 
 	// Form data capture
 	$formFormat = $_POST["format"];
@@ -27,7 +26,6 @@ if (isSet($_POST['function'])) {
 
 
 	// Open SRS Call -> Result
-	require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
 	$osrsHandler = processOpenSRS ($formFormat, $callstring);
 
 	// Print out the results

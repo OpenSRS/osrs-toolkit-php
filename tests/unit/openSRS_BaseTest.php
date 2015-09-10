@@ -1,6 +1,9 @@
 <?php
 
 require_once(__DIR__ . '/../../opensrs/openSRS_loader.php');
+require_once(__DIR__ . '/../../opensrs/openSRS_base.php');
+require_once(__DIR__ . '/../../opensrs/openSRS_ops.php');
+
 
 class openSRS_BaseTest extends PHPUnit_Framework_TestCase
 {

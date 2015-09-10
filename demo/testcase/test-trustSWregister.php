@@ -1,7 +1,7 @@
 <?php 
 
 if (isSet($_POST['function'])) {
-	require_once dirname(__FILE__) . "/../../opensrs/spyc.php";
+require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
 
 	// Form data capture
 	$formFormat = $_POST["format"];
@@ -25,7 +25,7 @@ if (isSet($_POST['function'])) {
 			"fax" => $_POST['fax'],
 			"email" => $_POST['email'],
 			"title" => $_POST['title']
-		),
+			),
 		"data" => array (
 			"approver_email" => $_POST["approver_email"],
 			"csr" => $_POST["csr"],
@@ -40,20 +40,19 @@ if (isSet($_POST['function'])) {
 			"special_instructions" => $_POST["special_instructions"],
 			"trust_seal" => $_POST["trust_seal"],
 			"period" => $_POST["period"]
-		)
-	);
+			)
+		);
 
-	if ($formFormat == "json") $callstring = json_encode($callArray);
-	if ($formFormat == "yaml") $callstring = Spyc::YAMLDump($callArray);
+if ($formFormat == "json") $callstring = json_encode($callArray);
+if ($formFormat == "yaml") $callstring = Spyc::YAMLDump($callArray);
 
 
 	// Open SRS Call -> Result
-	require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
-	$osrsHandler = processOpenSRS($formFormat, $callstring);
+$osrsHandler = processOpenSRS($formFormat, $callstring);
 
 	// Print out the results
-	echo (" In: ". $callstring ."<br>");
-	echo ("Out: ". $osrsHandler->resultFormatted);
+echo ("{\"in\":". $callstring . "},");
+echo ("{\"out\":". $osrsHandler->resultFormatted."}");
 
 } else {
 	// Format
