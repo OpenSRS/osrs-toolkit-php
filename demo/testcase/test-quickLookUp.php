@@ -2,7 +2,6 @@
 
 require __DIR__ . '/../../vendor/autoload.php';
 
-use Spyc;
 use OpenSRS\Request;
 
 
