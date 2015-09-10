@@ -96,6 +96,7 @@ class BulkChangeTest extends PHPUnit_Framework_TestCase
      * expected class name
      *
      * @group othertests
+     *
      * @return void
      */
     public function testLoadingChangeTypeClasses() {
