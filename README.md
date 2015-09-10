@@ -12,7 +12,21 @@ Getting Started
 
 1. Download and install the toolkit
 
-#### With Composer
+2. In opensrs directory, rename/copy the openSRS_config.php.template to 
+   openSRS_config.php
+
+3. Open openSRS_config.php in a text editor and fill in your reseller details
+[Here](#setup_config)
+
+4. Source your openSRS_config.php before using
+
+5. Follow the guidelines to start developing your application.
+
+* [OpenSRS API Documentation Page](http://www.opensrs.com/site/resources/documentation/api)
+
+That's it!
+
+#### Install With Composer
 
 ```json
 "repositories": [
@@ -26,21 +40,6 @@ Getting Started
 ```json
     "OpenSRS/osrs-toolkit-php": "dev-develop"
 ```
-
-
-2. In opensrs directory, rename/copy the openSRS_config.php.template to openSRS_config.php
-
-3. Open openSRS_config.php in a text editor and fill in your reseller details
-[Here](#setup_config)
-
-4. Source your openSRS_config.php before using
-
-5. Follow the guidelines to start developing your application.
-
-* [OpenSRS API Documentation Page](http://www.opensrs.com/site/resources/documentation/api)
-
-
-That's it!
 
 
 Set up openSRS_config.php <a name="setup_config"></a>
