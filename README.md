@@ -14,7 +14,7 @@ Getting Started
 
 #### With Composer
 
-``json
+```json
 "repositories": [
     {
         "type": "vcs",
