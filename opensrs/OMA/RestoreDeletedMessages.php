@@ -3,6 +3,7 @@
 namespace OpenSRS\OMA;
 
 use OpenSRS\OMA;
+use OpenSRS\Exception;
 
 // command: restore_deleted_messages
 // Recover specific recently deleted messages.  
@@ -19,7 +20,7 @@ class RestoreDeletedMessages
     public static function validate($data)
     {
         if (empty($data['user']) || empty($data['ids'])) {
-            trigger_error("oSRS Error - User/IDs required\n", E_USER_WARNING);
+            throw new Exception("oSRS Error - User/IDs required");
         } else {
             return true;
         }

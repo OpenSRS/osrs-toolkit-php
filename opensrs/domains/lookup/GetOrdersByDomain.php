@@ -35,7 +35,7 @@ class GetOrdersByDomain extends Base {
 	// Validate the object
 	private function _validateObject (){
 		if (!isset($this->_dataObject->data->domain)) {
-			throw new Exception( "oSRS Error - Domain is not defined.", E_USER_WARNING);
+			throw new Exception( "oSRS Error - Domain is not defined.");
 			$allPassed = false;
 		}
 

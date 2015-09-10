@@ -20,7 +20,7 @@ class ChangeCompany
     public static function validate($data)
     {
         if (empty($data['company'])) {
-            throw new Exception("oSRS Error - Company required\n");
+            throw new Exception("oSRS Error - Company required");
         } else {
             return true;
         }

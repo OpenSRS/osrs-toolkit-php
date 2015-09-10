@@ -3,6 +3,7 @@
 namespace OpenSRS\OMA;
 
 use OpenSRS\OMA;
+use OpenSRS\Exception;
 
 // command: rename_user
 // Rename a user 
@@ -19,7 +20,7 @@ class RenameUser
     public static function validate($data)
     {
         if (empty($data['user']) || empty($data['new_name'])) {
-            trigger_error("oSRS Error - User/IDs required\n", E_USER_WARNING);
+            throw new Exception("oSRS Error - User/IDs required");
         } else {
             return true;
         }

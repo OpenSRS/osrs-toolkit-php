@@ -3,6 +3,7 @@
 namespace opensrs\fastlookup;
 
 use OpenSRS\FastLookup;
+use OpenSRS\Exception;
 
 class FastDomainLookup extends FastLookup 
 {
@@ -43,7 +44,7 @@ class FastDomainLookup extends FastLookup
             // Grab domain name
             $domain = $this->_dataObject->data->domain;
         } else {
-            trigger_error('oSRS Error - Search domain strinng not defined.', E_USER_WARNING);
+            throw new Exception('oSRS Error - Search domain strinng not defined.');
             $allPassed = false;
         }
 
@@ -52,7 +53,7 @@ class FastDomainLookup extends FastLookup
                 $arraSelected = explode(';', $this->_dataObject->data->selected);
             }
         } else {
-            trigger_error('oSRS Error - Selected domains are not defined.', E_USER_WARNING);
+            throw new Exception('oSRS Error - Selected domains are not defined.');
             $allPassed = false;
         }
 
@@ -63,7 +64,7 @@ class FastDomainLookup extends FastLookup
                 $allPassed = false;
             }
         } else {
-            trigger_error('oSRS Error - All domain strinng not defined.', E_USER_WARNING);
+            throw new Exception('oSRS Error - All domain strinng not defined.');
             $allPassed = false;
         }
 
@@ -79,7 +80,7 @@ class FastDomainLookup extends FastLookup
             $resObject = $this->_domainTLD($domain, $arraCall);
         } else {
 
-            trigger_error('oSRS Error - Incorrect call.', E_USER_WARNING);
+            throw new Exception('oSRS Error - Incorrect call.');
         }
     }
 

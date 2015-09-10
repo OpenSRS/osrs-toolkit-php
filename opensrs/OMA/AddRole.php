@@ -20,11 +20,11 @@ class AddRole {
     public static function validate($data) {
     	$roles = array("company", "domain", "mail", "workgroup");
     	if(empty($data["role"]) || !in_array($data["role"], $roles))	{
-    		throw new Exception("oSRS Error - No role found\n");
+    		throw new Exception("oSRS Error - No role found");
     		return false;
     	}
     	if(empty($data['user']) || empty($data['object']) ){
-			throw new Exception("oSRS Error - User/Role/Object required\n"); return false;
+			throw new Exception("oSRS Error - User/Role/Object required"); return false;
 		} 	
 		return true;
   	}

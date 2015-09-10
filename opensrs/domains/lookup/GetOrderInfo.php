@@ -35,7 +35,7 @@ class GetOrderInfo extends Base {
 	// Validate the object
 	private function _validateObject (){
 		if (!isset($this->_dataObject->data->order_id)) {
-			throw new Exception( "oSRS Error - order_id is not defined.", E_USER_WARNING);
+			throw new Exception( "oSRS Error - order_id is not defined.");
 		}
 
 		// Execute the command

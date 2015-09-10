@@ -37,7 +37,7 @@ class UpdateOrder extends Base
         $allPassed = true;
 
         if (!isset($this->_dataObject->data->order_id)) {
-            trigger_error('oSRS Error - order_id is not defined.', E_USER_WARNING);
+            throw new Exception('oSRS Error - order_id is not defined.');
             $allPassed = false;
         }
 
@@ -46,7 +46,7 @@ class UpdateOrder extends Base
             // Execute the command
             $this->_processRequest();
         } else {
-            trigger_error('oSRS Error - Incorrect call.', E_USER_WARNING);
+            throw new Exception('oSRS Error - Incorrect call.');
         }
     }
 
@@ -101,8 +101,8 @@ class UpdateOrder extends Base
         } else {
             $this->resultRaw = $arrayResult;
         }
-        $this->resultFullFormatted = convertArray2Formatted($this->_formatHolder, $this->resultFullRaw);
-        $this->resultFormatted = convertArray2Formatted($this->_formatHolder, $this->resultRaw);
+        $this->resultFullFormatted = $this->convertArray2Formatted($this->_formatHolder, $this->resultFullRaw);
+        $this->resultFormatted = $this->convertArray2Formatted($this->_formatHolder, $this->resultRaw);
         $this->XMLresult = $XMLresult;
     }
 }

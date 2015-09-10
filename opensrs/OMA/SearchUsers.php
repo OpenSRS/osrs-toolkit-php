@@ -3,6 +3,7 @@
 namespace OpenSRS\OMA;
 
 use OpenSRS\OMA;
+use OpenSRS\Exception;
 
 // command: search_users
 // Retrieve a list of users in a domain. 
@@ -20,7 +21,7 @@ class SearchUsers
     public static function validate($data)
     {
         if (empty($data['criteria']['domain'])) {
-            trigger_error("oSRS Error - Domain required\n", E_USER_WARNING);
+            throw new Exception("oSRS Error - Domain required");
         } else {
             return true;
         }

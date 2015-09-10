@@ -40,7 +40,7 @@ class SuggestDomain extends Base {
 			$domain = $this->_dataObject->data->domain;
 			// $domain = htmlspecialchars($domain);
 		} else {
-			throw new Exception( "oSRS Error - Search domain strinng not defined.", E_USER_WARNING);
+			throw new Exception( "oSRS Error - Search domain strinng not defined.");
 		}
 
 		// Select non empty one

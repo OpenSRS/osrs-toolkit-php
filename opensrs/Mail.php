@@ -3,8 +3,6 @@
 namespace OpenSRS;
 use OpenSRS\Exception;
 
-use OpenSRS\Exception;
-
 class Mail
 {
 
