@@ -10,28 +10,31 @@ communication markup languages such as JSON and YAML.
 Getting Started
 ---------------
 
-### With Composer
+1. Download and install the toolkit
+
+#### With Composer
 
 ``json
 "repositories": [
     {
         "type": "vcs",
-        "url": "https://github.com/openSRS/osrs-toolkit-php.git"
+        "url": "https://github.com/OpenSRS/osrs-toolkit-php.git"
     }
 ]
 
 ```json
-    "maestro": "dev-develop"
+    "OpenSRS/osrs-toolkit-php": "dev-develop"
 ```
 
-1. Download and install the toolkit
 
 2. In opensrs directory, rename/copy the openSRS_config.php.template to openSRS_config.php
 
 3. Open openSRS_config.php in a text editor and fill in your reseller details
 [Here](#setup_config)
 
-4. Follow the guidelines to start developing your application.
+4. Source your openSRS_config.php before using
+
+5. Follow the guidelines to start developing your application.
 
 * [OpenSRS API Documentation Page](http://www.opensrs.com/site/resources/documentation/api)
 

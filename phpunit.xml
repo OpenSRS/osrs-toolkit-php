@@ -1,4 +1,4 @@
-<phpunit bootstrap="./vendor/autoload.php" colors="true" verbose="true" beStrictAboutTestsThatDoNotTestAnything="true">
+<phpunit bootstrap="./tests/bootstrap.php" colors="true" verbose="true" beStrictAboutTestsThatDoNotTestAnything="true">
     <testsuites>
         <testsuite name="OpenSRS/osrs-toolkit-php test suite">
             <directory>./tests</directory>
