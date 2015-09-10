@@ -29,15 +29,6 @@ That's it!
 #### Install With Composer
 
 ```json
-"repositories": [
-    {
-        "type": "vcs",
-        "url": "https://github.com/OpenSRS/osrs-toolkit-php.git"
-    }
-]
-```
-
-```json
     "OpenSRS/osrs-toolkit-php": "dev-develop"
 ```
 
