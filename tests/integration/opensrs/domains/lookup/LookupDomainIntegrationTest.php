@@ -14,10 +14,9 @@ class LookupDomainIntegrationTest extends PHPUnit_Framework_TestCase
     public function testlookupGoogle()
     {
         $data = (object) array (
-            'func' => 'premiumDomain',
+            'func' => 'lookupDomain',
             'data' => (object) array (
                 'domain' => 'google.com',
-                'selected' => '.com',
             ),
         );
 
