@@ -583,6 +583,12 @@ if ($openSRS_result->resultFullRaw['is_success']=="0"){
 }
 ```
 
+Exception Handling
+------------------
+
+Errors are now only logged with trigger_erorr when running in legacy mode.  
+For all other usage, use PHP exception handling to deal with errors.
+
 
 Library Functions
 -----------------
@@ -614,10 +620,10 @@ Sample JSON call:
 {
    "func": "lookupDomain",
    "data": {
-            "domain": "example.net",
-            "alldomains": ".com;.net;.org",
-            "selected": ".com;.net"
-           }
+        "domain": "example.net",
+        "alldomains": ".com;.net;.org",
+        "selected": ".com;.net"
+    }
 }
 ```
 Returned Data:
@@ -677,27 +683,27 @@ checkboxes) [OPTIONAL]
 Sample JSON Call
 ```json
 {
- "func": "fastDomainLookup",
- "data": {
-         "domain": "example",
-         "selected": ".com",
-         "alldomains": ".com;.net"
-         }
+    "func": "fastDomainLookup",
+    "data": {
+        "domain": "example",
+        "selected": ".com",
+        "alldomains": ".com;.net"
+    }
 }
 ```
 Returned Data (full and condensed response):
 ```json
 [
-  {
-  "domain":"example",
-  "tld":".com",
-  "result":"Taken"
-  },
-  {
-  "domain":"example",
-  "tld":".net",
-  "result":"Taken"
-  }
+    {
+        "domain":"example",
+        "tld":".com",
+        "result":"Taken"
+    },
+    {
+        "domain":"example",
+        "tld":".net",
+        "result":"Taken"
+    }
 ]
 ```
 
@@ -710,16 +716,16 @@ Purpose:  The price associated to the domain in US Dollars
 Sample JSON call:
 ```json
 {
- "func": "lookupGetPrice",
- "data": {
-         "domain": "example.com"
-         }
+    "func": "lookupGetPrice",
+    "data": {
+        "domain": "example.com"
+    }
 }
 ```
 Returned Data:
 ```json
 {
- "price":"20"
+    "price":"20"
 }
 ```
 
@@ -732,31 +738,30 @@ Purpose:  To suggest more selections when querying the Personal Name system
 Example JSON call:
 ```json
 {
-     "func": "persNameSuggest",
-     "data": {
-             "searchstring": "John Smith"
-             }
+    "func": "persNameSuggest",
+    "data": {
+        "searchstring": "John Smith"
+    }
 }
 ```
 
 Returned Data:
 ```json
 {
-"suggestion":
-     {
-     "count":"40",
-     "response_text":"Command completed successfully.",
-     "response_code":"200",
-     "items":[
-             {"domain":"john.smith.net","status":"taken"},
-             {"domain":"johnny.smith.net","status":"taken"},
-             {"domain":"johnnie.smith.net","status":"available"},
-             {"domain":"johnie.smith.net","status":"available"},
-             {"domain":"johnn.smith.net","status":"available"},
-             {"domain":"jonnie.smith.net","status":"available"}
-             ],
-     "is_success":"1"
-     }
+    "suggestion": {
+        "count":"40",
+        "response_text":"Command completed successfully.",
+        "response_code":"200",
+        "items":[
+            {"domain":"john.smith.net","status":"taken"},
+            {"domain":"johnny.smith.net","status":"taken"},
+            {"domain":"johnnie.smith.net","status":"available"},
+            {"domain":"johnie.smith.net","status":"available"},
+            {"domain":"johnn.smith.net","status":"available"},
+            {"domain":"jonnie.smith.net","status":"available"}
+        ],
+        "is_success":"1"
+    }
 }
 ```
 
@@ -902,23 +907,23 @@ Sample JSON call:
        "reg_username": "username",
        "reg_password": "password",
        "handle": "process"
-       },
-       "personal": {
-          "first_name": "First",
-          "last_name": "Last",
-          "phone": "+1.555123456789",
-          "fax": "",
-          "email": "email@email.com",
-          "org_name": "Organization Name",
-          "address1": "Address 1",
-          "address2": "Address 2",
-          "address3": "",
-          "postal_code": "A1A2B2",
-          "city": "City",
-          "state": "ON",
-          "country": "CA",
-          "lang_pref": "EN"
-      }
+    },
+    "personal": {
+        "first_name": "First",
+        "last_name": "Last",
+        "phone": "+1.555123456789",
+        "fax": "",
+        "email": "email@email.com",
+        "org_name": "Organization Name",
+        "address1": "Address 1",
+        "address2": "Address 2",
+        "address3": "",
+        "postal_code": "A1A2B2",
+        "city": "City",
+        "state": "ON",
+        "country": "CA",
+        "lang_pref": "EN"
+    }
 }
 ```
 Returned Data:
