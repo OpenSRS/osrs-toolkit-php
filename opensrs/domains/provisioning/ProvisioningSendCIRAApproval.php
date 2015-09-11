@@ -10,7 +10,7 @@ use OpenSRS\Exception;
  *  data -
  */
 
-class ProvisioningSendCIRAapproval extends Base {
+class ProvisioningSendCIRAApproval extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
 	public $resultFullRaw;

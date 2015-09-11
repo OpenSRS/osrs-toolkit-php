@@ -21,9 +21,30 @@ class SWRegister extends Base {
 
 	public function __construct( $formatString, $dataObject ) {
 		parent::__construct();
-		$this->_dataObject = $dataObject;
-		$this->_formatHolder = $formatString;
-		$this->_validate();
+
+		$original = true;
+
+		if($original){
+			$this->_dataObject = $dataObject;
+			$this->_formatHolder = $formatString;
+			$this->_validate();
+		}
+		else{
+			$this->_formatHolder = $formatString;
+
+			if(!isset($dataObject->attributes)){
+				$bc = new \OpenSRS\backwardcompatibility\dataconversion\domains\provisioning\SWRegister;
+
+				$dataObject = $bc->convertDataObject( $dataObject );
+			}
+
+			$this->_dataObject = $dataObject;
+
+			$tldarr = explode( ".", strtolower($this->_dataObject->attributes->domain ) );
+			$tld = end( $tldarr );
+
+			$this->send( $tld );
+		}
 	}
 
 	public function __destruct() {
@@ -114,6 +135,42 @@ class SWRegister extends Base {
 			}
 		}
 	}
+
+	private function send( $ccTLD ){
+		$this->_dataObject->protocol = 'XCP';
+		$this->_dataObject->action = 'SW_REGISTER';
+		$this->_dataObject->object = 'DOMAIN';
+
+		$cmd = $this->_dataObject = json_decode( json_encode( $this->_dataObject ), true);
+
+		$cmd = $this->setSpecialRequestFieldsForTld( $ccTLD, $cmd );
+
+		// Flip Array to XML
+		$xmlCMD = $this->_opsHandler->encode( $cmd );
+		// Send XML
+		$XMLresult = $this->send_cmd( $xmlCMD );
+		// Flip XML to Array
+		$arrayResult = $this->_opsHandler->decode( $XMLresult );
+
+		/* Added by BC : NG : 16-7-2014 : To set error message for Insufficient Funds */
+		if( isset( $arrayResult['attributes']['forced_pending'] ) and $arrayResult['attributes']['forced_pending'] != "" and $arrayResult['is_success'] == 1 )
+		{
+			$arrayResult['is_success'] = 0;
+            if( $arrayResult['response_text'] == 'Registration successful' )    // Get Resonse Text 'Registration successful'  when insufficient fund
+            $arrayResult['response_text'] = "Insufficient Funds";
+        }
+        /* End : To set error message for Insufficient Funds */
+
+		// Results
+        $this->resultFullRaw = $arrayResult;
+        if( isset($arrayResult['attributes'] ) ) {
+        	$this->resultRaw = $arrayResult['attributes'];
+        } else {
+        	$this->resultRaw = $arrayResult;
+        }
+        $this->resultFullFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
+        $this->resultFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
+ 	}
 
 	// Post validation functions
 	private function _processRequest( $ccTLD ) {

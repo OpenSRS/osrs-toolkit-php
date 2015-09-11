@@ -18,6 +18,16 @@ class CookieDelete extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+	protected $callStructure = array(
+		'cookie' => '',
+
+		'attributes' => array(
+			'cookie' => '',
+			'domain' => '',
+			),
+		);
+
+
 	public function __construct( $formatString, $dataObject ) {
 		parent::__construct();
 		$this->_dataObject = $dataObject;

@@ -20,9 +20,18 @@ class AuthenticationChangeOwnership extends Base {
 
 	public function __construct( $formatString, $dataObject ) {
 		parent::__construct();
+
+
 		$this->_dataObject = $dataObject;
 		$this->_formatHolder = $formatString;
+
 		$this->_validateObject();
+
+		// $bc = new \OpenSRS\backwardcompatibility\dataconversion\domains\authentication\AuthenticationChangeOwnership;
+
+		// $this->_dataObject = $bc->convertDataObject( $dataObject );
+
+		// $this->send();
 	}
 
 	public function __destruct() {
@@ -74,6 +83,27 @@ class AuthenticationChangeOwnership extends Base {
 		) {
 			$cmd['attributes']['reg_domain'] = $this->_dataObject->data->reg_domain;
 		}
+
+		// Flip Array to XML
+		$xmlCMD = $this->_opsHandler->encode( $cmd );
+		// Send XML
+		$XMLresult = $this->send_cmd( $xmlCMD );
+		// Flip XML to Array
+		$arrayResult = $this->_opsHandler->decode( $XMLresult );
+
+		// Results
+		$this->resultFullRaw = $arrayResult;
+		$this->resultRaw = $arrayResult;
+		$this->resultFullFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
+		$this->resultFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
+	}
+
+	private function send(){
+		$this->_dataObject->protocol = 'XCP';
+		$this->_dataObject->action = 'CHANGE';
+		$this->_dataObject->object = 'OWNERSHIP';
+
+		$cmd = $this->_dataObject = json_decode( json_encode( $this->_dataObject ), true);
 
 		// Flip Array to XML
 		$xmlCMD = $this->_opsHandler->encode( $cmd );
