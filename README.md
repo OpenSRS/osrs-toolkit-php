@@ -7,6 +7,7 @@ application to allow for quick integration, but also incorporates new
 communication markup languages such as JSON and YAML.  
 
 
+
 Getting Started
 ---------------
 
@@ -18,19 +19,27 @@ Getting Started
 3. Open openSRS_config.php in a text editor and fill in your reseller details
 [Here](#setup_config)
 
-4. Source your openSRS_config.php before using
+4. Follow the guidelines to start developing your application.  
+[OpenSRS API Documentation Page](http://www.opensrs.com/site/resources/documentation/api)
 
-5. Follow the guidelines to start developing your application.
 
-* [OpenSRS API Documentation Page](http://www.opensrs.com/site/resources/documentation/api)
+#### Or, Install With Composer
 
-That's it!
-
-#### Install With Composer
 
 ```json
     "OpenSRS/osrs-toolkit-php": "dev-develop"
 ```
+
+1. Copy vendor/opensrs/osrs-toolkit-php/opensrs/openSRS_config.php.template to
+   your config folder.  Rename to a .php file.
+
+2. Open your config file in a text editor and fill in your reseller details
+[Here](#setup_config)
+
+4. Source your openSRS_config.php before using
+
+5. Follow the guidelines to start developing your application.
+[OpenSRS API Documentation Page](http://www.opensrs.com/site/resources/documentation/api)
 
 
 Set up openSRS_config.php <a name="setup_config"></a>
