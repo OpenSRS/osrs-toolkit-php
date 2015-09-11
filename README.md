@@ -262,6 +262,23 @@ library may cause files to be put into the wrong folder thus possibily affecting
 future enhancements.
 
 
+Running Demos with Vagrant
+--------------------------
+
+Provided is a a Vagrant & Ansible config to quickly get a dev box up and running.
+
+#### Requirements
+* Vagrant [www.vagrantup.com](https://www.vagrantup.com)
+* Ansible [www.ansible.com](http://www.ansible.com)
+
+Start the vagrant box
+```bash
+vagrant up 
+```
+
+View toolkit demo at localhost:8080
+
+
 General Use
 -----------
 
@@ -1201,3 +1218,4 @@ Domain Function list and corresponding Action and Object in OpenSRS XML API
 |mailSetDomainBlockList|SET_DOMAIN_BLOCK_LIST|26|36|
 |mailSetDomainDisabledStatus|SET_DOMAIN_DISABLED_STATUS|22|32|
 |mailSetDomainMailboxLimits|SET_DOMAIN_MAILBOX_LIMITS|24|34|
+
