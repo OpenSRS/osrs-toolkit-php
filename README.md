@@ -88,21 +88,67 @@ Sample API Call
 ---------------
 * Lookup Domain
 
-```
+#### Method 1 (Legacy mode)
+
+```php
 require_once ("your_root_path/opensrs/openSRS_loader.php");
 
-$callArray = array (
-        "func" => "lookupLookupDomain",
-        "data" => array (
-                "domain" => "sometest.com",
-        )
+$data = array (
+    "func" => "lookupLookupDomain",
+    "data" => array (
+        "domain" => "google.com",
+    )
 );
 
-$osrsHandler = processOpenSRS ("array", $callArray);
+$osrsHandler = processOpenSRS ("array", $data);
 
 var_dump($osrsHandler);
 ```
 
+#### Method 2 (Request Factory)
+```php
+require_once('vendor/autoload.php');
+require_once('config/openSRS_config.php');
+
+$data = array (
+    "func" => "lookupLookupDomain",
+        "data" => array (
+            "domain" => "google.com",
+    )
+);
+
+try {
+    $request = new Request();
+    $osrsHandler = $request->process('array', $data);
+
+} catch (\OpenSRS\Exception $e){
+    // handle exception(s)
+}
+```
+
+#### Method 3 (Specific Request)
+```php
+require_once('vendor/autoload.php');
+require_once('config/openSRS_config.php');
+
+use OpenSRS\domain\LookupDomain;
+
+$data = (object) array (
+    'func' => 'lookupDomain',
+    'data' => (object) array (
+        'domain' => 'google.com',
+    )
+);
+
+try {
+    $lookupDomain = new LookupDomain('array', $data);
+
+} catch (\OpenSRS\Exception $e){
+    // handle exception(s)
+}
+
+var_dump($lookupDomain->resultRaw);
+```
         
 
 Requirements
