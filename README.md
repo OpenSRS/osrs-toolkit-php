@@ -187,7 +187,7 @@ Once authenticated, scroll down to the bottom of the page where the heading
 shows "Profile Management".  Here, there is a link called "Generate New
 Private Key".  If you are sure you wish to continue, click on the 'OK' button
 on the warning window.  This window ensure that you wish to generate a new
-key.  On refresh, you will see a key similiar to this structure:
+key.  On refresh, you will see a key similar to this structure:
 
 a2e308f4df69c969de9ada09c39bb43d0e4d0a88ce83fd2c0a193328d16e8bf5080ee7e0ef388fd8aa0dfb42d33dcd02d3de321c9af1f06b
 
@@ -258,7 +258,7 @@ define("OPENSRSMAIL", OPENSRSURI . DS . "mail");
 ```
 
 NOTE:  It's recommended to keep these folder names constant as upgrades to the
-library may cause files to be put into the wrong folder thus possibily affecting
+library may cause files to be put into the wrong folder thus possibly affecting
 future enhancements.
 
 
@@ -530,7 +530,7 @@ with the header being corrupted.
 
 UNEXPECTED ERROR: No Content-Length header provided!
 * Same causes as above
-* Generated when the Content-Lengt should always be provided
+* Generated when the Content-Length should always be provided
 
 UNEXPECTED READ: No CRLF
 * No carriage return provided after the header, possibly corrupted information
