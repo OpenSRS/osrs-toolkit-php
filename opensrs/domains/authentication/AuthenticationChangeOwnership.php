@@ -97,25 +97,4 @@ class AuthenticationChangeOwnership extends Base {
 		$this->resultFullFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
 		$this->resultFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
 	}
-
-	private function send(){
-		$this->_dataObject->protocol = 'XCP';
-		$this->_dataObject->action = 'CHANGE';
-		$this->_dataObject->object = 'OWNERSHIP';
-
-		$cmd = $this->_dataObject = json_decode( json_encode( $this->_dataObject ), true);
-
-		// Flip Array to XML
-		$xmlCMD = $this->_opsHandler->encode( $cmd );
-		// Send XML
-		$XMLresult = $this->send_cmd( $xmlCMD );
-		// Flip XML to Array
-		$arrayResult = $this->_opsHandler->decode( $XMLresult );
-
-		// Results
-		$this->resultFullRaw = $arrayResult;
-		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
-		$this->resultFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
-	}
 }

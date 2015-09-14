@@ -19,11 +19,6 @@ class SWRegisterTest extends PHPUnit_Framework_TestCase
         $data = json_decode( $this->validSubmission );
         $data->data->domain = 'phptest'.time().'.com';
 
-        $this->setExpectedExceptionRegExp(
-          'OpenSRS\Exception',
-          '/insufficient funds/i'
-          );
-
         $ns = new SWRegister( 'array', $data );
 
         $this->assertTrue( $ns instanceof SWRegister );
@@ -37,13 +32,8 @@ class SWRegisterTest extends PHPUnit_Framework_TestCase
      */
     public function testRemovesWww() {
         $data = json_decode( $this->validSubmission );
+
         $data->data->domain = 'www.phptest' . time() . '.com';
-
-        $this->setExpectedExceptionRegExp(
-          'OpenSRS\Exception',
-          '/insufficient funds/i'
-          );
-
         $ns = new SWRegister( 'array', $data );
 
         $this->assertTrue( $ns instanceof SWRegister );

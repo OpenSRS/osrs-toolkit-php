@@ -25,7 +25,7 @@ class DataConversion extends Base {
 				$valueMap = explode('->', $value);
 
 				for( $i = 0; $i < count($valueMap); $i++ ) {
-					if(isset( $newValue->{$valueMap[$i]} ) && $newValue->{$valueMap[$i]} ){
+					if(isset( $newValue->{$valueMap[$i]} ) && $newValue->{$valueMap[$i]} !== "" ){
 						$newValue = $newValue->{$valueMap[$i]};
 					}
 					else{

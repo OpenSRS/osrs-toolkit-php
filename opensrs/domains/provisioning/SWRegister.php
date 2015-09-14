@@ -43,7 +43,7 @@ class SWRegister extends Base {
 		/* Added by BC : NG : 16-7-2014 : To set error message for Insufficient Funds */
 		if( isset( $arrayResult['attributes']['forced_pending'] ) and $arrayResult['attributes']['forced_pending'] != "" and $arrayResult['is_success'] == 1 )
 		{
-			$arrayResult['is_success'] = 1;
+			$arrayResult['is_success'] = 0;
 
 			// Get Resonse Text 'Registration successful'  when insufficient fund
             if( $arrayResult['response_text'] == 'Registration successful' ) {

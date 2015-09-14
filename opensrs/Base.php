@@ -371,7 +371,7 @@ class Base
 			$arrayResult = $this->customResponseHandling( $arrayResult );
 		}
 
-		if(!$arrayResult['is_success']){
+		if(!$arrayResult['is_success'] && $arrayResult['response_code'] != 200){
 			throw new Exception("oSRS Error code #{$arrayResult['response_code']}: {$arrayResult['response_text']}.");
 		}
 

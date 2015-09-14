@@ -45,6 +45,12 @@ class AuthenticationChangeOwnership extends DataConversion {
 
 		$newDataObject = $p->convertDataObject( $dataObject, $newStructure );
 
+		// make sure attributes->reg_domain is set, even if it's
+		// an empty string
+		if(!$newDataObject->attributes->reg_domain){
+			$newDataObject->attributes->reg_domain = ""; 
+		}
+
 		return $newDataObject;
 	}
 }
