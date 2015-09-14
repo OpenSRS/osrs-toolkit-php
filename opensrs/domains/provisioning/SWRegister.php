@@ -19,7 +19,6 @@ class SWRegister extends Base {
 	public $resultRaw;
 	public $resultFullFormatted;
 	public $resultFormatted;
-	protected $specialRequirements = null;
 
 	public function __construct( $formatString, $dataObject ) {
 		parent::__construct();
