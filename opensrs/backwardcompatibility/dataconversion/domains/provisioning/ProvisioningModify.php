@@ -36,21 +36,22 @@ class ProvisioningModify extends DataConversion {
 			'change_tag_all' => 'data->change_tag_all',
 			'gaining_registrar_tag' => 'data->gaining_registrar_tag',
 			'rsp_override' => 'data->rsp_override',
-			'address1' => 'data->address1',
-			'address2' => 'data->address2',
-			'address3' => 'data->address3',
-			'city' => 'data->city',
-			'country' => 'data->country',
-			'email' => 'data->email',
-			'fax' => 'data->fax',
-			'first_name' => 'data->first_name',
-			'lang' => 'data->lang',
-			'last_name' => 'data->last_name',
+			'address1' => 'data->personal->address1',
+			'address2' => 'data->personal->address2',
+			'address3' => 'data->personal->address3',
+			'city' => 'data->personal->city',
+			'country' => 'data->personal->country',
+			'email' => 'data->personal->email',
+			'fax' => 'data->personal->fax',
+			'first_name' => 'data->personal->first_name',
+			'lang' => 'data->personal->lang',
+			'last_name' => 'data->personal->last_name',
 			'legal_type' => 'data->legal_type',
-			'org_name' => 'data->org_name',
-			'phone' => 'data->phone',
-			'postal_code' => 'data->postal_code',
-			'state' => 'data->state',
+			'org_name' => 'data->personal->org_name',
+			'phone' => 'data->personal->phone',
+			'postal_code' => 'data->personal->postal_code',
+			'state' => 'data->personal->state',
+			'url' => 'data->personal->url',
 
 			/**
 			 * $contact_types = explode( ",", data->contact_type ),
@@ -83,11 +84,17 @@ class ProvisioningModify extends DataConversion {
 		$newDataObject = $p->convertDataObject( $dataObject, $newStructure );
 
 		// run customizations required by this particular class 
-		$newDataObject->contact_set = new \stdClass;
-		$contact_types = explode( ",", $dataObject->data->contact_type );
 
-		foreach( $contact_types as $contact_type ) {
-			$newDataObject->contact_set->{$contact_type} = $dataObject->personal;
+		if(
+			isset($newDataObject->contact_set) &&
+			isset($dataObject->personal)
+		){
+			$newDataObject->contact_set = new \stdClass;
+			$contact_types = explode( ",", $dataObject->data->contact_type );
+
+			foreach( $contact_types as $contact_type ) {
+				$newDataObject->contact_set->{$contact_type} = $dataObject->personal;
+			}
 		}
 		// end customizations
 
