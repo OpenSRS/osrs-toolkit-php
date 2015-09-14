@@ -285,8 +285,21 @@ General Use
 In the openSRS_loader there is a processOpenSRS function which will take in the
 JSON data and run the appropriate function.
 
+#### Method 1 (Legacy mode)
 ```php
-	$returnedResult = processOpenSRS($data_type, $call_string)
+$returnedResult = processOpenSRS($data_type, $call_string)
+```
+
+#### Method 2 (Request Factory)
+```php
+$request = new Request;
+$request->process($data_type, $call_string);
+    
+```
+
+#### Method 3 (Specific Request)
+```php
+$lookupDomain = new OpenSRS\domains\lookup\LookupDomain($data_type, $call_string)
 ```
 
 The returnedResult variable will be an object that has the result in a string using
@@ -311,10 +324,10 @@ Sample JSON request:
 {
 	"func": "lookupDomain",
 	"data": { 
-			"domain": "example.com",
-			"alldomains": ".com,.net,.org",
-			"selected": ".com,.net"
-			}
+        "domain": "example.com",
+        "alldomains": ".com,.net,.org",
+        "selected": ".com,.net"
+	}
 }
 ```
 
@@ -325,12 +338,13 @@ it broken down to the essentials.
 Here is an example of the call string being used:
 
 Sample code:
+#### Method 1 (Legacy mode)
 ```php
 <?php
-require_once("./opensrs/openSRS_loader.php");
-require_once("./opensrs/spyc.php");
+require_once('vendor/autoload.php');
+require_once('config/openSRS_config.php');
 
-$openSRS_results=processOpensrs("json",'
+$openSRS_results = processOpensrs("json",'
 	{
 		"func": "lookupDomain",
 		"data": {
@@ -340,9 +354,56 @@ $openSRS_results=processOpensrs("json",'
 		}
 	}');
 echo $openSRS_results->resultFormatted . "\n";
-?>
 ```
 
+#### Method 2 (Request Factory)
+```php
+<?php
+require_once('vendor/autoload.php');
+require_once('config/openSRS_config.php');
+
+try {
+    $request = new OpenSRS\Request;
+    $lookupDomain = $requeest->process("json",'
+	{
+		"func": "lookupDomain",
+		"data": {
+			"domain": "example.com",
+			"alldomains": ".com;.net;.org",
+			"selected": ".com;.net"
+		}
+	}');
+
+    echo $lookupDomain->resultFormatted . "\n";
+
+} catch (OpenSRS\Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+```
+
+#### Method 3 (Specific Request)
+```php
+<?php
+require_once('vendor/autoload.php');
+require_once('config/openSRS_config.php');
+
+try {
+    $lookupDomain = new OpenSRS\domains\lookup\LookupDomain("json",'
+	{
+		"func": "lookupDomain",
+		"data": {
+			"domain": "example.com",
+			"alldomains": ".com;.net;.org",
+			"selected": ".com;.net"
+		}
+	}');
+
+    echo $lookupDomain->resultFormatted . "\n";
+
+} catch (OpenSRS\Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+```
 NOTE:  The example above only gives the raw JSON output.
 
 This example shows it all put together with associative arrays:
