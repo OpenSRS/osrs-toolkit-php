@@ -1,22 +1,19 @@
 <?php
 
-use OpenSRS\backwardcompatibility\dataconversion\domains\cookie\CookieUpdate;
+use OpenSRS\backwardcompatibility\dataconversion\domains\forwarding\ForwardingGet;
 
 /**
  * @group backwardcompatibility
  * @group dataconversion
  * @group cookie
- * @group BC_CookieUpdate
+ * @group BC_ForwardingGet
  */
-class BC_CookieUpdateTest extends PHPUnit_Framework_TestCase
+class BC_ForwardingGetTest extends PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         "data" => array(
+            "cookie" => "",
             "domain" => "",
-            "domain_new" => "",
-
-            "reg_username" => "",
-            "reg_password" => "",
             ),
         );
 
@@ -31,27 +28,17 @@ class BC_CookieUpdateTest extends PHPUnit_Framework_TestCase
     public function testValidDataConversion() {
         $data = json_decode( json_encode ($this->validSubmission) );
 
-        $data->data->cookie = md5(time());
         $data->data->domain = 'phptest' . time() . '.com';
-        $data->data->domain_new = 'new' . $data->data->domain;
-        $data->data->reg_username = $data->data->domain;
-        $data->data->reg_password = "password1234";
+        $data->data->cookie = md5(time());
 
         $shouldMatchNewDataObject = new \stdClass;
         $shouldMatchNewDataObject->cookie = $data->data->cookie;
 
         $shouldMatchNewDataObject->attributes = new \stdClass;
         $shouldMatchNewDataObject->attributes->domain = $data->data->domain;
-        $shouldMatchNewDataObject->attributes->domain_new = $data->data->domain_new;
-        $shouldMatchNewDataObject->attributes->reg_username = $data->data->reg_username;
-        $shouldMatchNewDataObject->attributes->reg_password = $data->data->reg_password;
 
-        print_r($shouldMatchNewDataObject);
-
-        $ns = new CookieUpdate();
+        $ns = new ForwardingGet();
         $newDataObject = $ns->convertDataObject( $data );
-
-        print_r($newDataObject);
 
         $this->assertTrue( $newDataObject == $shouldMatchNewDataObject );
     }

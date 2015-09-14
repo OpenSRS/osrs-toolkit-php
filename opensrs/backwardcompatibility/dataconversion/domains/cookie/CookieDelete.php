@@ -24,7 +24,7 @@ class CookieDelete extends DataConversion {
 	//  this will map ->data->domain in the original
 	//  to ->attributes->domain in the new format
 	protected $newStructure = array(
-		'cookie' => '',
+		'cookie' => 'data->cookie',
 
 		'attributes' => array(
 			'cookie' => 'data->cookie',

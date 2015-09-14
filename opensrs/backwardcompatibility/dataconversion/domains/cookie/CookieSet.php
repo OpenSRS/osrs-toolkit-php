@@ -25,9 +25,9 @@ class CookieSet extends DataConversion {
 	//  to ->attributes->domain in the new format
 	protected $newStructure = array(
 		'attributes' => array(
-			"domain" => "",
-			"reg_username" => "",
-			"reg_password" => "",
+			"domain" => "data->domain",
+			"reg_username" => "data->reg_username",
+			"reg_password" => "data->reg_password",
 			),
 		);
 

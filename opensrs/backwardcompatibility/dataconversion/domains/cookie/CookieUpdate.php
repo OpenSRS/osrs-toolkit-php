@@ -24,14 +24,14 @@ class CookieUpdate extends DataConversion {
 	//  this will map ->data->domain in the original
 	//  to ->attributes->domain in the new format
 	protected $newStructure = array(
-		'cookie' => '',
+		'cookie' => 'data->cookie',
 
 		'attributes' => array(
-			"domain" => "",
+			"domain" => "data->domain",
 			
-			"domain_new" => "",
-			"reg_username" => "",
-			"reg_password" => "",
+			"domain_new" => "data->domain_new",
+			"reg_username" => "data->reg_username",
+			"reg_password" => "data->reg_password",
 			),
 		);
 
