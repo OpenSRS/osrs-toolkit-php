@@ -79,33 +79,37 @@ class SWRegister extends DataConversion {
 		// run customizations required by this particular class 
 
 		// set custom nameservers to nameserver_list
-		if( $dataObject->data->custom_nameservers == 1 ) {
-			$newDataObject->attributes->nameserver_list = array();
+		if(isset($dataObject->data)) {
+			if( $dataObject->data->custom_nameservers == 1 ) {
+				$newDataObject->attributes->nameserver_list = array();
 
-			for( $j=1; $j<=10; $j++ ) {
-				$tns = "name". $j;
-				$tso = "sortorder". $j;
+				for( $j=1; $j<=10; $j++ ) {
+					$tns = "name". $j;
+					$tso = "sortorder". $j;
 
-				if(
-					isset($dataObject->data->$tns ) && 
-					$dataObject->data->$tns != "" &&
-					isset($dataObject->data->$tso) &&
-					$dataObject->data->$tso
-				) {
-					$nameserver = new \stdClass;
-					$nameserver->name = $dataObject->data->{$tns};
-					$nameserver->sortorder = $dataObject->data->{$tso};
+					if(
+						isset($dataObject->data->$tns ) && 
+						$dataObject->data->$tns != "" &&
+						isset($dataObject->data->$tso) &&
+						$dataObject->data->$tso
+					) {
+						$nameserver = new \stdClass;
+						$nameserver->name = $dataObject->data->{$tns};
+						$nameserver->sortorder = $dataObject->data->{$tso};
 
-					$newDataObject->attributes->nameserver_list[] = $nameserver;
+						$newDataObject->attributes->nameserver_list[] = $nameserver;
+					}
 				}
 			}
 		}
 
-		$newDataObject->attributes->contact_set = new \stdClass;
-		$newDataObject->attributes->contact_set->owner = $dataObject->personal;
-		$newDataObject->attributes->contact_set->admin = $dataObject->personal;
-		$newDataObject->attributes->contact_set->billing = $dataObject->personal;
-		$newDataObject->attributes->contact_set->tech = $dataObject->personal;
+		if(isset($dataObject->personal)){
+			$newDataObject->attributes->contact_set = new \stdClass;
+			$newDataObject->attributes->contact_set->owner = $dataObject->personal;
+			$newDataObject->attributes->contact_set->admin = $dataObject->personal;
+			$newDataObject->attributes->contact_set->billing = $dataObject->personal;
+			$newDataObject->attributes->contact_set->tech = $dataObject->personal;
+		}
 		// end customizations
 
 		return $newDataObject;

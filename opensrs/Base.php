@@ -336,4 +336,56 @@ class Base
     {
         return $this->dataObject->data->domain; 
     }
+
+    /**
+     * Send the oSRS API request, set action,
+     * object and protocol based on the call
+     * being made (so we don't have to set it
+     * in each call class), and run any custom
+     * response handling if the function
+     * 'customResponseHandling' exists on $obj,
+     * the class for that specific API call
+     *
+     * @return void
+     */
+    public function send( $dataObject ) {
+		$dataObject->protocol = 'XCP';
+		$dataObject->action = $this->action;
+		$dataObject->object = $this->object;
+
+		if(
+			isset($dataObject->attributes->domain) &&
+			substr_count($dataObject->attributes->domain, "." ) > 1
+		){
+			$dataObject->attributes->domain = str_replace("www.", "", $dataObject->attributes->domain);
+		}
+
+		// Flip Array to XML
+		$xmlCMD = $this->_opsHandler->encode( json_decode(json_encode($dataObject), true) );
+		// Send XML
+		$XMLresult = $this->send_cmd( $xmlCMD );
+		// Flip XML to Array
+		$arrayResult = $this->_opsHandler->decode( $XMLresult );
+
+		if( method_exists( $this, 'customResponseHandling' )){
+			$arrayResult = $this->customResponseHandling( $arrayResult );
+		}
+
+		if(!$arrayResult['is_success']){
+			throw new Exception("oSRS Error code #{$arrayResult['response_code']}: {$arrayResult['response_text']}.");
+		}
+
+
+		// Results
+        $this->resultFullRaw = $arrayResult;
+
+        if( isset($arrayResult['attributes'] ) ) {
+        	$this->resultRaw = $arrayResult['attributes'];
+        } else {
+        	$this->resultRaw = $arrayResult;
+        }
+
+        $this->resultFullFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
+        $this->resultFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
+    }
 }
