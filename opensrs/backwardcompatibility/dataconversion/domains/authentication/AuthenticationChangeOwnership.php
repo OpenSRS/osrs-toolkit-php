@@ -47,7 +47,7 @@ class AuthenticationChangeOwnership extends DataConversion {
 
 		// make sure attributes->reg_domain is set, even if it's
 		// an empty string
-		if(!$newDataObject->attributes->reg_domain){
+		if(!isset($newDataObject->attributes->reg_domain)){
 			$newDataObject->attributes->reg_domain = ""; 
 		}
 
