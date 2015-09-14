@@ -79,9 +79,6 @@ class OMA
         );
         $response = curl_exec($ch);
 
-        var_dump($response);
-        var_dump($ch);
-
         if (curl_errno($ch)) {
             throw new Exception('Curl error: '.curl_error($ch));
         }
