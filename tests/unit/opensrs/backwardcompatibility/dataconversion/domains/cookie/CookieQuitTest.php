@@ -27,7 +27,7 @@ class BC_CookieQuitTest extends PHPUnit_Framework_TestCase
 
 
         $shouldMatchNewDataObject = new \stdClass;
-        $shouldMatchNewDataObject->attributes = new \stdClass;
+        $shouldMatchNewDataObject->attributes = array();
 
         $ns = new CookieQuit();
         $newDataObject = $ns->convertDataObject( $data );

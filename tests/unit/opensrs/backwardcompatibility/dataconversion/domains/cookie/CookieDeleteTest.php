@@ -31,6 +31,7 @@ class BC_CookieDeleteTest extends PHPUnit_Framework_TestCase
         $data->data->cookie = md5(time());
 
         $shouldMatchNewDataObject = new \stdClass;
+        $shouldMatchNewDataObject->cookie = $data->data->cookie;
         $shouldMatchNewDataObject->attributes = new \stdClass;
 
         $shouldMatchNewDataObject->attributes->cookie = $data->data->cookie;

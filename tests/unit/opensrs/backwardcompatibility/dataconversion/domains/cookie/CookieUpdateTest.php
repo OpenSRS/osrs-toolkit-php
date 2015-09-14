@@ -46,12 +46,8 @@ class BC_CookieUpdateTest extends PHPUnit_Framework_TestCase
         $shouldMatchNewDataObject->attributes->reg_username = $data->data->reg_username;
         $shouldMatchNewDataObject->attributes->reg_password = $data->data->reg_password;
 
-        print_r($shouldMatchNewDataObject);
-
         $ns = new CookieUpdate();
         $newDataObject = $ns->convertDataObject( $data );
-
-        print_r($newDataObject);
 
         $this->assertTrue( $newDataObject == $shouldMatchNewDataObject );
     }

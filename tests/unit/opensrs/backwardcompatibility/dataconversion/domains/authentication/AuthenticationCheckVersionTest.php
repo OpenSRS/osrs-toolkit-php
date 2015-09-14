@@ -26,7 +26,7 @@ class BC_AuthenticationCheckVersionTest extends PHPUnit_Framework_TestCase
         $data = json_decode( json_encode ($this->validSubmission) );
 
         $shouldMatchNewDataObject = new \stdClass;
-        $shouldMatchNewDataObject->attributes = new \stdClass;
+        $shouldMatchNewDataObject->attributes = array();
 
         $ns = new AuthenticationCheckVersion();
         $newDataObject = $ns->convertDataObject( $data );
