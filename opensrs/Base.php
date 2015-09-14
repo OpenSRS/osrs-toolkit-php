@@ -311,6 +311,14 @@ class Base
         return $this->defaultTlds;
     }
 
+    /**
+     * Set the data object and the format 
+     * 
+     * @param string $format format 
+     * @param sdtClass $dataObject dataObject 
+     * 
+     * @return void
+     */
     public function setDataObject($format, $dataObject)
     {
         $this->dataObject = $dataObject;
