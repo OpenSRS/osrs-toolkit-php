@@ -25,12 +25,6 @@ class SWRegister extends Base {
 
 		$this->_formatHolder = $formatString;
 
-		if(!isset($dataObject->attributes)){
-			$bc = new \OpenSRS\backwardcompatibility\dataconversion\domains\provisioning\SWRegister;
-
-			$dataObject = $bc->convertDataObject( $dataObject );
-		}
-
 		$this->send( $dataObject );
 	}
 
