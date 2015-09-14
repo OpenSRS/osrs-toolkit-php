@@ -44,6 +44,19 @@ class NameserverAdvancedUpdate extends DataConversion {
 
 		$newDataObject = $p->convertDataObject( $dataObject, $newStructure );
 
+		/**
+		 * Convert fields that should be arrays to arrays
+		 */
+		if( isset($newDataObject->attributes->add_ns) ){
+			$newDataObject->attributes->add_ns = explode( ",", $newDataObject->attributes->add_ns );
+		}
+		if( isset($newDataObject->attributes->assign_ns) ){
+			$newDataObject->attributes->assign_ns = explode( ",", $newDataObject->attributes->assign_ns );
+		}
+		if( isset($newDataObject->attributes->remove_ns) ){
+			$newDataObject->attributes->remove_ns = explode( ",", $newDataObject->attributes->remove_ns );
+		}
+
 		return $newDataObject;
 	}
 }

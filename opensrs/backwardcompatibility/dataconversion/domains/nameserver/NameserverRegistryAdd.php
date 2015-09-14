@@ -40,6 +40,8 @@ class NameserverRegistryAdd extends DataConversion {
 
 		$newDataObject = $p->convertDataObject( $dataObject, $newStructure );
 
+		$newDataObject->attributes->tld = explode(",", $newDataObject->attributes->tld);
+
 		return $newDataObject;
 	}
 }

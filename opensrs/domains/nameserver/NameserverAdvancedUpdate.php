@@ -88,6 +88,7 @@ class NameserverAdvancedUpdate extends Base {
 		// Command optional values
 		if(
 			isset( $this->_dataObject->data->add_ns ) &&
+			!is_array( $this->_dataObject->data->add_ns ) &&
 			$this->_dataObject->data->add_ns != ""
 		) {
 			$tempAdd = explode( ",", $this->_dataObject->data->add_ns );
@@ -95,6 +96,7 @@ class NameserverAdvancedUpdate extends Base {
 		}
 		if(
 			isset( $this->_dataObject->data->assign_ns ) &&
+			!is_array( $this->_dataObject->data->assign_ns ) &&
 			$this->_dataObject->data->assign_ns != ""
 		) {
 			$tempAdd = explode( ",", $this->_dataObject->data->assign_ns );
@@ -102,6 +104,7 @@ class NameserverAdvancedUpdate extends Base {
 		}
 		if(
 			isset( $this->_dataObject->data->remove_ns ) &&
+			!is_array( $this->_dataObject->data->remove_ns ) &&
 			$this->_dataObject->data->remove_ns != ""
 		) {
 			$tempAdd = explode( ",", $this->_dataObject->data->remove_ns );

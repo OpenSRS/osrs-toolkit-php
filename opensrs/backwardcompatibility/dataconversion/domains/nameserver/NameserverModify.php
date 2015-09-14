@@ -5,7 +5,7 @@ namespace OpenSRS\backwardcompatibility\dataconversion\domains\nameserver;
 use OpenSRS\backwardcompatibility\dataconversion\DataConversion;
 use OpenSRS\Exception;
 
-class NameserverGet extends DataConversion {
+class NameserverModify extends DataConversion {
 	// New structure for API calls handled by
 	// the toolkit.
 	//
