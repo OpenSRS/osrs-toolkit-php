@@ -11,7 +11,7 @@ class AuthenticationSendAuthCodeTest extends PHPUnit_Framework_TestCase
     protected $fund = "authSendAuthcode";
 
     protected $validSubmission = array(
-        "data" => array(
+        "attributes" => array(
             /**
              * Required
              *
@@ -33,7 +33,7 @@ class AuthenticationSendAuthCodeTest extends PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
         
-        $data->data->domain_name = "phptest" . time() . ".com";
+        $data->attributes->domain_name = "phptest" . time() . ".com";
 
         $ns = new AuthenticationSendAuthCode( 'array', $data );
 
@@ -57,10 +57,10 @@ class AuthenticationSendAuthCodeTest extends PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->domain_name = "phptest" . time() . ".com";
+        $data->attributes->domain_name = "phptest" . time() . ".com";
 
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(

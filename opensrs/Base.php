@@ -16,6 +16,8 @@ defined('OPENSRSURI') or die;
 
 class Base 
 {
+	protected $protocol = 'XCP';
+	
 	private $_socket = false;
 	private $_socketErrorNum = false;
 	private $_socketErrorMsg = false;
@@ -349,7 +351,10 @@ class Base
      * @return void
      */
     public function send( $dataObject ) {
-		$dataObject->protocol = 'XCP';
+    	if( !is_object($dataObject )){
+    		$dataObject = new \stdClass;
+    	}
+		$dataObject->protocol = $this->protocol;
 		$dataObject->action = $this->action;
 		$dataObject->object = $this->object;
 
@@ -387,5 +392,14 @@ class Base
 
         $this->resultFullFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
         $this->resultFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
+    }
+
+    /**
+     * Method for any shared validation that is applicable to all
+     * API calls. Empty as for now is just a fallback for classes
+     * that don't have its own _validateObject method
+     */
+    public function _validateObject( $dataObject ){
+
     }
 }

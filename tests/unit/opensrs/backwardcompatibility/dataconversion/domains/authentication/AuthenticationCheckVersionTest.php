@@ -11,7 +11,7 @@ use OpenSRS\backwardcompatibility\dataconversion\domains\authentication\Authenti
 class BC_AuthenticationCheckVersionTest extends PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
-        "data" => array()
+        "attributes" => array()
         );
 
     /**

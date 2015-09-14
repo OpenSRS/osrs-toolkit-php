@@ -133,7 +133,13 @@ class RequestFactory
 
     public static function build( $func, $type, $dataObject )
     {
-        $route = self::$RequestRoutes[strtolower( $func )];
+        $route = '';
+        $routeKey = strtolower($func);
+
+        if (array_key_exists($routeKey, self::$RequestRoutes)) {
+            $route = self::$RequestRoutes[$routeKey];
+        }
+
         $class = '\OpenSRS\\' . $route;
 
         if(class_exists($class)){

@@ -11,9 +11,11 @@ class AuthenticationChangeOwnershipTest extends PHPUnit_Framework_TestCase
     protected $func = "authChangeOwnership";
 
     protected $validSubmission = array(
-        "data" => array(
+        "cookie" => "",
+
+        "attributes" => array(
             /**
-             * Required: one of 'cookie' or 'domain'
+             * Required: one of 'cookie' (above) or 'domain'
              *
              * cookie: authentication cookie
              *   * see domains\cookie\CookieSet
@@ -71,7 +73,7 @@ class AuthenticationChangeOwnershipTest extends PHPUnit_Framework_TestCase
      */
     function submissionFields() {
         return array(
-            'missing cookie' => array('cookie'),
+            'missing cookie' => array('cookie', null),
             'missing username' => array('username'),
             'missing password' => array('password'),
             );
@@ -85,10 +87,12 @@ class AuthenticationChangeOwnershipTest extends PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->cookie = md5(time());
+        $data->cookie = md5(time());
+        $data->attributes->username = "phptest" . time();
+        $data->attributes->password = "password1234";
 
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(

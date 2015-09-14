@@ -11,7 +11,7 @@ class AuthenticationChangePasswordTest extends PHPUnit_Framework_TestCase
     protected $fund = "authChangePassword";
 
     protected $validSubmission = array(
-        "data" => array(
+        "attributes" => array(
             /**
              * Required: one of 'cookie' or 'domain'
              *
@@ -43,9 +43,9 @@ class AuthenticationChangePasswordTest extends PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->cookie = md5(time());
-        $data->data->domain = "phptest" . time() . ".com";
-        $data->data->reg_password = password_hash( md5(time()), PASSWORD_BCRYPT );
+        $data->attributes->cookie = md5(time());
+        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->reg_password = password_hash( md5(time()), PASSWORD_BCRYPT );
 
         $ns = new AuthenticationChangePassword( 'array', $data );
 
@@ -69,12 +69,12 @@ class AuthenticationChangePasswordTest extends PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->cookie = md5(time());
-        $data->data->domain = "phptest" . time() . ".com";
-        $data->data->reg_password = password_hash( md5(time()), PASSWORD_BCRYPT );
+        $data->attributes->cookie = md5(time());
+        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->reg_password = password_hash( md5(time()), PASSWORD_BCRYPT );
 
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(
