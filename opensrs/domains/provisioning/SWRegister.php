@@ -50,7 +50,7 @@ class SWRegister extends Base {
  	}
 
 	// Validate the object
-	private function _validateObject( $dataObject ) {
+	public function _validateObject( $dataObject ) {
 		// if( !isset($dataObject->attributes->domain ) ) {
 		// 	throw new Exception( "oSRS Error - domain is not defined." );
 		// }
