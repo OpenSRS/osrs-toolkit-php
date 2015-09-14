@@ -31,7 +31,7 @@ Getting Started
 ```
 
 1. Copy vendor/opensrs/osrs-toolkit-php/opensrs/openSRS_config.php.template to
-   your config folder.  Rename to a .php file.
+   your config folder & Rename, for example config/openSRS_config.php 
 
 2. Open your config file in a text editor and fill in your reseller details
 [Here](#setup_config)
