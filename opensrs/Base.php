@@ -1,6 +1,8 @@
 <?php
 
 namespace OpenSRS;
+
+use OpenSRS\DataObjectTrait;
 use OpenSRS\Exception;
 
 defined('OPENSRSURI') or die;
@@ -25,8 +27,10 @@ class Base
 	protected $_opsHandler;
 
     protected $defaultTlds = array('.com', '.net', '.org');
-    protected $dataObject;
-    protected $dataFormat;
+    // protected $dataObject;
+    // protected $dataFormat;
+
+    use DataObjectTrait;
 
 	/**
 	 * openSRS_base object constructor
@@ -309,39 +313,5 @@ class Base
 
         // use included defaults
         return $this->defaultTlds;
-    }
-
-    /**
-     * Set the data object and the format 
-     * 
-     * @param string $format format 
-     * @param sdtClass $dataObject dataObject 
-     * 
-     * @return void
-     */
-    public function setDataObject($format, $dataObject)
-    {
-        $this->dataObject = $dataObject;
-        $this->dataFormat = $format;
-    }
-
-    /**
-     * Does the dataObject have a domain set?
-     * 
-     * @return bool 
-     */
-    public function hasDomain()
-    {
-        return isset($this->dataObject->data->domain);
-    }
-
-    /**
-     * Get the domain from the dataObject
-     * 
-     * @return void
-     */
-    public function getDomain()
-    {
-        return $this->dataObject->data->domain; 
     }
 }
