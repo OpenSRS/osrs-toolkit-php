@@ -10,20 +10,17 @@ class ProvisioningModifyTest extends PHPUnit_Framework_TestCase
     protected $func = 'provModify';
 
     protected $validSubmission = array(
-        "data" => array(
+        "cookie" => "",
+
+        "attributes" => array(
             /**
              * Required: 1 of 2
              *
              * cookie: cookie to be changed
              * domain: relevant domain, required
              *   only if cookie is not sent
-             *   NOTE: class uses domain_name
-             *         and not "domain" for this
-             *         field's name
              */
-            "cookie" => "",
-            // "domain" => "",
-            "domain_name" => "",
+            "domain" => "",
 
             /**
              * Required
@@ -58,14 +55,11 @@ class ProvisioningModifyTest extends PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->domain = "phptest" . time() . ".com";
-        $data->data->affect_domains = "0";
+        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->affect_domains = "0";
 
-        $data->data->data = 'status';
-        $data->data->lock_state = "locked";
-        $data->data->domain_name = $data->data->domain;
-
-
+        $data->attributes->data = 'status';
+        $data->attributes->lock_state = "locked";
 
         $ns = new ProvisioningModify( 'array', $data );
 
@@ -90,15 +84,14 @@ class ProvisioningModifyTest extends PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data' ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes' ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->domain = "phptest" . time() . ".com";
-        $data->data->affect_domains = "0";
+        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->affect_domains = "0";
 
-        $data->data->data = 'status';
-        $data->data->lock_state = "locked";
-        $data->data->domain_name = $data->data->domain;
+        $data->attributes->data = 'status';
+        $data->attributes->lock_state = "locked";
 
         $this->setExpectedExceptionRegExp(
             'OpenSRS\Exception',

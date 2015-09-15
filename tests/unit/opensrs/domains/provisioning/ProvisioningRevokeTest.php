@@ -10,7 +10,7 @@ class ProvisioningRevokeTest extends PHPUnit_Framework_TestCase
     protected $func = 'provRevoke';
 
     protected $validSubmission = array(
-        "data" => array(
+        "attributes" => array(
             /**
              * Required
              *
@@ -43,8 +43,8 @@ class ProvisioningRevokeTest extends PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->domain = "phptest" . time() . ".com";
-        $data->data->reseller = "reseller_username";
+        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->reseller = "reseller_username";
 
         $ns = new ProvisioningRevoke( 'array', $data );
 
@@ -69,11 +69,11 @@ class ProvisioningRevokeTest extends PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data' ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes' ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->domain = "phptest" . time() . ".com";
-        $data->data->reseller = "reseller_username";
+        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->reseller = "reseller_username";
 
         $this->setExpectedExceptionRegExp(
             'OpenSRS\Exception',

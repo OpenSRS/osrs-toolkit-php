@@ -10,7 +10,7 @@ class ProvisioningCancelActivateTest extends PHPUnit_Framework_TestCase
     protected $func = 'provCancelActivate';
 
     protected $validSubmission = array(
-        "data" => array(
+        "attributes" => array(
             /**
              * Required: 1 of 2
              *
@@ -19,9 +19,7 @@ class ProvisioningCancelActivateTest extends PHPUnit_Framework_TestCase
              *   to cancel activation for
              */
             "order_id" => "",
-            // class not set up to accept
-            // cancel based on domain only
-            // // "domain" => "",
+            "domain" => "",
             )
         );
 
@@ -36,28 +34,17 @@ class ProvisioningCancelActivateTest extends PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-
-
         // sending request with order_id only
-        $data->data->order_id = time();
+        $data->attributes->order_id = time();
         $ns = new ProvisioningCancelActivate( 'array', $data );
 
         $this->assertTrue( $ns instanceof ProvisioningCancelActivate );
 
 
-        // // sending request with domain only -- CLASS NOT SET UP TO ACCEPT THIS AS VALID
-        // $data->data->domain = "phptest" . time() . ".com";
-        // $ns = new ProvisioningCancelActivate( 'array', $data );
-        // $this->assertTrue( $ns instanceof ProvisioningCancelActivate );
-    }
-
-    /**
-     * Data Provider for Invalid Submission test
-     */
-    function submissionFields() {
-        return array(
-            'missing order_id' => array('order_id'),
-            );
+        // sending request with domain only -- CLASS NOT SET UP TO ACCEPT THIS AS VALID
+        $data->attributes->domain = "phptest" . time() . ".ca";
+        $ns = new ProvisioningCancelActivate( 'array', $data );
+        $this->assertTrue( $ns instanceof ProvisioningCancelActivate );
     }
 
     /**
@@ -65,28 +52,36 @@ class ProvisioningCancelActivateTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      *
-     * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data' ) {
+    public function testInvalidSubmissionFieldsMissing() {
         $data = json_decode( json_encode($this->validSubmission) );
-
-        $data->data->order_id = time();
 
         $this->setExpectedExceptionRegExp(
             'OpenSRS\Exception',
-            "/$field.*not defined/"
+            "/(order_id|domain).*not.*defined/"
             );
 
+        $ns = new ProvisioningCancelActivate( 'array', $data );
+     }
 
+    /**
+     * Invalid submission should throw an exception
+     *
+     * @return void
+     *
+     * @group invalidsubmission
+     */
+    public function testInvalidSubmissionFieldsDomainAndOrderIdSent() {
+        $data = json_decode( json_encode($this->validSubmission) );
 
-        // clear field being tested
-        if(is_null($parent)){
-            unset( $data->$field );
-        }
-        else{
-            unset( $data->$parent->$field );
-        }
+        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->order_id = time();
+
+        $this->setExpectedExceptionRegExp(
+            'OpenSRS\Exception',
+            "/order_id and domain.*one call/"
+            );
 
         $ns = new ProvisioningCancelActivate( 'array', $data );
      }

@@ -11,18 +11,23 @@ use OpenSRS\Exception;
  */
 
 class ProvisioningActivate extends Base {
-	private $_dataObject;
-	private $_formatHolder = "";
+	public $action = "activate";
+	public $object = "domain";
+
+	public $_formatHolder = "";
 	public $resultFullRaw;
 	public $resultRaw;
 	public $resultFullFormatted;
 	public $resultFormatted;
 
-	public function __construct( $formatString, $dataObject ) {
+	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
-		$this->_dataObject = $dataObject;
+
 		$this->_formatHolder = $formatString;
-		$this->_validateObject();
+
+		$this->_validateObject( $dataObject );
+
+		$this->send( $dataObject, $returnFullResponse );
 	}
 
 	public function __destruct() {
@@ -30,71 +35,22 @@ class ProvisioningActivate extends Base {
 	}
 
 	// Validate the object
-	private function _validateObject() {
-		// Command required values
+	public function _validateObject( $dataObject ) {
 		if(
-			(!isset($this->_dataObject->data->cookie) ||
-				$this->_dataObject->data->cookie == "") &&
-			(!isset($this->_dataObject->data->bypass) ||
-				$this->_dataObject->data->bypass == "" )
+			(!isset($dataObject->cookie) ||
+				$dataObject->cookie == "") &&
+			(!isset($dataObject->attributes->domain) ||
+				$dataObject->attributes->domain == "" )
 		) {
-			throw new Exception( "oSRS Error - cookie / bypass is not defined." );
+			throw new Exception( "oSRS Error - cookie / domain is not defined." );
 		}
 		if(
-			isset( $this->_dataObject->data->cookie ) &&
-			$this->_dataObject->data->cookie != "" &&
-	  		isset( $this->_dataObject->data->bypass ) &&
-	  		$this->_dataObject->data->bypass != ""
+			isset( $dataObject->cookie ) &&
+			$dataObject->cookie != "" &&
+	  		isset( $dataObject->attributes->domain ) &&
+	  		$dataObject->attributes->domain != ""
   		) {
-			throw new Exception( "oSRS Error - Both cookie and bypass cannot be set in one call." );
+			throw new Exception( "oSRS Error - Both cookie and domain cannot be set in one call." );
 		}
-		if(
-			!isset( $this->_dataObject->data->domainname )
-		) {
-			throw new Exception( "oSRS Error - domainname is not defined." );
-		}
-
-		// Execute the command
-		$this->_processRequest();
-	}
-
-	// Post validation functions
-	private function _processRequest() {
-		$cmd = array(
-			"protocol" => "XCP",
-			"action" => "activate",
-			"object" => "domain",
-//			"cookie" => $this->_dataObject->data->cookie,
-			"attributes" => array(
-				'domainname' => $this->_dataObject->data->domainname
-			)
-		);
-
-		// Cookie / bypass
-		if(
-			isset($this->_dataObject->data->cookie) &&
-			$this->_dataObject->data->cookie != ""
-		) {
-			$cmd['cookie'] = $this->_dataObject->data->cookie;
-		}
-		if(
-			isset($this->_dataObject->data->bypass) &&
-			$this->_dataObject->data->bypass != ""
-		) {
-			$cmd['domain'] = $this->_dataObject->data->bypass;
-		}
-
-		// Flip Array to XML
-		$xmlCMD = $this->_opsHandler->encode( $cmd );
-		// Send XML
-		$XMLresult = $this->send_cmd( $xmlCMD );
-		// Flip XML to Array
-		$arrayResult = $this->_opsHandler->decode( $XMLresult );
-
-		// Results
-		$this->resultFullRaw = $arrayResult;
-		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
-		$this->resultFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
 	}
 }
