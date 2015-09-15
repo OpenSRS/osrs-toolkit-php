@@ -36,7 +36,6 @@ class CookieDelete extends Base {
 
 	// Validate the object
 	public function _validateObject( $dataObject ) {
-		print_r($dataObject);
 		if( !isset($dataObject->cookie ) ) {
 			throw new Exception( "oSRS Error - cookie is not defined." );
 		}
