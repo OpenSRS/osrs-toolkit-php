@@ -372,12 +372,23 @@ class Base
 		// Flip XML to Array
 		$arrayResult = $this->_opsHandler->decode( $XMLresult );
 
+
 		if( method_exists( $this, 'customResponseHandling' )){
 			$arrayResult = $this->customResponseHandling( $arrayResult );
 		}
 
-		if(!$arrayResult['is_success'] && $arrayResult['response_code'] != 200){
-			throw new Exception("oSRS Error code #{$arrayResult['response_code']}: {$arrayResult['response_text']}.");
+		if(
+			// is_success will be 0 if there was
+			// an error
+			!$arrayResult['is_success'] && 
+			// 200 means there was no error
+			$arrayResult['response_code'] != 200 &&
+			// we dont want to throw an exception
+			// for authentication failed, error
+			// code 415*
+			$arrayResult['response_code'] != 415
+		){
+			throw new Exception("oSRS Error Code #{$arrayResult['response_code']}: {$arrayResult['response_text']}.");
 		}
 
 
