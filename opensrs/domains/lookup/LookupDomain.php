@@ -8,7 +8,6 @@ use OpenSRS\Exception;
 class LookupDomain extends Base
 {
     private $_domain = '';
-    private $_formatHolder = '';
     public $resultFullRaw;
     public $resultRaw;
     public $resultFullFormatted;
@@ -18,8 +17,7 @@ class LookupDomain extends Base
     public function __construct($formatString, $dataObject)
     {
         parent::__construct();
-        $this->dataObject = $dataObject;
-        $this->_formatHolder = $formatString;
+        $this->setDataObject($formatString, $dataObject);
         $this->_validateObject();
     }
 
@@ -82,7 +80,7 @@ class LookupDomain extends Base
             $this->resultRaw = $arrayResult;
         }
 
-        $this->resultFullFormatted = $this->convertArray2Formatted($this->_formatHolder, $this->resultFullRaw);
-        $this->resultFormatted = $this->convertArray2Formatted($this->_formatHolder, $this->resultRaw);
+        $this->resultFullFormatted = $this->convertArray2Formatted($this->dataFormat, $this->resultFullRaw);
+        $this->resultFormatted = $this->convertArray2Formatted($this->dataFormat, $this->resultRaw);
     }
 }
