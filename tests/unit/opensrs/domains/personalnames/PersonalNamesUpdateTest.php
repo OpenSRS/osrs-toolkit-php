@@ -10,7 +10,7 @@ class PersonalNamesUpdateTest extends PHPUnit_Framework_TestCase
     protected $func = 'persUpdate';
 
     protected $validSubmission = array(
-        "data" => array(
+        "attributes" => array(
             /**
              * Required
              *
@@ -75,7 +75,7 @@ class PersonalNamesUpdateTest extends PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->domain = "john.smith.net";
+        $data->attributes->domain = "john.smith.net";
 
         $ns = new PersonalNamesUpdate( 'array', $data );
 
@@ -99,10 +99,10 @@ class PersonalNamesUpdateTest extends PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->domain = "john.smith.net";
+        $data->attributes->domain = "john.smith.net";
 
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(
