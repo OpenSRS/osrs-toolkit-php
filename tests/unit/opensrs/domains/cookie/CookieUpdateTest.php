@@ -10,18 +10,23 @@ class CookieUpdateTest extends PHPUnit_Framework_TestCase
     protected $func = 'cookieUpdate';
 
     protected $validSubmission = array(
-        "data" => array(
+        /*
+         * Required
+         *
+         * cookie: OpenSRS auth cookie (see CookieSet)
+         */
+        "cookie" => "",
+
+        "attributes" => array(
             /**
              * Required
              *
-             * cookie: OpenSRS auth cookie (see CookieSet)
              * domain: relevant domain, required if
              *   'cookie' is not set
              * domain_new: new domain for the cookie
              * reg_username: registrant's username
              * reg_password: registrant's password
              */
-            "cookie" => "",
             "domain" => "",
             "domain_new" => "",
             "reg_username" => "phptest",
@@ -40,11 +45,11 @@ class CookieUpdateTest extends PHPUnit_Framework_TestCase
     public function testValidSubmission()
     {
         $data = json_decode( json_encode($this->validSubmission) );
-        $data->data->cookie = md5(time());
-        $data->data->domain = "phptest" . time() . ".com";
-        $data->data->domain_new = "phptest" . md5(time()) . ".com";
-        $data->data->reg_username = "phptest";
-        $data->data->reg_password = "password12345";
+        $data->cookie = md5(time());
+        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->domain_new = "phptest" . md5(time()) . ".com";
+        $data->attributes->reg_username = "phptest";
+        $data->attributes->reg_password = "password12345";
 
         $ns = new CookieUpdate( 'array', $data );
 
@@ -56,7 +61,7 @@ class CookieUpdateTest extends PHPUnit_Framework_TestCase
      */
     function submissionFields() {
         return array(
-            'missing cookie' => array('cookie'),
+            'missing cookie' => array('cookie', null),
             'missing domain' => array('domain'),
             'missing domain_new' => array('domain_new'),
             'missing reg_password' => array('reg_password'),
@@ -72,14 +77,14 @@ class CookieUpdateTest extends PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->cookie = md5(time());
-        $data->data->domain = "phptest" . time() . ".com";
-        $data->data->domain_new = "phptest" . md5(time()) . ".com";
-        $data->data->reg_username = "phptest";
-        $data->data->reg_password = "password12345";
+        $data->cookie = md5(time());
+        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->domain_new = "phptest" . md5(time()) . ".com";
+        $data->attributes->reg_username = "phptest";
+        $data->attributes->reg_password = "password12345";
 
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(
