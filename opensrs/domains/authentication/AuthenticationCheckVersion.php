@@ -11,8 +11,8 @@ use OpenSRS\Exception;
  */
 
 class AuthenticationCheckVersion extends Base {
-	public $action = "CHECK";
-	public $object = "VERSION";
+	public $action = "check";
+	public $object = "version";
 
 	public $_formatHolder = "";
 	public $resultFullRaw;

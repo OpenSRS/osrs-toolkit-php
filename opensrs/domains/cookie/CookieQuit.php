@@ -11,8 +11,8 @@ use OpenSRS\Exception;
  */
 
 class CookieQuit extends Base {
-	public $action = "QUIT";
-	public $object = "SESSION";
+	public $action = "quit";
+	public $object = "session";
 
 	public $_formatHolder = "";
 	public $resultFullRaw;

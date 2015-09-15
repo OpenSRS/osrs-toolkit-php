@@ -10,7 +10,7 @@ class ForwardingSetTest extends PHPUnit_Framework_TestCase
     protected $func = 'fwdSet';
 
     protected $validSubmission = array(
-        "data" => array(
+        "attributes" => array(
             /**
              * Required: 1 of 2
              *
@@ -78,9 +78,8 @@ class ForwardingSetTest extends PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->cookie = md5(time());
-        $data->data->domain = "phptest" . time() . ".com";
-        $data->data->subdomain = "null";
+        $data->cookie = md5(time());
+        $data->attributes->subdomain = "null";
 
         $ns = new ForwardingSet( 'array', $data );
 
@@ -92,8 +91,6 @@ class ForwardingSetTest extends PHPUnit_Framework_TestCase
      */
     function submissionFields() {
         return array(
-            'missing domain' => array('domain'),
-            'missing bypass' => array('bypass'),
             'missing subdomain' => array('subdomain'),
             );
     }
@@ -106,12 +103,11 @@ class ForwardingSetTest extends PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->domain = "phptest" . time() . ".com";
-        $data->data->bypass = $data->data->domain;
-        $data->data->subdomain = "null";
+        $data->cookie = md5(time());
+        $data->attributes->subdomain = "null";
 
         $this->setExpectedException( 'OpenSRS\Exception' );
 
@@ -152,15 +148,14 @@ class ForwardingSetTest extends PHPUnit_Framework_TestCase
         $data = json_decode( json_encode($this->validSubmission) );
 
         // assign_ns request
-        $data->data->cookie = md5(time());
-        $data->data->domain = "phptest" . time() . ".com";
-        $data->data->bypass = $data->data->domain;
-        $data->data->subdomain = "null";
+        $data->cookie = md5(time());
+        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->subdomain = "null";
 
         $this->setExpectedExceptionRegExp(
-          'OpenSRS\Exception',
-        "/.*cookie.*bypass.*cannot.*one.*call.*/"
-          );
+            'OpenSRS\Exception',
+            "/.*cookie.*domain.*cannot.*one.*call.*/"
+            );
 
         $ns = new ForwardingSet( 'array', $data );
     }

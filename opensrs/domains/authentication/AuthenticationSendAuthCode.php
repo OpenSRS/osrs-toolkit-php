@@ -11,8 +11,8 @@ use OpenSRS\Exception;
  */
 
 class AuthenticationSendAuthCode extends Base {
-	public $action = "SEND_AUTHCODE";
-	public $object = "DOMAIN";
+	public $action = "send_authcode";
+	public $object = "domain";
 
 	public $_formatHolder = "";
 	public $resultFullRaw;

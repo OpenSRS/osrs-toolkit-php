@@ -11,8 +11,8 @@ use OpenSRS\Exception;
  */
 
 class CookieDelete extends Base {
-	public $action = "DELETE";
-	public $object = "COOKIE";
+	public $action = "delete";
+	public $object = "cookie";
 
 	public $_formatHolder = "";
 	public $resultFullRaw;

@@ -11,8 +11,8 @@ use OpenSRS\Exception;
  */
 
 class AuthenticationChangeOwnership extends Base {
-	public $action = "CHANGE";
-	public $object = "OWNERSHIP";
+	public $action = "change";
+	public $object = "ownership";
 
 	public $_formatHolder = "";
 	public $resultFullRaw;

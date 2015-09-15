@@ -11,8 +11,8 @@ use OpenSRS\Exception;
  */
 
 class AuthenticationChangePassword extends Base {
-	public $action = "CHANGE";
-	public $object = "PASSWORD";
+	public $action = "change";
+	public $object = "password";
 
 	public $_formatHolder = "";
 	public $resultFullRaw;
@@ -35,7 +35,7 @@ class AuthenticationChangePassword extends Base {
 	}
 
 	// Validate the object
-	private function _validateObject( $dataObject ) {
+	public function _validateObject( $dataObject ) {
 		if( !isset($dataObject->attributes->reg_password ) ) {
 			throw new Exception( "oSRS Error - reg_password is not defined." );
 		}

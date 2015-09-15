@@ -11,8 +11,8 @@ use OpenSRS\Exception;
  */
 
 class CookieSet extends Base {
-	public $action = "SET";
-	public $object = "COOKIE";
+	public $action = "set";
+	public $object = "cookie";
 
 	public $_formatHolder = "";
 	public $resultFullRaw;

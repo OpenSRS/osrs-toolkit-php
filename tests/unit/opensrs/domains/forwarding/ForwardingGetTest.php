@@ -10,7 +10,7 @@ class ForwardingGetTest extends PHPUnit_Framework_TestCase
     protected $func = 'fwdGet';
 
     protected $validSubmission = array(
-        "data" => array(
+        "attributes" => array(
             /**
              * Required: 1 of 2
              *
@@ -41,8 +41,7 @@ class ForwardingGetTest extends PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->domain = "phptest" . time() . ".com";
-        $data->data->bypass = $data->data->domain;
+        $data->cookie = md5(time());
 
         $ns = new ForwardingGet( 'array', $data );
 
@@ -50,52 +49,19 @@ class ForwardingGetTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Data Provider for Invalid Submission test
-     */
-    function submissionFields() {
-        return array(
-            'missing domain' => array('domain'),
-            'missing bypass' => array('bypass'),
-            );
-    }
-
-    /**
      * Invalid submission should throw an exception
      *
      * @return void
      *
-     * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
+    public function testInvalidSubmissionFieldsMissing() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        // assign_ns request
-        $data->data->domain = "phptest" . time() . ".com";
-        $data->data->bypass = $data->data->domain;
-
-        if(is_null($message)){
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
-              "/$field.*not defined/"
-              );
-        }
-        else {
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
-              "/$message/"
-              );
-        }
-
-
-
-        // clear field being tested
-        if(is_null($parent)){
-            unset( $data->$field );
-        }
-        else{
-            unset( $data->$parent->$field );
-        }
+        $this->setExpectedExceptionRegExp(
+            'OpenSRS\Exception',
+            "/(domain|cookie).*not defined/"
+            );
 
         $ns = new ForwardingGet( 'array', $data );
     }
@@ -110,14 +76,12 @@ class ForwardingGetTest extends PHPUnit_Framework_TestCase
     public function testInvalidSubmissionFieldsCookieAndBypassSent() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        // assign_ns request
-        $data->data->cookie = md5(time());
-        $data->data->domain = "phptest" . time() . ".com";
-        $data->data->bypass = $data->data->domain;
+        $data->cookie = md5(time());
+        $data->attributes->domain = "phptest" . time() . ".com";
 
         $this->setExpectedExceptionRegExp(
           'OpenSRS\Exception',
-        "/.*cookie.*bypass.*cannot.*one.*call.*/"
+        "/.*cookie.*domain.*cannot.*one.*call.*/"
           );
 
         $ns = new ForwardingGet( 'array', $data );
