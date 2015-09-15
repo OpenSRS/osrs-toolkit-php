@@ -10,7 +10,7 @@ class NameserverRegistryCheckTest extends PHPUnit_Framework_TestCase
     protected $func = 'nsRegistryAdd';
 
     protected $validSubmission = array(
-        "data" => array(
+        "attributes" => array(
             /**
              * Required
              *
@@ -37,8 +37,8 @@ class NameserverRegistryCheckTest extends PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->fqdn = "ns1." . "phptest" . time() . ".com";
-        $data->data->tld = ".com";
+        $data->attributes->fqdn = "ns1." . "phptest" . time() . ".com";
+        $data->attributes->tld = ".com";
 
         $ns = new NameserverRegistryCheck( 'array', $data );
 
@@ -63,11 +63,11 @@ class NameserverRegistryCheckTest extends PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->fqdn = "ns1." . "phptest" . time() . ".com";
-        $data->data->tld = ".com";
+        $data->attributes->fqdn = "ns1." . "phptest" . time() . ".com";
+        $data->attributes->tld = ".com";
 
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(

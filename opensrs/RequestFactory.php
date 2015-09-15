@@ -135,6 +135,7 @@ class RequestFactory
     {
         $route = '';
         $routeKey = strtolower($func);
+        $returnFullResponse = true;
 
         if (array_key_exists($routeKey, self::$RequestRoutes)) {
             $route = self::$RequestRoutes[$routeKey];
@@ -150,10 +151,12 @@ class RequestFactory
                     $dc = new $dataconversionRoute();
 
                     $dataObject = $dc->convertDataObject( $dataObject );
+
+                    $returnFullResponse = false;
                 }
             }
 
-            return new $class( $type, $dataObject);
+            return new $class( $type, $dataObject, $returnFullResponse );
         }
         else {
             throw new Exception( "OSRS Error - $func is unsupported." );

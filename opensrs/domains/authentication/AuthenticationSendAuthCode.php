@@ -20,18 +20,14 @@ class AuthenticationSendAuthCode extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
-	public function __construct( $formatString, $dataObject ) {
+	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
 		$this->_formatHolder = $formatString;
 
 		$this->_validateObject( $dataObject );
 
-		$this->send( $dataObject );
-	}
-
-	public function __destruct() {
-		parent::__destruct();
+		$this->send( $dataObject, $returnFullResponse );
 	}
 
 	// Validate the object

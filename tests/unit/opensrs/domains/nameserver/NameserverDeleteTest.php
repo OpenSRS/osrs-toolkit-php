@@ -10,11 +10,13 @@ class NameserverDeleteTest extends PHPUnit_Framework_TestCase
     protected $func = 'nsDelete';
 
     protected $validSubmission = array(
-        "data" => array(
+        "cookie" => "",
+
+        "attributes" => array(
             /**
              * Required
              *
-             * bypass: relevant domain, required
+             * domain: relevant domain, required
              *   only if cookie is not set
              * ipaddress: IPv4 address of the
              *   nameserver. always required for
@@ -25,8 +27,7 @@ class NameserverDeleteTest extends PHPUnit_Framework_TestCase
              * name: fully qualified domain name
              *   for the nameserver
              */
-            "cookie" => "",
-            "bypass" => "",
+            "domain" => "",
             "ipaddress" => "",
             "ipv6" => "",
             "name" => "",
@@ -45,14 +46,14 @@ class NameserverDeleteTest extends PHPUnit_Framework_TestCase
         $data = json_decode( json_encode($this->validSubmission) );
 
         // assign_ns request
-        $data->data->bypass = "phptest" . time() . ".com";
+        $data->cookie = md5(time());
 
         // generate a random IPv4
-        $data->data->ipaddress = long2ip(mt_rand());
+        $data->attributes->ipaddress = long2ip(mt_rand());
 
         // generate a random (fake) IPv6
-        $data->data->ipv6 = implode(':', str_split(sha1(dechex(mt_rand(0, 2147483647))), 4));
-        $data->data->name = "ns1." . $data->data->bypass;
+        $data->attributes->ipv6 = implode(':', str_split(sha1(dechex(mt_rand(0, 2147483647))), 4));
+        $data->attributes->name = "ns1." . $data->attributes->domain;
 
         $ns = new NameserverDelete( 'array', $data );
 
@@ -64,7 +65,6 @@ class NameserverDeleteTest extends PHPUnit_Framework_TestCase
      */
     function submissionFields() {
         return array(
-            'missing bypass' => array('bypass'),
             'missing name' => array('name'),
             );
     }
@@ -77,18 +77,18 @@ class NameserverDeleteTest extends PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
         // assign_ns request
-        $data->data->bypass = "phptest" . time() . ".com";
+        $data->cookie = md5(time());
 
         // generate a random IPv4
-        $data->data->ipaddress = long2ip(mt_rand());
+        $data->attributes->ipaddress = long2ip(mt_rand());
 
         // generate a random (fake) IPv6
-        $data->data->ipv6 = implode(':', str_split(sha1(dechex(mt_rand(0, 2147483647))), 4));
-        $data->data->name = "ns1." . $data->data->bypass;
+        $data->attributes->ipv6 = implode(':', str_split(sha1(dechex(mt_rand(0, 2147483647))), 4));
+        $data->attributes->name = "ns1." . $data->attributes->domain;
 
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(
@@ -127,19 +127,44 @@ class NameserverDeleteTest extends PHPUnit_Framework_TestCase
         $data = json_decode( json_encode($this->validSubmission) );
 
         // assign_ns request
-        $data->data->cookie = md5(time());
-        $data->data->bypass = "phptest" . time() . ".com";
+        $data->cookie = md5(time());
+        $data->attributes->domain = "phptest" . time() . ".com";
 
         // generate a random IPv4
-        $data->data->ipaddress = long2ip(mt_rand());
+        $data->attributes->ipaddress = long2ip(mt_rand());
 
         // generate a random (fake) IPv6
-        $data->data->ipv6 = implode(':', str_split(sha1(dechex(mt_rand(0, 2147483647))), 4));
-        $data->data->name = "ns1." . $data->data->bypass;
+        $data->attributes->ipv6 = implode(':', str_split(sha1(dechex(mt_rand(0, 2147483647))), 4));
+        $data->attributes->name = "ns1." . $data->attributes->domain;
 
         $this->setExpectedExceptionRegExp(
           'OpenSRS\Exception',
         "/.*cookie.*bypass.*cannot.*one.*call.*/"
+          );
+
+        $ns = new NameserverDelete( 'array', $data );
+    }
+
+    /**
+     * Invalid submission should throw an exception
+     *
+     * @return void
+     *
+     * @group invalidsubmission
+     */
+    public function testInvalidSubmissionFieldsNoCookieOrDomainSent() {
+        $data = json_decode( json_encode($this->validSubmission) );
+
+        // generate a random IPv4
+        $data->attributes->ipaddress = long2ip(mt_rand());
+
+        // generate a random (fake) IPv6
+        $data->attributes->ipv6 = implode(':', str_split(sha1(dechex(mt_rand(0, 2147483647))), 4));
+        $data->attributes->name = "ns1." . $data->attributes->domain;
+
+        $this->setExpectedExceptionRegExp(
+          'OpenSRS\Exception',
+        "/(cookie|domain).*not.*defined/"
           );
 
         $ns = new NameserverDelete( 'array', $data );

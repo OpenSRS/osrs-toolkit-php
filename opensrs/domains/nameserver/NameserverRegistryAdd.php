@@ -10,18 +10,23 @@ use OpenSRS\Exception;
  */
 
 class NameserverRegistryAdd extends Base {
-	private $_dataObject;
-	private $_formatHolder = "";
+	public $action = "registry_add_ns";
+	public $object = "nameserver";
+
+	public $_formatHolder = "";
 	public $resultFullRaw;
 	public $resultRaw;
 	public $resultFullFormatted;
 	public $resultFormatted;
 
-	public function __construct( $formatString, $dataObject ) {
+	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
-		$this->_dataObject = $dataObject;
+
 		$this->_formatHolder = $formatString;
-		$this->_validateObject();
+
+		$this->_validateObject( $dataObject );
+
+		$this->send( $dataObject, $returnFullResponse );
 	}
 
 	public function __destruct() {
@@ -29,61 +34,24 @@ class NameserverRegistryAdd extends Base {
 	}
 
 	// Validate the object
-	private function _validateObject() {
-		// Command required values
+	public function _validateObject( $dataObject ) {
 		if(
-			!isset( $this->_dataObject->data->fqdn ) ||
-			$this->_dataObject->data->fqdn == ""
+			!isset( $dataObject->attributes->fqdn ) ||
+			$dataObject->attributes->fqdn == ""
 		) {
 			throw new Exception( "oSRS Error - fqdn is not defined." );
 		}
 		if(
-			!isset( $this->_dataObject->data->tld ) ||
-			$this->_dataObject->data->tld == ""
+			!isset( $dataObject->attributes->tld ) ||
+			$dataObject->attributes->tld == ""
 		) {
 			throw new Exception( "oSRS Error - tld is not defined." );
 		}
 		if(
-			!isset( $this->_dataObject->data->all ) ||
-			$this->_dataObject->data->all == ""
+			!isset( $dataObject->attributes->all ) ||
+			$dataObject->attributes->all == ""
 		) {
 			throw new Exception( "oSRS Error - all is not defined." );
 		}
-
-		// Execute the command
-		$this->_processRequest();
-	}
-
-	// Post validation functions
-	private function _processRequest() {
-		$cmd = array(
-			'protocol' => 'XCP',
-			'action' => 'registry_add_ns',
-			'object' => 'nameserver',
-			'attributes' => array(
-				'fqdn' => $this->_dataObject->data->fqdn,
-				'tld' => $this->_dataObject->data->tld,
-				'all' => $this->_dataObject->data->all
-			)
-		);
-
-		// Flip Array to XML
-		$xmlCMD = $this->_opsHandler->encode( $cmd );
-		// Send XML
-		$XMLresult = $this->send_cmd( $xmlCMD );
-		// Flip XML to Array
-		$arrayResult = $this->_opsHandler->decode( $XMLresult );
-
-		// Results
-		$this->resultFullRaw = $arrayResult;
-
-        if( isset($arrayResult['attributes'] )) {
-            $this->resultRaw = $arrayResult['attributes'];
-        } else {
-			$this->resultRaw = $arrayResult;
-		}
-		
-		$this->resultFullFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
-		$this->resultFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
 	}
 }

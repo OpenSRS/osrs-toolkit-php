@@ -350,10 +350,11 @@ class Base
      *
      * @return void
      */
-    public function send( $dataObject ) {
+    public function send( $dataObject, $returnFullResponse = true ) {
     	if( !is_object($dataObject )){
     		$dataObject = new \stdClass;
     	}
+
 		$dataObject->protocol = $this->protocol;
 		$dataObject->action = $this->action;
 		$dataObject->object = $this->object;
@@ -385,7 +386,7 @@ class Base
 			$arrayResult['response_code'] != 200 &&
 			// we dont want to throw an exception
 			// for authentication failed, error
-			// code 415*
+			// code 415
 			$arrayResult['response_code'] != 415
 		){
 			throw new Exception("oSRS Error Code #{$arrayResult['response_code']}: {$arrayResult['response_text']}.");
@@ -395,7 +396,13 @@ class Base
 		// Results
         $this->resultFullRaw = $arrayResult;
 
-        if( isset($arrayResult['attributes'] ) ) {
+        if( !$returnFullResponse && isset($arrayResult['attributes'] ) ) {
+	        // Return 'attributes' hash from response
+	        // if it exists, otherwise return the full
+	        // response--original class did this, so have
+	        // to keep for backward compatibility
+	        // THIS IS NOT DEFAULT BEHAVIOR, BY DEFAULT
+	        // WE WILL RETURN THE WHOLE RESPONSE
         	$this->resultRaw = $arrayResult['attributes'];
         } else {
         	$this->resultRaw = $arrayResult;

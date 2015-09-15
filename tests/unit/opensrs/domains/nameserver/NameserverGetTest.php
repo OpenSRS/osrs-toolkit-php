@@ -10,7 +10,9 @@ class NameserverGetTest extends PHPUnit_Framework_TestCase
     protected $func = 'nsGet';
 
     protected $validSubmission = array(
-        "data" => array(
+        "cookie" => "",
+
+        "attributes" => array(
             /**
              * Required
              *
@@ -19,7 +21,6 @@ class NameserverGetTest extends PHPUnit_Framework_TestCase
              * name: fully qualified domain name
              *   for the nameserver
              */
-            "cookie" => "",
             "bypass" => "",
             "name" => "",
             )
@@ -37,8 +38,8 @@ class NameserverGetTest extends PHPUnit_Framework_TestCase
         $data = json_decode( json_encode($this->validSubmission) );
 
         // assign_ns request
-        $data->data->bypass = "phptest" . time() . ".com";
-        $data->data->name = "ns1." . $data->data->bypass;
+        $data->cookie = md5(time());
+        $data->attributes->name = "ns1.phptest" . time() . ".com";
 
         $ns = new NameserverGet( 'array', $data );
 
@@ -50,7 +51,6 @@ class NameserverGetTest extends PHPUnit_Framework_TestCase
      */
     function submissionFields() {
         return array(
-            'missing bypass' => array('bypass'),
             'missing name' => array('name'),
             );
     }
@@ -63,12 +63,12 @@ class NameserverGetTest extends PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
         // assign_ns request
-        $data->data->bypass = "phptest" . time() . ".com";
-        $data->data->name = "ns1." . $data->data->bypass;
+        $data->cookie = md5(time());
+        $data->attributes->name = "ns1.phptest" . time() . ".com";
 
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(
@@ -107,14 +107,35 @@ class NameserverGetTest extends PHPUnit_Framework_TestCase
         $data = json_decode( json_encode($this->validSubmission) );
 
         // assign_ns request
-        $data->data->cookie = md5(time());
-        $data->data->bypass = "phptest" . time() . ".com";
-        $data->data->name = "ns1." . $data->data->bypass;
+        $data->cookie = md5(time());
+        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->name = "ns1.phptest" . time() . ".com";
 
         $this->setExpectedExceptionRegExp(
           'OpenSRS\Exception',
         "/.*cookie.*bypass.*cannot.*one.*call.*/"
           );
+
+        $ns = new NameserverGet( 'array', $data );
+    }
+
+    /**
+     * Invalid submission should throw an exception
+     *
+     * @return void
+     *
+     * @group invalidsubmission
+     */
+    public function testInvalidSubmissionFieldsNoCookieOrDomainSent() {
+        $data = json_decode( json_encode($this->validSubmission) );
+
+        // assign_ns request
+        $data->attributes->name = "ns1.phptest" . time() . ".com";
+
+        $this->setExpectedExceptionRegExp(
+            'OpenSRS\Exception',
+            "/(cookie|domain).*not.*defined/"
+            );
 
         $ns = new NameserverGet( 'array', $data );
     }
