@@ -4,7 +4,7 @@ require __DIR__ . '/../../vendor/autoload.php';
 
 use OpenSRS\Request;
 
-if (isSet($_POST['function'])) {
+if (isset($_POST['function'])) {
 
 
 // ONLY FOR TESTING PURPOSE!!!
@@ -69,6 +69,7 @@ catch(\OpenSRS\Exception $e) {
 // 	} else {
 // 		$tf = "json";
 // 	}
+} else {
 ?>
 
 

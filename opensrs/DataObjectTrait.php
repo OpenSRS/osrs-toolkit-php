@@ -60,7 +60,6 @@ trait DataObjectTrait
     /**
      * Get dataObject selected tlds 
      * 
-     * 
      * @return array selected tlds 
      */
     public function getSelected()

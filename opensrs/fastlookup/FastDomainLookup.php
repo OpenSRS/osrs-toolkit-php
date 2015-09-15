@@ -10,7 +10,6 @@ class FastDomainLookup extends FastLookup
     private $_domain = '';
     private $_tldSelect = array();
     private $_tldAll = array();
-    // private $_dataObject;
     private $_formatHolder = '';
     public $resultFullRaw;
     public $resultRaw;
@@ -21,8 +20,6 @@ class FastDomainLookup extends FastLookup
     {
 
         parent::__construct();
-        // $this->_dataObject = $dataObject;
-        // $this->_formatHolder = $formatString;
         $this->setDataObject($formatString, $dataObject);
         $this->_validateObject();
     }
