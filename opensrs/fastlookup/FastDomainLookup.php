@@ -10,7 +10,7 @@ class FastDomainLookup extends FastLookup
     private $_domain = '';
     private $_tldSelect = array();
     private $_tldAll = array();
-    private $_dataObject;
+    // private $_dataObject;
     private $_formatHolder = '';
     public $resultFullRaw;
     public $resultRaw;
@@ -21,8 +21,9 @@ class FastDomainLookup extends FastLookup
     {
 
         parent::__construct();
-        $this->_dataObject = $dataObject;
-        $this->_formatHolder = $formatString;
+        // $this->_dataObject = $dataObject;
+        // $this->_formatHolder = $formatString;
+        $this->setDataObject($formatString, $dataObject);
         $this->_validateObject();
     }
 
@@ -34,54 +35,42 @@ class FastDomainLookup extends FastLookup
     // Validate the object
     private function _validateObject()
     {
-        $allPassed = true;
         $domain = '';
         $arraSelected = array();
         $arraAll = array();
         $arraCall = array();
 
-        if (isset($this->_dataObject->data->domain)) {
-            // Grab domain name
-            $domain = $this->_dataObject->data->domain;
-        } else {
-            throw new Exception('oSRS Error - Search domain strinng not defined.');
-            $allPassed = false;
+        // search domain must be definded
+        if (!$this->hasDomain()) { 
+            throw new Exception('oSRS Error - Search domain string not defined.');
         }
 
-        if (isset($this->_dataObject->data->selected)) {
-            if ($this->_dataObject->data->selected != '') {
-                $arraSelected = explode(';', $this->_dataObject->data->selected);
-            }
-        } else {
+        // Grab domain name
+        $domain = $this->getDomain();
+
+        // selected required
+        if (!$this->hasSelected()) {
             throw new Exception('oSRS Error - Selected domains are not defined.');
-            $allPassed = false;
         }
 
-        if (isset($this->_dataObject->data->alldomains)) {
-            if ($this->_dataObject->data->alldomains != '') {
-                $arraAll = explode(';', $this->_dataObject->data->alldomains);
-            } else {
-                $allPassed = false;
-            }
-        } else {
+        $arraSelected = $this->getSelected();
+
+        // all domains required
+        if (!$this->hasAllDomains()) {
             throw new Exception('oSRS Error - All domain strinng not defined.');
-            $allPassed = false;
         }
+
+        $arrAll = $this->getAllDomains();
 
         // Select non empty one
         if (count($arraSelected) == 0) {
             $arraCall = $arraAll;
         } else {
-            $arraCall = $arraSelected;
+            $arraCall = $arraSelected; 
         }
 
         // Call function
-        if ($allPassed) {
-            $resObject = $this->_domainTLD($domain, $arraCall);
-        } else {
-
-            throw new Exception('oSRS Error - Incorrect call.');
-        }
+        $resObject = $this->_domainTLD($domain, $arraCall);
     }
 
     // Selected / all TLD options
@@ -92,8 +81,8 @@ class FastDomainLookup extends FastLookup
         // Results
         $this->resultFullRaw = $result;
         $this->resultRaw = $result;
-        $this->resultFullFormatted = $this->convertArray2Formatted($this->_formatHolder, $this->resultFullRaw);
-        $this->resultFormatted = $this->convertArray2Formatted($this->_formatHolder, $this->resultRaw);
+        $this->resultFullFormatted = $this->convertArray2Formatted($this->dataFormat, $this->resultFullRaw);
+        $this->resultFormatted = $this->convertArray2Formatted($this->dataFormat, $this->resultRaw);
 
     }
 
