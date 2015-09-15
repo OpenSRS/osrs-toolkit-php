@@ -2,6 +2,12 @@
 
 namespace OpenSRS;
 
+/**
+ * DataObjectTrait
+ *
+ * OpenSRS request DataObjectTrait shares common dataObject functionality
+ *
+ */
 trait DataObjectTrait
 {
     protected $dataObject;
