@@ -10,7 +10,7 @@ class TransferProcessTest extends PHPUnit_Framework_TestCase
     protected $func = 'transferProcess';
 
     protected $validSubmission = array(
-        "data" => array(
+        "attributes" => array(
             /**
              * Required
              *
@@ -34,8 +34,8 @@ class TransferProcessTest extends PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->order_id = time();
-        $data->data->reseller = "phptest" . time();
+        $data->attributes->order_id = time();
+        $data->attributes->reseller = "phptest" . time();
 
         $ns = new TransferProcess( 'array', $data );
 
@@ -60,11 +60,11 @@ class TransferProcessTest extends PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->order_id = time();
-        $data->data->reseller = "phptest" . time();
+        $data->attributes->order_id = time();
+        $data->attributes->reseller = "phptest" . time();
 
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(

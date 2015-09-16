@@ -10,7 +10,7 @@ class TransferCheckTest extends PHPUnit_Framework_TestCase
     protected $func = 'transferCheck';
 
     protected $validSubmission = array(
-        "data" => array(
+        "attributes" => array(
             /**
              * Required
              *
@@ -33,7 +33,8 @@ class TransferCheckTest extends PHPUnit_Framework_TestCase
              *   status of a transfer request
              *     allowed values: 0 or 1
              */
-            "reseller" => "",
+            "get_request_address" => "",
+            "check_status" => "",
             ),
         );
 
@@ -48,10 +49,10 @@ class TransferCheckTest extends PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->domain = "phptest" . time() . ".com";
+        $data->attributes->domain = "phptest" . time() . ".com";
 
-        $data->data->check_status = "0";
-        $data->data->get_request_address = "0";
+        $data->attributes->check_status = "0";
+        $data->attributes->get_request_address = "0";
 
         $ns = new TransferCheck( 'array', $data );
 
@@ -75,13 +76,13 @@ class TransferCheckTest extends PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->domain = "phptest" . time() . ".com";
+        $data->attributes->domain = "phptest" . time() . ".com";
 
-        $data->data->check_status = "0";
-        $data->data->get_request_address = "0";
+        $data->attributes->check_status = "0";
+        $data->attributes->get_request_address = "0";
 
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(

@@ -10,7 +10,7 @@ class TransferGetInTest extends PHPUnit_Framework_TestCase
     protected $func = 'transferGetIn';
 
     protected $validSubmission = array(
-        "data" => array(
+        "attributes" => array(
             /**
              * Optional
              *
@@ -79,22 +79,10 @@ class TransferGetInTest extends PHPUnit_Framework_TestCase
             "page" => "",
             "req_from" => "",
             "req_to" => "",
+            "transfer_id" => "",
 
-            /**
-             * Optional
-             *
-             * get_request_address: flag to
-             *   request the registrant's
-             *   contact email. useful if you
-             *   want to make sure your client
-             *   can receive mail at that address
-             *   to acknowledge the tranfer
-             *     allowed values: 0 or 1
-             * check_status: flag to request
-             *   status of a transfer request
-             *     allowed values: 0 or 1
-             */
-            "reseller" => "",
+            "request_address" => "",
+            "status" => "",
             ),
         );
 
