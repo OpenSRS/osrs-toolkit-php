@@ -61,8 +61,8 @@ class Mail
             $result .= $servCatch;
         }
 
-    //Close the socket
-    fclose($fp);
+        //Close the socket
+        fclose($fp);
 
         return $result;
     }

@@ -2,6 +2,7 @@
 
 namespace OpenSrs;
 
+use OpenSRS\DataObjectTrait;
 use OpenSRS\Exception;
 
 class FastLookup
@@ -10,6 +11,8 @@ class FastLookup
     private $_socketErrorNum = false;
     private $_socketErrorMsg = false;
     private $_socketTimeout = 120;                // seconds
+
+    use DataObjectTrait;
 
     // Class constructor
     public function __construct()

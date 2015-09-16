@@ -1,6 +1,8 @@
 <?php
 
 namespace OpenSRS;
+
+use OpenSRS\DataObjectTrait;
 use OpenSRS\Exception;
 
 defined('OPENSRSURI') or die;
@@ -27,8 +29,10 @@ class Base
 	protected $_opsHandler;
 
     protected $defaultTlds = array('.com', '.net', '.org');
-    protected $dataObject;
-    protected $dataFormat;
+    // protected $dataObject;
+    // protected $dataFormat;
+
+    use DataObjectTrait;
 
 	/**
 	 * openSRS_base object constructor

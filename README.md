@@ -7,6 +7,7 @@ application to allow for quick integration, but also incorporates new
 communication markup languages such as JSON and YAML.  
 
 
+
 Getting Started
 ---------------
 
@@ -18,19 +19,27 @@ Getting Started
 3. Open openSRS_config.php in a text editor and fill in your reseller details
 [Here](#setup_config)
 
-4. Source your openSRS_config.php before using
+4. Follow the guidelines to start developing your application.  
+[OpenSRS API Documentation Page](http://www.opensrs.com/site/resources/documentation/api)
 
-5. Follow the guidelines to start developing your application.
 
-* [OpenSRS API Documentation Page](http://www.opensrs.com/site/resources/documentation/api)
+#### Or, Install With Composer
 
-That's it!
-
-#### Install With Composer
 
 ```json
     "OpenSRS/osrs-toolkit-php": "dev-develop"
 ```
+
+1. Copy vendor/opensrs/osrs-toolkit-php/opensrs/openSRS_config.php.template to
+   your config folder & Rename, for example config/openSRS_config.php 
+
+2. Open your config file in a text editor and fill in your reseller details
+[Here](#setup_config)
+
+4. Source your openSRS_config.php before using
+
+5. Follow the guidelines to start developing your application.
+[OpenSRS API Documentation Page](http://www.opensrs.com/site/resources/documentation/api)
 
 
 Set up openSRS_config.php <a name="setup_config"></a>
@@ -79,21 +88,66 @@ Sample API Call
 ---------------
 * Lookup Domain
 
-```
+#### Method 1 (Legacy mode)
+```php
 require_once ("your_root_path/opensrs/openSRS_loader.php");
 
-$callArray = array (
-        "func" => "lookupLookupDomain",
-        "data" => array (
-                "domain" => "sometest.com",
-        )
+$data = array (
+    "func" => "lookupLookupDomain",
+    "data" => array (
+        "domain" => "google.com",
+    )
 );
 
-$osrsHandler = processOpenSRS ("array", $callArray);
+$osrsHandler = processOpenSRS ("array", $data);
 
 var_dump($osrsHandler);
 ```
 
+#### Method 2 (Request Factory)
+```php
+require_once('vendor/autoload.php');
+require_once('config/openSRS_config.php');
+
+$data = array (
+    "func" => "lookupLookupDomain",
+        "data" => array (
+            "domain" => "google.com",
+    )
+);
+
+try {
+    $request = new Request();
+    $osrsHandler = $request->process('array', $data);
+
+} catch (\OpenSRS\Exception $e){
+    // handle exception(s)
+}
+```
+
+#### Method 3 (Specific Request)
+```php
+require_once('vendor/autoload.php');
+require_once('config/openSRS_config.php');
+
+use OpenSRS\domain\LookupDomain;
+
+$data = (object) array (
+    'func' => 'lookupDomain',
+    'data' => (object) array (
+        'domain' => 'google.com',
+    )
+);
+
+try {
+    $lookupDomain = new LookupDomain('array', $data);
+
+} catch (\OpenSRS\Exception $e){
+    // handle exception(s)
+}
+
+var_dump($lookupDomain->resultRaw);
+```
         
 
 Requirements
@@ -133,7 +187,7 @@ Once authenticated, scroll down to the bottom of the page where the heading
 shows "Profile Management".  Here, there is a link called "Generate New
 Private Key".  If you are sure you wish to continue, click on the 'OK' button
 on the warning window.  This window ensure that you wish to generate a new
-key.  On refresh, you will see a key similiar to this structure:
+key.  On refresh, you will see a key similar to this structure:
 
 a2e308f4df69c969de9ada09c39bb43d0e4d0a88ce83fd2c0a193328d16e8bf5080ee7e0ef388fd8aa0dfb42d33dcd02d3de321c9af1f06b
 
@@ -185,7 +239,7 @@ opensrs/openSRS_config.php
 
 Changes to the OPENSRSURI constant will need to be made as appropriate.  Using
 the full path name may be necessary on some servers.
-```
+```php
 define ("OPENSRSURI", "/path/to/opensrs/");
 ```
 Further changes can be made to function folders:
@@ -204,8 +258,25 @@ define("OPENSRSMAIL", OPENSRSURI . DS . "mail");
 ```
 
 NOTE:  It's recommended to keep these folder names constant as upgrades to the
-library may cause files to be put into the wrong folder thus possibily affecting
+library may cause files to be put into the wrong folder thus possibly affecting
 future enhancements.
+
+
+Running Demos with Vagrant
+--------------------------
+
+Provided is a a Vagrant & Ansible config to quickly get a dev box up and running.
+
+#### Requirements
+* Vagrant [www.vagrantup.com](https://www.vagrantup.com)
+* Ansible [www.ansible.com](http://www.ansible.com)
+
+Start the vagrant box
+```bash
+vagrant up 
+```
+
+View toolkit demo at localhost:8080
 
 
 General Use
@@ -214,8 +285,21 @@ General Use
 In the openSRS_loader there is a processOpenSRS function which will take in the
 JSON data and run the appropriate function.
 
+#### Method 1 (Legacy mode)
+```php
+$returnedResult = processOpenSRS($data_type, $call_string)
 ```
-	$returnedResult = processOpenSRS($data_type, $call_string)
+
+#### Method 2 (Request Factory)
+```php
+$request = new Request;
+$request->process($data_type, $call_string);
+    
+```
+
+#### Method 3 (Specific Request)
+```php
+$lookupDomain = new OpenSRS\domains\lookup\LookupDomain($data_type, $call_string)
 ```
 
 The returnedResult variable will be an object that has the result in a string using
@@ -236,14 +320,14 @@ data
 An example of a call string for looking up the domain "example.com" would be:
 
 Sample JSON request:
-```
+```json
 {
 	"func": "lookupDomain",
 	"data": { 
-			"domain": "example.com",
-			"alldomains": ".com,.net,.org",
-			"selected": ".com,.net"
-			}
+        "domain": "example.com",
+        "alldomains": ".com,.net,.org",
+        "selected": ".com,.net"
+	}
 }
 ```
 
@@ -254,12 +338,13 @@ it broken down to the essentials.
 Here is an example of the call string being used:
 
 Sample code:
-```
+#### Method 1 (Legacy mode)
+```php
 <?php
-require_once("./opensrs/openSRS_loader.php");
-require_once("./opensrs/spyc.php");
+require_once('vendor/autoload.php');
+require_once('config/openSRS_config.php');
 
-$openSRS_results=processOpensrs("json",'
+$openSRS_results = processOpensrs("json",'
 	{
 		"func": "lookupDomain",
 		"data": {
@@ -269,15 +354,62 @@ $openSRS_results=processOpensrs("json",'
 		}
 	}');
 echo $openSRS_results->resultFormatted . "\n";
-?>
 ```
 
+#### Method 2 (Request Factory)
+```php
+<?php
+require_once('vendor/autoload.php');
+require_once('config/openSRS_config.php');
+
+try {
+    $request = new OpenSRS\Request;
+    $lookupDomain = $requeest->process("json",'
+	{
+		"func": "lookupDomain",
+		"data": {
+			"domain": "example.com",
+			"alldomains": ".com;.net;.org",
+			"selected": ".com;.net"
+		}
+	}');
+
+    echo $lookupDomain->resultFormatted . "\n";
+
+} catch (OpenSRS\Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+```
+
+#### Method 3 (Specific Request)
+```php
+<?php
+require_once('vendor/autoload.php');
+require_once('config/openSRS_config.php');
+
+try {
+    $lookupDomain = new OpenSRS\domains\lookup\LookupDomain("json",'
+	{
+		"func": "lookupDomain",
+		"data": {
+			"domain": "example.com",
+			"alldomains": ".com;.net;.org",
+			"selected": ".com;.net"
+		}
+	}');
+
+    echo $lookupDomain->resultFormatted . "\n";
+
+} catch (OpenSRS\Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+```
 NOTE:  The example above only gives the raw JSON output.
 
 This example shows it all put together with associative arrays:
 
 Sample code:
-```
+```php
 <?php
 require_once("./opensrs/openSRS_loader.php");
 require_once("./opensrs/spyc.php");
@@ -363,7 +495,7 @@ Once the application gets the JSON response back it evaluates the JSON and will
 have an object that can be use easily.
 
 Sample AJAX example:
-```
+```javascript
 function domainLookup(name) {
     var jsonResponse = {} ;
     var url="lookupGTLDDomain.php?domain=" + name ;
@@ -459,7 +591,7 @@ with the header being corrupted.
 
 UNEXPECTED ERROR: No Content-Length header provided!
 * Same causes as above
-* Generated when the Content-Lengt should always be provided
+* Generated when the Content-Length should always be provided
 
 UNEXPECTED READ: No CRLF
 * No carriage return provided after the header, possibly corrupted information
@@ -516,7 +648,7 @@ The response codes from the Mail APP are listed in the documentation at:
     http://opensrs.com/docs/OpenSRS_APP_Dev_Guide.pdf
 
 Example:
-```
+```php
 $openSRS_results=processOpensrs("json",json_encode($callString));
 
 if ($openSRS_result->resultFullRaw['is_success']=="0"){
@@ -528,6 +660,12 @@ if ($openSRS_result->resultFullRaw['is_success']=="0"){
     echo $openSRS_result->resultFormatted;
 }
 ```
+
+Exception Handling
+------------------
+
+Errors are now only logged with trigger_erorr when running in legacy mode.  
+For all other usage, use PHP exception handling to deal with errors.
 
 
 Library Functions
@@ -556,18 +694,18 @@ the same format as below.  Please change the "func" name to make the different c
 selection checkboxes) [OPTIONAL]
 
 Sample JSON call:
-```
+```json
 {
    "func": "lookupDomain",
    "data": {
-            "domain": "example.net",
-            "alldomains": ".com;.net;.org",
-            "selected": ".com;.net"
-           }
+        "domain": "example.net",
+        "alldomains": ".com;.net;.org",
+        "selected": ".com;.net"
+    }
 }
 ```
 Returned Data:
-```
+```json
 "_OPS_version":"0.9",
 "protocol":"XCP",
 "response_text":"Command completed successfully",
@@ -598,7 +736,7 @@ Returned Data:
 ```
 
 In the condensed version it returns the items in an array:
-```
+```json
 [
   {
   "domain":"example.com",
@@ -621,29 +759,29 @@ Purpose:  To open a socket and lookup the availability of domains
 checkboxes) [OPTIONAL]
 
 Sample JSON Call
-```
+```json
 {
- "func": "fastDomainLookup",
- "data": {
-         "domain": "example",
-         "selected": ".com",
-         "alldomains": ".com;.net"
-         }
+    "func": "fastDomainLookup",
+    "data": {
+        "domain": "example",
+        "selected": ".com",
+        "alldomains": ".com;.net"
+    }
 }
 ```
 Returned Data (full and condensed response):
-```
+```json
 [
-  {
-  "domain":"example",
-  "tld":".com",
-  "result":"Taken"
-  },
-  {
-  "domain":"example",
-  "tld":".net",
-  "result":"Taken"
-  }
+    {
+        "domain":"example",
+        "tld":".com",
+        "result":"Taken"
+    },
+    {
+        "domain":"example",
+        "tld":".net",
+        "result":"Taken"
+    }
 ]
 ```
 
@@ -654,18 +792,18 @@ Purpose:  The price associated to the domain in US Dollars
 * domain - the domain to query
 
 Sample JSON call:
-```
+```json
 {
- "func": "lookupGetPrice",
- "data": {
-         "domain": "example.com"
-         }
+    "func": "lookupGetPrice",
+    "data": {
+        "domain": "example.com"
+    }
 }
 ```
 Returned Data:
-```
+```json
 {
- "price":"20"
+    "price":"20"
 }
 ```
 
@@ -676,33 +814,32 @@ Purpose:  To suggest more selections when querying the Personal Name system
 * Search String:  The first and last name of the user to find more options for
 
 Example JSON call:
-```
+```json
 {
-     "func": "persNameSuggest",
-     "data": {
-             "searchstring": "John Smith"
-             }
+    "func": "persNameSuggest",
+    "data": {
+        "searchstring": "John Smith"
+    }
 }
 ```
 
 Returned Data:
-```
+```json
 {
-"suggestion":
-     {
-     "count":"40",
-     "response_text":"Command completed successfully.",
-     "response_code":"200",
-     "items":[
-             {"domain":"john.smith.net","status":"taken"},
-             {"domain":"johnny.smith.net","status":"taken"},
-             {"domain":"johnnie.smith.net","status":"available"},
-             {"domain":"johnie.smith.net","status":"available"},
-             {"domain":"johnn.smith.net","status":"available"},
-             {"domain":"jonnie.smith.net","status":"available"}
-             ],
-     "is_success":"1"
-     }
+    "suggestion": {
+        "count":"40",
+        "response_text":"Command completed successfully.",
+        "response_code":"200",
+        "items":[
+            {"domain":"john.smith.net","status":"taken"},
+            {"domain":"johnny.smith.net","status":"taken"},
+            {"domain":"johnnie.smith.net","status":"available"},
+            {"domain":"johnie.smith.net","status":"available"},
+            {"domain":"johnn.smith.net","status":"available"},
+            {"domain":"jonnie.smith.net","status":"available"}
+        ],
+        "is_success":"1"
+    }
 }
 ```
 
@@ -713,7 +850,7 @@ Purpose:  To set DNS Zone record for an existing DNS Zone
 
 
 Example JSON request call:
-```
+```json
 {
 	"func":"dnsSet",
 	"data":{
@@ -743,7 +880,7 @@ Example JSON request call:
 ```
 
 Returned Data:
-```
+```json
 {
 	"_OPS_version":"0.9",
 	"protocol":"XCP",
@@ -838,7 +975,7 @@ The rest of the calls are OPTIONAL:
 	Please refer to the XML API Documentation 
 			 
 Sample JSON call:
-```
+```json
 {
   "func": "provSWregister",
   "data": {
@@ -848,39 +985,40 @@ Sample JSON call:
        "reg_username": "username",
        "reg_password": "password",
        "handle": "process"
-       },
-       "personal": {
-          "first_name": "First",
-          "last_name": "Last",
-          "phone": "+1.555123456789",
-          "fax": "",
-          "email": "email@email.com",
-          "org_name": "Organization Name",
-          "address1": "Address 1",
-          "address2": "Address 2",
-          "address3": "",
-          "postal_code": "A1A2B2",
-          "city": "City",
-          "state": "ON",
-          "country": "CA",
-          "lang_pref": "EN"
-      }
+    },
+    "personal": {
+        "first_name": "First",
+        "last_name": "Last",
+        "phone": "+1.555123456789",
+        "fax": "",
+        "email": "email@email.com",
+        "org_name": "Organization Name",
+        "address1": "Address 1",
+        "address2": "Address 2",
+        "address3": "",
+        "postal_code": "A1A2B2",
+        "city": "City",
+        "state": "ON",
+        "country": "CA",
+        "lang_pref": "EN"
+    }
 }
 ```
 Returned Data:
 
-```
-"object":"DOMAIN",
-"response_text":"Domain registration successfully completed",
-"action":"REPLY",
-"attributes":{
-  "registration_text":"Domain registration successfully completed",
-  "admin_email":"email@email.com",
-  "registration_code":"200",
-  "id":"83002651"
-},
-"response_code":"200",
-"is_success":"1"
+```json
+{
+	"object":"DOMAIN",
+	"response_text":"Domain registration successfully completed",
+	"action":"REPLY",
+	"attributes":{
+	  "registration_text":"Domain registration successfully completed",
+	  "admin_email":"email@email.com",
+	  "registration_code":"200",
+	  "id":"83002651"
+	},
+	"response_code":"200",
+	"is_success":"1"
 }
 ```
 
@@ -906,7 +1044,7 @@ Configurations
 
 In opensrs/openSRS_config.php, edit the following lines,
 
-```
+```php
 define("MAIL_HOST", "https://admin.test.hostedemail.com/api");
 define("MAIL_USERNAME", "YOUR_COMPANY_LEVEL_ADMIN_USERNAME");
 define("MAIL_PASSWORD", "YOUR_COMPANY_LEVEL_ADMIN_PASSWORD");
@@ -926,7 +1064,7 @@ Create an array of data, then call ClassName::call($data_array) returns the JSON
 Sample code:
 The following will create a new user or change the attributes of an existing user,
 
-```
+```php
 require_once("opensrs/openSRS_loader.php");
 $data_array = array(
     "user" => "sample@sample.com",
@@ -943,7 +1081,7 @@ $response = ChangeUser::call($data_array);
 ```
 
 sample JSON Request:
-```
+```json
 {
     "credentials": {
         "user": "sample@sample.com",
@@ -961,7 +1099,7 @@ sample JSON Request:
 }
 ```
 sample JSON Response:
-```
+```json
 {
    "success" : true
 }
@@ -1029,117 +1167,116 @@ commands in the library.
 Domain Function list and corresponding Action and Object in OpenSRS XML API
 ---------------------------------------------------------------------------
 
-PHP Function Name			XML Action				XML Object		XML Doc Page	PDF Page
+|PHP Function Name|XML Action|XML Object|XML Doc Page|PDF Page|
+|-----------------|----------|----------|------------|--------|
+|premiumDomain|NAME_SUGGEST|DOMAIN|117|132|
+|allinoneDomain|NAME_SUGGEST|DOMAIN|117|132|
+|suggestDomain|NAME_SUGGEST|DOMAIN|117|132|
 
-premiumDomain				NAME_SUGGEST				DOMAIN			117				132
-allinoneDomain				NAME_SUGGEST				DOMAIN			117				132
-suggestDomain				NAME_SUGGEST				DOMAIN			117				132
+> NOTE: There is a difference between how NAME_SUGGEST is used by each function above. The function premiumDomain will only run NAME_SUGGEST for Premium domain suggestions. The suggestDomain function will only run NAME_SUGGEST for name suggestions. Finally, allinoneDomain will run NAME_SUGGEST for a TLD lookup, name suggestions and premium domains all at the same time.
 
-NOTE:	There is a difference between how NAME_SUGGEST is used by each function
-above.  The function premiumDomain will only run NAME_SUGGEST for Premium domain
-suggestions.  The suggestDomain function will only run NAME_SUGGEST for name
-suggestions.  Finally, allinoneDomain will run NAME_SUGGEST for a TLD lookup,
-name suggestions and premium domains all at the same time.
-
-authAuthenticateUser                    AUTHENTICATE				USER
-authChangeOwnership			CHANGE					OWNERSHIP		533				548
-authChangePassword			CHANGE					PASSWORD		536				551
-authSendAuthcode			SEND_AUTHCODE				DOMAIN			539				554
-authSendPassword			SEND_PASSWORD				DOMAIN			542				557
-sendCiraEmailPwd			CIRA_EMAIL_PWD				DOMAIN			23				38
-bulkChange				SUBMIT					BULK_CHANGE		391				406
-bulkTransfer				BULK_TRANSFER				DOMAIN			385				400
-cookieDelete				DELETE					COOKIE			546				561
-cookieSet				SET					COOKIE			551				566
-cookieUpdate				UPDATE					COOKIE			556				571
-dnsCreate				CREATE_DNS_ZONE                         DOMAIN			455				470
-dnsDelete				DELETE_DNS_ZONE                         DOMAIN			465				480
-dnsForce				FORCE_DNS_NAMESERVERS                   DOMAIN			468				483
-dnsGet					GET_DNS_ZONE                            DOMAIN			471				486
-dnsReset				RESET_DNS_ZONE                          DOMAIN			478				493
-dnsSet					SET_DNS_ZONE                            DOMAIN			488				503
-fwdCreate				CREATE_DOMAIN_FORWARDING                DOMAIN			499				514
-fwdDelete				DELETE_DOMAIN_FORWARDING                DOMAIN			501				516
-fwdGet					GET_DOMAIN_FORWARDING                   DOMAIN			504				519
-fwdSet					SET_DOMAIN_FORWARDING                   DOMAIN			508				523
-lookupBelongsToRsp			BELONGS_TO_RSP				DOMAIN			19				34
-lookupDomain				LOOKUP					DOMAIN			112				127
-lookupGetBalance			GET_BALANCE				BALANCE			26				41
-lookupGetCaBlockerList                  GET_CA_BLOCKER_LIST			DOMAIN			29				44
-lookupGetDeletedDomains                 GET_DELETED_DOMAINS			DOMAIN			33				48
-lookupGetDomain				GET					DOMAIN			40				55
-lookupGetDomainByExpiry                 GET_DOMAINS_BY_EXPIREDATE               DOMAIN			88				103
-lookupGetDomainContacts                 GET_DOMAIN_CONTACTS			DOMAIN			84				99
-lookupGetNotes				GET_NOTES				DOMAIN			93				108
-lookupGetOrderInfo			GET_ORDER_INFO				DOMAIN			97				112
-lookupGetOrdersByDomain                 GET_ORDERS_BY_DOMAIN                    DOMAIN			104				119
-lookupGetPrice				GET_PRICE				DOMAIN			109				124
-nsAdvancedUpdt				ADVANCED_UPDATE_NAMESERVERS             DOMAIN			420				435
-nsCreate				REGISTRY_ADD_NS				NAMESERVER		425				440
-nsDelete				DELETE					NAMESERVER		432				447
-nsGet					GET					NAMESERVER		435				450
-nsModify				MODIFY					NAMESERVER		440				455
-nsRegistryAdd				REGISTRY_ADD_NS				NAMESERVER		443				458
-nsRegistryCheck				REGISTRY_CHECK_NAMESERVER               NAMESERVER		449				464
-persDelete				DELETE					SURNAME			336				351
-persNameSuggest				NAME_SUGGEST				SURNAME			307				322
-persQuery				QUERY					SURNAME			324				339
-persSUregister				SU_REGISTER				SURNAME			313				328
-persUpdate				UPDATE					SURNAME			329				344
-provActivate				ACTIVATE				DOMAIN			147				162
-provCancelActivate			CANCEL_ACTIVE_PROCESS                   DOMAIN			150				165
-provCancelPending			CANCEL_PENDING_ORDERS                   ORDER			153				168
-provModify				MODIFY					DOMAIN			157				172
-provProcessPending			PROCESS_PENDING				DOMAIN			197				212
-provQueryQueuedRequest                  QUERY_QUEUED_REQUEST                    DOMAIN			202				217
-provRenew				RENEW                               	DOMAIN			205				220
-provRevoke				REVOKE					DOMAIN			211				226
-provSendCIRAapproval                    SEND_CIRA_APPROVAL_EMAIL                DOMAIN			215				230
-provSWregister				SW_REGISTER				DOMAIN			218				233
-provUpdateAllInfo			UPDATE_ALL_INFO				DOMAIN			274				289
-provUpdateContacts			UPDATE_CONTACTS				DOMAIN			278				293
-subresCreate				CREATE					SUBRESELLER		287				302
-subresGet				GET					SUBRESELLER		296				311
-subresModify				MODIFY					SUBRESELLER		292				307
-subresPay				PAY					SUBRESELLER		303				318
-subuserAdd				ADD					SUBUSER			514				529
-subuserDelete				DELETE					SUBUSER			517				532
-subuserGet				GET					SUBUSER			520				535
-subuserGetInfo				GET					USERINFO		523				538
-subuserModify				MODIFY					SUBUSER			529				544
-transCancel				CANCEL_TRANSFER				TRANSFER		340				355
-transCheck				CHECK_TRANSFER				DOMAIN			344				359
-transGetAway				GET_TRANSFERS_AWAY			DOMAIN			350				365
-transGetIn				GET_TRANSFERS_IN			DOMAIN			360				375
-transProcess				PROCESS_TRANSFER			TRANSFER		369				384
-transRsp2Rsp				RSP2RSP_PUSH_TRANSFER                   DOMAIN			373				388
-transSendPass				SEND_PASSWORD				TRANSFER		377				392
-transTradeDomain			TRADE_DOMAIN				DOMAIN			380				395
-
+|PHP Function Name|XML Action|XML Object|XML Doc Page|PDF Page|
+|-----------------|----------|----------|------------|--------|
+|authAuthenticateUser|AUTHENTICATE|USER|
+|authChangeOwnership|CHANGE|OWNERSHIP|533|548|
+|authChangePassword|CHANGE|PASSWORD|536|551|
+|authSendAuthcode|SEND_AUTHCODE|DOMAIN|539|554|
+|authSendPassword|SEND_PASSWORD|DOMAIN|542|557|
+|sendCiraEmailPwd|CIRA_EMAIL_PWD|DOMAIN|23|38|
+|bulkChange|SUBMIT|BULK_CHANGE|391|406|
+|bulkTransfer|BULK_TRANSFER|DOMAIN|385|400|
+|cookieDelete|DELETE|COOKIE|546|561|
+|cookieSet|SET|COOKIE|551|566|
+|cookieUpdate|UPDATE|COOKIE|556|571|
+|dnsCreate|CREATE_DNS_ZONE|DOMAIN|455|470|
+|dnsDelete|DELETE_DNS_ZONE|DOMAIN|465|480|
+|dnsForce|FORCE_DNS_NAMESERVERS|DOMAIN|468|483|
+|dnsGet|GET_DNS_ZONE|DOMAIN|471|486|
+|dnsReset|RESET_DNS_ZONE|DOMAIN|478|493|
+|dnsSet|SET_DNS_ZONE|DOMAIN|488|503|
+|fwdCreate|CREATE_DOMAIN_FORWARDING|DOMAIN|499|514|
+|fwdDelete|DELETE_DOMAIN_FORWARDING|DOMAIN|501|516|
+|fwdGet|GET_DOMAIN_FORWARDING|DOMAIN|504|519|
+|fwdSet|SET_DOMAIN_FORWARDING|DOMAIN|508|523|
+|lookupBelongsToRsp|BELONGS_TO_RSP|DOMAIN|19|34|
+|lookupDomain|LOOKUP|DOMAIN|112|127|
+|lookupGetBalance|GET_BALANCE|BALANCE|26|41|
+|lookupGetCaBlockerList|GET_CA_BLOCKER_LIST|DOMAIN|29|44|
+|lookupGetDeletedDomains|GET_DELETED_DOMAINS|DOMAIN|33|48|
+|lookupGetDomain|GET|DOMAIN|40|55|
+|lookupGetDomainByExpiry|GET_DOMAINS_BY_EXPIREDATE|DOMAIN|88|103|
+|lookupGetDomainContacts|GET_DOMAIN_CONTACTS|DOMAIN|84|99|
+|lookupGetNotes|GET_NOTES|DOMAIN|93|108|
+|lookupGetOrderInfo|GET_ORDER_INFO|DOMAIN|97|112|
+|lookupGetOrdersByDomain|GET_ORDERS_BY_DOMAIN|DOMAIN|104|119|
+|lookupGetPrice|GET_PRICE|DOMAIN|109|124|
+|nsAdvancedUpdt|ADVANCED_UPDATE_NAMESERVERS|DOMAIN|420|435|
+|nsCreate|REGISTRY_ADD_NS|NAMESERVER|425|440|
+|nsDelete|DELETE|NAMESERVER|432|447|
+|nsGet|GET|NAMESERVER|435|450|
+|nsModify|MODIFY|NAMESERVER|440|455|
+|nsRegistryAdd|REGISTRY_ADD_NS|NAMESERVER|443|458|
+|nsRegistryCheck|REGISTRY_CHECK_NAMESERVER|NAMESERVER|449|464|
+|persDelete|DELETE|SURNAME|336|351|
+|persNameSuggest|NAME_SUGGEST|SURNAME|307|322|
+|persQuery|QUERY|SURNAME|324|339|
+|persSUregister|SU_REGISTER|SURNAME|313|328|
+|persUpdate|UPDATE|SURNAME|329|344|
+|provActivate|ACTIVATE|DOMAIN|147|162|
+|provCancelActivate|CANCEL_ACTIVE_PROCESS|DOMAIN|150|165|
+|provCancelPending|CANCEL_PENDING_ORDERS|ORDER|153|168|
+|provModify|MODIFY|DOMAIN|157|172|
+|provProcessPending|PROCESS_PENDING|DOMAIN|197|212|
+|provQueryQueuedRequest|QUERY_QUEUED_REQUEST|DOMAIN|202|217|
+|provRenew|RENEW|DOMAIN|205|220|
+|provRevoke|REVOKE|DOMAIN|211|226|
+|provSendCIRAapproval|SEND_CIRA_APPROVAL_EMAIL|DOMAIN|215|230|
+|provSWregister|SW_REGISTER|DOMAIN|218|233|
+|provUpdateAllInfo|UPDATE_ALL_INFO|DOMAIN|274|289|
+|provUpdateContacts|UPDATE_CONTACTS|DOMAIN|278|293|
+|subresCreate|CREATE|SUBRESELLER|287|302|
+|subresGet|GET|SUBRESELLER|296|311|
+|subresModify|MODIFY|SUBRESELLER|292|307|
+|subresPay|PAY|SUBRESELLER|303|318|
+|subuserAdd|ADD|SUBUSER|514|529|
+|subuserDelete|DELETE|SUBUSER|517|532|
+|subuserGet|GET|SUBUSER|520|535|
+|subuserGetInfo|GET|USERINFO|523|538|
+|subuserModify|MODIFY|SUBUSER|529|544|
+|transCancel|CANCEL_TRANSFER|TRANSFER|340|355|
+|transCheck|CHECK_TRANSFER|DOMAIN|344|359|
+|transGetAway|GET_TRANSFERS_AWAY|DOMAIN|350|365|
+|transGetIn|GET_TRANSFERS_IN|DOMAIN|360|375|
+|transProcess|PROCESS_TRANSFER|TRANSFER|369|384|
+|transRsp2Rsp|RSP2RSP_PUSH_TRANSFER|DOMAIN|373|388|
+|transSendPass|SEND_PASSWORD|TRANSFER|377|392|
+|transTradeDomain|TRADE_DOMAIN|DOMAIN|380|395|
 
 ======================================================================
 9.2 - Mail Function list and corresponding Command in OpenSRS Mail APP
 ======================================================================
-PHP Function Name				APP Command				APP Doc Page	PDF Page
-mailAuthentication				LOGIN					7				17
-mailChangeDomain				CHANGE_DOMAIN				18				28
-mailCreateDomain				CREATE_DOMAIN				9				19
-mailCreateDomainAlias                           CREATE_DOMAIN_ALIAS			10				20
-mailCreateDomainWelcomeEmail                    CREATE_DOMAIN_WELCOME_EMAIL		12				22
-mailCreateMailbox				CREATE_MAILBOX				32				42
-mailDeleteDomain				DELETE_DOMAIN				11				21
-mailDeleteDomainAlias                           DELETE_DOMAIN_ALIAS			11				21
-mailDeleteDomainWelcomeEmail                    DELETE_DOMAIN_WELCOME_EMAIL		15				25
-mailDeleteMailbox				DELETE_MAILBOX				47				57
-mailGetCompanyDomains                           GET_COMPANY_DOMAINS			14				24
-mailGetDomain					GET_DOMAIN				16				26
-mailGetDomainAllowList                          GET_DOMAIN_ALLOW_LIST			26				36
-mailGetDomainBlockList                          GET_DOMAIN_BLOCK_LIST			27				37
-mailGetDomainMailboxes                          GET_DOMAIN_MAILBOXES			23				33
-mailGetDomainMailboxLimits                      GET_DOMAIN_MAILBOX_LIMITS		24				34
-mailGetNumDomainMailboxes                       GET_NUM_DOMAIN_MAILBOXES		22				32
-mailSetDomainAdmin				SET_DOMAIN_ADMIN			19				29
-mailSetDomainAllowList                          SET_DOMAIN_ALLOW_LIST			25				35
-mailSetDomainBlockList                          SET_DOMAIN_BLOCK_LIST			26				36
-mailSetDomainDisabledStatus                     SET_DOMAIN_DISABLED_STATUS		22				32
-mailSetDomainMailboxLimits                      SET_DOMAIN_MAILBOX_LIMITS		24				34
+|PHP Function Name|APP Command|APP Doc Page|PDF Page|
+|-----------------|-----------|------------|--------|
+|mailAuthentication|LOGIN|7|17|
+|mailChangeDomain|CHANGE_DOMAIN|18|28|
+|mailCreateDomain|CREATE_DOMAIN|9|19|
+|mailCreateDomainAlias|CREATE_DOMAIN_ALIAS|10|20|
+|mailCreateDomainWelcomeEmail|CREATE_DOMAIN_WELCOME_EMAIL|12|22|
+|mailCreateMailbox|CREATE_MAILBOX|32|42|
+|mailDeleteDomain|DELETE_DOMAIN|11|21|
+|mailDeleteDomainAlias|DELETE_DOMAIN_ALIAS|11|21|
+|mailDeleteDomainWelcomeEmail|DELETE_DOMAIN_WELCOME_EMAIL|15|25|
+|mailDeleteMailbox|DELETE_MAILBOX|47|57|
+|mailGetCompanyDomains|GET_COMPANY_DOMAINS|14|24|
+|mailGetDomain|GET_DOMAIN|16|26|
+|mailGetDomainAllowList|GET_DOMAIN_ALLOW_LIST|26|36|
+|mailGetDomainBlockList|GET_DOMAIN_BLOCK_LIST|27|37|
+|mailGetDomainMailboxes|GET_DOMAIN_MAILBOXES|23|33|
+|mailGetDomainMailboxLimits|GET_DOMAIN_MAILBOX_LIMITS|24|34|
+|mailGetNumDomainMailboxes|GET_NUM_DOMAIN_MAILBOXES|22|32|
+|mailSetDomainAdmin|SET_DOMAIN_ADMIN|19|29|
+|mailSetDomainAllowList|SET_DOMAIN_ALLOW_LIST|25|35|
+|mailSetDomainBlockList|SET_DOMAIN_BLOCK_LIST|26|36|
+|mailSetDomainDisabledStatus|SET_DOMAIN_DISABLED_STATUS|22|32|
+|mailSetDomainMailboxLimits|SET_DOMAIN_MAILBOX_LIMITS|24|34|
+
