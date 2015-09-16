@@ -6,23 +6,18 @@ use OpenSRS\Base;
 use OpenSRS\Exception;
 
 class GetOrderInfo extends Base {
-	public $action = "get_order_info";
-	public $object = "domain";
-
-	public $_formatHolder = "";
+	private $_dataObject;
+	private $_formatHolder = "";
 	public $resultFullRaw;
 	public $resultRaw;
 	public $resultFullFormatted;
 	public $resultFormatted;
 
-	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
+	public function __construct ($formatString, $dataObject) {
 		parent::__construct();
-
+		$this->_dataObject = $dataObject;
 		$this->_formatHolder = $formatString;
-
-		$this->_validateObject( $dataObject );
-
-		$this->send( $dataObject, $returnFullResponse );
+		$this->_validateObject ();
 	}
 
 	public function __destruct () {
@@ -30,9 +25,40 @@ class GetOrderInfo extends Base {
 	}
 
 	// Validate the object
-	public function _validateObject( $dataObject ) {
-		if (!isset($dataObject->attributes->order_id)) {
+	private function _validateObject (){
+		if (!isset($this->_dataObject->data->order_id)) {
 			throw new Exception( "oSRS Error - order_id is not defined.");
 		}
+
+		// Execute the command
+		$this->_processRequest ();
+	}
+
+	// Post validation functions
+	private function _processRequest (){
+		$cmd = array(
+			"protocol" => "XCP",
+			"action" => "GET_ORDER_INFO",
+			"object" => "DOMAIN",
+			"attributes" => array (
+				"order_id" => $this->_dataObject->data->order_id
+				)
+			);
+		
+		// Command optional values
+		if (isset($this->_dataObject->data->page) && $this->_dataObject->data->page != "") $cmd['attributes']['page'] = $this->_dataObject->data->page;
+		if (isset($this->_dataObject->data->limit) && $this->_dataObject->data->limit != "") $cmd['attributes']['limit'] = $this->_dataObject->data->limit;
+		if (isset($this->_dataObject->data->order_id) && $this->_dataObject->data->order_id != "") $cmd['attributes']['order_id'] = $this->_dataObject->data->order_id;
+		if (isset($this->_dataObject->data->transfer_id) && $this->_dataObject->data->transfer_id != "") $cmd['attributes']['transfer_id'] = $this->_dataObject->data->transfer_id;
+
+		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
+		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
+		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
+
+		// Results
+		$this->resultFullRaw = $arrayResult;
+		$this->resultRaw = $arrayResult;
+		$this->resultFullFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
+		$this->resultFormatted = $this->convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
 }
