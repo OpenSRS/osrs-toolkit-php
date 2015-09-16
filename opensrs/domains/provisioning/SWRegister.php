@@ -5,14 +5,9 @@ namespace opensrs\domains\provisioning;
 use OpenSRS\Base;
 use OpenSRS\Exception;
 
-/*
- *  Required object values:
- *  data -
- */
-
 class SWRegister extends Base {
-	public $action = "SW_REGISTER";
-	public $object = "DOMAIN";
+	public $action = "sw_register";
+	public $object = "domain";
 
 	public $_formatHolder = "";
 	public $resultFullRaw;
@@ -51,8 +46,29 @@ class SWRegister extends Base {
 
 	// Validate the object
 	public function _validateObject( $dataObject ) {
-		// if( !isset($dataObject->attributes->domain ) ) {
-		// 	throw new Exception( "oSRS Error - domain is not defined." );
-		// }
+		if( !isset($dataObject->attributes->domain ) ) {
+			throw new Exception( "oSRS Error - domain is not defined." );
+		}
+		if( !isset($dataObject->attributes->custom_nameservers ) ) {
+			throw new Exception( "oSRS Error - custom_nameservers is not defined." );
+		}
+		if( !isset($dataObject->attributes->custom_tech_contact ) ) {
+			throw new Exception( "oSRS Error - custom_tech_contact is not defined." );
+		}
+		if( !isset($dataObject->attributes->handle ) ) {
+			throw new Exception( "oSRS Error - handle is not defined." );
+		}
+		if( !isset($dataObject->attributes->period ) ) {
+			throw new Exception( "oSRS Error - period is not defined." );
+		}
+		if( !isset($dataObject->attributes->reg_username ) ) {
+			throw new Exception( "oSRS Error - reg_username is not defined." );
+		}
+		if( !isset($dataObject->attributes->reg_password ) ) {
+			throw new Exception( "oSRS Error - reg_password is not defined." );
+		}
+		if( !isset($dataObject->attributes->reg_type ) ) {
+			throw new Exception( "oSRS Error - reg_type is not defined." );
+		}
 	}
 }
