@@ -10,7 +10,7 @@ class CookieSetTest extends PHPUnit_Framework_TestCase
     protected $func = 'cookieSet';
 
     protected $validSubmission = array(
-        "data" => array(
+        "attributes" => array(
             /**
              * Required
              *
@@ -36,9 +36,9 @@ class CookieSetTest extends PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->domain = "phptest" . time() . ".com";
-        $data->data->reg_username = "phptest";
-        $data->data->reg_password = "password12345";
+        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->reg_username = "phptest";
+        $data->attributes->reg_password = "password12345";
 
         $ns = new CookieSet( 'array', $data );
 
@@ -64,12 +64,12 @@ class CookieSetTest extends PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->domain = "phptest" . time() . ".com";
-        $data->data->reg_username = "phptest";
-        $data->data->reg_password = "password12345";
+        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->reg_username = "phptest";
+        $data->attributes->reg_password = "password12345";
 
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(

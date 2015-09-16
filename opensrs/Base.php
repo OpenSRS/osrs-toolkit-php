@@ -18,6 +18,8 @@ defined('OPENSRSURI') or die;
 
 class Base 
 {
+	protected $protocol = 'XCP';
+	
 	private $_socket = false;
 	private $_socketErrorNum = false;
 	private $_socketErrorMsg = false;
@@ -313,5 +315,113 @@ class Base
 
         // use included defaults
         return $this->defaultTlds;
+    }
+
+    public function setDataObject($format, $dataObject)
+    {
+        $this->dataObject = $dataObject;
+        $this->dataFormat = $format;
+    }
+
+    /**
+     * Does the dataObject have a domain set?
+     * 
+     * @return bool 
+     */
+    public function hasDomain()
+    {
+        return isset($this->dataObject->data->domain);
+    }
+
+    /**
+     * Get the domain from the dataObject
+     * 
+     * @return void
+     */
+    public function getDomain()
+    {
+        return $this->dataObject->data->domain; 
+    }
+
+    /**
+     * Send the oSRS API request, set action,
+     * object and protocol based on the call
+     * being made (so we don't have to set it
+     * in each call class), and run any custom
+     * response handling if the function
+     * 'customResponseHandling' exists on $obj,
+     * the class for that specific API call
+     *
+     * @return void
+     */
+    public function send( $dataObject, $returnFullResponse = true ) {
+    	if( !is_object($dataObject )){
+    		$dataObject = new \stdClass;
+    	}
+
+		$dataObject->protocol = $this->protocol;
+		$dataObject->action = $this->action;
+		$dataObject->object = $this->object;
+
+		if(
+			isset($dataObject->attributes->domain) &&
+			substr_count($dataObject->attributes->domain, "." ) > 1
+		){
+			$dataObject->attributes->domain = str_replace("www.", "", $dataObject->attributes->domain);
+		}
+
+		// Flip Array to XML
+		$xmlCMD = $this->_opsHandler->encode( json_decode(json_encode($dataObject), true) );
+		// Send XML
+		$XMLresult = $this->send_cmd( $xmlCMD );
+		// Flip XML to Array
+		$arrayResult = $this->_opsHandler->decode( $XMLresult );
+
+
+		if( method_exists( $this, 'customResponseHandling' )){
+			$arrayResult = $this->customResponseHandling( $arrayResult );
+		}
+
+		if(
+			// is_success will be 0 if there was
+			// an error
+			!$arrayResult['is_success'] && 
+			// 200 means there was no error
+			$arrayResult['response_code'] != 200 &&
+			// we dont want to throw an exception
+			// for authentication failed, error
+			// code 415
+			$arrayResult['response_code'] != 415
+		){
+			throw new Exception("oSRS Error Code #{$arrayResult['response_code']}: {$arrayResult['response_text']}.");
+		}
+
+
+		// Results
+        $this->resultFullRaw = $arrayResult;
+
+        if( !$returnFullResponse && isset($arrayResult['attributes'] ) ) {
+	        // Return 'attributes' hash from response
+	        // if it exists, otherwise return the full
+	        // response--original class did this, so have
+	        // to keep for backward compatibility
+	        // THIS IS NOT DEFAULT BEHAVIOR, BY DEFAULT
+	        // WE WILL RETURN THE WHOLE RESPONSE
+        	$this->resultRaw = $arrayResult['attributes'];
+        } else {
+        	$this->resultRaw = $arrayResult;
+        }
+
+        $this->resultFullFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
+        $this->resultFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
+    }
+
+    /**
+     * Method for any shared validation that is applicable to all
+     * API calls. Empty as for now is just a fallback for classes
+     * that don't have its own _validateObject method
+     */
+    public function _validateObject( $dataObject ){
+
     }
 }

@@ -29,7 +29,7 @@ class BulkSubmit extends Base {
 	}
 
 	// Validate the object
-	private function _validateObject() {
+	public function _validateObject( $dataObject ) {
 		// Command required values
 		if(
 			!isset( $this->_dataObject->data->change_items ) ||

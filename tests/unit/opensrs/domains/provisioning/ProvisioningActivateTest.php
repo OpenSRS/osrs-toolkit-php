@@ -10,7 +10,9 @@ class ProvisioningActivateTest extends PHPUnit_Framework_TestCase
     protected $func = 'provActivate';
 
     protected $validSubmission = array(
-        "data" => array(
+        "cookie" => "",
+
+        "attributes" => array(
             /**
              * Required: 1 of 2
              *
@@ -19,10 +21,7 @@ class ProvisioningActivateTest extends PHPUnit_Framework_TestCase
              *   to activate, required only if
              *   cookie is not sent
              */
-            "cookie" => "",
-            // domainname in class, domain in API docs?
-            // "domain" => "",
-            "domainname" => "",
+            "domain" => "",
             )
         );
 
@@ -37,23 +36,11 @@ class ProvisioningActivateTest extends PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->cookie = md5(time());
-        $data->data->domainname = "phptest" . time() . ".com";
+        $data->cookie = md5(time());
 
         $ns = new ProvisioningActivate( 'array', $data );
 
         $this->assertTrue( $ns instanceof ProvisioningActivate );
-    }
-
-
-    /**
-     * Data Provider for Invalid Submission test
-     */
-    function submissionFields() {
-        return array(
-            'missing cookie' => array('cookie'),
-            'missing domainname' => array('domainname'),
-            );
     }
 
     /**
@@ -61,29 +48,15 @@ class ProvisioningActivateTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      *
-     * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data' ) {
+    public function testInvalidSubmissionFieldsMissing() {
         $data = json_decode( json_encode($this->validSubmission) );
-
-        $data->data->cookie = md5(time());
-        $data->data->domainname = "phptest" . time() . ".com";
 
         $this->setExpectedExceptionRegExp(
             'OpenSRS\Exception',
-            "/$field.*not defined/"
+            "/(cookie|domain).*not.*defined/"
             );
-
-
-
-        // clear field being tested
-        if(is_null($parent)){
-            unset( $data->$field );
-        }
-        else{
-            unset( $data->$parent->$field );
-        }
 
         $ns = new ProvisioningActivate( 'array', $data );
      }
@@ -95,24 +68,24 @@ class ProvisioningActivateTest extends PHPUnit_Framework_TestCase
      *
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsBypassAndCookieSent() {
+    public function testInvalidSubmissionFieldsDomainAndCookieSent() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->cookie = md5(time());
-        $data->data->domainname = "phptest" . time() . ".com";
+        $data->cookie = md5(time());
+        $data->attributes->domain = "phptest" . time() . ".com";
 
         $this->setExpectedExceptionRegExp(
             'OpenSRS\Exception',
-            "/cookie and bypass.*one call/"
+            "/cookie and domain.*one call/"
             );
 
 
 
-        // setting cookie and bypass in the
+        // setting cookie and domain in the
         // same request
-        $data->data->bypass = $data->data->cookie;
+        $data->attributes->domain = $data->cookie;
         $ns = new ProvisioningActivate( 'array', $data );
-        // removing bypass
-        unset( $data->data->bypass );
+        // removing domain
+        unset( $data->attributes->domain );
      }
 }

@@ -10,7 +10,7 @@ class PersonalNamesSURegisterSuggestTest extends PHPUnit_Framework_TestCase
     protected $func = 'persSUregister';
 
     protected $validSubmission = array(
-        "data" => array(
+        "attributes" => array(
             /**
              * Required
              *
@@ -58,9 +58,9 @@ class PersonalNamesSURegisterSuggestTest extends PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->domain = "phptest" . time() . ".com";
-        $data->data->mailbox_type = "MAILBOX";
-        $data->data->password = "password12345";
+        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->mailbox_type = "MAILBOX";
+        $data->attributes->password = "password12345";
 
 
         $ns = new PersonalNamesSURegister( 'array', $data );
@@ -87,12 +87,12 @@ class PersonalNamesSURegisterSuggestTest extends PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->domain = "phptest" . time() . ".com";
-        $data->data->mailbox_type = "MAILBOX";
-        $data->data->password = "password12345";
+        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->mailbox_type = "MAILBOX";
+        $data->attributes->password = "password12345";
 
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(

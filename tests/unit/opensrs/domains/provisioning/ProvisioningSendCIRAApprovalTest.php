@@ -10,7 +10,7 @@ class ProvisioningSendCIRAApprovalTest extends PHPUnit_Framework_TestCase
     protected $func = 'provSendCIRAApproval';
 
     protected $validSubmission = array(
-        "data" => array(
+        "attributes" => array(
             /**
              * Required
              *
@@ -35,7 +35,7 @@ class ProvisioningSendCIRAApprovalTest extends PHPUnit_Framework_TestCase
 
 
         // sending request with order_id only
-        $data->data->domain = "phptest" . time() . ".com";
+        $data->attributes->domain = "phptest" . time() . ".com";
         $ns = new ProvisioningSendCIRAApproval( 'array', $data );
 
         $this->assertTrue( $ns instanceof ProvisioningSendCIRAApproval );
@@ -58,10 +58,10 @@ class ProvisioningSendCIRAApprovalTest extends PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data' ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes' ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->domain = "phptest" . time() . ".com";
+        $data->attributes->domain = "phptest" . time() . ".com";
 
         $this->setExpectedExceptionRegExp(
             'OpenSRS\Exception',

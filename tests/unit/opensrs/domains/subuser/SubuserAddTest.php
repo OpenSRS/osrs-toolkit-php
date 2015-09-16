@@ -10,16 +10,16 @@ class SubuserAddTest extends PHPUnit_Framework_TestCase
     protected $func = 'subuserAdd';
 
     protected $validSubmission = array(
-        "data" => array(
+        "attributes" => array(
             /**
              * Required: 1 of 2
              *
              * cookie: domain auth cookie
-             * bypass: relevant domain, required
+             * domain: relevant domain, required
              *   only if cookie is not sent
              */
             "cookie" => "",
-            "bypass" => "",
+            "domain" => "",
 
             /**
              * Required
@@ -56,12 +56,12 @@ class SubuserAddTest extends PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->bypass = "phptest" . time() . ".com";
+        $data->cookie = md5(time());
 
-        $data->data->username = "phptest" . time();
-        $data->data->sub_username = "phptestuser";
-        $data->data->sub_permission = "2";
-        $data->data->sub_password = "password1234";
+        $data->attributes->username = "phptest" . time();
+        $data->attributes->sub_username = "phptestuser";
+        $data->attributes->sub_permission = "2";
+        $data->attributes->sub_password = "password1234";
 
         $ns = new SubuserAdd( 'array', $data );
 
@@ -73,7 +73,7 @@ class SubuserAddTest extends PHPUnit_Framework_TestCase
      */
     function submissionFields() {
         return array(
-            'missing bypass' => array('bypass'),
+            'missing cookie' => array('cookie', null),
             'missing username' => array('username'),
             'missing sub_username' => array('sub_username'),
             'missing sub_permission' => array('sub_permission'),
@@ -89,15 +89,15 @@ class SubuserAddTest extends PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->bypass = "phptest" . time() . ".com";
+        $data->cookie = md5(time());
 
-        $data->data->username = "phptest" . time();
-        $data->data->sub_username = "phptestuser" . time();
-        $data->data->sub_permission = "2";
-        $data->data->sub_password = "password1234";
+        $data->attributes->username = "phptest" . time();
+        $data->attributes->sub_username = "phptestuser" . time();
+        $data->attributes->sub_permission = "2";
+        $data->attributes->sub_password = "password1234";
 
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(
@@ -132,20 +132,20 @@ class SubuserAddTest extends PHPUnit_Framework_TestCase
      *
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionCookieAndBypassSent() {
+    public function testInvalidSubmissionCookieAndDomainSent() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->cookie = md5(time());
-        $data->data->bypass = "phptest" . time() . ".com";
+        $data->cookie = md5(time());
+        $data->attributes->domain = "phptest" . time() . ".com";
 
-        $data->data->username = "phptest" . time();
-        $data->data->sub_username = "phptestuser" . time();
-        $data->data->sub_permission = "2";
-        $data->data->sub_password = "password1234";
+        $data->attributes->username = "phptest" . time();
+        $data->attributes->sub_username = "phptestuser" . time();
+        $data->attributes->sub_permission = "2";
+        $data->attributes->sub_password = "password1234";
 
         $this->setExpectedExceptionRegExp(
             'OpenSRS\Exception',
-            "/.*cookie.*bypass.*cannot.*one.*call.*/"
+            "/.*cookie.*domain.*cannot.*one.*call.*/"
             );
 
         $ns = new SubuserAdd( 'array', $data );

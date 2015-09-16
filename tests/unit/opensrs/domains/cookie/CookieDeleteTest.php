@@ -11,14 +11,17 @@ class CookieDeleteTest extends PHPUnit_Framework_TestCase
     protected $fund = "cookieDelete";
 
     protected $validSubmission = array(
-        "data" => array(
-            /**
-             * Required
-             *
-             * cookie: cookie to be deleted
-             */
-            "cookie" => "",
-            )
+        /**
+         * Required
+         *
+         * cookie: cookie to be deleted
+         */
+        "cookie" => "",
+
+        "attributes" => array(
+            'cookie' => '',
+            'domain' => '',
+            ),
         );
 
     /**
@@ -31,7 +34,10 @@ class CookieDeleteTest extends PHPUnit_Framework_TestCase
      */
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
-        $data->data->cookie = md5(time());
+
+        $data->cookie = md5(time());
+        $data->attributes->cookie = $data->cookie;
+        $data->attributes->domain = 'phptest' . time() . '.com';
 
         $ns = new CookieDelete( 'array', $data );
 
@@ -43,7 +49,9 @@ class CookieDeleteTest extends PHPUnit_Framework_TestCase
      */
     function submissionFields() {
         return array(
+            'missing root cookie' => array('cookie', null),
             'missing cookie' => array('cookie'),
+            'missing domain' => array('domain'),
             );
     }
 
@@ -55,10 +63,12 @@ class CookieDeleteTest extends PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->cookie = md5(time());
+        $data->cookie = md5(time());
+        $data->attributes->cookie = $data->cookie;
+        $data->attributes->domain = 'phptest' . time() . '.com';
 
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(
@@ -72,8 +82,6 @@ class CookieDeleteTest extends PHPUnit_Framework_TestCase
               "/$message/"
               );
         }
-
-
 
         // clear field being tested
         if(is_null($parent)){

@@ -10,7 +10,7 @@ class TransferTradeDomainTest extends PHPUnit_Framework_TestCase
     protected $func = 'transferTradeDomain';
 
     protected $validSubmission = array(
-        "data" => array(
+        "attributes" => array(
             /**
              * Required
              *
@@ -71,12 +71,12 @@ class TransferTradeDomainTest extends PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->domain = "phptest" . time() . ".be";
+        $data->attributes->domain = "phptest" . time() . ".be";
 
-        $data->data->email = "phptoolkit@tucows.com";
-        $data->data->first_name = "Php";
-        $data->data->last_name = "Toolkit";
-        $data->data->org_name = "Tikloot Php";
+        $data->attributes->email = "phptoolkit@tucows.com";
+        $data->attributes->first_name = "Php";
+        $data->attributes->last_name = "Toolkit";
+        $data->attributes->org_name = "Tikloot Php";
 
         $ns = new TransferTradeDomain( 'array', $data );
 
@@ -104,15 +104,15 @@ class TransferTradeDomainTest extends PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->domain = "phptest" . time() . ".be";
+        $data->attributes->domain = "phptest" . time() . ".be";
 
-        $data->data->email = "phptoolkit@tucows.com";
-        $data->data->first_name = "Php";
-        $data->data->last_name = "Toolkit";
-        $data->data->org_name = "Tikloot Php";
+        $data->attributes->email = "phptoolkit@tucows.com";
+        $data->attributes->first_name = "Php";
+        $data->attributes->last_name = "Toolkit";
+        $data->attributes->org_name = "Tikloot Php";
 
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(

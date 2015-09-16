@@ -10,7 +10,7 @@ class ForwardingCreateTest extends PHPUnit_Framework_TestCase
     protected $func = 'fwdCreate';
 
     protected $validSubmission = array(
-        "data" => array(
+        "attributes" => array(
             /**
              * Optional
              *
@@ -32,7 +32,7 @@ class ForwardingCreateTest extends PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->domain = "phptest" . time() . ".com";
+        $data->attributes->domain = "phptest" . time() . ".com";
 
         $ns = new ForwardingCreate( 'array', $data );
 

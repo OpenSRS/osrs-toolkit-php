@@ -10,7 +10,7 @@ class PersonalNamesNameSuggestTest extends PHPUnit_Framework_TestCase
     protected $func = 'persNameSuggest';
 
     protected $validSubmission = array(
-        "data" => array(
+        "attributes" => array(
             /**
              * Required
              *
@@ -32,7 +32,7 @@ class PersonalNamesNameSuggestTest extends PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->searchstring = "john smith";
+        $data->attributes->searchstring = "john smith";
 
         $ns = new PersonalNamesNameSuggest( 'array', $data );
 
@@ -56,10 +56,10 @@ class PersonalNamesNameSuggestTest extends PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->searchstring = "john smith";
+        $data->attributes->searchstring = "john smith";
 
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(

@@ -5,14 +5,6 @@ namespace opensrs\domains\lookup;
 use OpenSRS\Base;
 use OpenSRS\Exception;
 
-/*
- *  Required object values:
- *  - none -
- *
- *  Optional Data:
- *  data - owner_email, admin_email, billing_email, tech_email, del_from, del_to, exp_from, exp_to, page, limit
- */
-
 class GetDomainsContacts extends Base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -33,7 +25,7 @@ class GetDomainsContacts extends Base {
 	}
 
 	// Validate the object
-	private function _validateObject (){
+	public function _validateObject( $dataObject ) {
 		if (!isset($this->_dataObject->data->domain_list)) {
 			throw new Exception ("oSRS Error - Domain list is not defined.");
 		}

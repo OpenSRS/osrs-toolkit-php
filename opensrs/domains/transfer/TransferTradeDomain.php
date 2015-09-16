@@ -11,18 +11,23 @@ use OpenSRS\Exception;
  */
 
 class TransferTradeDomain extends Base {
-	private $_dataObject;
-	private $_formatHolder = "";
+	public $action = "trade_domain";
+	public $object = "domain";
+
+	public $_formatHolder = "";
 	public $resultFullRaw;
 	public $resultRaw;
 	public $resultFullFormatted;
 	public $resultFormatted;
 
-	public function __construct( $formatString, $dataObject ) {
+	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
-		$this->_dataObject = $dataObject;
+
 		$this->_formatHolder = $formatString;
-		$this->_validateObject();
+
+		$this->_validateObject( $dataObject );
+
+		$this->send( $dataObject, $returnFullResponse );
 	}
 
 	public function __destruct() {
@@ -30,69 +35,37 @@ class TransferTradeDomain extends Base {
 	}
 
 	// Validate the object
-	private function _validateObject() {
+	public function _validateObject( $dataObject ) {
 		// Command required values
 		if(
-			!isset( $this->_dataObject->data->first_name ) ||
-			$this->_dataObject->data->first_name == ""
+			!isset( $dataObject->attributes->first_name ) ||
+			$dataObject->attributes->first_name == ""
 		) {
 			throw new Exception( "oSRS Error - first_name is not defined." );
 		}
 		if(
-			!isset( $this->_dataObject->data->last_name ) ||
-			$this->_dataObject->data->last_name == ""
+			!isset( $dataObject->attributes->last_name ) ||
+			$dataObject->attributes->last_name == ""
 		) {
 			throw new Exception( "oSRS Error - last_name is not defined." );
 		}
 		if(
-			!isset( $this->_dataObject->data->domain ) ||
-			$this->_dataObject->data->domain == ""
+			!isset( $dataObject->attributes->domain ) ||
+			$dataObject->attributes->domain == ""
 		) {
 			throw new Exception( "oSRS Error - domain is not defined." );
 		}
 		if(
-			!isset( $this->_dataObject->data->email ) ||
-			$this->_dataObject->data->email == ""
+			!isset( $dataObject->attributes->email ) ||
+			$dataObject->attributes->email == ""
 		) {
 			throw new Exception( "oSRS Error - email is not defined." );
 		}
 		if(
-			!isset( $this->_dataObject->data->org_name ) ||
-			$this->_dataObject->data->org_name == ""
+			!isset( $dataObject->attributes->org_name ) ||
+			$dataObject->attributes->org_name == ""
 		) {
 			throw new Exception( "oSRS Error - org_name is not defined." );
 		}
-
-		// Execute the command
-		$this->_processRequest();
-	}
-
-	// Post validation functions
-	private function _processRequest() {
-		$cmd = array(
-			'protocol' => 'XCP',
-			'action' => 'TRADE_DOMAIN',
-			'object' => 'DOMAIN',
-			'attributes' => array(
-				'first_name' => $this->_dataObject->data->first_name,
-				'last_name' => $this->_dataObject->data->last_name,
-				'domain' => $this->_dataObject->data->domain,
-				'email' => $this->_dataObject->data->email,
-				'org_name' => $this->_dataObject->data->org_name
-			)
-		);
-
-        // Flip Array to XML
-        $xmlCMD = $this->_opsHandler->encode( $cmd );
-        // Send XML
-        $XMLresult = $this->send_cmd( $xmlCMD );
-        // Flip XML to Array
-        $arrayResult = $this->_opsHandler->decode( $XMLresult );
-
-		// Results
-		$this->resultFullRaw = $arrayResult;
-		$this->resultRaw = $arrayResult;
-		$this->resultFullFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultFullRaw );
-		$this->resultFormatted = $this->convertArray2Formatted( $this->_formatHolder, $this->resultRaw );
 	}
 }

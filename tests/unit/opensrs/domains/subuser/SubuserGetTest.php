@@ -10,16 +10,17 @@ class SubuserGetTest extends PHPUnit_Framework_TestCase
     protected $func = 'subuserGet';
 
     protected $validSubmission = array(
-        "data" => array(
+        "cookie" => "",
+
+        "attributes" => array(
             /**
              * Required: 1 of 2
              *
              * cookie: domain auth cookie
-             * bypass: relevant domain, required
+             * domain: relevant domain, required
              *   only if cookie is not sent
              */
-            "cookie" => "",
-            "bypass" => "",
+            "domain" => "",
 
             /**
              * Required
@@ -42,9 +43,9 @@ class SubuserGetTest extends PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->bypass = "phptest" . time() . ".com";
-
-        $data->data->username = "phptest" . time();
+        $data->cookie = md5(time());
+        
+        $data->attributes->username = "phptest" . time();
 
         $ns = new SubuserGet( 'array', $data );
 
@@ -56,7 +57,7 @@ class SubuserGetTest extends PHPUnit_Framework_TestCase
      */
     function submissionFields() {
         return array(
-            'missing bypass' => array('bypass'),
+            'missing cookie' => array('cookie', null),
             'missing username' => array('username'),
             );
     }
@@ -69,12 +70,12 @@ class SubuserGetTest extends PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->bypass = "phptest" . time() . ".com";
+        $data->cookie = md5(time());
 
-        $data->data->username = "phptest" . time();
+        $data->attributes->username = "phptest" . time();
 
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(
@@ -112,14 +113,14 @@ class SubuserGetTest extends PHPUnit_Framework_TestCase
     public function testInvalidSubmissionCookieAndBypassSent() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->cookie = md5(time());
-        $data->data->bypass = "phptest" . time() . ".com";
+        $data->cookie = md5(time());
+        $data->attributes->domain = "phptest" . time() . ".com";
 
-        $data->data->username = "phptest" . time();
+        $data->attributes->username = "phptest" . time();
 
         $this->setExpectedExceptionRegExp(
             'OpenSRS\Exception',
-            "/.*cookie.*bypass.*cannot.*one.*call.*/"
+            "/.*cookie.*domain.*cannot.*one.*call.*/"
             );
 
         $ns = new SubuserGet( 'array', $data );

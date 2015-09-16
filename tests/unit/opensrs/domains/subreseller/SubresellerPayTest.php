@@ -10,7 +10,7 @@ class SubresellerPayTest extends PHPUnit_Framework_TestCase
     protected $func = 'subresPay';
 
     protected $validSubmission = array(
-        "data" => array(
+        "attributes" => array(
             /**
              * Required
              *
@@ -36,8 +36,8 @@ class SubresellerPayTest extends PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->username = "subreseller" . time();
-        $data->data->amount = "10.00";
+        $data->attributes->username = "subreseller" . time();
+        $data->attributes->amount = "10.00";
 
         $ns = new SubresellerPay( 'array', $data );
 
@@ -62,11 +62,11 @@ class SubresellerPayTest extends PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data' ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes' ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->username = "subreseller" . time();
-        $data->data->amount = "10.00";
+        $data->attributes->username = "subreseller" . time();
+        $data->attributes->amount = "10.00";
 
         $this->setExpectedExceptionRegExp(
             'OpenSRS\Exception',

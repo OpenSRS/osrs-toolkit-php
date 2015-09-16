@@ -57,19 +57,11 @@ class Request
     */
     public function array2object($data)
     {
-        if (!is_array($data)) {
-            return $data;
-        }
-        $object = new \stdClass();
-
-        foreach ($data as $name => $value) {
-            if (isset($name)) {
-                $name = strtolower(trim($name));
-                $object->$name = $this->array2object($value);
-            }
+        if(is_array($data)){
+            $data = json_decode(json_encode($data));
         }
 
-        return $object;
+        return $data;
     }
 
     public function convertArray2Formatted($type = '', $data = '')

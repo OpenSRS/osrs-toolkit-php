@@ -10,7 +10,7 @@ class ProvisioningRenewTest extends PHPUnit_Framework_TestCase
     protected $func = 'provRenew';
 
     protected $validSubmission = array(
-        "data" => array(
+        "attributes" => array(
             /**
              * Required
              *
@@ -72,11 +72,11 @@ class ProvisioningRenewTest extends PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->auto_renew = "Y";
-        $data->data->currentexpirationyear = date("Y");
-        $data->data->domain = "phptest" . time() . ".com";
-        $data->data->handle = "save";
-        $data->data->period = "1";
+        $data->attributes->auto_renew = "Y";
+        $data->attributes->currentexpirationyear = date("Y");
+        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->handle = "save";
+        $data->attributes->period = "1";
 
         $ns = new ProvisioningRenew( 'array', $data );
 
@@ -104,14 +104,14 @@ class ProvisioningRenewTest extends PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data' ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes' ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->auto_renew = "Y";
-        $data->data->currentexpirationyear = date("Y");
-        $data->data->domain = "phptest" . time() . ".com";
-        $data->data->handle = "save";
-        $data->data->period = "1";
+        $data->attributes->auto_renew = "Y";
+        $data->attributes->currentexpirationyear = date("Y");
+        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->handle = "save";
+        $data->attributes->period = "1";
 
         $this->setExpectedExceptionRegExp(
             'OpenSRS\Exception',

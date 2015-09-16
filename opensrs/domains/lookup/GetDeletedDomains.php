@@ -33,7 +33,7 @@ class GetDeletedDomains extends Base {
 	}
 
 	// Validate the object
-	private function _validateObject(){
+	public function _validateObject( $dataObject ){
 		// Maybe all attribute array should be compiled here
 		if (isset($this->_dataObject->data->owner_email)) {
 			// Verify proper email
