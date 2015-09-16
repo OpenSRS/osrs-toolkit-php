@@ -29,7 +29,7 @@ class LookupDomain extends Base
     }
 
     // Validate the object
-    private function _validateObject()
+    public function _validateObject( $dataObject )
     {
         $domain = '';
 

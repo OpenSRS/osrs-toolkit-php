@@ -30,7 +30,7 @@ class GetCaBlockerList extends Base {
 	}
 
 	// Validate the object
-	private function _validateObject(){
+	public function _validateObject( $dataObject ){
 		if (!isset($this->_dataObject->data->domain)) {
 			throw new Exception("oSRS Error - Search domain string not defined." );
 		}

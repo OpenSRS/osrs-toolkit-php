@@ -33,7 +33,7 @@ class NameSuggest extends Base {
 	}
 
 	// Validate the object
-	private function _validateObject(){
+	public function _validateObject( $dataObject ){
 		$domain = "";
 
 		if (!isset($this->_dataObject->data->domain)) {

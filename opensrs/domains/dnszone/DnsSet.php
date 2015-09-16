@@ -35,7 +35,7 @@ class DnsSet extends Base {
     	parent::__destruct();
     }
 
-    private function _validateObject() {
+    public function _validateObject( $dataObject ) {
         // Command required values
         if(
         	!isset( $this->_dataObject->data->domain ) ||

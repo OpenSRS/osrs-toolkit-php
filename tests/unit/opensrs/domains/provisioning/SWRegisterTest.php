@@ -133,7 +133,6 @@ class SWRegisterTest extends PHPUnit_Framework_TestCase
             'missing domain' => array('domain'),
             'missing custom_nameservers' => array('custom_nameservers'),
             'missing custom_tech_contact' => array('custom_tech_contact'),
-            'missing handle' => array('handle'),
             'missing period' => array('period'),
             'missing reg_username' => array('reg_username'),
             'missing reg_password' => array('reg_password'),

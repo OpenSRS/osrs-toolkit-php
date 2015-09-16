@@ -29,7 +29,7 @@ class SWRegister extends Base {
 		parent::__destruct();
 	}
 
-	public function customResponseHandling( $arrayResult ){
+	public function customResponseHandling( $arrayResult, $returnFullResponse = true ){
 		/* Added by BC : NG : 16-7-2014 : To set error message for Insufficient Funds */
 		if( isset( $arrayResult['attributes']['forced_pending'] ) and $arrayResult['attributes']['forced_pending'] != "" and $arrayResult['is_success'] == 1 )
 		{
@@ -54,9 +54,6 @@ class SWRegister extends Base {
 		}
 		if( !isset($dataObject->attributes->custom_tech_contact ) ) {
 			throw new Exception( "oSRS Error - custom_tech_contact is not defined." );
-		}
-		if( !isset($dataObject->attributes->handle ) ) {
-			throw new Exception( "oSRS Error - handle is not defined." );
 		}
 		if( !isset($dataObject->attributes->period ) ) {
 			throw new Exception( "oSRS Error - period is not defined." );
