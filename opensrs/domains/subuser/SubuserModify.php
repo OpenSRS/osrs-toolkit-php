@@ -5,11 +5,6 @@ namespace opensrs\domains\subuser;
 use OpenSRS\Base;
 use OpenSRS\Exception;
 
-/*
- *  Required object values:
- *  data -
- */
-
 class SubuserModify extends Base {
 	public $action = "modify";
 	public $object = "subuser";
@@ -36,7 +31,6 @@ class SubuserModify extends Base {
 
 	// Validate the object
 	public function _validateObject( $dataObject ) {
-		// Command required values
 		if(
 			( !isset($dataObject->cookie ) ||
 				$dataObject->cookie == "") &&
