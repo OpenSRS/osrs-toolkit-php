@@ -36,7 +36,6 @@ class BC_SuggestDomainTest extends PHPUnit_Framework_TestCase
         $shouldMatchNewDataObject->attributes->service_override = new \stdClass;
         $shouldMatchNewDataObject->attributes->service_override->suggestion = new \stdClass;
 
-
         $shouldMatchNewDataObject->attributes->searchstring = $data->data->domain;
         $shouldMatchNewDataObject->attributes->services = array( "suggestion" );
         $shouldMatchNewDataObject->attributes->service_override->suggestion->maximum = 
