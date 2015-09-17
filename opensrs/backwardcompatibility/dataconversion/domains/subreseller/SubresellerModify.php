@@ -56,6 +56,12 @@ class SubresellerModify extends DataConversion {
 
 		$newDataObject = $p->convertDataObject( $dataObject, $newStructure );
 
+		if(!is_array($newDataObject->attributes->allowed_tld_list)){
+			$newDataObject->attributes->allowed_tld_list = explode(
+				",", $newDataObject->attributes->allowed_tld_list
+				);
+		}
+
 		return $newDataObject;
 	}
 }

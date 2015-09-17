@@ -26,6 +26,7 @@ class SubresellerGet extends DataConversion {
 	protected $newStructure = array(
 		'attributes' => array(
 			'username' => 'data->username',
+			),
 		);
 
 	public function convertDataObject( $dataObject, $newStructure = null ) {

@@ -27,6 +27,7 @@ class SubresellerPay extends DataConversion {
 		'attributes' => array(
 			'amount' => 'data->amount',
 			'username' => 'data->username',
+			),
 		);
 
 	public function convertDataObject( $dataObject, $newStructure = null ) {
