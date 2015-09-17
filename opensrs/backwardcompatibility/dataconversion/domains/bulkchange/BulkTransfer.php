@@ -1,11 +1,11 @@
 <?php
 
-namespace OpenSRS\backwardcompatibility\dataconversion\domains\authentication;
+namespace OpenSRS\backwardcompatibility\dataconversion\domains\bulkchange;
 
 use OpenSRS\backwardcompatibility\dataconversion\DataConversion;
 use OpenSRS\Exception;
 
-class BulkChange extends DataConversion {
+class BulkTransfer extends DataConversion {
 	// New structure for API calls handled by
 	// the toolkit.
 	//
@@ -25,26 +25,23 @@ class BulkChange extends DataConversion {
 	//  to ->attributes->domain in the new format
 	protected $newStructure = array(
 		'attributes' => array(
-			'change_items' => 'data->change_items',
-			'change_type' => 'data->change_type',
-			'op_type' => 'data->op_type',
+			'reg_username' => 'data->reg_username',
+			'reg_domain' => 'data->reg_domain',
+			'reg_password' => 'data->reg_password',
 
-			'apply_to_locked_domains' => 'data->apply_to_locked_domains',
-			'contact_email' => 'data->contact_email',
-			'apply_to_all_reseller_items' => 'data->apply_to_all_reseller_items',
+			'custom_tech_contact' => 'data->custom_tech_contact',
+			'domain_list' => 'data->domain_list',
 
-			'apply_to_domains' => 'data->apply_to_domains',
-			'dns_action' => 'data->dns_action',
-			'dns_template' => 'data->dns_template',
-			'only_if' => 'data->only_if',
-			'force_dns_nameservers' => 'data->force_dns_nameservers',
+			'contact_set' => array(
+				'owner' => 'personal',
+				'admin' => 'personal',
+				'billing' => 'personal',
+				'tech' => 'personal',
+				),
 
-			'dns_record_type' => 'data->dns_record_type',
-			'dns_record_data' => 'data->dns_record_data',
-
-			'type' => 'data->type',
-			'apply_to_all_reseller_items' => 'data->apply_to_all_reseller_items',
-			'apply_to_all_reseller_items' => 'data->apply_to_all_reseller_items',
+			'affiliate_id' => 'data->affiliate_id',
+			'handle' => 'data->handle',
+			'registrant_ip' => 'data->registrant_ip',
 			),
 		);
 
@@ -57,6 +54,11 @@ class BulkChange extends DataConversion {
 
 		$newDataObject = $p->convertDataObject( $dataObject, $newStructure );
 
+		if(!is_array( $newDataObject->attributes->domain_list )){
+			$newDataObject->attributes->domain_list = explode(
+				",", $newDataObject->attributes->domain_list
+				);
+		}
 		return $newDataObject;
 	}
 }
