@@ -1,14 +1,14 @@
 <?php
 
-use OpenSRS\backwardcompatibility\dataconversion\domains\lookup\NameSuggest;
+use OpenSRS\backwardcompatibility\dataconversion\domains\lookup\SuggestDomain;
 
 /**
  * @group backwardcompatibility
  * @group dataconversion
  * @group lookup
- * @group BC_NameSuggest
+ * @group BC_SuggestDomain
  */
-class BC_NameSuggestTest extends PHPUnit_Framework_TestCase
+class BC_SuggestDomainTest extends PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         "data" => array(
@@ -29,30 +29,23 @@ class BC_NameSuggestTest extends PHPUnit_Framework_TestCase
 
         $data->data->domain = "phptest" . time() . ".com";
         $data->data->maximum = "10";
-        $data->data->nsselected = ".com;.net;.org";
-        $data->data->lkselected = ".com;.net;.org";
+        $data->data->selected = ".com;.net;.org";
 
         $shouldMatchNewDataObject = new \stdClass;
         $shouldMatchNewDataObject->attributes = new \stdClass;
         $shouldMatchNewDataObject->attributes->service_override = new \stdClass;
-        $shouldMatchNewDataObject->attributes->service_override->lookup = new \stdClass;
         $shouldMatchNewDataObject->attributes->service_override->suggestion = new \stdClass;
 
 
         $shouldMatchNewDataObject->attributes->searchstring = $data->data->domain;
-        $shouldMatchNewDataObject->attributes->services = array( "lookup", "suggestion" );
-        $shouldMatchNewDataObject->attributes->service_override->lookup->maximum = 
-            $data->data->maximum;
-        $shouldMatchNewDataObject->attributes->service_override->lookup->tlds = array(
-            ".com", ".net", ".org"
-            );
+        $shouldMatchNewDataObject->attributes->services = array( "suggestion" );
         $shouldMatchNewDataObject->attributes->service_override->suggestion->maximum = 
             $data->data->maximum;
         $shouldMatchNewDataObject->attributes->service_override->suggestion->tlds = array(
             ".com", ".net", ".org"
             );
 
-        $ns = new NameSuggest();
+        $ns = new SuggestDomain();
 
         $newDataObject = $ns->convertDataObject( $data );
 
