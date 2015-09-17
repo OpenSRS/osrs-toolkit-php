@@ -34,8 +34,5 @@ class GetOrderInfo extends Base {
 		if (!isset($dataObject->attributes->order_id)) {
 			throw new Exception( "oSRS Error - order_id is not defined.");
 		}
-
-		// Execute the command
-		$this->_processRequest ();
 	}
 }

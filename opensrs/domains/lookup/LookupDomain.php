@@ -5,20 +5,35 @@ namespace opensrs\domains\lookup;
 use OpenSRS\Base;
 use OpenSRS\Exception;
 
+<<<<<<< HEAD
 class LookupDomain extends Base
 {
     private $_domain = '';
+=======
+class LookupDomain extends Base {
+    public $action = "name_suggest";
+    public $object = "domain";
+
+    public $_formatHolder = "";
+>>>>>>> 8d38b07d82e838deed7e8be70befd06fe6d5b4d6
     public $resultFullRaw;
     public $resultRaw;
     public $resultFullFormatted;
     public $resultFormatted;
-    protected $defaultTlds = array('.com','.net','.org', '.ca');
 
-    public function __construct($formatString, $dataObject)
-    {
+    public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
         parent::__construct();
+<<<<<<< HEAD
         $this->setDataObject($formatString, $dataObject);
         $this->_validateObject();
+=======
+
+        $this->_formatHolder = $formatString;
+
+        $this->_validateObject( $dataObject );
+
+        $this->send( $dataObject, $returnFullResponse );
+>>>>>>> 8d38b07d82e838deed7e8be70befd06fe6d5b4d6
     }
 
     public function __destruct()
@@ -29,12 +44,11 @@ class LookupDomain extends Base
     // Validate the object
     public function _validateObject( $dataObject )
     {
-        $domain = '';
-
         // search domain must be defined
-        if (!$this->hasDomain()) {
+        if (!isset($dataObject->attributes->domain)) {
             throw new Exception('oSRS Error - Search domain string not defined.');
         }
+<<<<<<< HEAD
 
         $domain = $this->getDomain();
 
@@ -82,5 +96,7 @@ class LookupDomain extends Base
 
         $this->resultFullFormatted = $this->convertArray2Formatted($this->dataFormat, $this->resultFullRaw);
         $this->resultFormatted = $this->convertArray2Formatted($this->dataFormat, $this->resultRaw);
+=======
+>>>>>>> 8d38b07d82e838deed7e8be70befd06fe6d5b4d6
     }
 }
