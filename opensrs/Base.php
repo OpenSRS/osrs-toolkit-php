@@ -4,6 +4,7 @@ namespace OpenSRS;
 
 use OpenSRS\DataObjectTrait;
 use OpenSRS\Exception;
+use OpenSRS\APIException;
 
 defined('OPENSRSURI') or die;
 
@@ -388,7 +389,7 @@ class Base
 			// code 415
 			$arrayResult['response_code'] != 415
 		){
-			throw new Exception("oSRS Error Code #{$arrayResult['response_code']}: {$arrayResult['response_text']}.");
+			throw new APIException("oSRS Error Code #{$arrayResult['response_code']}: {$arrayResult['response_text']}.");
 		}
 
 		if( method_exists( $this, 'customResponseHandling' )){
