@@ -377,11 +377,6 @@ class Base
 		// Flip XML to Array
 		$arrayResult = $this->_opsHandler->decode( $XMLresult );
 
-
-		if( method_exists( $this, 'customResponseHandling' )){
-			$arrayResult = $this->customResponseHandling( $arrayResult );
-		}
-
 		if(
 			// is_success will be 0 if there was
 			// an error
@@ -396,6 +391,9 @@ class Base
 			throw new Exception("oSRS Error Code #{$arrayResult['response_code']}: {$arrayResult['response_text']}.");
 		}
 
+		if( method_exists( $this, 'customResponseHandling' )){
+			$arrayResult = $this->customResponseHandling( $arrayResult, $returnFullResponse );
+		}
 
 		// Results
         $this->resultFullRaw = $arrayResult;
