@@ -14,17 +14,7 @@ class FastLookup
 
     use DataObjectTrait;
 
-    // Class constructor
-    public function __construct()
-    {
-    }
-
-    // Class destructor
-    public function __destruct()
-    {
-    }
-
-//  Send a command to the server
+    //  Send a command to the server
     public function checkDomain($domain)
     {
         // make or get the socket filehandle
@@ -53,6 +43,7 @@ class FastLookup
 
     public function checkDomainBunch($domain, $tlds)
     {
+        var_dump($domain);
         if (!$this->init_socket()) {
             // throw new Exception('oSRS Error - Unable to establish socket: ('.$this->_socketErrorNum.') '.$this->_socketErrorMsg);
             // die();
@@ -142,5 +133,29 @@ class FastLookup
     {
         fclose($this->_socket);
         $this->_socket = false;
+    }
+
+    public function send($datObject, $tlds = array())
+    {
+        $result = $this->checkDomainBunch($this->getDomain(), $tlds);
+
+        // Results
+        $this->resultFullRaw = $result;
+        $this->resultRaw = $result;
+        $this->resultFullFormatted = $this->convertArray2Formatted($this->dataFormat, $this->resultFullRaw);
+        $this->resultFormatted = $this->convertArray2Formatted($this->dataFormat, $this->resultRaw);
+    }
+
+    public function convertArray2Formatted($type = '', $data = '')
+    {
+        $resultString = '';
+        if ($type == 'json') {
+            $resultString = json_encode($data);
+        }
+        if ($type == 'yaml') {
+            $resultString = Spyc::YAMLDump($data);
+        }
+
+        return $resultString;
     }
 }
