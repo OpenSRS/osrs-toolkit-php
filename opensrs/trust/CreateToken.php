@@ -41,11 +41,10 @@ class CreateToken extends Base
     }
 
     // Validate the object
-    private function _validateObject()
+    public function _validateObject($datObject)
     {
-        if (!isset($this->_dataObject->data->order_id) and !isset($this->_dataObject->data->product_id)) {
+        if (!isset($dataObject->data->order_id) and !isset($dataObject->data->product_id)) {
             throw new Exception('oSRS Error - order_id or product_id is not defined.');
         }
-
     }
 }
