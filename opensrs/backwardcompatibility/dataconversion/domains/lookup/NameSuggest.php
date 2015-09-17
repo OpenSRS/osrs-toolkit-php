@@ -70,7 +70,7 @@ class NameSuggest extends DataConversion {
 
 		// run old 'getTlds' method (now called 'getServiceOverride') to get
 		// info that should be part of service override entries
-		$dataObject->attributes->service_override = $this->getServiceOverride( $dataObject );
+		$newDataObject->attributes->service_override = $this->getServiceOverride( $dataObject );
 
 		$newDataObject->attributes->services = array( "lookup", "suggestion", );
 		/** end setting service_override **/

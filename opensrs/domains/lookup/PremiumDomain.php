@@ -5,22 +5,24 @@ namespace opensrs\domains\lookup;
 use OpenSRS\Base;
 use OpenSRS\Exception;
 
-class PremiumDomain extends Base
-{
-    private $_domain = '';
-    private $_tldSelect = array();
-    private $_tldAll = array();
+class PremiumDomain extends Base {
+    public $action = "name_suggest";
+    public $object = "domain";
+
+    public $_formatHolder = "";
     public $resultFullRaw;
     public $resultRaw;
     public $resultFullFormatted;
     public $resultFormatted;
-    public $result;
 
-    public function __construct($formatString, $dataObject)
-    {
+    public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
         parent::__construct();
-        $this->setDataObject($formatString, $dataObject);
-        $this->_validateObject();
+
+        $this->_formatHolder = $formatString;
+
+        $this->_validateObject( $dataObject );
+
+        $this->send( $dataObject, $returnFullResponse );
     }
 
     public function __destruct()
@@ -31,59 +33,27 @@ class PremiumDomain extends Base
     // Validate the object
     public function _validateObject( $dataObject )
     {
-        $domain = '';
-
-        // search domain must be definded
-        if (!$this->hasDomain()) { 
-            throw new Exception('oSRS Error - Search domain string not defined.');
+        if (
+            !isset($dataObject->attributes->searchstring) ||
+            !$dataObject->attributes->searchstring
+        ) {
+            throw new Exception('oSRS Error - searchstring is not defined.');
         }
-
-        // Grab domain name
-        $domain = $this->getDomain();
-
-        // get tlds
-        $tlds = $this->getConfiguredTlds();
-
-        // Call function
-        $resObject = $this->_domainTLD($domain, $tlds);
     }
 
-    // Selected / all TLD options
-    private function _domainTLD($domain, $request)
-    {
-        $cmd = array(
-            'protocol' => 'XCP',
-            'action' => 'name_suggest',
-            'object' => 'domain',
-            'attributes' => array(
-                'searchstring' => $domain,
-                'service_override' => array(
-                    'premium' => array(
-                        'tlds' => $request,
-                    ),
-                ),
-                'services' => array(
-                    'premium',
-                ),
-            ),
-        );
+    public function customResponseHandling( $arrayResult, $returnFullResponse = true ){
+        if( !$returnFullResponse ){
+            if (isset($arrayResult['attributes'])){
+                $resultRaw = array();
 
-        if (isset($this->dataObject->data->maximum) && $this->dataObject->data->maximum != '') {
-            $cmd['attributes']['service_override']['premium']['maximum'] = $this->dataObject->data->maximum;
+                if(isset($arrayResult['attributes']['premium']['items'])){
+                    $resultRaw['premium'] = $arrayResult['attributes']['premium']['items'];
+                }
+
+                $arrayResult = $resultRaw;
+            }
         }
 
-        $xmlCMD = $this->_opsHandler->encode($cmd);                    // Flip Array to XML
-        $XMLresult = $this->send_cmd($xmlCMD);                        // Send XML
-        $arrayResult = $this->_opsHandler->decode($XMLresult);        // FLip XML to Array
-
-        // Results
-        $this->resultFullRaw = $arrayResult;
-        if (isset($arrayResult['attributes']['premium']['items'])) {
-            $this->resultRaw = $arrayResult['attributes']['premium']['items'];
-        } else {
-            $this->resultRaw = $arrayResult;                        // Null if there are no premium domains 
-        }
-
-        $this->resultFullFormatted = $this->convertArray2Formatted($this->dataFormat, $this->resultFullRaw);
-        $this->resultFormatted = $this->convertArray2Formatted($this->dataFormat, $this->resultRaw); }
+        return $arrayResult;
+    }
 }

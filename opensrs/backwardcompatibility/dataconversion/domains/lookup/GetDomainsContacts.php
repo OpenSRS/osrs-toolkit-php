@@ -24,10 +24,12 @@ class GetDomainsContacts extends DataConversion {
 	//  this will map ->data->domain in the original
 	//  to ->attributes->domain in the new format
 	protected $newStructure = array(
+			'attributes' => array(
 			// Handling this one manually below
 			// as it needs to be exploded into 
 			// an array using ',' as the delimiter
 			// 'domain_list' => 'data->domain_list',
+			),
 		);
 
 	public function convertDataObject( $dataObject, $newStructure = null ) {
@@ -40,6 +42,9 @@ class GetDomainsContacts extends DataConversion {
 		$newDataObject = $p->convertDataObject( $dataObject, $newStructure );
 
 		// set attributes->domain_list
+		if(!is_object($newDataObject->attributes)){
+			$newDataObject->attributes = new \stdClass;
+		}
 		$newDataObject->attributes->domain_list = explode(",", $dataObject->data->domain_list);
 
 		return $newDataObject;
