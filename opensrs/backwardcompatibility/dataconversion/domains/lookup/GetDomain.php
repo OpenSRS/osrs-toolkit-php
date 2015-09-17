@@ -29,9 +29,9 @@ class GetDomain extends DataConversion {
 		'attributes' => array(
 			'domain' => 'data->domain',
 			'registrant_ip' => 'data->registrant_ip',
-			'limit' => 'data->limit',
-			'domain_name' => 'data->domain',
+			'domain_name' => 'data->domain_name',
 			'page' => 'data->page',
+			'limit' => 'data->limit',
 			'max_to_expiry' => 'data->max_to_expiry',
 			'min_to_expiry' => 'data->min_to_expiry',
 			'type' => 'data->type',

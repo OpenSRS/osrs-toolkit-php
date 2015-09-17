@@ -34,8 +34,8 @@ class LookupDomain extends Base {
     public function _validateObject( $dataObject )
     {
         // search domain must be defined
-        if (!isset($dataObject->attributes->domain)) {
-            throw new Exception('oSRS Error - Search domain string not defined.');
+        if (!isset($dataObject->attributes->searchstring)) {
+            throw new Exception('oSRS Error - searchstring is not defined.');
         }
     }
 }

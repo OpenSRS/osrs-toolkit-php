@@ -5,7 +5,7 @@ namespace OpenSRS\backwardcompatibility\dataconversion\domains\lookup;
 use OpenSRS\backwardcompatibility\dataconversion\DataConversion;
 use OpenSRS\Exception;
 
-class GetCaBlockerList extends DataConversion {
+class GetDeletedDomains extends DataConversion {
 	// New structure for API calls handled by
 	// the toolkit.
 	//
