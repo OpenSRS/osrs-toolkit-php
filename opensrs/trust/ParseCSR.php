@@ -15,19 +15,24 @@ use OpenSRS\Exception;
 
 class ParseCSR extends Base
 {
-    private $_dataObject;
+    protected $action = 'parse_csr';
+    protected $object = 'trust_service';
+
     private $_formatHolder = '';
     public $resultFullRaw;
     public $resultRaw;
     public $resultFullFormatted;
     public $resultFormatted;
 
-    public function __construct($formatString, $dataObject)
+    public function __construct($formatString, $dataObject, $returnFullResults = null)
     {
         parent::__construct();
-        $this->_dataObject = $dataObject;
+
         $this->_formatHolder = $formatString;
-        $this->_validateObject();
+
+        $this->_validateObject($dataObject);
+
+        $this->send($dataObject, $returnFullResults);
     }
 
     public function __destruct()
@@ -36,50 +41,14 @@ class ParseCSR extends Base
     }
 
     // Validate the object
-    private function _validateObject()
+    public function _validateObject($dataObject)
     {
-        $allPassed = true;
-
-        if (!isset($this->_dataObject->data->csr)) {
+        if (!isset($dataObject->data->csr)) {
             throw new Exception('oSRS Error - csr is not defined.');
-            $allPassed = false;
         }
 
-        if (!isset($this->_dataObject->data->product_type)) {
+        if (!isset($dataObject->data->product_type)) {
             throw new Exception('oSRS Error - product_type is not defined.');
-            $allPassed = false;
         }
-
-        // Run the command
-        if ($allPassed) {
-            // Execute the command
-            $this->_processRequest();
-        } else {
-            throw new Exception('oSRS Error - Incorrect call.');
-        }
-    }
-
-    // Post validation functions
-    private function _processRequest()
-    {
-        $cmd = array(
-            'protocol' => 'XCP',
-            'action' => 'parse_csr',
-            'object' => 'trust_service',
-            'attributes' => array(
-                'product_type' => $this->_dataObject->data->product_type,
-                'csr' => $this->_dataObject->data->csr,
-            ),
-        );
-
-        $xmlCMD = $this->_opsHandler->encode($cmd);                    // Flip Array to XML
-        $XMLresult = $this->send_cmd($xmlCMD);                        // Send XML
-        $arrayResult = $this->_opsHandler->decode($XMLresult);        // Flip XML to Array
-
-        // Results
-        $this->resultFullRaw = $arrayResult;
-        $this->resultRaw = $arrayResult;
-        $this->resultFullFormatted = $this->convertArray2Formatted($this->_formatHolder, $this->resultFullRaw);
-        $this->resultFormatted = $this->convertArray2Formatted($this->_formatHolder, $this->resultRaw);
     }
 }
