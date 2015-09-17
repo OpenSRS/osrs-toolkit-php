@@ -5,7 +5,7 @@ namespace opensrs\domains\lookup;
 use OpenSRS\Base;
 use OpenSRS\Exception;
 
-class BelongsToRsp extends openSRS_base {
+class BelongsToRsp extends Base {
 	public $action = "belongs_to_rsp";
 	public $object = "domain";
 

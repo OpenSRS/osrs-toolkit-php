@@ -7,6 +7,8 @@ use OpenSRS\domains\lookup\NameSuggest;
  */
 class NameSuggestTest extends PHPUnit_Framework_TestCase
 {
+    protected $func = 'lookupNameSuggest';
+
     /**
      * New NameSuggest should throw an exception if 
      * data->domain is ommitted 
@@ -16,7 +18,6 @@ class NameSuggestTest extends PHPUnit_Framework_TestCase
     public function testValidateMissingDomain()
     {
         $data = (object) array (
-            'func' => 'lookupNameSuggest',
             'data' => (object) array (
                 // 'domain' => 'hockey.com'
                 ),
@@ -35,23 +36,21 @@ class NameSuggestTest extends PHPUnit_Framework_TestCase
     public function testGetTlds()
     {
         // get included default tlds
-        $data = (object) array (
-            'func' => 'lookupNameSuggest',
-            'data' => (object) array (
-                'domain' => 'hockey.com',
-                ),
-            );
+        $data = new \stdClass;
+        $data->data = new \stdClass;
+        $data->data->domain = 'hockey.com';
 
-
+        $bc = new OpenSRS\backwardcompatibility\dataconversion\domains\lookup\NameSuggest;
+        $data = $bc->convertDataObject( $data );
 
         // test default tlds
-        $ns = new NameSuggest('array', $data);
+        $ns = new NameSuggest('array', $data, true);
         $expectedResult = array(
             "lookup" => array(
-                "tlds" => $ns->defaulttld_allnsdomains
+                "tlds" => $ns->defaultTlds
                 ),
             "suggestion" => array(
-                "tlds" => $ns->defaulttld_alllkdomains
+                "tlds" => $ns->defaultTlds
                 )
             );
         $this->assertTrue($expectedResult == $ns->getTlds());
