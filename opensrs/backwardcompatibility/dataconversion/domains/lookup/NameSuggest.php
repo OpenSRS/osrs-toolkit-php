@@ -5,7 +5,7 @@ namespace OpenSRS\backwardcompatibility\dataconversion\domains\lookup;
 use OpenSRS\backwardcompatibility\dataconversion\DataConversion;
 use OpenSRS\Exception;
 
-class LookupDomain extends DataConversion {
+class NameSuggest extends DataConversion {
 	// New structure for API calls handled by
 	// the toolkit.
 	//
