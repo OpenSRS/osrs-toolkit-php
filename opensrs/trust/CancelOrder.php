@@ -41,33 +41,10 @@ class CancelOrder extends Base
     }
 
     // Validate the object
-    private function _validateObject()
+    public function _validateObject($dataObject)
     {
-        if (!isset($this->_dataObject->data->order_id)) {
+        if (!isset($dataObject->data->order_id)) {
             throw new Exception('oSRS Error - order_id is not defined.');
         }
     }
-
-    // Post validation functions
-    // private function _processRequest()
-    // {
-    //     $cmd = array(
-    //         'protocol' => 'XCP',
-    //         'action' => 'cancel_order',
-    //         'object' => 'trust_service',
-    //         'attributes' => array(
-    //             'order_id' => $this->_dataObject->data->order_id,
-    //         ),
-    //     );
-    //
-    //     $xmlCMD = $this->_opsHandler->encode($cmd);                    // Flip Array to XML
-    //     $XMLresult = $this->send_cmd($xmlCMD);                        // Send XML
-    //     $arrayResult = $this->_opsHandler->decode($XMLresult);        // Flip XML to Array
-    //
-    //     // Results
-    //     $this->resultFullRaw = $arrayResult;
-    //     $this->resultRaw = $arrayResult;
-    //     $this->resultFullFormatted = $this->convertArray2Formatted($this->_formatHolder, $this->resultFullRaw);
-    //     $this->resultFormatted = $this->convertArray2Formatted($this->_formatHolder, $this->resultRaw);
-    // }
 }
