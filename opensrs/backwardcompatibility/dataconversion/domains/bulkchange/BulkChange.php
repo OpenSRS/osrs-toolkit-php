@@ -43,8 +43,6 @@ class BulkChange extends DataConversion {
 			'dns_record_data' => 'data->dns_record_data',
 
 			'type' => 'data->type',
-			'apply_to_all_reseller_items' => 'data->apply_to_all_reseller_items',
-			'apply_to_all_reseller_items' => 'data->apply_to_all_reseller_items',
 			),
 		);
 

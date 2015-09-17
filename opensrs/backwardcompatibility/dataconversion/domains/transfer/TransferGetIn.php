@@ -39,7 +39,6 @@ class TransferGetIn extends DataConversion {
 			'owner_request_to' => 'data->owner_request_to',
 			'page' => 'data->page',
 			'request_address' => 'data->request_address',
-			'request_address' => 'data->request_address',
 			'status' => 'data->status',
 			'transfer_id' => 'data->transfer_id',
 			),
