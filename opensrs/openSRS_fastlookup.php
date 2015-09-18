@@ -23,7 +23,6 @@ class openSRS_fastlookup
         // make or get the socket filehandle
         if (!$this->init_socket()) {
             throw new Exception('oSRS Error - Unable to establish socket: ('.$this->_socketErrorNum.') '.$this->_socketErrorMsg);
-            die();
         }
 
         // Send a check call
@@ -48,7 +47,6 @@ class openSRS_fastlookup
     {
         if (!$this->init_socket()) {
             throw new Exception('oSRS Error - Unable to establish socket: ('.$this->_socketErrorNum.') '.$this->_socketErrorMsg);
-            die();
         }
 
         // check to see if the domain has a "." in it, if it does then take everything before the dot as the domain

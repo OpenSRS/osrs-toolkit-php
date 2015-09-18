@@ -91,7 +91,6 @@ class Ops {
 			);
 			xml_parser_free($xp);
 			throw new Exception("oSRS Error - ". $error);
-			die();
 		}
 		
 		xml_parser_free($xp);

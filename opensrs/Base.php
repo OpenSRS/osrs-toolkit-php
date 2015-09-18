@@ -70,11 +70,9 @@ class Base
 		if (!function_exists('version_compare') || version_compare('4.3', phpversion(), '>=')) {
 			$error_message = "PHP version must be v4.3+ (current version is ". phpversion() .") to use \"SSL\" encryption";
 			throw new Exception ($error_message);
-			die();
 		} elseif (!function_exists('openssl_open')) {
 			$error_message = "PHP must be compiled using --with-openssl to use \"SSL\" encryption";
 			throw new Exception ($error_message);
-			die();
 		}
 	}
 
@@ -91,7 +89,6 @@ class Base
 		// make or get the socket filehandle
 		if (!$this->init_socket() ) {
 			throw new Exception ("oSRS Error - Unable to establish socket: (". $this->_socketErrorNum .") ". $this->_socketErrorMsg);
-			die();
 		}
 
 		$this->send_data($request);
