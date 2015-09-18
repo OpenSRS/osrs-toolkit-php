@@ -20,7 +20,6 @@ class FastLookup
         // make or get the socket filehandle
         if (!$this->init_socket()) {
             throw new Exception('oSRS Error - Unable to establish socket: ('.$this->_socketErrorNum.') '.$this->_socketErrorMsg);
-            die();
         }
 
         // Send a check call
@@ -43,10 +42,7 @@ class FastLookup
 
     public function checkDomainBunch($domain, $tlds)
     {
-        var_dump($domain);
         if (!$this->init_socket()) {
-            // throw new Exception('oSRS Error - Unable to establish socket: ('.$this->_socketErrorNum.') '.$this->_socketErrorMsg);
-            // die();
             throw new Exception('oSRS Error - Unable to establish socket: ('.$this->_socketErrorNum.') '.$this->_socketErrorMsg);
         }
 
