@@ -16,7 +16,7 @@ use OpenSRS\Exception;
 class CancelOrder extends Base
 {
     public $action = 'cancel_order';
-    public $object = 'trust_service'
+    public $object = 'trust_service';
 
     private $_formatHolder = '';
     public $resultFullRaw;
