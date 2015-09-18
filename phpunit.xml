@@ -4,4 +4,9 @@
             <directory>./tests</directory>
         </testsuite>
     </testsuites>
+    <groups>
+    	<exclude>
+    		<group>validsubmission</group>
+    	</exclude>
+    </groups>
 </phpunit>
