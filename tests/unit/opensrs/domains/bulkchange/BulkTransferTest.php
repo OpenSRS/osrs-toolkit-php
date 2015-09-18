@@ -20,7 +20,27 @@ class BulkTransferTest extends PHPUnit_Framework_TestCase
 		'push_domains' => 'Push_domains',
 		'whois_privacy' => 'Whois_privacy'
 		);
-    protected $validSubmission = '{"personal":{"first_name":"Claire","last_name":"Lam","org_name":"Tucows","address1":"96 Mowat Avenue","address2":"","address3":"","city":"Toronto","state":"ON","postal_code":"M6K 3M1","country":"CA","phone":"416-535-0123 x1386","fax":"","email":"clam@tucows.com","url":"http:\/\/www.tucows.com","lang_pref":"EN"},"data":{"registrant_ip":"","affiliate_id":"","reg_username":"clam","reg_domain":"","reg_password":"abc123","custom_tech_contact":"","handle":"","domain_list":"phptest.com,phptest2.com,phptest3.com","change_type":"availability_check","op_type":"export","custom_tech_contact":"clam@tucows.com"}}';
+    protected $validSubmission = array(
+        'attributes' => array(
+            'reg_username' => '',
+            'reg_domain' => '',
+            'reg_password' => '',
+
+            'custom_tech_contact' => '',
+            'domain_list' => '',
+
+            'contact_set' => array(
+                'owner' => '',
+                'admin' => '',
+                'billing' => '',
+                'tech' => '',
+                ),
+
+            'affiliate_id' => '',
+            'handle' => '',
+            'registrant_ip' => '',
+            ),
+        );
 
     /**
      * Valid submission should complete with no
@@ -31,7 +51,26 @@ class BulkTransferTest extends PHPUnit_Framework_TestCase
      * @group validsubmission
      */
     public function testValidSubmission() {
-        $data = json_decode( $this->validSubmission );
+        $data = json_decode( json_encode($this->validSubmission) );
+
+        $data->attributes->reg_username = "phptest";
+        $data->attributes->reg_password = "password1234";
+        $data->attributes->reg_domain = "phptest" . time() . ".com";
+
+        $data->attributes->custom_tech_contact = "techcontact";
+        $data->attributes->domain_list = array( 'phptest.com', 'phptest.net' );
+
+        $data->contact_set->owner = new \stdClass;
+        $data->contact_set->owner->first_name = "Tikloot";
+        $data->contact_set->owner->last_name = "Php";
+
+        $data->contact_set->admin = $data->contact_set->owner;
+        $data->contact_set->billing = $data->contact_set->owner;
+        $data->contact_set->tech = $data->contact_set->owner;
+
+        $data->affiliate_id = time();
+        $data->handle = "test";
+        $data->attributes->registrant_ip = long2ip(time());
 
         $ns = new BulkTransfer( 'array', $data );
 
@@ -43,10 +82,10 @@ class BulkTransferTest extends PHPUnit_Framework_TestCase
      */
     function submissionFields() {
         return array(
-            'missing reg_password' => array('reg_password'),
-            'missing reg_username' => array('reg_username'),
-            'missing domain_list' => array('domain_list'),
-            'missing custom_tech_contact' => array('custom_tech_contact'),
+            'missing reg_password' => array('custom_tech_contact'),
+            'missing reg_username' => array('domain_list'),
+            'missing domain_list' => array('reg_username'),
+            'missing custom_tech_contact' => array('reg_password'),
             );
     }
 
@@ -58,8 +97,27 @@ class BulkTransferTest extends PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
-        $data = json_decode( $this->validSubmission );
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
+        $data = json_decode( json_encode($this->validSubmission) );
+
+        $data->attributes->reg_username = "phptest";
+        $data->attributes->reg_password = "password1234";
+        $data->attributes->reg_domain = "phptest" . time() . ".com";
+
+        $data->attributes->custom_tech_contact = "techcontact";
+        $data->attributes->domain_list = array( 'phptest.com', 'phptest.net' );
+
+        $data->attributes->contact_set->owner = new \stdClass;
+        $data->attributes->contact_set->owner->first_name = "Tikloot";
+        $data->attributes->contact_set->owner->last_name = "Php";
+
+        $data->attributes->contact_set->admin = $data->attributes->contact_set->owner;
+        $data->attributes->contact_set->billing = $data->attributes->contact_set->owner;
+        $data->attributes->contact_set->tech = $data->attributes->contact_set->owner;
+
+        $data->attributes->affiliate_id = time();
+        $data->attributes->handle = "test";
+        $data->attributes->registrant_ip = long2ip(time());
 
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(
