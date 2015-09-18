@@ -32,14 +32,4 @@ class Push_domains extends Base {
 
 		return true;
 	}
-
-	public function setChangeTypeRequestFields( $dataObject, $requestData ) {
-		if(
-			isset( $dataObject->data->gaining_reseller_username ) &&
-			$dataObject->data->gaining_reseller_username!= "") {
-			$requestData['attributes']['gaining_reseller_username'] = $dataObject->data->gaining_reseller_username;
-		}
-
-		return $requestData;
-	}
 }

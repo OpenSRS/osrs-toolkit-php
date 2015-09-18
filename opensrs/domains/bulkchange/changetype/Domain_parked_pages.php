@@ -32,15 +32,4 @@ class Domain_parked_pages extends Base {
 
 		return true;
 	}
-
-	public function setChangeTypeRequestFields( $dataObject, $requestData ) {
-		if(
-			isset( $dataObject->data->op_type ) &&
-			$dataObject->data->op_type!= ""
-		) {
-			$requestData['attributes']['op_type'] = $dataObject->data->op_type;
-		}
-
-		return $requestData;
-	}
 }

@@ -39,31 +39,4 @@ class Domain_renew extends Base {
 
 		return true;
 	}
-
-	public function setChangeTypeRequestFields( $dataObject, $requestData ) {
-		if(
-			isset( $dataObject->data->period ) &&
-			$dataObject->data->period!= ""
-		) {
-			$requestData['attributes']['period'] = $dataObject->data->period;
-		}
-		if(
-			isset( $dataObject->data->let_expire ) &&
-			$dataObject->data->let_expire!= ""
-		) {
-			$requestData['attributes']['let_expire'] = $dataObject->data->let_expire;
-		}
-		if(
-			isset( $dataObject->data->auto_renew ) &&
-			$dataObject->data->auto_renew!= "") {
-			$requestData['attributes']['auto_renew'] = $dataObject->data->auto_renew;
-		}
-		if(
-			isset( $dataObject->data->affiliate_id ) &&
-			$dataObject->data->affiliate_id!= "") {
-			$requestData['attributes']['affiliate_id'] = $dataObject->data->affiliate_id;
-		}
-
-		return $requestData;
-	}
 }

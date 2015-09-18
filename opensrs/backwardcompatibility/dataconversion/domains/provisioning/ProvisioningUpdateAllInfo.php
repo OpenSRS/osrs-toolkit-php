@@ -74,7 +74,7 @@ class ProvisioningUpdateAllInfo extends DataConversion {
 
 			$newDataObject->attributes->nameserver_list = array();
 
-			foreach( $i = 0; $i < count($nameServers); $i++ ) {
+			for( $i = 0; $i < count($nameServers); $i++ ) {
 				$nameserver_obj = new \stdClass;
 
 				$nameserver_obj->fqdn = $nameServers[$i];

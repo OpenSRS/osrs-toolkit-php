@@ -39,33 +39,4 @@ class Domain_nameservers extends Base {
 
 		return true;
 	}
-
-	public function setChangeTypeRequestFields( $dataObject, $requestData ) {
-		if(
-			isset( $dataObject->data->op_type ) &&
-			$dataObject->data->op_type!= ""
-		) {
-			$requestData['attributes']['op_type'] = $dataObject->data->op_type;
-		}
-		if(
-			isset( $dataObject->data->add_ns ) &&
-			$dataObject->data->add_ns!= ""
-		) {
-			$requestData['attributes']['add_ns'] = explode( ",",$dataObject->data->add_ns );
-		}
-		if(
-			isset( $dataObject->data->remove_ns ) &&
-			$dataObject->data->remove_ns!= ""
-		) {
-			$requestData['attributes']['remove_ns'] = explode( ",",$dataObject->data->remove_ns );
-		}
-		if(
-			isset( $dataObject->data->assign_ns ) &&
-			$dataObject->data->assign_ns!= ""
-		) {
-			$requestData['attributes']['assign_ns'] = explode( ",",$dataObject->data->assign_ns );
-		}
-
-		return $requestData;
-	}
 }

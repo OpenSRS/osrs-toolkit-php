@@ -5,11 +5,6 @@ namespace opensrs\domains\bulkchange;
 use OpenSRS\Base;
 use OpenSRS\Exception;
 
-/*
- *  Required object values:
- *  data -
- */
-
 class BulkTransfer extends Base {
     public $action = "bulk_transfer";
     public $object = "domain";
@@ -36,7 +31,6 @@ class BulkTransfer extends Base {
 
 	// Validate the object
 	public function _validateObject( $dataObject ) {
-		// Command required values
 		if(
 			!isset( $dataObject->attributes->custom_tech_contact ) ||
 			$dataObject->attributes->custom_tech_contact == ""

@@ -36,7 +36,7 @@ class GetOrdersByDomain extends Base {
 		}
 	}
 
-	public function( $arrayResult, $returnFullResponse = true ){
+	public function customResponseHandling( $arrayResult, $returnFullResponse = true ){
 		if( !$returnFullResponse ){
 	        if (isset($arrayResult['attributes']['lookup']['items'])) {
 	            $arrayResult = $arrayResult['attributes']['lookup']['items'];
