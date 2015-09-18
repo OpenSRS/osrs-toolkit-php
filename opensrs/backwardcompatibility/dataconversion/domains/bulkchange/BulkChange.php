@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenSRS\backwardcompatibility\dataconversion\domains\authentication;
+namespace OpenSRS\backwardcompatibility\dataconversion\domains\bulkchange;
 
 use OpenSRS\backwardcompatibility\dataconversion\DataConversion;
 use OpenSRS\Exception;
@@ -42,7 +42,25 @@ class BulkChange extends DataConversion {
 			'dns_record_type' => 'data->dns_record_type',
 			'dns_record_data' => 'data->dns_record_data',
 
-			'type' => 'data->type',
+			// array of contacts to update, setting this
+			// manually below as requires exploding 
+			// data->type and building array based on that
+			// 'contacts' => array(
+			// 	array('type' => '', 'set' => '')
+			// 	),
+
+			// these ones have to be exploded into arrays
+			// using ',' as the delimiter
+			'add_ns' => 'data->add-ns',
+			'remove_ns' => 'data->remove_ns',
+			'assign_ns' => 'assign_ns',
+
+			'period' => 'data->period',
+			'let_expire' => 'data->let_expire',
+			'auto_renew' => 'data->auto_renew',
+			'affiliate_id' => 'data->affiliate_id',
+
+			'gaining_reseller_username' => 'data->gaining_reseller_username',
 			),
 		);
 
@@ -54,6 +72,56 @@ class BulkChange extends DataConversion {
 		}
 
 		$newDataObject = $p->convertDataObject( $dataObject, $newStructure );
+
+		// build attributes->contacts array.
+		// data->type is the contact_type,
+		// data->personal is the contact record
+		if(
+			isset( $dataObject->data->type ) && $dataObject->data->type!= "" &&
+		    isset( $dataObject->personal ) && $dataObject->personal!= ""
+	    ) {
+			$newDataObject->attributes->contacts = array();
+
+			$contact_types = explode( ",", $dataObject->data->type );
+
+			foreach( $contact_types as $i => $contact_type ) {
+				$contact = new \stdClass;
+
+				$contact->type = $contact_type;
+				$contact->set = $dataObject->personal;
+
+				$newDataObject->attributes->contacts[] = $contact;
+
+				unset($contact);
+			}
+		}
+
+		// explode *_ns fields into arrays if they exist
+		// and are not already arrays
+		if(
+			isset($newDataObject->attributes->add_ns) &&
+			!is_array($newDataObject->attributes->add_ns)
+		) {
+			$newDataObject->attributes->add_ns = explode(
+				",", $newDataObject->attributes->add_ns
+				);
+		}
+		if(
+			isset($newDataObject->attributes->remove_ns) &&
+			!is_array($newDataObject->attributes->remove_ns)
+		) {
+			$newDataObject->attributes->remove_ns = explode(
+				",", $newDataObject->attributes->remove_ns
+				);
+		}
+		if(
+			isset($newDataObject->attributes->assign_ns) &&
+			!is_array($newDataObject->attributes->assign_ns)
+		) {
+			$newDataObject->attributes->assign_ns = explode(
+				",", $newDataObject->attributes->assign_ns
+				);
+		}
 
 		return $newDataObject;
 	}

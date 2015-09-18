@@ -54,7 +54,7 @@ class ProvisioningUpdateContacts extends DataConversion {
 		// make sure attributes->types is an array on the new
 		// object
 		if( !is_array($newDataObject->attributes->types) ) {
-			$newDataObject->attributes->types = explode( ",", $newDataObject->attributes->types)
+			$newDataObject->attributes->types = explode( ",", $newDataObject->attributes->types);
 		}
 
 		// end customizations

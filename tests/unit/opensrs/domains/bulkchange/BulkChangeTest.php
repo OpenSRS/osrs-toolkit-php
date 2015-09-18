@@ -20,7 +20,12 @@ class BulkChangeTest extends PHPUnit_Framework_TestCase
 		'push_domains' => 'Push_domains',
 		'whois_privacy' => 'Whois_privacy'
 		);
-    protected $validSubmission = '{"personal":{"first_name":"Claire","last_name":"Lam","org_name":"Tucows","address1":"96 Mowat Avenue","address2":"","address3":"","city":"Toronto","state":"ON","postal_code":"M6K 3M1","country":"CA","phone":"416-535-0123 x1386","fax":"","email":"clam@tucows.com","url":"http:\/\/www.tucows.com","lang_pref":"EN"},"data":{"registrant_ip":"","affiliate_id":"","reg_username":"clam","reg_domain":"","reg_password":"abc123","custom_tech_contact":"","handle":"","domain_list":"","change_items":"phptest.com","change_type":"availability_check"}}';
+    protected $validSubmission = array(
+        'attributes' => array(
+            'change_items' => '',
+            'change_type' => '',
+            )
+        );
 
     /**
      * Valid submission should complete with no
@@ -100,7 +105,8 @@ class BulkChangeTest extends PHPUnit_Framework_TestCase
      * @return void
      */
     public function testLoadingChangeTypeClasses() {
-        $data = json_decode( $this->validSubmission );
+        $data = json_decode( json_encode($this->validSubmission ) );
+
         $ns = new BulkChange( 'array', $data );
 
         foreach( $this->change_types as $change_type => $class_name ) {
