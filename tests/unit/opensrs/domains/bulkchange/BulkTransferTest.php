@@ -60,16 +60,16 @@ class BulkTransferTest extends PHPUnit_Framework_TestCase
         $data->attributes->custom_tech_contact = "techcontact";
         $data->attributes->domain_list = array( 'phptest.com', 'phptest.net' );
 
-        $data->contact_set->owner = new \stdClass;
-        $data->contact_set->owner->first_name = "Tikloot";
-        $data->contact_set->owner->last_name = "Php";
+        $data->attributes->contact_set->owner = new \stdClass;
+        $data->attributes->contact_set->owner->first_name = "Tikloot";
+        $data->attributes->contact_set->owner->last_name = "Php";
 
-        $data->contact_set->admin = $data->contact_set->owner;
-        $data->contact_set->billing = $data->contact_set->owner;
-        $data->contact_set->tech = $data->contact_set->owner;
+        $data->attributes->contact_set->admin = $data->attributes->contact_set->owner;
+        $data->attributes->contact_set->billing = $data->attributes->contact_set->owner;
+        $data->attributes->contact_set->tech = $data->attributes->contact_set->owner;
 
-        $data->affiliate_id = time();
-        $data->handle = "test";
+        $data->attributes->affiliate_id = time();
+        $data->attributes->handle = "test";
         $data->attributes->registrant_ip = long2ip(time());
 
         $ns = new BulkTransfer( 'array', $data );

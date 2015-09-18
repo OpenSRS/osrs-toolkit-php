@@ -4,10 +4,6 @@ namespace opensrs\domains\dnszone;
 
 use OpenSRS\Base;
 use OpenSRS\Exception;
-/*
- *  Required object values:
- *  data -
- */
 
 class DnsReset extends Base {
     public $action = "reset_dns_zone";
