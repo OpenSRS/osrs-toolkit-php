@@ -24,7 +24,7 @@ class BulkChangeTest extends PHPUnit_Framework_TestCase
         'attributes' => array(
             'change_items' => '',
             'change_type' => '',
-            )
+            ),
         );
 
     /**
@@ -34,9 +34,14 @@ class BulkChangeTest extends PHPUnit_Framework_TestCase
      * @return void
      *
      * @group validsubmission
+     * @group bulkchangevalidsubmission
      */
     public function testValidSubmission() {
-        $data = json_decode( $this->validSubmission );
+        $data = json_decode( json_encode($this->validSubmission ) );
+
+        $data->attributes->change_type = 'availability_check';
+        $data->attributes->change_items = 'phptest' . time() . '.com,' .
+                                          'phptest' . time() . '.net';
 
         $ns = new BulkChange( 'array', $data );
 

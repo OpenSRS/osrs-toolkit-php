@@ -25,7 +25,10 @@ class BulkChange extends DataConversion {
 	//  to ->attributes->domain in the new format
 	protected $newStructure = array(
 		'attributes' => array(
+			// this has to be exploded into an array,
+			// handled below
 			'change_items' => 'data->change_items',
+
 			'change_type' => 'data->change_type',
 			'op_type' => 'data->op_type',
 
@@ -51,9 +54,9 @@ class BulkChange extends DataConversion {
 
 			// these ones have to be exploded into arrays
 			// using ',' as the delimiter
-			'add_ns' => 'data->add-ns',
+			'add_ns' => 'data->add_ns',
 			'remove_ns' => 'data->remove_ns',
-			'assign_ns' => 'assign_ns',
+			'assign_ns' => 'data->assign_ns',
 
 			'period' => 'data->period',
 			'let_expire' => 'data->let_expire',
@@ -73,6 +76,14 @@ class BulkChange extends DataConversion {
 
 		$newDataObject = $p->convertDataObject( $dataObject, $newStructure );
 
+		// explode change_items into an array
+		// if it isn't already
+		if( !is_array($newDataObject->attributes->change_items )) {
+			$newDataObject->attributes->change_items = explode(
+				",", $newDataObject->attributes->change_items
+				);
+		}
+
 		// build attributes->contacts array.
 		// data->type is the contact_type,
 		// data->personal is the contact record
@@ -87,8 +98,8 @@ class BulkChange extends DataConversion {
 			foreach( $contact_types as $i => $contact_type ) {
 				$contact = new \stdClass;
 
-				$contact->type = $contact_type;
 				$contact->set = $dataObject->personal;
+				$contact->type = $contact_type;
 
 				$newDataObject->attributes->contacts[] = $contact;
 
