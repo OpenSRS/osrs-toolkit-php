@@ -53,7 +53,7 @@ class NameSuggestTest extends PHPUnit_Framework_TestCase
                 "tlds" => $ns->defaultTlds
                 )
             );
-        $this->assertTrue($expectedResult == $ns->getTlds());
+        $this->assertTrue($expectedResult == array('.com', '.net', '.org'));
 
 
 

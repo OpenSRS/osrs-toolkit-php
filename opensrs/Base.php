@@ -29,7 +29,7 @@ class Base
 
 	protected $_opsHandler;
 
-    protected $defaultTlds = array('.com', '.net', '.org');
+    public $defaultTlds = array('.com', '.net', '.org');
     // protected $dataObject;
     // protected $dataFormat;
 

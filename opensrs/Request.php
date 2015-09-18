@@ -18,7 +18,6 @@ class Request
     public function process($format = '', $data = '')
     {
         if (empty($data)) {
-            // trigger_error('OSRS Error - No data found.');
             throw new Exception('OSRS Error - No data found.');
             return;
         } 

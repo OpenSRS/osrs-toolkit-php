@@ -29,7 +29,7 @@ class functionTemplate extends openSRS_base {
 		
 		// Command required values
 		if (!isSet($this->_dataObject->data->xxx) || $this->_dataObject->data->xxx == "") {
-			trigger_error ("oSRS Error - xxx is not defined.", E_USER_WARNING);
+			throw new Exception ("oSRS Error - xxx is not defined.");
 			$allPassed = false;
 		}
 				
@@ -38,7 +38,7 @@ class functionTemplate extends openSRS_base {
 			// Execute the command
 			$this->_processRequest ();
 		} else {
-			trigger_error ("oSRS Error - Incorrect call.", E_USER_WARNING);
+			throw new Exception ("oSRS Error - Incorrect call.");
 		}
 	}
 

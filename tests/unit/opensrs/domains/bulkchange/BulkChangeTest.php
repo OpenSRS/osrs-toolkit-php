@@ -66,11 +66,13 @@ class BulkChangeTest extends PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
-        $data = json_decode( $this->validSubmission );
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
+        $data = json_decode( json_encode($this->validSubmission ) );
 
-        $data->data->domain_name = "phptest" . time() . ".com";
-
+        $data->attributes->change_type = 'availability_check';
+        $data->attributes->change_items = 'phptest' . time() . '.com,' .
+                                          'phptest' . time() . '.net';
+        
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(
               'OpenSRS\Exception',
@@ -112,12 +114,20 @@ class BulkChangeTest extends PHPUnit_Framework_TestCase
     public function testLoadingChangeTypeClasses() {
         $data = json_decode( json_encode($this->validSubmission ) );
 
-        $ns = new BulkChange( 'array', $data );
+        $data->attributes->change_type = 'availability_check';
+        $data->attributes->change_items = 'phptest' . time() . '.com,' .
+                                          'phptest' . time() . '.net';
+
+        $ns = new BulkChange( 'array', $data, false, false );
 
         foreach( $this->change_types as $change_type => $class_name ) {
         	$changeTypeClassName = $ns->getFriendlyClassName( $change_type );
 	        $this->assertTrue( $changeTypeClassName == $class_name );
-        	$ns->loadChangeTypeClass( $changeTypeClassName );
+
+            $fullClassName = "OpenSRS\\domains\\bulkchange\\changetype\\$changeTypeClassName";
+        	$changeTypeClass = $ns->loadChangeTypeClass( $changeTypeClassName );
+
+            $this->assertTrue( $changeTypeClass instanceof $fullClassName );
         }
     }
 }

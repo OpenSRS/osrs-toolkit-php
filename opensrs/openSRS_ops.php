@@ -105,7 +105,7 @@ class openSRS_ops
                 xml_get_current_line_number($xp)
             );
             xml_parser_free($xp);
-            trigger_error('oSRS Error - '.$error, E_USER_WARNING);
+            throw new Exception('oSRS Error - '.$error);
             die();
         }
 

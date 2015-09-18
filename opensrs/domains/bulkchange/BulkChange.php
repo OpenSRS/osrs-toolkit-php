@@ -17,14 +17,16 @@ class BulkChange extends Base {
 
 	protected $changeTypeHandle = null;
 
-    public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
+    public function __construct( $formatString, $dataObject, $returnFullResponse = true, $send = true ) {
         parent::__construct();
 
         $this->_formatHolder = $formatString;
 
-        $this->_validateObject( $dataObject );
+        if($send){
+	        $this->_validateObject( $dataObject );
 
-        $this->send( $dataObject, $returnFullResponse );
+	        $this->send( $dataObject, $returnFullResponse );
+        }
     }
 
 	public function __destruct() {

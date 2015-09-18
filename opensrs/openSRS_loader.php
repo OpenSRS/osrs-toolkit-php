@@ -52,7 +52,7 @@ function processOpenSRS($type = '', $data = '')
 
     }
     catch(\OpenSRS\Exception $e) {
-        trigger_error ($e->getMessage(), E_USER_WARNING);
+        throw new Exception($e->getMessage());
         return ($e->getMessage());
     }
 }

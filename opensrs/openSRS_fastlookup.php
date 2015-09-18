@@ -22,7 +22,7 @@ class openSRS_fastlookup
     {
         // make or get the socket filehandle
         if (!$this->init_socket()) {
-            trigger_error('oSRS Error - Unable to establish socket: ('.$this->_socketErrorNum.') '.$this->_socketErrorMsg, E_USER_WARNING);
+            throw new Exception('oSRS Error - Unable to establish socket: ('.$this->_socketErrorNum.') '.$this->_socketErrorMsg);
             die();
         }
 
@@ -47,7 +47,7 @@ class openSRS_fastlookup
     public function checkDomainBunch($domain, $tlds)
     {
         if (!$this->init_socket()) {
-            trigger_error('oSRS Error - Unable to establish socket: ('.$this->_socketErrorNum.') '.$this->_socketErrorMsg, E_USER_WARNING);
+            throw new Exception('oSRS Error - Unable to establish socket: ('.$this->_socketErrorNum.') '.$this->_socketErrorMsg);
             die();
         }
 

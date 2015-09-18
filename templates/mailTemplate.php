@@ -32,21 +32,21 @@ class xxx extends openSRS_mail {
 		
 		// Command required values - authentication
 		if (!isSet($this->_dataObject->data->username) || $this->_dataObject->data->username == "") {
-			trigger_error ("oSRS-eMail Error - username is not defined.", E_USER_WARNING);
+			throw new Exception ("oSRS-eMail Error - username is not defined.");
 			$allPassed = false;
 		}
 		if (!isSet($this->_dataObject->data->password) || $this->_dataObject->data->password == "") {
-			trigger_error ("oSRS-eMail Error - password is not defined.", E_USER_WARNING);
+			throw new Exception ("oSRS-eMail Error - password is not defined.");
 			$allPassed = false;
 		}
 		if (!isSet($this->_dataObject->data->authdomain) || $this->_dataObject->data->authdomain == "") {
-			trigger_error ("oSRS-eMail Error - authentication domain is not defined.", E_USER_WARNING);
+			throw new Exception ("oSRS-eMail Error - authentication domain is not defined.");
 			$allPassed = false;
 		}
 				
 		// Command required values
 		if (!isSet($this->_dataObject->data->xxx) || $this->_dataObject->data->xxx == "") {
-			trigger_error ("oSRS-eMail Error - xxx is not defined.", E_USER_WARNING);
+			throw new Exception ("oSRS-eMail Error - xxx is not defined.");
 			$allPassed = false;
 		} else {
 			$compile .= " xxx=\"". $this->_dataObject->data->xxx ."\"";
@@ -60,7 +60,7 @@ class xxx extends openSRS_mail {
 			// Execute the command
 			$this->_processRequest ($compile);
 		} else {
-			trigger_error ("oSRS-eMail Error - Missing data.", E_USER_WARNING);
+			throw new Exception ("oSRS-eMail Error - Missing data.");
 		}
 	}
 	
