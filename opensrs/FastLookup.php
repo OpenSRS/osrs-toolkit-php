@@ -4,6 +4,7 @@ namespace OpenSrs;
 
 use OpenSRS\DataObjectTrait;
 use OpenSRS\Exception;
+use OpenSRS\APIException;
 
 class FastLookup
 {
@@ -19,7 +20,7 @@ class FastLookup
     {
         // make or get the socket filehandle
         if (!$this->init_socket()) {
-            throw new Exception('oSRS Error - Unable to establish socket: ('.$this->_socketErrorNum.') '.$this->_socketErrorMsg);
+            throw new APIException('oSRS Error - Unable to establish socket: ('.$this->_socketErrorNum.') '.$this->_socketErrorMsg);
         }
 
         // Send a check call
@@ -43,7 +44,7 @@ class FastLookup
     public function checkDomainBunch($domain, $tlds)
     {
         if (!$this->init_socket()) {
-            throw new Exception('oSRS Error - Unable to establish socket: ('.$this->_socketErrorNum.') '.$this->_socketErrorMsg);
+            throw new APIException('oSRS Error - Unable to establish socket: ('.$this->_socketErrorNum.') '.$this->_socketErrorMsg);
         }
 
         // check to see if the domain has a "." in it, if it does then take everything before the dot as the domain
