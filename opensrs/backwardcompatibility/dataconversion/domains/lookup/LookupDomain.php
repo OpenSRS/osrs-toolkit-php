@@ -27,7 +27,7 @@ class LookupDomain extends DataConversion {
 		'attributes' => array(
 			// setting this one by hand below
 			// 'services' => 'data->domain',
-			'searchstring' => 'data->domain',
+			'domain' => 'data->searchstring',
 
 			// setting service_override and its
 			// contents by hand below, better
@@ -62,39 +62,6 @@ class LookupDomain extends DataConversion {
 		}
 
 		$newDataObject = $p->convertDataObject( $dataObject, $newStructure );
-
-		$tlds = array();
-
-		if(isset($dataObject->data->selected) && $dataObject->data->selected){
-			$tlds = explode(";", $dataObject->data->selected);
-		}
-		if(
-			empty($tlds) && 
-			isset($dataObject->data->defaulttld) &&
-			$dataObject->data->defaulttld
-		){
-			$tlds = explode(";", $dataObject->data->defaulttld);
-		}
-
-		if(empty($tlds)){
-			$tlds = $this->defaultTlds;
-		}
-
-		/**
-		 * setting service_override
-		 */
-		$newDataObject->attributes->service_override = new \stdClass;
-		$service_override = new \stdCLass;
-		$service_override->tlds = $tlds;
-
-		if(isset( $dataObject->data->maximum ) && $dataObject->data->maximum){
-			$service_override->maximum = $dataObject->data->maximum;
-		}
-
-		$newDataObject->attributes->service_override->lookup = $service_override;
-
-		$newDataObject->attributes->services = array( "lookup", );
-		/** end setting service_override **/
 
 		return $newDataObject;
 	}

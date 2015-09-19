@@ -23,7 +23,7 @@ $callstring = "";
 $callArray = array (
 	"func" => $formFunction,
 	"data" => array (
-		"domain" => $formSearchWord,
+		"searchstring" => $formSearchWord,
                 "maximum" => $_POST['max'],
 		"selected" => implode (";", $formSelectedDomainArray),
 		"defaulttld" => implode (";", $allDomainArray)
@@ -33,16 +33,17 @@ $callArray = array (
 if ($formFormat == "json") $callstring = json_encode($callArray);
 if ($formFormat == "yaml") $callstring = Spyc::YAMLDump($callArray);
 
-
-
 // Open SRS Call -> Result
 $osrsHandler = processOpenSRS ($formFormat, $callstring);
 
-
 // Print out the results
 echo (" In: ". $callstring ."<br>");
-if ($osrsHandler!=NULL)
-echo ("Out: ". $osrsHandler->resultFormatted);
+
+if (isset($osrsHandler->resultFormatted)) {
+    echo ("Out: ". $osrsHandler->resultFormatted);
+} else {
+    var_dump($osrsHandler);
+}
 
 
 } else {
@@ -76,30 +77,30 @@ echo ("Out: ". $osrsHandler->resultFormatted);
 		<td class="searchBoxText" width="100%">
 			<span class="headLine">Lookup Domain</span><br>
 			<input type="text" name="domain" id="domain" value="" class="frontBox"><br>
-                        <span class="headLine">Max Number of Results </span>
-                        <input type="text" name="max" id="max" value="" class="frontBox"><br>
+        <!--                 <span class="headLine">Max Number of Results </span> -->
+        <!--                 <input type="text" name="max" id="max" value="" class="frontBox"><br> -->
 		</td>
 	</tr>
-	<tr>
-		<td width="100%"><table class="searchBoxText" border="0" cellpadding="0" cellspacing="0">
-			<tr>
-				<td width="100%"><div>
-					<div class="fronttld"><input name="tld_2" id="tld_2" value=".co.uk" type="checkbox"> .co.uk</div>
-					<div class="fronttld"><input name="tld_2" id="tld_2" value=".me" type="checkbox"> .me</div>
-					<div class="fronttld"><input name="tld_3" id="tld_3" value=".org" type="checkbox"> .org</div>
-					<div class="fronttld"><input name="tld_4" id="tld_4" value=".asia" type="checkbox"> .asia</div>
-					<div class="fronttld"><input name="tld_5" id="tld_5" value=".org.uk" type="checkbox"> .org.uk</div>
-					<div class="fronttld"><input name="tld_6" id="tld_6" value=".net" type="checkbox"> .net</div>
-					<div class="fronttld"><input name="tld_7" id="tld_7" value=".tel" type="checkbox"> .tel</div>
-					<div class="fronttld"><input name="tld_8" id="tld_8" value=".com" type="checkbox"> .com</div>
-					<div class="fronttld"><input name="tld_9" id="tld_9" value=".mobi" type="checkbox"> .mobi</div>
-					<div class="fronttld"><input name="tld_10" id="tld_10" value=".biz" type="checkbox"> .biz</div>
-					<div class="fronttld"><input name="tld_11" id="tld_11" value=".info" type="checkbox"> .info</div>
-					<div class="fronttld"><input name="tld_12" id="tld_12" value=".ca" type="checkbox"> .ca</div>
-				</div></td>
-			</tr>
-		</table></td>
-	</tr>
+	<!-- <tr> -->
+	<!-- 	<td width="100%"><table class="searchBoxText" border="0" cellpadding="0" cellspacing="0"> -->
+	<!-- 		<tr> -->
+	<!-- 			<td width="100%"><div> -->
+	<!-- 				<div class="fronttld"><input name="tld_2" id="tld_2" value=".co.uk" type="checkbox"> .co.uk</div> -->
+	<!-- 				<div class="fronttld"><input name="tld_2" id="tld_2" value=".me" type="checkbox"> .me</div> -->
+	<!-- 				<div class="fronttld"><input name="tld_3" id="tld_3" value=".org" type="checkbox"> .org</div> -->
+	<!-- 				<div class="fronttld"><input name="tld_4" id="tld_4" value=".asia" type="checkbox"> .asia</div> -->
+	<!-- 				<div class="fronttld"><input name="tld_5" id="tld_5" value=".org.uk" type="checkbox"> .org.uk</div> -->
+	<!-- 				<div class="fronttld"><input name="tld_6" id="tld_6" value=".net" type="checkbox"> .net</div> -->
+	<!-- 				<div class="fronttld"><input name="tld_7" id="tld_7" value=".tel" type="checkbox"> .tel</div> -->
+	<!-- 				<div class="fronttld"><input name="tld_8" id="tld_8" value=".com" type="checkbox"> .com</div> -->
+	<!-- 				<div class="fronttld"><input name="tld_9" id="tld_9" value=".mobi" type="checkbox"> .mobi</div> -->
+	<!-- 				<div class="fronttld"><input name="tld_10" id="tld_10" value=".biz" type="checkbox"> .biz</div> -->
+	<!-- 				<div class="fronttld"><input name="tld_11" id="tld_11" value=".info" type="checkbox"> .info</div> -->
+	<!-- 				<div class="fronttld"><input name="tld_12" id="tld_12" value=".ca" type="checkbox"> .ca</div> -->
+	<!-- 			</div></td> -->
+	<!-- 		</tr> -->
+	<!-- 	</table></td> -->
+	<!-- </tr> -->
 	<tr>
 		<td><input value="Check" id="lookupSearch" type="submit"></td>
 	</tr>

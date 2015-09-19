@@ -352,7 +352,8 @@ class Base
      *
      * @return void
      */
-    public function send( $dataObject, $returnFullResponse = true ) {
+    public function send( $dataObject, $returnFullResponse = true ) 
+    {
     	if( !is_object($dataObject )){
     		$dataObject = new \stdClass;
     	}
@@ -370,8 +371,10 @@ class Base
 
 		// Flip Array to XML
 		$xmlCMD = $this->_opsHandler->encode( json_decode(json_encode($dataObject), true) );
+
 		// Send XML
 		$XMLresult = $this->send_cmd( $xmlCMD );
+
 		// Flip XML to Array
 		$arrayResult = $this->_opsHandler->decode( $XMLresult );
 

@@ -51,8 +51,7 @@ function processOpenSRS($type = '', $data = '')
         return $request->process($type, $data);
 
     }
-    catch(\OpenSRS\Exception $e) {
-        throw new Exception($e->getMessage());
+    catch(Exception $e) {
         return ($e->getMessage());
     }
 }

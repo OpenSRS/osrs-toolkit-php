@@ -5,8 +5,9 @@ namespace opensrs\domains\lookup;
 use OpenSRS\Base;
 use OpenSRS\Exception;
 
-class LookupDomain extends Base {
-    public $action = "name_suggest";
+class LookupDomain extends Base 
+{
+    public $action = "lookup";
     public $object = "domain";
 
     public $_formatHolder = "";
@@ -19,7 +20,7 @@ class LookupDomain extends Base {
         parent::__construct();
 
         $this->_formatHolder = $formatString;
-
+        
         $this->_validateObject( $dataObject );
 
         $this->send( $dataObject, $returnFullResponse );
@@ -34,7 +35,8 @@ class LookupDomain extends Base {
     public function _validateObject( $dataObject )
     {
         // search domain must be defined
-        if (!isset($dataObject->attributes->searchstring)) {
+        // if (!isset($dataObject->attributes->searchstring)) {
+        if (!isset($dataObject->attributes->domain)) {
             throw new Exception('oSRS Error - searchstring is not defined.');
         }
     }
