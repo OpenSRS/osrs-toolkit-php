@@ -9,7 +9,7 @@ use OpenSRS\Exception;
  *  data -
  */
 
-class Domain_contacts extends Base {
+class DomainContacts extends Base {
 	protected $change_type = 'domain_contacts';
 	protected $checkFields = array(
 		'type'

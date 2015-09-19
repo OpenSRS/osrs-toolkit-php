@@ -9,11 +9,10 @@ use OpenSRS\Exception;
  *  data -
  */
 
-class Dns_zone extends Base {
-	protected $change_type = 'dns_zone';
+class WhoisPrivacy extends Base {
+	protected $change_type = 'whois_privacy';
 	protected $checkFields = array(
-		'apply_to_domains',
-		'dns_action'
+		'op_type'
 		);
 
 	public function __construct() {

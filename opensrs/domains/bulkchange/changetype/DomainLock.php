@@ -9,8 +9,8 @@ use OpenSRS\Exception;
  *  data -
  */
 
-class Domain_parked_pages extends Base {
-	protected $change_type = 'domain_parked_pages';
+class DomainLock extends Base {
+	protected $change_type = 'domain_lock';
 	protected $checkFields = array(
 		'op_type'
 		);
