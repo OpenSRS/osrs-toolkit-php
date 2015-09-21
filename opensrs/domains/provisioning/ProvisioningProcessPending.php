@@ -15,6 +15,12 @@ class ProvisioningProcessPending extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+    public $requiredFields = array(
+        'attributes' => array(
+            'order_id',
+            ),
+        );
+
 	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
@@ -27,15 +33,5 @@ class ProvisioningProcessPending extends Base {
 
 	public function __destruct() {
 		parent::__destruct();
-	}
-
-	// Validate the object
-	public function _validateObject( $dataObject ) {
-		if(
-			!isset( $dataObject->attributes->order_id ) ||
-			$dataObject->attributes->order_id == ""
-		) {
-			throw new Exception( "oSRS Error - order_id is not defined." );
-		}
 	}
 }

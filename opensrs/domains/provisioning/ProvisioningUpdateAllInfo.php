@@ -15,6 +15,12 @@ class ProvisioningUpdateAllInfo extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+    public $requiredFields = array(
+        'attributes' => array(
+            'domain',
+            ),
+        );
+
 	public $contactRequiredFields = array(
 		"first_name",
 		"last_name",
@@ -44,40 +50,7 @@ class ProvisioningUpdateAllInfo extends Base {
 	}
 
 	// Validate the object
-	public function _validateObject( $dataObject ) {
-		// Command required values
-		if(
-			!isset( $dataObject->attributes->domain ) ||
-			$dataObject->attributes->domain  == ""
-		) {
-			throw new Exception( "oSRS Error - domain is not defined." );
-		}
-
-		if(
-			!isset( $dataObject->attributes->contact_set->owner_contact ) ||
-			!$dataObject->attributes->contact_set->owner_contact
-		) {
-			throw new Exception( "oSRS Error - owner_contact is not defined." );
-		}
-		if(
-			!isset( $dataObject->attributes->contact_set->admin_contact ) ||
-			!$dataObject->attributes->contact_set->admin_contact
-		) {
-			throw new Exception( "oSRS Error - admin_contact is not defined." );
-		}
-		if(
-			!isset( $dataObject->attributes->contact_set->tech_contact ) ||
-			!$dataObject->attributes->contact_set->tech_contact
-		) {
-			throw new Exception( "oSRS Error - tech_contact in is not defined." );
-		}
-		if(
-			!isset( $dataObject->attributes->contact_set->billing_contact ) ||
-			!$dataObject->attributes->contact_set->billing_contact
-		) {
-			throw new Exception( "oSRS Error - billing_contact is not defined." );
-		}
-
+    public function _validateObject( $dataObject, $requiredFields = null ){
 		// make sure contact fields are all sent
 		$this->checkContactFields( $dataObject->attributes->contact_set );
 
@@ -100,6 +73,10 @@ class ProvisioningUpdateAllInfo extends Base {
 				throw new Exception( "oSRS Error - The function requires the same number of Nameserver IP addresses as Nameserver names if you are defining Nameserver IP addresses." );
 			}
 		}
+	
+		$parent = new parent();
+
+		$parent->_validateObject( $dataObject, $this->requiredFields );
 	}
 
 	private function checkContactFields( $contact ) {
@@ -110,13 +87,18 @@ class ProvisioningUpdateAllInfo extends Base {
 			'tech_contact',
 			'billing_contact'
 			);
+		
 		for( $contact_type = 0; $contact_type < count( $contact_types ); $contact_type++ ){
+			if(!isset($contact->{$contact_types[$contact_type]})){
+				Exception::notDefined( $contact_types[$contact_type]);
+			}
+
 			for( $i = 0; $i < count($this->contactRequiredFields); $i++ ) {
 				if(
 					!isset($contact->{$contact_types[$contact_type]}->{$this->contactRequiredFields[$i]}) ||
 					$contact->{$contact_types[$contact_type]}->{$this->contactRequiredFields[$i]} == ""
 				) {
-					throw new Exception( "oSRS Error -  ". $this->contactRequiredFields[$i] ." is not defined in {$contact_types[$contact_type]} contact set." );
+					Exception::notDefined( "{$this->contactRequiredFields[$i]} in {$contact_types[$contact_type]} " );
 				}
 			}
 		}

@@ -445,7 +445,7 @@ class Base
 	    			$this->_validateObject( $dataObject->$i, $field );
 	    		}
 	    		else{
-	    			if( !isset($dataObject->$field) || !$dataObject->$field ) {
+	    			if( !isset($dataObject->$field) || !strlen($dataObject->$field) ) {
 	    				Exception::notDefined( $field );
 	    			}
 	    		}

@@ -15,6 +15,13 @@ class ProvisioningModify extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+    public $requiredFields = array(
+        'attributes' => array(
+            'affect_domains',
+            'data',
+            ),
+        );
+
 	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
@@ -30,16 +37,13 @@ class ProvisioningModify extends Base {
 	}
 
 	// Validate the object
-	public function _validateObject( $dataObject ) {
+    public function _validateObject( $dataObject, $requiredFields = null ){
 		if( empty($dataObject->cookie) && empty($dataObject->attributes->domain ) ) {
-			throw new Exception( "oSRS Error - cookie and/or domain is not defined." );
+			Exception::notDefined( "cookie and/or domain." );
 		}
+	
+		$parent = new parent();
 
-		if( !isset($dataObject->attributes->affect_domains) || $dataObject->attributes->affect_domains == "" ) {
-			throw new Exception( "oSRS Error - affect_domains is not defined." );
-		}
-		if( !isset($dataObject->attributes->data) || $dataObject->attributes->data == "" ) {
-			throw new Exception( "oSRS Error - data variable that defines the modify type is not defined." );
-		}
+		$parent->_validateObject( $dataObject, $this->requiredFields );
 	}
 }

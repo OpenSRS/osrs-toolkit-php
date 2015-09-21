@@ -15,6 +15,12 @@ class ProvisioningQueryQueuedRequest extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+    public $requiredFields = array(
+        'attributes' => array(
+            'request_id',
+            ),
+        );
+
 	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
@@ -27,15 +33,5 @@ class ProvisioningQueryQueuedRequest extends Base {
 
 	public function __destruct() {
 		parent::__destruct();
-	}
-
-	// Validate the object
-	public function _validateObject( $dataObject ) {
-		if(
-			!isset( $dataObject->attributes->request_id ) ||
-			$dataObject->attributes->request_id == ""
-		) {
-			throw new Exception( "oSRS Error - request_id is not defined." );
-		}
 	}
 }
