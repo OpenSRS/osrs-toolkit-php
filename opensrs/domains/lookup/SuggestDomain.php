@@ -15,6 +15,12 @@ class SuggestDomain extends Base {
     public $resultFullFormatted;
     public $resultFormatted;
 
+    public $requiredFields = array(
+        'attributes' => array(
+            'searchstring',
+            ),
+        );
+
     public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
         parent::__construct();
 
@@ -27,12 +33,5 @@ class SuggestDomain extends Base {
 
 	public function __destruct () {
 		parent::__destruct();
-	}
-
-	// Validate the object
-    public function _validateObject( $dataObject ) {
-		if (!isset($dataObject->attributes->searchstring)) {
-			throw new Exception( "oSRS Error - Search searchstring is not defined.");
-		}
 	}
 }

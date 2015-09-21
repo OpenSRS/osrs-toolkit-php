@@ -15,6 +15,12 @@ class AuthenticationSendAuthCode extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+	public $requiredFields = array(
+		'attributes' => array(
+			'domain_name'
+			),
+		);
+
 	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
@@ -24,11 +30,8 @@ class AuthenticationSendAuthCode extends Base {
 
 		$this->send( $dataObject, $returnFullResponse );
 	}
-
-	// Validate the object
-	public function _validateObject( $dataObject ) {
-		if( !isset($dataObject->attributes->domain_name ) ) {
-			throw new Exception( "oSRS Error - domain_name is not defined." );
-		}
+	
+	public function __destruct() {
+		parent::__destruct();
 	}
 }

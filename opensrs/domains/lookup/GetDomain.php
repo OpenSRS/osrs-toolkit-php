@@ -15,6 +15,14 @@ class LookupDomain extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+    public $requiredFields = array(
+    	'cookie',
+
+    	'attributes' => array(
+    		'type',
+    		),
+    	);
+
 	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
@@ -27,16 +35,5 @@ class LookupDomain extends Base {
 
 	public function __destruct () {
 		parent::__destruct();
-	}
-
-	// Validate the object
-	public function _validateObject( $dataObject ){
-		if (empty($dataObject->cookie) && empty($dataObject->attributes->domain) ) {
-			throw new Exception( "oSRS Error - cookie and domain are not defined." );
-		}
-		
-		if (empty($dataObject->attributes->type)) {
-			throw new Exception( "oSRS Error - type is not defined." );
-		}
 	}
 }

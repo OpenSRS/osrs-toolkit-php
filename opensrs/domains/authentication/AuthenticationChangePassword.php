@@ -15,6 +15,12 @@ class AuthenticationChangePassword extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+	public $requiredFields = array(
+		'attributes' => array(
+			'reg_password'
+			),
+		);
+
 	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
@@ -27,12 +33,5 @@ class AuthenticationChangePassword extends Base {
 
 	public function __destruct() {
 		parent::__destruct();
-	}
-
-	// Validate the object
-	public function _validateObject( $dataObject ) {
-		if( !isset($dataObject->attributes->reg_password ) ) {
-			throw new Exception( "oSRS Error - reg_password is not defined." );
-		}
 	}
 }

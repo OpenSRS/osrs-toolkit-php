@@ -15,6 +15,12 @@ class DnsCreate extends Base {
     public $resultFullFormatted;
     public $resultFormatted;
 
+    public $requiredFields = array(
+        'attributes' => array(
+            'domain',
+            ),
+        );
+
     public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
         parent::__construct();
 

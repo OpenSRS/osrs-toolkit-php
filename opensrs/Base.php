@@ -30,6 +30,15 @@ class Base
 	protected $_opsHandler;
 
     public $defaultTlds = array('.com', '.net', '.org');
+
+    // default required fields for all calls
+    // set to empty array because that are
+    // no fields that EVERY call requires!
+    // this is set so we don't have to
+    // set $requiredFields at all on API
+    // classes that don't have any fields
+    public $requiredFields = array();
+
     // protected $dataObject;
     // protected $dataFormat;
 
@@ -43,7 +52,7 @@ class Base
 	 * @since   3.1
 	 */
 	public function __construct () {
-		$this->_verifySystemProperties ();
+		$this->_verifySystemProperties();
 		$this->_opsHandler = new Ops;
 	}
 
@@ -417,10 +426,30 @@ class Base
 
     /**
      * Method for any shared validation that is applicable to all
-     * API calls. Empty as for now is just a fallback for classes
-     * that don't have its own _validateObject method
+     * API calls. Checks API call class for requiredFields array
+     * and checks all fields on $dataObject against it to make sure
+     * all fields in requiredFields are set and have a value
+     * THIS DOES NOT VALIDATE THAT THE VALUE IS VALID!
      */
-    public function _validateObject( $dataObject ){
+    public function _validateObject( $dataObject, $requiredFields = null ){
+    	if( is_null($requiredFields) ){
+    		$requiredFields = $this->requiredFields;
+    	}
 
+    	if( !empty($requiredFields) ) {
+	    	foreach($requiredFields as $i => $field) {
+	    		if( is_array($field) ){
+	    			if(!isset($dataObject->$i)){
+	    				Exception::notDefined( $i );
+	    			}
+	    			$this->_validateObject( $dataObject->$i, $field );
+	    		}
+	    		else{
+	    			if( !isset($dataObject->$field) || !$dataObject->$field ) {
+	    				Exception::notDefined( $field );
+	    			}
+	    		}
+	    	}
+    	}
     }
 }

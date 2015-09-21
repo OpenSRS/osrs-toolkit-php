@@ -15,6 +15,12 @@ class ForwardingSet extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+    public $requiredFields = array(
+    	'attributes' => array(
+    		'subdomain',
+    		),
+    	);
+
 	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
@@ -30,13 +36,17 @@ class ForwardingSet extends Base {
 	}
 
 	// Validate the object
-	public function _validateObject( $dataObject ) {
+	public function _validateObject( $dataObject, $requiredFields = null ) {
+		$parent = new parent();
+
+		$parent->_validateObject( $dataObject, $this->requiredFields );
+
 		// Command required values
 		if(
 			( !isset($dataObject->cookie) || !$dataObject->cookie ) &&
 			( !isset($dataObject->attributes->domain) || !$dataObject->attributes->domain )
 		) {
-			throw new Exception( "oSRS Error - cookie or domain is not defined." );
+			Exception::notDefined( "cookie or domain" );
 		}
 		if(
 			isset($dataObject->cookie) &&
@@ -44,13 +54,7 @@ class ForwardingSet extends Base {
 			$dataObject->cookie &&
 			$dataObject->attributes->domain
 		) {
-			throw new Exception( "oSRS Error - Both cookie and domain cannot be set in one call." );
-		}
-		if(
-			!isset( $dataObject->attributes->subdomain ) ||
-			!$dataObject->attributes->subdomain
-		) {
-			throw new Exception( "oSRS Error - subdomain is not defined." );
+			Exception::cannotSetOneCall( "cookie and domain" );
 		}
 	}
 }

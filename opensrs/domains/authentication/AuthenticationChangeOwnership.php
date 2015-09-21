@@ -15,6 +15,15 @@ class AuthenticationChangeOwnership extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+	public $requiredFields = array(
+		'cookie',
+
+		'attributes' => array(
+			'username',
+			'password'
+			),
+		);
+
 	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
@@ -27,20 +36,5 @@ class AuthenticationChangeOwnership extends Base {
 
 	public function __destruct() {
 		parent::__destruct();
-	}
-
-	// Validate the object
-	public function _validateObject( $dataObject ) {
-		if( !isset($dataObject->cookie ) ) {
-			throw new Exception( "oSRS Error - cookie is not defined." );
-		}
-
-		if( !isset($dataObject->attributes->username ) ) {
-			throw new Exception( "oSRS Error - username is not defined." );
-		}
-
-		if( !isset($dataObject->attributes->password ) ) {
-			throw new Exception( "oSRS Error - password is not defined." );
-		}
 	}
 }

@@ -15,6 +15,13 @@ class GetDomainsByExpiry extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+    public $requiredFields = array(
+    	'attributes' => array(
+    		'exp_from',
+    		'exp_to',
+    		),
+    	);
+
 	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
@@ -27,16 +34,5 @@ class GetDomainsByExpiry extends Base {
 
 	public function __destruct () {
 		parent::__destruct();
-	}
-
-	// Validate the object
-	public function _validateObject( $dataObject ){
-		if (!isset($dataObject->attributes->exp_from)) {
-			throw new Exception( "oSRS Error - exp_from is not defined." );
-		}
-
-		if (!isset($dataObject->attributes->exp_to)) {
-			throw new Exception( "oSRS Error - exp_to is not defined." );
-		}
 	}
 }

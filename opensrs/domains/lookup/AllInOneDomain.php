@@ -15,6 +15,12 @@ class AllInOneDomain extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+    public $requiredFields = array(
+    	'attributes' => array(
+    		'searchstring',
+    		),
+    	);
+
 	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
@@ -27,16 +33,6 @@ class AllInOneDomain extends Base {
 
 	public function __destruct() {
 		parent::__destruct();
-	}
-
-	// Validate the object
-	public function _validateObject( $dataObject ){
-		if (
-			!isset( $dataObject->attributes->searchstring ) ||
-			!$dataObject->attributes->searchstring
-		) {
-			throw new Exception( "oSRS Error - searchstring is not defined." );
-		}
 	}
 
 	public function customResponseHandling( $arrayResult, $returnFullResponse = true ){

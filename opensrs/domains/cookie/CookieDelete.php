@@ -15,6 +15,15 @@ class CookieDelete extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+	public $requiredFields = array(
+		'cookie',
+
+		'attributes' => array(
+			'cookie',
+			'domain',
+			),
+		);
+
 	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
@@ -27,20 +36,5 @@ class CookieDelete extends Base {
 
 	public function __destruct() {
 		parent::__destruct();
-	}
-
-	// Validate the object
-	public function _validateObject( $dataObject ) {
-		if( !isset($dataObject->cookie ) ) {
-			throw new Exception( "oSRS Error - cookie is not defined." );
-		}
-
-		if( !isset($dataObject->attributes->cookie ) ) {
-			throw new Exception( "oSRS Error - cookie is not defined." );
-		}
-
-		if( !isset($dataObject->attributes->domain ) ) {
-			throw new Exception( "oSRS Error - domain is not defined." );
-		}
 	}
 }

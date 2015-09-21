@@ -15,6 +15,13 @@ class GetNotes extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+    public $requiredFields = array(
+    	'attributes' => array(
+    		'domain',
+    		'type',
+    		),
+    	);
+
 	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
@@ -27,19 +34,5 @@ class GetNotes extends Base {
 
 	public function __destruct() {
 		parent::__destruct();
-	}
-
-	// Validate the object
-	public function _validateObject( $dataObject ){
-		if (!isset($dataObject->attributes->domain)) {
-			throw new Exception( "oSRS Error - domain is not defined." );
-		}
-
-		if (!isset($dataObject->attributes->type)) {
-			throw new Exception( "oSRS Error - type is not defined." );
-		}
-
-		// Execute the command
-		$this->_processRequest ();
 	}
 }

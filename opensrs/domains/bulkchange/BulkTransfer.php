@@ -15,6 +15,15 @@ class BulkTransfer extends Base {
     public $resultFullFormatted;
     public $resultFormatted;
 
+	public $requiredFields = array(
+		'attributes' => array(
+			'custom_tech_contact',
+			'domain_list',
+			'reg_username',
+			'reg_password',
+			),
+		);
+
     public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
         parent::__construct();
 
@@ -27,33 +36,5 @@ class BulkTransfer extends Base {
 
 	public function __destruct() {
 		parent::__destruct();
-	}
-
-	// Validate the object
-	public function _validateObject( $dataObject ) {
-		if(
-			!isset( $dataObject->attributes->custom_tech_contact ) ||
-			$dataObject->attributes->custom_tech_contact == ""
-		) {
-			throw new Exception( "oSRS Error - custom_tech_contact is not defined." );
-		}
-		if(
-			!isset( $dataObject->attributes->domain_list ) ||
-			$dataObject->attributes->domain_list == ""
-		) {
-			throw new Exception( "oSRS Error - domain_list is not defined." );
-		}
-		if(
-			!isset( $dataObject->attributes->reg_username ) ||
-			$dataObject->attributes->reg_username == ""
-		) {
-			throw new Exception( "oSRS Error - reg_username is not defined." );
-		}
-		if(
-			!isset( $dataObject->attributes->reg_password ) ||
-			$dataObject->attributes->reg_password == ""
-		) {
-			throw new Exception( "oSRS Error - reg_password is not defined." );
-		}
 	}
 }
