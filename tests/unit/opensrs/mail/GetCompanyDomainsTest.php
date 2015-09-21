@@ -1,11 +1,13 @@
 <?php
 
+namespace OpenSRS\mail;
+
 use OpenSRS\mail\GetCompanyDomains;
 /**
  * @group mail
  * @group MailGetCompanyDomains
  */
-class GetCompanyDomainsTest extends PHPUnit_Framework_TestCase
+class GetCompanyDomainsTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         'data' => array(
@@ -52,7 +54,7 @@ class GetCompanyDomainsTest extends PHPUnit_Framework_TestCase
      * @return void
      *
      * @dataProvider submissionFields
-     * @group invalidsubmissionmail
+     * @group invalidsubmission
      */
     public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission ) );

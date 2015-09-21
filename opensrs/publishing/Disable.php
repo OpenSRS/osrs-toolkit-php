@@ -36,26 +36,18 @@ class Disable extends Base
     }
 
     // Validate the object
-    private function _validateObject()
+    public function _validateObject( $dataObject = array() ) 
     {
-        $allPassed = true;
-
         if (!isset($this->_dataObject->data->domain)) {
             throw new Exception('oSRS Error - domain is not defined.');
-            $allPassed = false;
         }
 
         if (!isset($this->_dataObject->data->service_type)) {
             throw new Exception('oSRS Error - service_type is not defined.');
-            $allPassed = false;
         }
-        // Run the command
-        if ($allPassed) {
-            // Execute the command
-            $this->_processRequest();
-        } else {
-            throw new Exception('oSRS Error - Incorrect call.');
-        }
+
+        // Execute the command
+        $this->_processRequest();
     }
 
     // Post validation functions

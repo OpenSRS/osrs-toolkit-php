@@ -1,11 +1,13 @@
 <?php
 
+namespace OpenSRS\mail;
+
 use OpenSRS\mail\SetDomainAllowList;
 /**
  * @group mail
  * @group MailSetDomainAllowList
  */
-class SetDomainAllowListTest extends PHPUnit_Framework_TestCase
+class SetDomainAllowListTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         'data' => array(
@@ -58,7 +60,7 @@ class SetDomainAllowListTest extends PHPUnit_Framework_TestCase
      * @return void
      *
      * @dataProvider submissionFields
-     * @group invalidsubmissionmail
+     * @group invalidsubmission
      */
     public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission ) );

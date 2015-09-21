@@ -1,21 +1,19 @@
 <?php
 
-namespace OpenSRS\mail;
+namespace OpenSRS\publishing;
 
-use OpenSRS\mail\SetDomainDisabledStatus;
+use OpenSRS\publishing\Update;
 /**
- * @group mail
- * @group MailSetDomainDisabledStatus
+ * @group publishing
+ * @group publishing\Update
  */
-class SetDomainDisabledStatusTest extends \PHPUnit_Framework_TestCase
+class UpdateTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         'data' => array(
-            'admin_username' => '',
-            'admin_password' => '',
-            'admin_domain' => '',
             'domain' => '',
-            'disabled' => '',
+            'service_type' => '',
+            'source_domain' => '',
             ),
         );
 
@@ -30,15 +28,14 @@ class SetDomainDisabledStatusTest extends \PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission ) );
 
-        $data->data->admin_username = 'phptest' . time();
-        $data->data->admin_password = 'password1234';
-        $data->data->admin_domain = 'mail.phptest' . time() . '.com';
-        $data->data->domain = 'new-' . $data->data->admin_domain;
-        $data->data->disabled = "1";
+        $data->data->domain = 'phptest' . time() . ".com";
+        $data->data->service_type = "phptest" . time();
+        $data->data->source_domain = 'source.' . $data->data->domain;
 
-        $ns = new SetDomainDisabledStatus( 'array', $data );
 
-        $this->assertTrue( $ns instanceof SetDomainDisabledStatus );
+        $ns = new Update( 'array', $data );
+
+        $this->assertTrue( $ns instanceof Update );
     }
 
     /**
@@ -46,11 +43,9 @@ class SetDomainDisabledStatusTest extends \PHPUnit_Framework_TestCase
      */
     function submissionFields() {
         return array(
-            'missing admin_username' => array('admin_username'),
-            'missing admin_password' => array('admin_password'),
-            'missing admin_domain' => array('admin_domain'),
             'missing domain' => array('domain'),
-            'missing disabled' => array('disabled'),
+            'missing service_type' => array('service_type'),
+            'missing source_domain' => array('source_domain'),
             );
     }
 
@@ -65,11 +60,9 @@ class SetDomainDisabledStatusTest extends \PHPUnit_Framework_TestCase
     public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission ) );
 
-        $data->data->admin_username = 'phptest' . time();
-        $data->data->admin_password = 'password1234';
-        $data->data->admin_domain = 'mail.phptest' . time() . '.com';
-        $data->data->domain = 'new-' . $data->data->admin_domain;
-        $data->data->disabled = "1";
+        $data->data->domain = 'phptest' . time() . ".com";
+        $data->data->service_type = "phptest" . time();
+        $data->data->source_domain = 'source.' . $data->data->domain;
         
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(
@@ -94,6 +87,6 @@ class SetDomainDisabledStatusTest extends \PHPUnit_Framework_TestCase
             unset( $data->$parent->$field );
         }
 
-        $ns = new SetDomainDisabledStatus( 'array', $data );
+        $ns = new Update( 'array', $data );
     }
 }

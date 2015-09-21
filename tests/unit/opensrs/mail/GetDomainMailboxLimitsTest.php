@@ -1,11 +1,13 @@
 <?php
 
+namespace OpenSRS\mail;
+
 use OpenSRS\mail\GetDomainMailboxLimits;
 /**
  * @group mail
  * @group MailGetDomainMailboxLimits
  */
-class GetDomainMailboxLimitsTest extends PHPUnit_Framework_TestCase
+class GetDomainMailboxLimitsTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         'data' => array(
@@ -55,7 +57,7 @@ class GetDomainMailboxLimitsTest extends PHPUnit_Framework_TestCase
      * @return void
      *
      * @dataProvider submissionFields
-     * @group invalidsubmissionmail
+     * @group invalidsubmission
      */
     public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission ) );

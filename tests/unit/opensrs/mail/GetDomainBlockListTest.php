@@ -2,12 +2,12 @@
 
 namespace OpenSRS\mail;
 
-use OpenSRS\mail\SetDomainDisabledStatus;
+use OpenSRS\mail\GetDomainBlockList;
 /**
  * @group mail
- * @group MailSetDomainDisabledStatus
+ * @group MailGetDomainBlockList
  */
-class SetDomainDisabledStatusTest extends \PHPUnit_Framework_TestCase
+class GetDomainBlockListTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         'data' => array(
@@ -15,7 +15,6 @@ class SetDomainDisabledStatusTest extends \PHPUnit_Framework_TestCase
             'admin_password' => '',
             'admin_domain' => '',
             'domain' => '',
-            'disabled' => '',
             ),
         );
 
@@ -34,11 +33,10 @@ class SetDomainDisabledStatusTest extends \PHPUnit_Framework_TestCase
         $data->data->admin_password = 'password1234';
         $data->data->admin_domain = 'mail.phptest' . time() . '.com';
         $data->data->domain = 'new-' . $data->data->admin_domain;
-        $data->data->disabled = "1";
 
-        $ns = new SetDomainDisabledStatus( 'array', $data );
+        $ns = new GetDomainBlockList( 'array', $data );
 
-        $this->assertTrue( $ns instanceof SetDomainDisabledStatus );
+        $this->assertTrue( $ns instanceof GetDomainBlockList );
     }
 
     /**
@@ -50,7 +48,6 @@ class SetDomainDisabledStatusTest extends \PHPUnit_Framework_TestCase
             'missing admin_password' => array('admin_password'),
             'missing admin_domain' => array('admin_domain'),
             'missing domain' => array('domain'),
-            'missing disabled' => array('disabled'),
             );
     }
 
@@ -69,7 +66,6 @@ class SetDomainDisabledStatusTest extends \PHPUnit_Framework_TestCase
         $data->data->admin_password = 'password1234';
         $data->data->admin_domain = 'mail.phptest' . time() . '.com';
         $data->data->domain = 'new-' . $data->data->admin_domain;
-        $data->data->disabled = "1";
         
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(
@@ -94,6 +90,6 @@ class SetDomainDisabledStatusTest extends \PHPUnit_Framework_TestCase
             unset( $data->$parent->$field );
         }
 
-        $ns = new SetDomainDisabledStatus( 'array', $data );
+        $ns = new GetDomainBlockList( 'array', $data );
     }
 }

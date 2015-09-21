@@ -1,11 +1,13 @@
 <?php
 
+namespace OpenSRS\mail;
+
 use OpenSRS\mail\CreateMailboxForwardOnly;
 /**
  * @group mail
  * @group MailCreateMailboxForwardOnly
  */
-class CreateMailboxForwardOnlyTest extends PHPUnit_Framework_TestCase
+class CreateMailboxForwardOnlyTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         'data' => array(
@@ -64,7 +66,7 @@ class CreateMailboxForwardOnlyTest extends PHPUnit_Framework_TestCase
      * @return void
      *
      * @dataProvider submissionFields
-     * @group invalidsubmissionmail
+     * @group invalidsubmission
      */
     public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission ) );

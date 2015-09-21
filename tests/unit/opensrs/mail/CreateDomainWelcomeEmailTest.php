@@ -1,11 +1,13 @@
 <?php
 
+namespace OpenSRS\mail;
+
 use OpenSRS\mail\CreateDomainWelcomeEmail;
 /**
  * @group mail
  * @group MailCreateDomainWelcomeEmail
  */
-class CreateDomainWelcomeEmailTest extends PHPUnit_Framework_TestCase
+class CreateDomainWelcomeEmailTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         'data' => array(
@@ -73,7 +75,7 @@ class CreateDomainWelcomeEmailTest extends PHPUnit_Framework_TestCase
      * @return void
      *
      * @dataProvider submissionFields
-     * @group invalidsubmissionmail
+     * @group invalidsubmission
      */
     public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission ) );

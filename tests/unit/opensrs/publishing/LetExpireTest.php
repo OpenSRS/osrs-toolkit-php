@@ -1,18 +1,18 @@
 <?php
 
-use OpenSRS\mail\GetDomainBlockList;
+namespace OpenSRS\publishing;
+
+use OpenSRS\publishing\LetExpire;
 /**
- * @group mail
- * @group MailGetDomainBlockList
+ * @group publishing
+ * @group publishing\LetExpire
  */
-class GetDomainBlockListTest extends PHPUnit_Framework_TestCase
+class LetExpireTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         'data' => array(
-            'admin_username' => '',
-            'admin_password' => '',
-            'admin_domain' => '',
             'domain' => '',
+            'service_type' => '',
             ),
         );
 
@@ -27,14 +27,12 @@ class GetDomainBlockListTest extends PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission ) );
 
-        $data->data->admin_username = 'phptest' . time();
-        $data->data->admin_password = 'password1234';
-        $data->data->admin_domain = 'mail.phptest' . time() . '.com';
-        $data->data->domain = 'new-' . $data->data->admin_domain;
+        $data->data->domain = 'phptest' . time() . ".com";
+        $data->data->service_type = "phptest" . time();
 
-        $ns = new GetDomainBlockList( 'array', $data );
+        $ns = new LetExpire( 'array', $data );
 
-        $this->assertTrue( $ns instanceof GetDomainBlockList );
+        $this->assertTrue( $ns instanceof LetExpire );
     }
 
     /**
@@ -42,10 +40,8 @@ class GetDomainBlockListTest extends PHPUnit_Framework_TestCase
      */
     function submissionFields() {
         return array(
-            'missing admin_username' => array('admin_username'),
-            'missing admin_password' => array('admin_password'),
-            'missing admin_domain' => array('admin_domain'),
             'missing domain' => array('domain'),
+            'missing service_type' => array('service_type'),
             );
     }
 
@@ -55,15 +51,13 @@ class GetDomainBlockListTest extends PHPUnit_Framework_TestCase
      * @return void
      *
      * @dataProvider submissionFields
-     * @group invalidsubmissionmail
+     * @group invalidsubmission
      */
     public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission ) );
 
-        $data->data->admin_username = 'phptest' . time();
-        $data->data->admin_password = 'password1234';
-        $data->data->admin_domain = 'mail.phptest' . time() . '.com';
-        $data->data->domain = 'new-' . $data->data->admin_domain;
+        $data->data->domain = 'phptest' . time() . ".com";
+        $data->data->service_type = "test-service";
         
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(
@@ -88,6 +82,6 @@ class GetDomainBlockListTest extends PHPUnit_Framework_TestCase
             unset( $data->$parent->$field );
         }
 
-        $ns = new GetDomainBlockList( 'array', $data );
+        $ns = new LetExpire( 'array', $data );
     }
 }

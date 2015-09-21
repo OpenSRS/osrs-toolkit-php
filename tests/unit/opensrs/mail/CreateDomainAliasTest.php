@@ -1,11 +1,13 @@
 <?php
 
+namespace OpenSRS\mail;
+
 use OpenSRS\mail\CreateDomainAlias;
 /**
  * @group mail
  * @group MailCreateDomainAlias
  */
-class CreateDomainAliasTest extends PHPUnit_Framework_TestCase
+class CreateDomainAliasTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         'data' => array(
@@ -32,7 +34,7 @@ class CreateDomainAliasTest extends PHPUnit_Framework_TestCase
         $data->data->admin_password = 'password1234';
         $data->data->admin_domain = 'mail.phptest' . time() . '.com';
         $data->data->domain = 'new-' . $data->data->admin_domain;
-        $data->data->domain = 'alias-' . $data->data->domain;
+        $data->data->alias = 'alias-' . $data->data->alias;
 
         $ns = new CreateDomainAlias( 'array', $data );
 
@@ -58,7 +60,7 @@ class CreateDomainAliasTest extends PHPUnit_Framework_TestCase
      * @return void
      *
      * @dataProvider submissionFields
-     * @group invalidsubmissionmail
+     * @group invalidsubmission
      */
     public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission ) );
@@ -67,7 +69,7 @@ class CreateDomainAliasTest extends PHPUnit_Framework_TestCase
         $data->data->admin_password = 'password1234';
         $data->data->admin_domain = 'mail.phptest' . time() . '.com';
         $data->data->domain = 'new-' . $data->data->admin_domain;
-        $data->data->domain = 'alias-' . $data->data->domain;
+        $data->data->alias = 'alias-' . $data->data->alias;
         
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(
