@@ -27,13 +27,12 @@ class BC_LookupDomainTest extends PHPUnit_Framework_TestCase
     public function testValidDataConversion() {
         $data = json_decode( json_encode ($this->validSubmission) );
 
-        $data->data->domain = "phptest" . time() . ".com";
+        $data->data->searchstring = "phptest" . time() . ".com";
 
         $shouldMatchNewDataObject = new \stdClass;
         $shouldMatchNewDataObject->attributes = new \stdClass;
 
-
-        $shouldMatchNewDataObject->attributes->domain = $data->data->domain;
+        $shouldMatchNewDataObject->attributes->domain = $data->data->searchstring;
 
         $ns = new LookupDomain();
 

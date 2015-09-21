@@ -200,7 +200,7 @@ echo ("{\"out\":". json_encode($osrsHandler->resultRaw)."}");
 						reg_username: <input type="text" name="reg_username" value="phptest"><br>
 						reg_password: <input type="text" name="reg_password" value="abc123"><br>
 						reg_type: <input type="text" name="reg_type" value="new"><br>
-						custom_tech_contact: <input type="text" name="custom_tech_contact" value="0"><br>
+						custom_tech_contact: <input type="text" name="custom_tech_contact" value="1"><br>
 						custom_nameservers: <input type="text" name="custom_nameservers" value="1"><br>
 					</td>
 				</tr>
