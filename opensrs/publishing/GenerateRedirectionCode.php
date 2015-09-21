@@ -36,7 +36,7 @@ class GenerateRedirectionCode extends Base
     }
 
     // Validate the object
-    private function _validateObject()
+    public function _validateObject( $dataObject = array() ) 
     {
         $allPassed = true;
 
@@ -51,7 +51,7 @@ class GenerateRedirectionCode extends Base
         }
 
         if (!isset($this->_dataObject->data->programming_language)) {
-            throw new Exception('oSRS Error - programming language is not defined.');
+            throw new Exception('oSRS Error - programming_language is not defined.');
             $allPassed = false;
         }
 

@@ -35,7 +35,7 @@ class CreateDomain extends Mail
     }
 
     // Validate the object
-    private function _validateObject()
+    public function _validateObject( $dataObject = array() ) 
     {
         $allPassed = true;
         $compile = '';
@@ -74,27 +74,27 @@ class CreateDomain extends Mail
         }
 
         // Command optional values
-        if (isset($this->_dataObject->data->timezone) && $this->_dataObject->data->timezone != '') {
+        if (isset($this->_dataObject->data->timezone) && $this->_dataObject->data->timezone) {
             $compile .= ' timezone="'.$this->_dataObject->data->timezone.'"';
         }
 
-        if (isset($this->_dataObject->data->language) && $this->_dataObject->data->language != '') {
+        if (isset($this->_dataObject->data->language) && $this->_dataObject->data->language) {
             $compile .= ' language="'.$this->_dataObject->data->language.'"';
         }
 
-        if (isset($this->_dataObject->data->filtermx) && $this->_dataObject->data->filtermx != '') {
+        if (isset($this->_dataObject->data->filtermx) && $this->_dataObject->data->filtermx) {
             $compile .= ' filtermx="'.$this->_dataObject->data->filtermx.'"';
         }
 
-        if (isset($this->_dataObject->data->spam_tag) && $this->_dataObject->data->spam_tag != '') {
+        if (isset($this->_dataObject->data->spam_tag) && $this->_dataObject->data->spam_tag) {
             $compile .= ' spam_tag="'.$this->_dataObject->data->spam_tag.'"';
         }
 
-        if (isset($this->_dataObject->data->spam_folder) && $this->_dataObject->data->spam_folder != '') {
+        if (isset($this->_dataObject->data->spam_folder) && $this->_dataObject->data->spam_folder) {
             $compile .= ' spam_folder="'.$this->_dataObject->data->spam_folder.'"';
         }
 
-        if (isset($this->_dataObject->data->spam_level) & $this->_dataObject->data->spam_level != '') {
+        if (isset($this->_dataObject->data->spam_level) && $this->_dataObject->data->spam_level) {
             $compile .= ' spam_level="'.$this->_dataObject->data->spam_level.'"';
         }
 

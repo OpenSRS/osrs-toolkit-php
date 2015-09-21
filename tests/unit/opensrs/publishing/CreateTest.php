@@ -1,19 +1,18 @@
 <?php
 
-use OpenSRS\mail\CreateDomainAlias;
+namespace OpenSRS\publishing;
+
+use OpenSRS\publishing\Create;
 /**
- * @group mail
- * @group MailCreateDomainAlias
+ * @group publishing
+ * @group publishing\Create
  */
-class CreateDomainAliasTest extends PHPUnit_Framework_TestCase
+class CreateTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         'data' => array(
-            'admin_username' => '',
-            'admin_password' => '',
-            'admin_domain' => '',
             'domain' => '',
-            'alias' => '',
+            'service_type' => '',
             ),
         );
 
@@ -28,15 +27,12 @@ class CreateDomainAliasTest extends PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission ) );
 
-        $data->data->admin_username = 'phptest' . time();
-        $data->data->admin_password = 'password1234';
-        $data->data->admin_domain = 'mail.phptest' . time() . '.com';
-        $data->data->domain = 'new-' . $data->data->admin_domain;
-        $data->data->alias = 'alias-' . $data->data->alias;
+        $data->data->domain = 'phptest' . time() . ".com";
+        $data->data->service_type = "phptest" . time();
 
-        $ns = new CreateDomainAlias( 'array', $data );
+        $ns = new Create( 'array', $data );
 
-        $this->assertTrue( $ns instanceof CreateDomainAlias );
+        $this->assertTrue( $ns instanceof Create );
     }
 
     /**
@@ -44,11 +40,8 @@ class CreateDomainAliasTest extends PHPUnit_Framework_TestCase
      */
     function submissionFields() {
         return array(
-            'missing admin_username' => array('admin_username'),
-            'missing admin_password' => array('admin_password'),
-            'missing admin_domain' => array('admin_domain'),
             'missing domain' => array('domain'),
-            'missing alias' => array('alias'),
+            'missing service_type' => array('service_type'),
             );
     }
 
@@ -58,17 +51,14 @@ class CreateDomainAliasTest extends PHPUnit_Framework_TestCase
      * @return void
      *
      * @dataProvider submissionFields
-     * @group invalidsubmissionmail
+     * @group invalidsubmission
      */
     public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission ) );
 
-        $data->data->admin_username = 'phptest' . time();
-        $data->data->admin_password = 'password1234';
-        $data->data->admin_domain = 'mail.phptest' . time() . '.com';
-        $data->data->domain = 'new-' . $data->data->admin_domain;
-        $data->data->alias = 'alias-' . $data->data->alias;
-        
+        $data->data->domain = 'phptest' . time() . ".com";
+        $data->data->service_type = "test-service";
+
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(
               'OpenSRS\Exception',
@@ -92,6 +82,6 @@ class CreateDomainAliasTest extends PHPUnit_Framework_TestCase
             unset( $data->$parent->$field );
         }
 
-        $ns = new CreateDomainAlias( 'array', $data );
+        $ns = new Create( 'array', $data );
     }
 }

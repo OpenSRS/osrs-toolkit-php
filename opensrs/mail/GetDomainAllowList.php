@@ -35,7 +35,7 @@ class GetDomainAllowList extends Mail
     }
 
     // Validate the object
-    private function _validateObject()
+    public function _validateObject( $dataObject = array() ) 
     {
         $allPassed = true;
         $compile = '';

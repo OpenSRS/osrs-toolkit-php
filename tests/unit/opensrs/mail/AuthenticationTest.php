@@ -3,7 +3,7 @@
 use OpenSRS\mail\Authentication;
 /**
  * @group mail
- * @group MailAuthentication
+ * @group mail\Authentication
  */
 class AuthenticationTest extends PHPUnit_Framework_TestCase
 {
@@ -55,7 +55,7 @@ class AuthenticationTest extends PHPUnit_Framework_TestCase
      * @group invalidsubmissionmail
      */
     public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
-        $data = json_decode( json_encode($this->validSubmission ) );
+        $data = json_decode( json_encode( $this->validSubmission ) );
 
         $data->data->admin_username = 'phptest' . time();
         $data->data->admin_password = 'password1234';

@@ -35,7 +35,7 @@ class SetDomainMailboxLimits extends Mail
     }
 
     // Validate the object
-    private function _validateObject()
+    public function _validateObject( $dataObject = array() ) 
     {
         $allPassed = true;
         $compile = '';
@@ -75,19 +75,19 @@ class SetDomainMailboxLimits extends Mail
         }
 
         // Command optional values
-        if (isset($this->_dataObject->data->mailbox) || $this->_dataObject->data->mailbox != '') {
+        if (isset($this->_dataObject->data->mailbox) && $this->_dataObject->data->mailbox) {
             $compile .= ' mailbox="'.$this->_dataObject->data->mailbox.'"';
         }
-        if (isset($this->_dataObject->data->filter_only) || $this->_dataObject->data->filter_only != '') {
+        if (isset($this->_dataObject->data->filter_only) && $this->_dataObject->data->filter_only) {
             $compile .= ' filter_only="'.$this->_dataObject->data->filter_only.'"';
         }
-        if (isset($this->_dataObject->data->alias) || $this->_dataObject->data->alias != '') {
+        if (isset($this->_dataObject->data->alias) && $this->_dataObject->data->alias) {
             $compile .= ' alias="'.$this->_dataObject->data->alias.'"';
         }
-        if (isset($this->_dataObject->data->forward_only) || $this->_dataObject->data->forward_only != '') {
+        if (isset($this->_dataObject->data->forward_only) && $this->_dataObject->data->forward_only) {
             $compile .= ' forward_only="'.$this->_dataObject->data->forward_only.'"';
         }
-        if (isset($this->_dataObject->data->mailing_list) || $this->_dataObject->data->mailing_list != '') {
+        if (isset($this->_dataObject->data->mailing_list) && $this->_dataObject->data->mailing_list) {
             $compile .= ' mailing_list="'.$this->_dataObject->data->mailing_list.'"';
         }
 
