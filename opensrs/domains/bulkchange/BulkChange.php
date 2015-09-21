@@ -41,7 +41,7 @@ class BulkChange extends Base {
 	}
 
 	// Validate the object
-	public function _validateObject( $dataObject ) {
+	public function _validateObject( $dataObject, $requiredFields = null ) {
 		$parent = new parent();
 
 		$parent->_validateObject( $dataObject, $this->requiredFields );

@@ -30,4 +30,8 @@ class AuthenticationSendAuthCode extends Base {
 
 		$this->send( $dataObject, $returnFullResponse );
 	}
+	
+	public function __destruct() {
+		parent::__destruct();
+	}
 }

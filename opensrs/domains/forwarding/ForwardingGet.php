@@ -15,6 +15,8 @@ class ForwardingGet extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+    public $requiredFields = array();
+
 	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
@@ -30,7 +32,7 @@ class ForwardingGet extends Base {
 	}
 
 	// Validate the object
-	public function _validateObject( $dataObject ) {
+	public function _validateObject( $dataObject, $requiredFields = null ) {
 		// Command required values
 		if(
 			( !isset($dataObject->cookie) || !$dataObject->cookie ) &&
