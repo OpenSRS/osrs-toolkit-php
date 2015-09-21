@@ -25,32 +25,7 @@ class LookupDomain extends DataConversion {
 	//  to ->attributes->domain in the new format
 	protected $newStructure = array(
 		'attributes' => array(
-			// setting this one by hand below
-			// 'services' => 'data->domain',
-			'domain' => 'data->searchstring',
-
-			// setting service_override and its
-			// contents by hand below, better
-			// performance to just do it since we
-			// know where it's coming from than
-			// have a ton of conditionals,
-			// if(is_object(... etc etc .... ))
-			// 'service_override' => array(
-
-			// 	'lookup' =>	array(
-			// 		'maximum' => 'data->maximum',
-			// 		),
-
-			// 	'premium' => array(
-			// 		'maximum' => 'data->maximum',
-			// 		),
-
-			// 	'suggestion' => array(
-			// 		'maximum' => 'data->maximum',
-			// 		),
-
-			// 	),
-			// ),
+			'domain' => 'data->domain',
 			)
 		);
 
