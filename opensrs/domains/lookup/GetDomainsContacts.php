@@ -15,6 +15,12 @@ class GetDomainsContacts extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+    public $requiredFields = array(
+    	'attributes' => array(
+    		'domain_list',
+    		),
+    	);
+
 	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
@@ -27,12 +33,5 @@ class GetDomainsContacts extends Base {
 
 	public function __destruct () {
 		parent::__destruct();
-	}
-
-	// Validate the object
-	public function _validateObject( $dataObject ){
-		if (!isset($dataObject->attributes->domain_list)) {
-			throw new Exception ("oSRS Error - domain_list is not defined.");
-		}
 	}
 }

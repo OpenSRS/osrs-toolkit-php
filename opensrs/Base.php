@@ -439,6 +439,9 @@ class Base
     	if( !empty($requiredFields) ) {
 	    	foreach($requiredFields as $i => $field) {
 	    		if( is_array($field) ){
+	    			if(!isset($dataObject->$i)){
+	    				Exception::notDefined( $i );
+	    			}
 	    			$this->_validateObject( $dataObject->$i, $field );
 	    		}
 	    		else{
