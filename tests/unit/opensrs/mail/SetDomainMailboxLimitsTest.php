@@ -55,7 +55,7 @@ class SetDomainMailboxLimitsTest extends PHPUnit_Framework_TestCase
      * @return void
      *
      * @dataProvider submissionFields
-     * @group invalidsubmissionmail
+     * @group invalidsubmission
      */
     public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission ) );
