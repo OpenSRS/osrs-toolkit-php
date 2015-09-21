@@ -4,15 +4,13 @@ namespace opensrs\domains\bulkchange\changetype;
 
 use OpenSRS\Base;
 use OpenSRS\Exception;
-/*
- *  Required object values:
- *  data -
- */
 
-class Domain_lock extends Base {
-	protected $change_type = 'domain_lock';
+class DnsZoneRecord extends Base {
+	protected $change_type = 'dns_zone_record';
 	protected $checkFields = array(
-		'op_type'
+		'dns_action',
+		'dns_record_type',
+		'dns_record_data'
 		);
 
 	public function __construct() {

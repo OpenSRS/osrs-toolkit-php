@@ -9,10 +9,10 @@ use OpenSRS\Exception;
  *  data -
  */
 
-class Push_domains extends Base {
-	protected $change_type = 'push_domains';
+class DomainForwarding extends Base {
+	protected $change_type = 'domain_forwarding';
 	protected $checkFields = array(
-		'gaining_reseller_username'
+		'op_type'
 		);
 
 	public function __construct() {

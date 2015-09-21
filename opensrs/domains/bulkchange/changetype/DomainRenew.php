@@ -9,11 +9,9 @@ use OpenSRS\Exception;
  *  data -
  */
 
-class Whois_privacy extends Base {
-	protected $change_type = 'whois_privacy';
-	protected $checkFields = array(
-		'op_type'
-		);
+class DomainRenew extends Base {
+	protected $change_type = 'domain_renew';
+	protected $checkFields = array();
 
 	public function __construct() {
 		parent::__construct();
@@ -28,6 +26,15 @@ class Whois_privacy extends Base {
 			if( !isset( $dataObject->data->$field ) || !$dataObject->data->$field ) {
 				throw new Exception( "oSRS Error - change type is {$this->change_type} but $field is not defined." );
 			}
+		}
+
+		if(
+			!isset( $dataObject->data->period ) && $dataObject->data->period == "" &&
+			!isset( $dataObject->data->let_expire ) && $dataObject->data->let_expire == "" &&
+			!isset( $dataObject->data->auto_renew ) && $dataObject->data->auto_renew == ""
+		) {
+
+			throw new Exception( "oSRS Error - change type is {$this->change_type} but at least one of period, let_expire or auto_renew has to be defined." );
 		}
 
 		return true;

@@ -5,7 +5,7 @@ namespace opensrs\domains\bulkchange\changetype;
 use OpenSRS\Base;
 use OpenSRS\Exception;
 
-class Availability_check extends Base {
+class AvailabilityCheck extends Base {
 	protected $change_type = 'availability_check';
 
 	public function __construct() {
