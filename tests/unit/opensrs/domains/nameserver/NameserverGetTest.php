@@ -103,7 +103,7 @@ class NameserverGetTest extends PHPUnit_Framework_TestCase
      *
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsCookieAndBypassSent() {
+    public function testInvalidSubmissionFieldsCookieAndDomainSent() {
         $data = json_decode( json_encode($this->validSubmission) );
 
         // assign_ns request
@@ -113,7 +113,7 @@ class NameserverGetTest extends PHPUnit_Framework_TestCase
 
         $this->setExpectedExceptionRegExp(
           'OpenSRS\Exception',
-        "/.*cookie.*bypass.*cannot.*one.*call.*/"
+        "/.*cookie.*domain.*cannot.*one.*call.*/"
           );
 
         $ns = new NameserverGet( 'array', $data );
