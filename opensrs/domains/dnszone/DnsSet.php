@@ -15,6 +15,12 @@ class DnsSet extends Base {
     public $resultFullFormatted;
     public $resultFormatted;
 
+    public $requiredFields = array(
+        'attributes' => array(
+            'domain',
+            ),
+        );
+
     public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
         parent::__construct();
 
@@ -28,14 +34,4 @@ class DnsSet extends Base {
     public function __destruct() {
     	parent::__destruct();
     }
-
-	// Validate the object
-	public function _validateObject( $dataObject ) {
-        if(
-        	!isset( $dataObject->attributes->domain ) ||
-        	$dataObject->attributes->domain == ""
-    	) {
-			throw new Exception( "oSRS Error - domain is not defined." );
-		}
-	}
 }
