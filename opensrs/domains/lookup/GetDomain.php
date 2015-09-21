@@ -5,7 +5,7 @@ namespace opensrs\domains\lookup;
 use OpenSRS\Base;
 use OpenSRS\Exception;
 
-class LookupDomain extends Base {
+class GetDomain extends Base {
 	public $action = "get";
 	public $object = "domain";
 
