@@ -15,6 +15,14 @@ class PersonalNamesSURegister extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+    public $requiredFields = array(
+        'attributes' => array(
+            'domain',
+            'mailbox_type',
+            'password',
+            ),
+        );
+
 	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
@@ -27,18 +35,5 @@ class PersonalNamesSURegister extends Base {
 
 	public function __destruct() {
 		parent::__destruct();
-	}
-
-	// Validate the object
-	public function _validateObject( $dataObject ) {
-		if( !isset($dataObject->attributes->domain) || $dataObject->attributes->domain == "" ) {
-			throw new Exception( "oSRS Error - domain is not defined." );
-		}
-		if( !isset($dataObject->attributes->mailbox_type) || $dataObject->attributes->mailbox_type == "" ) {
-			throw new Exception( "oSRS Error - mailbox_type is not defined." );
-		}
-		if( !isset($dataObject->attributes->password) || $dataObject->attributes->password == "" ) {
-			throw new Exception( "oSRS Error - password is not defined." );
-		}
 	}
 }

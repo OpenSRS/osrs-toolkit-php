@@ -37,11 +37,6 @@ class ForwardingSet extends Base {
 
 	// Validate the object
 	public function _validateObject( $dataObject, $requiredFields = null ) {
-		$parent = new parent();
-
-		$parent->_validateObject( $dataObject, $this->requiredFields );
-
-		// Command required values
 		if(
 			( !isset($dataObject->cookie) || !$dataObject->cookie ) &&
 			( !isset($dataObject->attributes->domain) || !$dataObject->attributes->domain )
@@ -56,5 +51,9 @@ class ForwardingSet extends Base {
 		) {
 			Exception::cannotSetOneCall( "cookie and domain" );
 		}
+	
+		$parent = new parent();
+
+		$parent->_validateObject( $dataObject, $this->requiredFields );
 	}
 }

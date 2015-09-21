@@ -15,6 +15,12 @@ class NameserverAdvancedUpdate extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+    public $requiredFields = array(
+        'attributes' => array(
+            'op_type',
+            ),
+        );
+
 	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
@@ -30,14 +36,14 @@ class NameserverAdvancedUpdate extends Base {
 	}
 
 	// Validate the object
-	public function _validateObject( $dataObject ) {
+	public function _validateObject( $dataObject, $requiredFields = null ) {
 		if(
 			( !isset($dataObject->cookie ) ||
 				$dataObject->cookie == "") &&
 			( !isset($dataObject->attributes->domain ) ||
 				$dataObject->attributes->domain == "")
 		) {
-			throw new Exception( "oSRS Error - cookie / domain is not defined." );
+			Exception::notDefined( "cookie or domain" );
 		}
 		if(
 			isset( $dataObject->cookie ) &&
@@ -45,14 +51,11 @@ class NameserverAdvancedUpdate extends Base {
 		  	isset( $dataObject->attributes->domain ) &&
 		  	$dataObject->attributes->domain != ""
 	  	) {
-			throw new Exception( "oSRS Error - Both cookie and domain cannot be set in one call." );
+			Exception::cannotSetOneCall( "cookie and domain" );
 		}
+	
+		$parent = new parent();
 
-		if(
-			!isset( $dataObject->attributes->op_type ) ||
-			$dataObject->attributes->op_type == ""
-		) {
-			throw new Exception( "oSRS Error - op_type is not defined." );
-		}
+		$parent->_validateObject( $dataObject, $this->requiredFields );
 	}
 }

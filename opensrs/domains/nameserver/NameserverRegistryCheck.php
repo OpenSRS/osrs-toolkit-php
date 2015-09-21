@@ -15,6 +15,13 @@ class NameserverRegistryCheck extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+    public $requiredFields = array(
+        'attributes' => array(
+            'fqdn',
+            'tld',
+            ),
+        );
+
 	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
@@ -27,22 +34,5 @@ class NameserverRegistryCheck extends Base {
 
 	public function __destruct() {
 		parent::__destruct();
-	}
-
-	// Validate the object
-	public function _validateObject( $dataObject ) {
-		// Command required values
-		if(
-			!isset( $dataObject->attributes->fqdn ) ||
-			$dataObject->attributes->fqdn == ""
-		) {
-			throw new Exception( "oSRS Error - fqdn is not defined." );
-		}
-		if(
-			!isset( $dataObject->attributes->tld ) ||
-			$dataObject->attributes->tld == ""
-		) {
-			throw new Exception( "oSRS Error - tld is not defined." );
-		}
 	}
 }
