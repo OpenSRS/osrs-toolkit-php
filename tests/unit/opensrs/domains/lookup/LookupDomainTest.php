@@ -13,11 +13,9 @@ class LookupDomainTest extends PHPUnit_Framework_TestCase
     public function testValidateMissingDomain()
     {
         $data = (object) array (
-            'func' => 'premiumDomain',
+            'func' => 'lookupDomain',
             'data' => (object) array (
                 // 'domain' => 'hockey.com',
-                'selected' => '.com;.net;.org',
-                'alldomains' => '.com;.net;.org', 
             ),
         );
 

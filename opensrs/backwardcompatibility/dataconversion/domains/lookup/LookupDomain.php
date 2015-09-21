@@ -57,6 +57,8 @@ class LookupDomain extends DataConversion {
 	public function convertDataObject( $dataObject, $newStructure = null ) {
 		$p = new parent();
 
+        var_dump($dataObject);
+
 		if(is_null($newStructure)){
 			$newStructure = $this->newStructure;
 		}
