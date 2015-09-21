@@ -43,7 +43,7 @@ class DeleteDomainAlias extends Mail
         // Command required values - authentication
         if (!isset($this->_dataObject->data->admin_username) || $this->_dataObject->data->admin_username == '') {
             if (APP_MAIL_USERNAME == '') {
-                throw new Exception('oSRS-eMail Error - username is not defined.');
+                throw new Exception('oSRS-eMail Error - admin_username is not defined.');
                 $allPassed = false;
             } else {
                 $this->_dataObject->data->admin_username = APP_MAIL_USERNAME;
@@ -51,7 +51,7 @@ class DeleteDomainAlias extends Mail
         }
         if (!isset($this->_dataObject->data->admin_password) || $this->_dataObject->data->admin_password == '') {
             if (APP_MAIL_PASSWORD == '') {
-                throw new Exception('oSRS-eMail Error - password is not defined.');
+                throw new Exception('oSRS-eMail Error - admin_password is not defined.');
                 $allPassed = false;
             } else {
                 $this->_dataObject->data->admin_password = APP_MAIL_PASSWORD;
@@ -59,7 +59,7 @@ class DeleteDomainAlias extends Mail
         }
         if (!isset($this->_dataObject->data->admin_domain) || $this->_dataObject->data->admin_domain == '') {
             if (APP_MAIL_DOMAIN == '') {
-                throw new Exception('oSRS-eMail Error - authentication domain is not defined.');
+                throw new Exception('oSRS-eMail Error - admin_domain is not defined.');
                 $allPassed = false;
             } else {
                 $this->_dataObject->data->admin_domain = APP_MAIL_DOMAIN;
