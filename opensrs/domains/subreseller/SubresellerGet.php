@@ -15,6 +15,12 @@ class SubresellerGet extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+    public $requiredFields = array(
+        'attributes' => array(
+            'username',
+            ),
+        );
+
 	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
@@ -27,15 +33,5 @@ class SubresellerGet extends Base {
 
 	public function __destruct() {
 		parent::__destruct();
-	}
-
-	// Validate the object
-	public function _validateObject( $dataObject ) {
-		if(
-			!isset( $dataObject->attributes->username ) ||
-			$dataObject->attributes->username == ""
-		) {
-			throw new Exception( "oSRS Error - username is not defined." );
-		}
 	}
 }

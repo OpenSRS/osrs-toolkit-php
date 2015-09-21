@@ -15,6 +15,13 @@ class ProvisioningUpdateContacts extends Base {
     public $resultFullFormatted;
     public $resultFormatted;
 
+    public $requiredFields = array(
+        'attributes' => array(
+            'domain',
+            'types',
+            ),
+        );
+
     public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
         parent::__construct();
 
@@ -30,20 +37,10 @@ class ProvisioningUpdateContacts extends Base {
 	}
 
 	// Validate the object
-    public function _validateObject( $dataObject ) {
-        if(
-            !isset($dataObject->attributes->domain) ||
-            !$dataObject->attributes->domain
-        ) {
-            throw new Exception( "oSRS Error - domain is not defined." );
-        }
+    public function _validateObject( $dataObject, $requiredFields = null ){
+        $parent = new parent();
 
-        if(
-            !isset($dataObject->attributes->types) ||
-            !$dataObject->attributes->types
-        ) {
-            throw new Exception( "oSRS Error - types is not defined." );
-        }
+        $parent->_validateObject( $dataObject, $this->requiredFields );
 
         $tld = explode( '.', $dataObject->attributes->domain, 2 );
 
@@ -60,7 +57,7 @@ class ProvisioningUpdateContacts extends Base {
             $contact_type = $contact_types[$c];
 
             if(!isset($dataObject->attributes->contact_set->$contact_type)){
-                    throw new Exception( "oSRS Error - $contact_type is not defined." );
+                    Exception::notDefined( $contact_type );
             }
 
     		for( $i = 0; $i < count($reqPers); $i++ ) {
@@ -68,7 +65,7 @@ class ProvisioningUpdateContacts extends Base {
                     !isset($dataObject->attributes->contact_set->$contact_type->{$reqPers[$i]}) ||
                     $dataObject->attributes->contact_set->$contact_type->{$reqPers[$i]} == ""
                 ) {
-    				throw new Exception( "oSRS Error - ". $reqPers[$i] ." is not defined." );
+    				Exception::notDefined($reqPers[$i] );
     			}
     		}
 

@@ -15,6 +15,13 @@ class ProvisioningRevoke extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+    public $requiredFields = array(
+        'attributes' => array(
+            'reseller',
+            'domain',
+            ),
+        );
+
 	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
@@ -30,7 +37,7 @@ class ProvisioningRevoke extends Base {
 	}
 
 	// Validate the object
-	public function _validateObject( $dataObject ) {
+    public function _validateObject( $dataObject, $requiredFields = null ){
 		if(
 			!isset( $dataObject->attributes->reseller ) ||
 			$dataObject->attributes->reseller == ""

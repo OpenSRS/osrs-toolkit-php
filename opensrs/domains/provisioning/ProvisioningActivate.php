@@ -30,22 +30,26 @@ class ProvisioningActivate extends Base {
 	}
 
 	// Validate the object
-	public function _validateObject( $dataObject ) {
+    public function _validateObject( $dataObject, $requiredFields = null ){
 		if(
-			(!isset($dataObject->cookie) ||
+			( !isset($dataObject->cookie ) ||
 				$dataObject->cookie == "") &&
-			(!isset($dataObject->attributes->domain) ||
-				$dataObject->attributes->domain == "" )
+			( !isset($dataObject->attributes->domain ) ||
+				$dataObject->attributes->domain == "")
 		) {
-			throw new Exception( "oSRS Error - cookie / domain is not defined." );
+			Exception::notDefined( "cookie or domain" );
 		}
 		if(
 			isset( $dataObject->cookie ) &&
 			$dataObject->cookie != "" &&
-	  		isset( $dataObject->attributes->domain ) &&
-	  		$dataObject->attributes->domain != ""
-  		) {
-			throw new Exception( "oSRS Error - Both cookie and domain cannot be set in one call." );
+		  	isset( $dataObject->attributes->domain ) &&
+		  	$dataObject->attributes->domain != ""
+	  	) {
+			Exception::cannotSetOneCall( "cookie and domain" );
 		}
+	
+		$parent = new parent();
+
+		$parent->_validateObject( $dataObject, $this->requiredFields );
 	}
 }

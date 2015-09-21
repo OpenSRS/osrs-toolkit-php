@@ -15,6 +15,12 @@ class ProvisioningCancelPending extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+    public $requiredFields = array(
+        'attributes' => array(
+            'to_date',
+            ),
+        );
+
 	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
@@ -27,15 +33,5 @@ class ProvisioningCancelPending extends Base {
 
 	public function __destruct() {
 		parent::__destruct();
-	}
-
-	// Validate the object
-	public function _validateObject( $dataObject ) {
-		if(
-			!isset( $dataObject->attributes->to_date ) ||
-			$dataObject->attributes->to_date == ""
-		) {
-			throw new Exception( "oSRS Error - to_date is not defined." );
-		}
 	}
 }

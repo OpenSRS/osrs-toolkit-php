@@ -30,14 +30,14 @@ class ProvisioningCancelActivate extends Base {
 	}
 
 	// Validate the object
-	public function _validateObject( $dataObject ) {
+	public function _validateObject( $dataObject, $requiredFields = null ) {
 		if(
 			(!isset($dataObject->attributes->order_id) ||
 				$dataObject->attributes->order_id == "") &&
 			(!isset($dataObject->attributes->domain) ||
 				$dataObject->attributes->domain == "" )
 		) {
-			throw new Exception( "oSRS Error - order_id / domain is not defined." );
+			Exception::notDefined( "order_id or domain" );
 		}
 		if(
 			isset( $dataObject->attributes->order_id ) &&
@@ -45,7 +45,11 @@ class ProvisioningCancelActivate extends Base {
 	  		isset( $dataObject->attributes->domain ) &&
 	  		$dataObject->attributes->domain != ""
   		) {
-			throw new Exception( "oSRS Error - Both order_id and domain cannot be set in one call." );
+			Exception::cannotSetOneCall( "order_id and domain" );
 		}
+	
+		$parent = new parent();
+
+		$parent->_validateObject( $dataObject, $this->requiredFields );
 	}
 }

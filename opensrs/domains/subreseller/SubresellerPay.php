@@ -15,6 +15,13 @@ class SubresellerPay extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+    public $requiredFields = array(
+        'attributes' => array(
+            'amount',
+            'username',
+            ),
+        );
+
 	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
@@ -27,21 +34,5 @@ class SubresellerPay extends Base {
 
 	public function __destruct() {
 		parent::__destruct();
-	}
-
-	// Validate the object
-	public function _validateObject( $dataObject ) {
-		if(
-			!isset( $dataObject->attributes->amount ) ||
-			$dataObject->attributes->amount == ""
-		) {
-			throw new Exception( "oSRS Error - amount is not defined." );
-		}
-		if(
-			!isset( $dataObject->attributes->username ) ||
-			$dataObject->attributes->username == ""
-		) {
-			throw new Exception( "oSRS Error - username is not defined." );
-		}
 	}
 }

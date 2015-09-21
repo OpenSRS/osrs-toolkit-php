@@ -15,6 +15,18 @@ class SubresellerCreate extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+    public $requiredFields = array(
+        'attributes' => array(
+            'ccp_enabled',
+            'low_balance_email',
+            'password',
+            'pricing_plan',
+            'status',
+            'system_status_email',
+            'username',
+            ),
+        );
+
 	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
@@ -27,21 +39,5 @@ class SubresellerCreate extends Base {
 
 	public function __destruct() {
 		parent::__destruct();
-	}
-
-	// Validate the object
-	public function _validateObject( $dataObject ) {
-		$reqData = array( "ccp_enabled", "low_balance_email", "password",
-			"pricing_plan", "status", "system_status_email", "username"
-			);
-
-		for( $i = 0; $i < count($reqData); $i++ ) {
-			if(
-				!isset($dataObject->attributes->{$reqData[$i]}) ||
-				$dataObject->attributes->{$reqData[$i]} == ""
-			) {
-				throw new Exception( "oSRS Error - ". $reqData[$i] ." is not defined." );
-			}
-		}
 	}
 }

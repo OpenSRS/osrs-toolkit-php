@@ -15,6 +15,18 @@ class SWRegister extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+    public $requiredFields = array(
+        'attributes' => array(
+            'domain',
+            'custom_nameservers',
+            'custom_tech_contact',
+            'period',
+            'reg_username',
+            'reg_password',
+            'reg_type',
+            ),
+        );
+
 	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
@@ -43,29 +55,4 @@ class SWRegister extends Base {
 
         return $arrayResult;
  	}
-
-	// Validate the object
-	public function _validateObject( $dataObject ) {
-		if( !isset($dataObject->attributes->domain ) ) {
-			throw new Exception( "oSRS Error - domain is not defined." );
-		}
-		if( !isset($dataObject->attributes->custom_nameservers ) ) {
-			throw new Exception( "oSRS Error - custom_nameservers is not defined." );
-		}
-		if( !isset($dataObject->attributes->custom_tech_contact ) ) {
-			throw new Exception( "oSRS Error - custom_tech_contact is not defined." );
-		}
-		if( !isset($dataObject->attributes->period ) ) {
-			throw new Exception( "oSRS Error - period is not defined." );
-		}
-		if( !isset($dataObject->attributes->reg_username ) ) {
-			throw new Exception( "oSRS Error - reg_username is not defined." );
-		}
-		if( !isset($dataObject->attributes->reg_password ) ) {
-			throw new Exception( "oSRS Error - reg_password is not defined." );
-		}
-		if( !isset($dataObject->attributes->reg_type ) ) {
-			throw new Exception( "oSRS Error - reg_type is not defined." );
-		}
-	}
 }
