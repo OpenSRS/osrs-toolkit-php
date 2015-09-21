@@ -4,10 +4,6 @@ namespace opensrs\domains\forwarding;
 
 use OpenSRS\Base;
 use OpenSRS\Exception;
-/*
- *  Required object values:
- *  data -
- */
 
 class ForwardingGet extends Base {
 	public $action = "get_domain_forwarding";

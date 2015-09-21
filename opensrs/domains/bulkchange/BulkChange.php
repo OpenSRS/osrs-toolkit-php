@@ -54,7 +54,7 @@ class BulkChange extends Base {
 	}
 
 	public function getFriendlyClassName( $string ) {
-		return ucwords( strtolower( preg_replace( "/[^a-z0-9]+/i", "_", $string ) ) );
+		return preg_replace("/[ ]/", "", ucwords( strtolower( preg_replace( "/[^a-z0-9]+/i", " ", $string ) ) ) );
 	}
 
 	public function loadChangeTypeClass( $change_type ) {

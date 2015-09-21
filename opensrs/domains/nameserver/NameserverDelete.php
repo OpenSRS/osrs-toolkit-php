@@ -4,10 +4,6 @@ namespace opensrs\domains\nameserver;
 
 use OpenSRS\Base;
 use OpenSRS\Exception;
-/*
- *  Required object values:
- *  data -
- */
 
 class NameserverDelete extends Base {
 	public $action = "delete";

@@ -4,10 +4,6 @@ namespace opensrs\domains\provisioning\specialrequirements;
 
 use OpenSRS\Base;
 use OpenSRS\Exception;
-/*
- *  Required object values:
- *  data - 
- */
 
 class ASIA extends Base {
 	protected $tld = 'asia';

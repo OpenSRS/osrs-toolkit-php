@@ -4,10 +4,6 @@ namespace opensrs\domains\nameserver;
 
 use OpenSRS\Base;
 use OpenSRS\Exception;
-/*
- *  Required object values:
- *  data -
- */
 
 class NameserverModify extends Base {
 	public $action = "modify";

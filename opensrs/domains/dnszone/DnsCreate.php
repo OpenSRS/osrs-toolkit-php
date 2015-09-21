@@ -4,10 +4,6 @@ namespace opensrs\domains\dnszone;
 
 use OpenSRS\Base;
 use OpenSRS\Exception;
-/**
- *  Required object values:
- *  data -
- */
 
 class DnsCreate extends Base {
     public $action = "create_dns_zone";

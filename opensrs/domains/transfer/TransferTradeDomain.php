@@ -5,11 +5,6 @@ namespace opensrs\domains\transfer;
 use OpenSRS\Base;
 use OpenSRS\Exception;
 
-/*
- *  Required object values:
- *  data -
- */
-
 class TransferTradeDomain extends Base {
 	public $action = "trade_domain";
 	public $object = "domain";

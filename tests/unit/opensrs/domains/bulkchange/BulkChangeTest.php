@@ -8,17 +8,17 @@ use OpenSRS\domains\bulkchange\BulkChange;
 class BulkChangeTest extends PHPUnit_Framework_TestCase
 {
 	protected $change_types = array(
-		'availability_check' => 'Availability_check',
-		'dns_zone' => 'Dns_zone',
-		'dns_zone_record' => 'Dns_zone_record',
-		'domain_contacts' => 'Domain_contacts',
-		'domain_forwarding' => 'Domain_forwarding',
-		'domain_lock' => 'Domain_lock',
-		'domain_nameservers' => 'Domain_nameservers',
-		'domain_parked_pages' => 'Domain_parked_pages',
-		'domain_renew' => 'Domain_renew',
-		'push_domains' => 'Push_domains',
-		'whois_privacy' => 'Whois_privacy'
+		'availability_check' => 'AvailabilityCheck',
+		'dns_zone' => 'DnsZone',
+		'dns_zone_record' => 'DnsZoneRecord',
+		'domain_contacts' => 'DomainContacts',
+		'domain_forwarding' => 'DomainForwarding',
+		'domain_lock' => 'DomainLock',
+		'domain_nameservers' => 'DomainNameservers',
+		'domain_parked_pages' => 'DomainParkedPages',
+		'domain_renew' => 'DomainRenew',
+		'push_domains' => 'PushDomains',
+		'whois_privacy' => 'WhoisPrivacy'
 		);
     protected $validSubmission = array(
         'attributes' => array(
@@ -122,10 +122,11 @@ class BulkChangeTest extends PHPUnit_Framework_TestCase
 
         foreach( $this->change_types as $change_type => $class_name ) {
         	$changeTypeClassName = $ns->getFriendlyClassName( $change_type );
+
 	        $this->assertTrue( $changeTypeClassName == $class_name );
 
             $fullClassName = "OpenSRS\\domains\\bulkchange\\changetype\\$changeTypeClassName";
-        	$changeTypeClass = $ns->loadChangeTypeClass( $changeTypeClassName );
+        	$changeTypeClass = $ns->loadChangeTypeClass( $change_type );
 
             $this->assertTrue( $changeTypeClass instanceof $fullClassName );
         }

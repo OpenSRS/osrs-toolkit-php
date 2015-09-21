@@ -5,11 +5,6 @@ namespace opensrs\domains\transfer;
 use OpenSRS\Base;
 use OpenSRS\Exception;
 
-/*
- *  Required object values:
- *  data -
- */
-
 class TransferSendPassword extends Base {
 	public $action = "send_password";
 	public $object = "transfer";

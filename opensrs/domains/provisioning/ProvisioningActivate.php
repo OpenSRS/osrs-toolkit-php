@@ -5,11 +5,6 @@ namespace opensrs\domains\provisioning;
 use OpenSRS\Base;
 use OpenSRS\Exception;
 
-/*
- *  Required object values:
- *  data -
- */
-
 class ProvisioningActivate extends Base {
 	public $action = "activate";
 	public $object = "domain";

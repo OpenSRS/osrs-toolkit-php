@@ -10,7 +10,7 @@ class DnsForceTest extends PHPUnit_Framework_TestCase
     protected $func = 'dnsForce';
 
     protected $validSubmission = array(
-        'data' => array(
+        'attributes' => array(
             /**
              * Required
              *
@@ -33,7 +33,7 @@ class DnsForceTest extends PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->data->domain = 'phptest'.time().'.com';
+        $data->attributes->domain = 'phptest'.time().'.com';
 
         $ns = new DnsForce( 'array', $data );
 
@@ -57,10 +57,10 @@ class DnsForceTest extends PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
         
-        $data->data->domain = 'phptest'.time().'.com';
+        $data->attributes->domain = 'phptest'.time().'.com';
 
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(

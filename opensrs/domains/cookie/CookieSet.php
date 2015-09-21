@@ -5,11 +5,6 @@ namespace opensrs\domains\cookie;
 use OpenSRS\Base;
 use OpenSRS\Exception;
 
-/*
- *  Required object values:
- *  data -
- */
-
 class CookieSet extends Base {
 	public $action = "set";
 	public $object = "cookie";
