@@ -1,11 +1,13 @@
 <?php
 
+namespace OpenSRS\mail;
+
 use OpenSRS\mail\ChangeDomain;
 /**
  * @group mail
  * @group MailChangeDomain
  */
-class ChangeDomainTest extends PHPUnit_Framework_TestCase
+class ChangeDomainTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         'data' => array(

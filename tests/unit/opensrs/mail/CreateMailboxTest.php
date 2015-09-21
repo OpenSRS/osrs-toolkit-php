@@ -1,11 +1,13 @@
 <?php
 
+namespace OpenSRS\mail;
+
 use OpenSRS\mail\CreateMailbox;
 /**
  * @group mail
  * @group MailCreateMailbox
  */
-class CreateMailboxTest extends PHPUnit_Framework_TestCase
+class CreateMailboxTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         'data' => array(

@@ -1,11 +1,13 @@
 <?php
 
+namespace OpenSRS\mail;
+
 use OpenSRS\mail\SetDomainDisabledStatus;
 /**
  * @group mail
  * @group MailSetDomainDisabledStatus
  */
-class SetDomainDisabledStatusTest extends PHPUnit_Framework_TestCase
+class SetDomainDisabledStatusTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         'data' => array(

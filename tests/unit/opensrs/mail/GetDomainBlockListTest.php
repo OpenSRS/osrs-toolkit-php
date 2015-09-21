@@ -1,11 +1,13 @@
 <?php
 
+namespace OpenSRS\mail;
+
 use OpenSRS\mail\GetDomainBlockList;
 /**
  * @group mail
  * @group MailGetDomainBlockList
  */
-class GetDomainBlockListTest extends PHPUnit_Framework_TestCase
+class GetDomainBlockListTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         'data' => array(

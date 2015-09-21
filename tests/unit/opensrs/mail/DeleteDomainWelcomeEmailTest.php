@@ -1,11 +1,13 @@
 <?php
 
+namespace OpenSRS\mail;
+
 use OpenSRS\mail\DeleteDomainWelcomeEmail;
 /**
  * @group mail
  * @group MailDeleteDomainWelcomeEmail
  */
-class DeleteDomainWelcomeEmailTest extends PHPUnit_Framework_TestCase
+class DeleteDomainWelcomeEmailTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         'data' => array(

@@ -1,11 +1,13 @@
 <?php
 
+namespace OpenSRS\mail;
+
 use OpenSRS\mail\GetDomainMailboxLimits;
 /**
  * @group mail
  * @group MailGetDomainMailboxLimits
  */
-class GetDomainMailboxLimitsTest extends PHPUnit_Framework_TestCase
+class GetDomainMailboxLimitsTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         'data' => array(

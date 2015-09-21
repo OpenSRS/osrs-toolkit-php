@@ -1,11 +1,13 @@
 <?php
 
+namespace OpenSRS\mail;
+
 use OpenSRS\mail\CreateDomain;
 /**
  * @group mail
  * @group MailCreateDomain
  */
-class CreateDomainTest extends PHPUnit_Framework_TestCase
+class CreateDomainTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         'data' => array(

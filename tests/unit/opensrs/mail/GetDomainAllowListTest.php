@@ -1,11 +1,13 @@
 <?php
 
+namespace OpenSRS\mail;
+
 use OpenSRS\mail\GetDomainAllowList;
 /**
  * @group mail
  * @group MailGetDomainAllowList
  */
-class GetDomainAllowListTest extends PHPUnit_Framework_TestCase
+class GetDomainAllowListTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         'data' => array(

@@ -1,11 +1,13 @@
 <?php
 
+namespace OpenSRS\mail;
+
 use OpenSRS\mail\DeleteMailbox;
 /**
  * @group mail
  * @group MailDeleteMailbox
  */
-class DeleteMailboxTest extends PHPUnit_Framework_TestCase
+class DeleteMailboxTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         'data' => array(

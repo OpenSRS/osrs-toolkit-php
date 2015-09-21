@@ -1,11 +1,13 @@
 <?php
 
+namespace OpenSRS\mail;
+
 use OpenSRS\mail\SetDomainAdmin;
 /**
  * @group mail
  * @group MailSetDomainAdmin
  */
-class SetDomainAdminTest extends PHPUnit_Framework_TestCase
+class SetDomainAdminTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         'data' => array(

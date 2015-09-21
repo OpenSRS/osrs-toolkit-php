@@ -1,11 +1,13 @@
 <?php
 
+namespace OpenSRS\mail;
+
 use OpenSRS\mail\DeleteDomainAlias;
 /**
  * @group mail
  * @group MailDeleteDomainAlias
  */
-class DeleteDomainAliasTest extends PHPUnit_Framework_TestCase
+class DeleteDomainAliasTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         'data' => array(
