@@ -4,10 +4,6 @@ namespace opensrs\domains\bulkchange\changetype;
 
 use OpenSRS\Base;
 use OpenSRS\Exception;
-/*
- *  Required object values:
- *  data -
- */
 
 class WhoisPrivacy extends Base {
 	protected $change_type = 'whois_privacy';

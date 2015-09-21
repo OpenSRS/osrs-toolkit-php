@@ -5,11 +5,6 @@ namespace opensrs\domains\subuser;
 use OpenSRS\Base;
 use OpenSRS\Exception;
 
-/*
- *  Required object values:
- *  data -
- */
-
 class SubuserDelete extends Base {
 	public $action = "delete";
 	public $object = "subuser";

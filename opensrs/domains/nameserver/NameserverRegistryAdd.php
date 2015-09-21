@@ -4,10 +4,6 @@ namespace opensrs\domains\nameserver;
 
 use OpenSRS\Base;
 use OpenSRS\Exception;
-/*
- *  Required object values:
- *  data -
- */
 
 class NameserverRegistryAdd extends Base {
 	public $action = "registry_add_ns";

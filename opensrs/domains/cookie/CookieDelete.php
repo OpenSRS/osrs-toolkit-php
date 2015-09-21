@@ -5,11 +5,6 @@ namespace opensrs\domains\cookie;
 use OpenSRS\Base;
 use OpenSRS\Exception;
 
-/*
- *  Required object values:
- *  data -
- */
-
 class CookieDelete extends Base {
 	public $action = "delete";
 	public $object = "cookie";

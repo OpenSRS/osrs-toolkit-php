@@ -5,11 +5,6 @@ namespace opensrs\domains\provisioning;
 use OpenSRS\Base;
 use OpenSRS\Exception;
 
-/*
- *  Required object values:
- *  data -
- */
-
 class ProvisioningCancelPending extends Base {
 	public $action = "cancel_pending_orders";
 	public $object = "order";

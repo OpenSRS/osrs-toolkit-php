@@ -4,10 +4,6 @@ namespace opensrs\domains\forwarding;
 
 use OpenSRS\Base;
 use OpenSRS\Exception;
-/*
- *  Required object values:
- *  data -
- */
 
 class ForwardingDelete extends Base {
 	public $action = "delete_domain_forwarding";

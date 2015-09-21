@@ -4,10 +4,6 @@ namespace opensrs\domains\nameserver;
 
 use OpenSRS\Base;
 use OpenSRS\Exception;
-/*
- *  Required object values:
- *  data -
- */
 
 class NameserverRegistryCheck extends Base {
 	public $action = "registry_check_nameserver";

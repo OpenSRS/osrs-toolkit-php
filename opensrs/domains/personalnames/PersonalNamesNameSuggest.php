@@ -4,10 +4,6 @@ namespace opensrs\domains\personalnames;
 
 use OpenSRS\Base;
 use OpenSRS\Exception;
-/*
- *  Required object values:
- *  data -
- */
 
 class PersonalNamesNameSuggest extends Base {
 	public $action = "name_suggest";

@@ -5,11 +5,6 @@ namespace opensrs\domains\subuser;
 use OpenSRS\Base;
 use OpenSRS\Exception;
 
-/*
- *  Required object values:
- *  data -
- */
-
 class SubuserGetInfo extends Base {
 	public $action = "get";
 	public $object = "userinfo";

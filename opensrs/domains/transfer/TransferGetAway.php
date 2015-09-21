@@ -5,11 +5,6 @@ namespace opensrs\domains\transfer;
 use OpenSRS\Base;
 use OpenSRS\Exception;
 
-/*
- *  Required object values:
- *  data -
- */
-
 class TransferGetAway extends Base {
 	public $action = "get_transfers_away";
 	public $object = "domain";

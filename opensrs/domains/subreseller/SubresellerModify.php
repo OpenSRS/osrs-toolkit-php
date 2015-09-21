@@ -5,11 +5,6 @@ namespace opensrs\domains\subreseller;
 use OpenSRS\Base;
 use OpenSRS\Exception;
 
-/*
- *  Required object values:
- *  data -
- */
-
 class SubresellerModify extends Base {
 	public $action = "modify";
 	public $object = "subreseller";

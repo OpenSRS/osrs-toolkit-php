@@ -4,10 +4,6 @@ namespace opensrs\domains\bulkchange\changetype;
 
 use OpenSRS\Base;
 use OpenSRS\Exception;
-/*
- *  Required object values:
- *  data -
- */
 
 class DnsZone extends Base {
 	protected $change_type = 'dns_zone';

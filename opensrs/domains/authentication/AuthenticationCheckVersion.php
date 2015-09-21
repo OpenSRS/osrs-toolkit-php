@@ -5,11 +5,6 @@ namespace opensrs\domains\authentication;
 use OpenSRS\Base;
 use OpenSRS\Exception;
 
-/*
- *  Required object values:
- *  data -
- */
-
 class AuthenticationCheckVersion extends Base {
 	public $action = "check";
 	public $object = "version";

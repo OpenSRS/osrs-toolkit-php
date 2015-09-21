@@ -5,11 +5,6 @@ namespace opensrs\domains\authentication;
 use OpenSRS\Base;
 use OpenSRS\Exception;
 
-/*
- *  Required object values:
- *  data -
- */
-
 class AuthenticationSendPassword extends Base {
 	public $action = "send_password";
 	public $object = "domain";
