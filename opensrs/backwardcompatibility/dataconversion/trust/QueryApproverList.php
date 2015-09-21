@@ -25,8 +25,8 @@ class QueryApproverList extends DataConversion {
     //  to ->attributes->domain in the new format
     protected $newStructure = array(
         'attributes' => array(
-            'product_type' => 'data->product_type'
-            'domain' => 'data->domain',
+            'product_type' => 'data->product_type',
+            'domain' => 'data->domain'
         ),
     );
 

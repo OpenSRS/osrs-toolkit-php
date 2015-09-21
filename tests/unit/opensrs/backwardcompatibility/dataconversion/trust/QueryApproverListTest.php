@@ -8,7 +8,7 @@ use OpenSRS\backwardcompatibility\dataconversion\trust\QueryApproverList;
  * @group trust
  * @group BC_QueryApproverList
  */
-class BC_QueryApproverList extends PHPUnit_Framework_TestCase
+class BC_QueryApproverListTest extends PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         "data" => array(
