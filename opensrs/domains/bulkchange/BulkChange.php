@@ -15,6 +15,13 @@ class BulkChange extends Base {
     public $resultFullFormatted;
     public $resultFormatted;
 
+	public $requiredFields = array(
+		'attributes' => array(
+			'change_items',
+			'change_type'
+			),
+		);
+
 	protected $changeTypeHandle = null;
 
     public function __construct( $formatString, $dataObject, $returnFullResponse = true, $send = true ) {
@@ -35,19 +42,9 @@ class BulkChange extends Base {
 
 	// Validate the object
 	public function _validateObject( $dataObject ) {
-		if(
-			!isset( $dataObject->attributes->change_items ) ||
-			$dataObject->attributes->change_items == ""
-		) {
-			throw new Exception( "oSRS Error - change_items is not defined." );
-		}
+		$parent = new parent();
 
-		if(
-			!isset( $dataObject->attributes->change_type ) ||
-			$dataObject->attributes->change_type == ""
-		) {
-			throw new Exception( "oSRS Error - change_type is not defined." );
-		}
+		$parent->_validateObject( $dataObject, $this->requiredFields );
 
 		// run validation for change_type
 		$this->validateChangeType( $dataObject->attributes->change_type, $dataObject );
@@ -66,7 +63,7 @@ class BulkChange extends Base {
 			return new $changeTypeClass();
 		}
 		else {
-			throw new Exception( "The class $changeTypeClass does not exist or cannot be found" );
+			Exception::classNotFound( $changeTypeClass );
 		}
 	}
 

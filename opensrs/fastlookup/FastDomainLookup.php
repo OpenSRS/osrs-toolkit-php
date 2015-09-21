@@ -33,18 +33,18 @@ class FastDomainLookup extends FastLookup
         
         // search domain must be definded
         if (!isset($dataObject->data->domain)) {
-            throw new Exception('oSRS Error - domain is not defined.');
+            Exception::notDefined( 'domain' );
         }
 
         // Grab domain name
         $domain = $this->getDomain();
 
         if (!isset($dataObject->data->selected)) {
-            throw new Exception('oSRS Error - selected is not defined.');
+            Exception::notDefined( 'selected' );
         }
 
         if (!isset($dataObject->data->alldomains)) {
-            throw new Exception('oSRS Error - alldomains is not defined.');
+            Exception::notDefined( 'alldomains' );
         }
 
         $selected = $this->getSelected();
