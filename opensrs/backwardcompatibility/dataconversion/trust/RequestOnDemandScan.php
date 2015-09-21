@@ -5,7 +5,7 @@ namespace OpenSRS\backwardcompatibility\dataconversion\trust;
 use OpenSRS\backwardcompatibility\dataconversion\DataConversion;
 use OpenSRS\Exception;
 
-class QueryApproverList extends DataConversion {
+class RequestOnDemandScan extends DataConversion {
     // New structure for API calls handled by
     // the toolkit.
     //
@@ -25,8 +25,8 @@ class QueryApproverList extends DataConversion {
     //  to ->attributes->domain in the new format
     protected $newStructure = array(
         'attributes' => array(
-            'product_type' => 'data->product_type',
-            'domain' => 'data->domain'
+            'product_id' => 'data->product_id',
+            'order_id' => 'data->order_id'
         ),
     );
 

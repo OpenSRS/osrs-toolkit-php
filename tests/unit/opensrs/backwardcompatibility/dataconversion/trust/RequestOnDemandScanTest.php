@@ -1,21 +1,21 @@
 <?php
 
-use OpenSRS\backwardcompatibility\dataconversion\trust\QueryApproverList;
+use OpenSRS\backwardcompatibility\dataconversion\trust\RequestOnDemandScan;
 
 /**
  * @group backwardcompatibility
  * @group dataconversion
  * @group trust
- * @group BC_QueryApproverList
+ * @group BC_RequestOnDemandScan
  */
-class BC_QueryApproverList extends PHPUnit_Framework_TestCase
+class BC_RequestOnDemandScan extends PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         "data" => array(
-            'product_type' => "",
-            'domain' => ""
-            ),
-        );
+            "product_id" => "",
+            "order_id" => ""
+        ),
+    );
 
     /**
      * Valid conversion should complete with no
@@ -28,18 +28,18 @@ class BC_QueryApproverList extends PHPUnit_Framework_TestCase
     public function testValidDataConversion() {
         $data = json_decode( json_encode ($this->validSubmission) );
 
-        $data->data->product_type = 'comodo_ev';
-        $data->data->domain = 'google.com';
+        $data->data->product_id = '123';
+        $data->data->order_id = '456';
 
         $shouldMatchNewDataObject = new \stdClass;
         $shouldMatchNewDataObject->attributes = new \stdClass;
 
-        $shouldMatchNewDataObject->attributes->product_type = $data->data->product_type;
-        $shouldMatchNewDataObject->attributes->domain = $data->data->domain;
+        $shouldMatchNewDataObject->attributes->product_id = $data->data->product_id;
+        $shouldMatchNewDataObject->attributes->order_id = $data->data->order_id;
 
-        $qal = new QueryApproverList;
+        $rods = new RequestOnDemandScan;
 
-        $newDataObject = $qal->convertDataObject( $data );
+        $newDataObject = $rods->convertDataObject( $data );
 
         $this->assertTrue( $newDataObject == $shouldMatchNewDataObject );
     }
