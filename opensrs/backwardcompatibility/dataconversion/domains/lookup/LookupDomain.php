@@ -25,14 +25,12 @@ class LookupDomain extends DataConversion {
 	//  to ->attributes->domain in the new format
 	protected $newStructure = array(
 		'attributes' => array(
-			'domain' => 'data->domain',
+			'domain' => 'data->searchstring',
 			)
 		);
 
 	public function convertDataObject( $dataObject, $newStructure = null ) {
 		$p = new parent();
-
-        var_dump($dataObject);
 
 		if(is_null($newStructure)){
 			$newStructure = $this->newStructure;
