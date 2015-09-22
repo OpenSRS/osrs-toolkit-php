@@ -19,7 +19,7 @@ class Create extends Base
     public $requiredFields = array(
         'attributes' => array(
             'domain',
-            'service_type'
+            'service_type',
             ),
         );
 
