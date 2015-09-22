@@ -10,7 +10,7 @@ use OpenSRS\mail\CreateDomainWelcomeEmail;
 class CreateDomainWelcomeEmailTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
-        'data' => array(
+        'attributes' => array(
             'admin_username' => '',
             'admin_password' => '',
             'admin_domain' => '',
@@ -35,16 +35,16 @@ class CreateDomainWelcomeEmailTest extends \PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission ) );
 
-        $data->data->admin_username = 'phptest' . time();
-        $data->data->admin_password = 'password1234';
-        $data->data->admin_domain = 'mail.phptest' . time() . '.com';
-        $data->data->domain = 'new-' . $data->data->admin_domain;
-        $data->data->welcome_text = "Welcome";
-        $data->data->welcome_subject = "Welcome!";
-        $data->data->from_name = "Tikloot Php";
-        $data->data->from_address = "phptoolkit@tucows.com";
-        $data->data->charset = "UTF-8";
-        $data->data->mime_type = "text/plain";
+        $data->attributes->admin_username = 'phptest' . time();
+        $data->attributes->admin_password = 'password1234';
+        $data->attributes->admin_domain = 'mail.phptest' . time() . '.com';
+        $data->attributes->domain = 'new-' . $data->attributes->admin_domain;
+        $data->attributes->welcome_text = "Welcome";
+        $data->attributes->welcome_subject = "Welcome!";
+        $data->attributes->from_name = "Tikloot Php";
+        $data->attributes->from_address = "phptoolkit@tucows.com";
+        $data->attributes->charset = "UTF-8";
+        $data->attributes->mime_type = "text/plain";
 
         $ns = new CreateDomainWelcomeEmail( 'array', $data );
 
@@ -77,19 +77,19 @@ class CreateDomainWelcomeEmailTest extends \PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission ) );
 
-        $data->data->admin_username = 'phptest' . time();
-        $data->data->admin_password = 'password1234';
-        $data->data->admin_domain = 'mail.phptest' . time() . '.com';
-        $data->data->domain = 'new-' . $data->data->admin_domain;
-        $data->data->welcome_text = "Welcome";
-        $data->data->welcome_subject = "Welcome!";
-        $data->data->from_name = "Tikloot Php";
-        $data->data->from_address = "phptoolkit@tucows.com";
-        $data->data->charset = "UTF-8";
-        $data->data->mime_type = "text/plain";
+        $data->attributes->admin_username = 'phptest' . time();
+        $data->attributes->admin_password = 'password1234';
+        $data->attributes->admin_domain = 'mail.phptest' . time() . '.com';
+        $data->attributes->domain = 'new-' . $data->attributes->admin_domain;
+        $data->attributes->welcome_text = "Welcome";
+        $data->attributes->welcome_subject = "Welcome!";
+        $data->attributes->from_name = "Tikloot Php";
+        $data->attributes->from_address = "phptoolkit@tucows.com";
+        $data->attributes->charset = "UTF-8";
+        $data->attributes->mime_type = "text/plain";
         
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(

@@ -153,12 +153,14 @@ class Mail
         $command = '';
 
         if( is_null($fields) ){
-            if( isset($this->requiredFields['attributes']) ) {
-                $command .= $this->getCommand( $dataObject->attributes, $this->requiredFields['attributes'], true );
-            }
+            if( isset($dataObject->attributes) ){
+                if( isset($this->requiredFields['attributes']) ) {
+                    $command .= $this->getCommand( $dataObject->attributes, $this->requiredFields['attributes'], true );
+                }
 
-            if( isset($this->optionalFields['attributes']) ) {
-                $command .= $this->getCommand( $dataObject->attributes, $this->optionalFields['attributes'], false );
+                if( isset($this->optionalFields['attributes']) ) {
+                    $command .= $this->getCommand( $dataObject->attributes, $this->optionalFields['attributes'], false );
+                }
             }
         }
         else {
