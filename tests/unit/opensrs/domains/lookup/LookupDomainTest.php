@@ -1,7 +1,9 @@
 <?php
 
 use OpenSRS\domains\lookup\LookupDomain;
-
+/**
+ * @group LookupDomain
+ */
 class LookupDomainTest extends PHPUnit_Framework_TestCase
 {
     /**
@@ -14,8 +16,8 @@ class LookupDomainTest extends PHPUnit_Framework_TestCase
     {
         $data = (object) array (
             'func' => 'lookupDomain',
-            'data' => (object) array (
-                // 'domain' => 'hockey.com',
+            'attributes' => (object) array (
+                 // 'domain' => 'hockey.com',
             ),
         );
 
