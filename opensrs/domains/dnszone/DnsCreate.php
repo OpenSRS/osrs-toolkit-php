@@ -36,7 +36,7 @@ class DnsCreate extends Base {
 	}
 
 	// Validate the object
-	public function _validateObject( $dataObject ) {
+    public function _validateObject( $dataObject, $requiredFields = null ){
 		if(
 			!isset( $dataObject->attributes->domain ) ||
 			$dataObject->attributes->domain == ""
