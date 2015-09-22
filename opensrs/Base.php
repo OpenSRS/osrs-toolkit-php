@@ -453,6 +453,13 @@ class Base
     	}
     }
 
+    // determine whether the value passed
+    // is valid or not. currently, could
+    // be invalid if is an empty string
+    // or empty array.
+    // moved to separate method to avoid
+    // having all cases inside the if()
+    // statement in _validateObject
     public function isValidField( $value ){
     	$isArray = is_array($value);
 
