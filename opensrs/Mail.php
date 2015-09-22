@@ -5,7 +5,7 @@ use OpenSRS\Exception;
 
 defined ('OPENSRSURI') or require_once dirname(__FILE__).'/openSRS_config.php';
 
-class Mail extends Base
+class Mail
 {
     protected $command = null;
 
@@ -213,11 +213,13 @@ class Mail extends Base
         $tucRes = $this->makeCall($sequence);
         $arrayResult = $this->parseResults($tucRes);
 
+        $base = new Base();
+
         // Results
         $this->resultFullRaw = $arrayResult;
         $this->resultRaw = $arrayResult;
-        $this->resultFullFormatted = $this->convertArray2Formatted($this->_formatHolder, $this->resultFullRaw);
-        $this->resultFormatted = $this->convertArray2Formatted($this->_formatHolder, $this->resultRaw);
+        $this->resultFullFormatted = $base->convertArray2Formatted($this->_formatHolder, $this->resultFullRaw);
+        $this->resultFormatted = $base->convertArray2Formatted($this->_formatHolder, $this->resultRaw);
     }
 
     public function addAuthenticationInfo( $dataObject ) {

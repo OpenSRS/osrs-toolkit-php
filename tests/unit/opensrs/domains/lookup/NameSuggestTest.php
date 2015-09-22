@@ -7,23 +7,79 @@ use OpenSRS\domains\lookup\NameSuggest;
  */
 class NameSuggestTest extends PHPUnit_Framework_TestCase
 {
-    protected $func = 'lookupNameSuggest';
+    protected $func = "lookupNameSuggest";
+
+    protected $validSubmission = array(
+        'attributes' => array(
+            'searchstring' => '',
+            ),
+        );
 
     /**
-     * New NameSuggest should throw an exception if 
-     * data->domain is ommitted 
-     * 
+     * Valid submission should complete with no
+     * exception thrown
+     *
      * @return void
+     *
+     * @group validsubmission
      */
-    public function testValidateMissingDomain()
-    {
-        $data = (object) array (
-            'data' => (object) array (
-                // 'domain' => 'hockey.com'
-                ),
-            );
+    public function testValidSubmission() {
+        $data = json_decode( json_encode ($this->validSubmission) );
 
-        $this->setExpectedException('OpenSRS\Exception');
-        $ns = new NameSuggest('array', $data);
+        $data->attributes->searchstring = 'phptest' . time() . '.com';
+
+        $ns = new NameSuggest( 'array', $data );
+
+        $this->assertTrue( $ns instanceof NameSuggest );
     }
+
+    /**
+     * Data Provider for Invalid Submission test
+     */
+    function submissionFields() {
+        return array(
+            'missing searchstring' => array('searchstring'),
+            );
+    }
+
+    /**
+     * Invalid submission should throw an exception
+     *
+     * @return void
+     *
+     * @dataProvider submissionFields
+     * @group invalidsubmission
+     */
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
+        $data = json_decode( json_encode($this->validSubmission) );
+
+        $data->attributes->searchstring = 'phptest' . time() . '.com';
+
+        $this->setExpectedException( 'OpenSRS\Exception' );
+
+        if(is_null($message)){
+          $this->setExpectedExceptionRegExp(
+              'OpenSRS\Exception',
+              "/$field.*not defined/"
+              );
+        }
+        else {
+          $this->setExpectedExceptionRegExp(
+              'OpenSRS\Exception',
+              "/$message/"
+              );
+        }
+
+
+
+        // clear field being tested
+        if(is_null($parent)){
+            unset( $data->$field );
+        }
+        else{
+            unset( $data->$parent->$field );
+        }
+
+        $ns = new NameSuggest( 'array', $data );
+     }
 }
