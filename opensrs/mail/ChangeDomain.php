@@ -5,11 +5,6 @@ namespace OpenSRS\mail;
 use OpenSRS\Mail;
 use OpenSRS\Exception;
 
-/*
- *  Required object values:
- *  data - 
- */
-
 class ChangeDomain extends Mail
 {
     public $command = 'change_domain';
