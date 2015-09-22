@@ -148,8 +148,13 @@ class Mail extends Base
         $command = '';
 
         if( is_null($fields) ){
-            $command .= $this->getCommand( $dataObject->attributes, $this->requiredFields['attributes'], true );
-            $command .= $this->getCommand( $dataObject->attributes, $this->optionalFields['attributes'], false );
+            if( isset($this->requiredFields['attributes']) ) {
+                $command .= $this->getCommand( $dataObject->attributes, $this->requiredFields['attributes'], true );
+            }
+
+            if( isset($this->optionalFields['attributes']) ) {
+                $command .= $this->getCommand( $dataObject->attributes, $this->optionalFields['attributes'], false );
+            }
         }
         else {
             // check required fields
