@@ -218,7 +218,7 @@ class Mail extends Base
     public function addAuthenticationInfo( $dataObject ) {
         if (!isset($dataObject->attributes->admin_username) || $dataObject->attributes->admin_username == '') {
             if (APP_MAIL_USERNAME == '') {
-                throw new Exception('oSRS-eMail Error - admin_username is not defined.');
+                Exception::notDefined( "admin_username" );
             } else {
                 $dataObject->attributes->admin_username = APP_MAIL_USERNAME;
             }
@@ -226,7 +226,7 @@ class Mail extends Base
 
         if (!isset($dataObject->attributes->admin_password) || $dataObject->attributes->admin_password == '') {
             if (APP_MAIL_PASSWORD == '') {
-                throw new Exception('oSRS-eMail Error - admin_password is not defined.');
+                Exception::notDefined( "admin_password" );
             } else {
                 $dataObject->attributes->admin_password = APP_MAIL_PASSWORD;
             }
@@ -234,7 +234,7 @@ class Mail extends Base
 
         if (!isset($dataObject->attributes->admin_domain) || $dataObject->attributes->admin_domain == '') {
             if (APP_MAIL_DOMAIN == '') {
-                throw new Exception('oSRS-eMail Error - admin_domain is not defined.');
+                Exception::notDefined( "admin_domain" );
             } else {
                 $dataObject->attributes->admin_domain = APP_MAIL_DOMAIN;
             }
