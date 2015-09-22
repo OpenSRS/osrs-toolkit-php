@@ -16,8 +16,6 @@ class GetDomain extends Base {
 	public $resultFormatted;
 
     public $requiredFields = array(
-    	'cookie',
-
     	'attributes' => array(
     		'type',
     		),
