@@ -14,6 +14,11 @@ class Mail
     
     }
 
+    public function __destruct()
+    {
+    
+    }
+
     // Class functions
     public function makeCall($sequence)
     {
