@@ -37,7 +37,7 @@ class UpdateProduct extends Base
         parent::__destruct();
     }
 
-    private function _validateObject()
+    public function _validateObject($dataObject)
     {
         if (!isset($this->_dataObject->data->product_id)) {
             throw new Exception('oSRS Error - product_id is not defined.');
