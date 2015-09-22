@@ -17,7 +17,6 @@ class ProvisioningRevoke extends Base {
 
     public $requiredFields = array(
         'attributes' => array(
-            'reseller',
             'domain',
             ),
         );
@@ -38,12 +37,6 @@ class ProvisioningRevoke extends Base {
 
 	// Validate the object
     public function _validateObject( $dataObject, $requiredFields = null ){
-		if(
-			!isset( $dataObject->attributes->reseller ) ||
-			$dataObject->attributes->reseller == ""
-		) {
-			throw new Exception( "oSRS Error - reseller is not defined." );
-		}
 		if(
 			!isset( $dataObject->attributes->domain ) ||
 			$dataObject->attributes->domain == ""
