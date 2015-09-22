@@ -5,11 +5,6 @@ namespace OpenSRS\mail;
 use OpenSRS\Mail;
 use OpenSRS\Exception;
 
-/*
- *  Required object values:
- *  data - 
- */
-
 class Authentication extends Mail
 {
     private $_dataObject;
@@ -37,42 +32,33 @@ class Authentication extends Mail
     // Validate the object
     public function _validateObject( $dataObject = array() ) 
     {
-        $allPassed = true;
         $compile = '';
 
         // Command required values - authentication
-        if (!isset($this->_dataObject->data->admin_username) || $this->_dataObject->data->admin_username == '') {
+        if (!isset($this->_dataObject->attributes->admin_username) || $this->_dataObject->attributes->admin_username == '') {
             if (APP_MAIL_USERNAME == '') {
-                throw new Exception('oSRS-eMail Error - admin_username is not defined.');
-                $allPassed = false;
+                Exception::notDefined( "admin_username" );
             } else {
-                $this->_dataObject->data->admin_username = APP_MAIL_USERNAME;
+                $this->_dataObject->attributes->admin_username = APP_MAIL_USERNAME;
             }
         }
-        if (!isset($this->_dataObject->data->admin_password) || $this->_dataObject->data->admin_password == '') {
+        if (!isset($this->_dataObject->attributes->admin_password) || $this->_dataObject->attributes->admin_password == '') {
             if (APP_MAIL_PASSWORD == '') {
-                throw new Exception('oSRS-eMail Error - admin_password is not defined.');
-                $allPassed = false;
+                Exception::notDefined( "admin_password" );
             } else {
-                $this->_dataObject->data->admin_password = APP_MAIL_PASSWORD;
+                $this->_dataObject->attributes->admin_password = APP_MAIL_PASSWORD;
             }
         }
-        if (!isset($this->_dataObject->data->admin_domain) || $this->_dataObject->data->admin_domain == '') {
+        if (!isset($this->_dataObject->attributes->admin_domain) || $this->_dataObject->attributes->admin_domain == '') {
             if (APP_MAIL_DOMAIN == '') {
-                throw new Exception('oSRS-eMail Error - admin_domain is not defined.');
-                $allPassed = false;
+                Exception::notDefined( "admin_domain" );
             } else {
-                $this->_dataObject->data->admin_domain = APP_MAIL_DOMAIN;
+                $this->_dataObject->attributes->admin_domain = APP_MAIL_DOMAIN;
             }
         }
 
-        // Run the command
-        if ($allPassed) {
-            // Execute the command
-            $this->_processRequest($compile);
-        } else {
-            throw new Exception('oSRS-eMail Error - Missing data.');
-        }
+        // Execute the command
+        $this->_processRequest($compile);
     }
 
     // Post validation functions
@@ -80,7 +66,7 @@ class Authentication extends Mail
     {
         $sequence = array(
             0 => 'ver ver="3.4"',
-            1 => 'login user="'.$this->_dataObject->data->admin_username.'" domain="'.$this->_dataObject->data->admin_domain.'" password="'.$this->_dataObject->data->admin_password.'"',
+            1 => 'login user="'.$this->_dataObject->attributes->admin_username.'" domain="'.$this->_dataObject->attributes->admin_domain.'" password="'.$this->_dataObject->attributes->admin_password.'"',
             2 => 'quit',
         );
         $tucRes = $this->makeCall($sequence);

@@ -10,7 +10,7 @@ use OpenSRS\mail\Authentication;
 class AuthenticationTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
-        'data' => array(
+        'attributes' => array(
             'admin_username' => '',
             'admin_password' => '',
             'admin_domain' => '',
@@ -28,9 +28,9 @@ class AuthenticationTest extends \PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission ) );
 
-        $data->data->admin_username = 'phptest' . time();
-        $data->data->admin_password = 'password1234';
-        $data->data->admin_domain = 'mail.phptest' . time() . '.com';
+        $data->attributes->admin_username = 'phptest' . time();
+        $data->attributes->admin_password = 'password1234';
+        $data->attributes->admin_domain = 'mail.phptest' . time() . '.com';
 
         $ns = new Authentication( 'array', $data );
 
@@ -56,12 +56,12 @@ class AuthenticationTest extends \PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
         $data = json_decode( json_encode( $this->validSubmission ) );
 
-        $data->data->admin_username = 'phptest' . time();
-        $data->data->admin_password = 'password1234';
-        $data->data->admin_domain = 'mail.phptest' . time() . '.com';
+        $data->attributes->admin_username = 'phptest' . time();
+        $data->attributes->admin_password = 'password1234';
+        $data->attributes->admin_domain = 'mail.phptest' . time() . '.com';
         
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(
