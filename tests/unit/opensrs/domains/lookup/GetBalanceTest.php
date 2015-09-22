@@ -1,7 +1,6 @@
 <?php
 
 use OpenSRS\domains\lookup\GetBalance;
-
 /**
  * @group lookup
  * @group GetBalance

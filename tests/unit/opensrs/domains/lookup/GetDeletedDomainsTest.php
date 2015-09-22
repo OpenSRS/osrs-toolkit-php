@@ -1,7 +1,6 @@
 <?php
 
 use OpenSRS\domains\lookup\GetDeletedDomains;
-
 /**
  * @group lookup
  * @group GetDeletedDomains

@@ -1,7 +1,6 @@
 <?php
 
 use OpenSRS\domains\lookup\GetCaBlockerList;
-
 /**
  * @group lookup
  * @group GetCaBlockerList

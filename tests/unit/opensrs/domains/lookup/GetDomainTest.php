@@ -8,7 +8,7 @@ use OpenSRS\Request;
  */
 class GetDomainTest extends PHPUnit_Framework_TestCase
 {
-    protected $func = 'fwdCreate';
+    protected $func = 'lookupGetDomain';
 
     protected $validSubmission = array(
         "attributes" => array(

@@ -2,6 +2,7 @@
 
 use OpenSRS\domains\lookup\LookupDomain;
 /**
+ * @group lookup
  * @group LookupDomain
  */
 class LookupDomainTest extends PHPUnit_Framework_TestCase

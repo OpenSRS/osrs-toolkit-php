@@ -7,6 +7,7 @@ use OpenSRS\domains\lookup\GetDomainsContacts;
  */
 class GetDomainsContactsTest extends PHPUnit_Framework_TestCase
 {
+    protected $func = 'lookupGetDomainsContacts';
     /**
      * New NameSuggest should throw an exception if 
      * data->domain is ommitted 
