@@ -16,8 +16,6 @@ class SWRegister extends Base {
 	public $resultFormatted;
 
 	public $requiredFields = array(
-		'cookie',
-
 		'attributes' => array(
 			'reg_type',
 			'product_type'
