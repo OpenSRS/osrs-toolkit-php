@@ -15,6 +15,13 @@ class TransferRsp2Rsp extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+    public $requiredFields = array(
+        'attributes' => array(
+            'domain',
+            'grsp',
+            ),
+        );
+
 	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
@@ -27,22 +34,5 @@ class TransferRsp2Rsp extends Base {
 
 	public function __destruct() {
 		parent::__destruct();
-	}
-
-	// Validate the object
-	public function _validateObject( $dataObject ) {
-		// Command required values
-		if(
-			!isset( $dataObject->attributes->domain ) ||
-			$dataObject->attributes->domain == ""
-		) {
-			throw new Exception( "oSRS Error - domain is not defined." );
-		}
-		if(
-			!isset( $dataObject->attributes->grsp ) ||
-			$dataObject->attributes->grsp == ""
-		) {
-			throw new Exception( "oSRS Error - grsp is not defined." );
-		}
 	}
 }

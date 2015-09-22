@@ -15,6 +15,12 @@ class TransferCancel extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+    public $requiredFields = array(
+        'attributes' => array(
+            'reseller',
+            ),
+        );
+
 	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
@@ -27,15 +33,5 @@ class TransferCancel extends Base {
 
 	public function __destruct() {
 		parent::__destruct();
-	}
-
-	// Validate the object
-	public function _validateObject( $dataObject ) {
-		if(
-			!isset( $dataObject->attributes->reseller ) ||
-			$dataObject->attributes->reseller == ""
-		) {
-			throw new Exception( "oSRS Error - reseller is not defined." );
-		}
 	}
 }

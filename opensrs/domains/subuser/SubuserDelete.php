@@ -15,6 +15,13 @@ class SubuserDelete extends Base {
 	public $resultFullFormatted;
 	public $resultFormatted;
 
+    public $requiredFields = array(
+        'attributes' => array(
+            'username',
+            'sub_id',
+            ),
+        );
+
 	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
 		parent::__construct();
 
@@ -30,14 +37,14 @@ class SubuserDelete extends Base {
 	}
 
 	// Validate the object
-	public function _validateObject( $dataObject ) {
+    public function _validateObject( $dataObject, $requiredFields = null ){
 		if(
 			( !isset($dataObject->cookie ) ||
 				$dataObject->cookie == "") &&
 			( !isset($dataObject->attributes->domain ) ||
 				$dataObject->attributes->domain == "")
 		) {
-			throw new Exception( "oSRS Error - cookie / domain is not defined." );
+			Exception::notDefined( "cookie or domain" );
 		}
 		if(
 			isset($dataObject->cookie) &&
@@ -45,20 +52,11 @@ class SubuserDelete extends Base {
 			isset($dataObject->attributes->domain) &&
 			$dataObject->attributes->domain != ""
 		) {
-			throw new Exception( "oSRS Error - Both cookie and domain cannot be set in one call." );
+			Exception::cannotSetOneCall( "cookie and domain" );
 		}
 
-		if(
-			!isset( $dataObject->attributes->username ) ||
-			$dataObject->attributes->username == ""
-		) {
-			throw new Exception( "oSRS Error - username is not defined." );
-		}
-		if(
-			!isset( $dataObject->attributes->sub_id ) ||
-			$dataObject->attributes->sub_id == ""
-		) {
-			throw new Exception( "oSRS Error - sub_id is not defined." );
-		}
+		$parent = new parent();
+
+		$parent->_validateObject( $dataObject, $this->requiredFields );
 	}
 }

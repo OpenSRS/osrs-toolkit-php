@@ -445,11 +445,27 @@ class Base
 	    			$this->_validateObject( $dataObject->$i, $field );
 	    		}
 	    		else{
-	    			if( !isset($dataObject->$field) || !strlen($dataObject->$field) ) {
+	    			if( !isset($dataObject->$field) || !$this->isValidField($dataObject->$field) ) {
 	    				Exception::notDefined( $field );
 	    			}
 	    		}
 	    	}
     	}
+    }
+
+    public function isValidField( $value ){
+    	$isArray = is_array($value);
+
+    	switch(true){
+    		case $isArray && count($value):
+    		case !$isArray && strlen($value):
+    			$isValid = true;
+    			break;
+			default:
+		    	$isValid = false;
+				break;
+    	}
+
+    	return $isValid;
     }
 }

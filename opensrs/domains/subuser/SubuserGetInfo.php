@@ -30,7 +30,7 @@ class SubuserGetInfo extends Base {
 	}
 
 	// Validate the object
-	public function _validateObject( $dataObject ) {
+    public function _validateObject( $dataObject, $requiredFields = null ){
 		// Command required values
 		if(
 			( !isset($dataObject->cookie ) ||
@@ -38,7 +38,7 @@ class SubuserGetInfo extends Base {
 			( !isset($dataObject->attributes->domain ) ||
 				$dataObject->attributes->domain == "")
 		) {
-			throw new Exception( "oSRS Error - cookie / domain is not defined." );
+			Exception::notDefined( "cookie or domain" );
 		}
 		if(
 			isset($dataObject->cookie) &&
@@ -46,7 +46,11 @@ class SubuserGetInfo extends Base {
 			isset($dataObject->attributes->domain) &&
 			$dataObject->attributes->domain != ""
 		) {
-			throw new Exception( "oSRS Error - Both cookie and domain cannot be set in one call." );
+			Exception::cannotSetOneCall( "cookie and domain" );
 		}
+		
+		$parent = new parent();
+
+		$parent->_validateObject( $dataObject, $this->requiredFields );
 	}
 }
