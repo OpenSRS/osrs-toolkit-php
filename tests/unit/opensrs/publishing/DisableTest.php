@@ -1,8 +1,7 @@
 <?php
 
-namespace OpenSRS\publishing;
+namespace opensrs\publishing;
 
-use OpenSRS\publishing\Disable;
 /**
  * @group publishing
  * @group publishing\Disable
@@ -18,27 +17,28 @@ class DisableTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Valid submission should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validsubmission
      */
-    public function testValidSubmission() {
-        $data = json_decode( json_encode($this->validSubmission ) );
+    public function testValidSubmission()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->attributes->domain = 'phptest' . time() . ".com";
-        $data->attributes->service_type = "phptest" . time();
+        $data->attributes->domain = 'phptest'.time().'.com';
+        $data->attributes->service_type = 'phptest'.time();
 
-        $ns = new Disable( 'array', $data );
+        $ns = new Disable('array', $data);
 
-        $this->assertTrue( $ns instanceof Disable );
+        $this->assertTrue($ns instanceof Disable);
     }
 
     /**
-     * Data Provider for Invalid Submission test
+     * Data Provider for Invalid Submission test.
      */
-    function submissionFields() {
+    public function submissionFields()
+    {
         return array(
             'missing domain' => array('domain'),
             'missing service_type' => array('service_type'),
@@ -46,42 +46,38 @@ class DisableTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Invalid submission should throw an exception
+     * Invalid submission should throw an exception.
      *
-     * @return void
      *
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
-        $data = json_decode( json_encode($this->validSubmission ) );
+    public function testInvalidSubmissionFieldsMissing($field, $parent = 'attributes', $message = null)
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->attributes->domain = 'phptest' . time() . ".com";
-        $data->attributes->service_type = "test-service";
-        
-        if(is_null($message)){
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
+        $data->attributes->domain = 'phptest'.time().'.com';
+        $data->attributes->service_type = 'test-service';
+
+        if (is_null($message)) {
+            $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
               "/$field.*not defined/"
               );
-        }
-        else {
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
+        } else {
+            $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
               "/$message/"
               );
         }
 
-
-
         // clear field being tested
-        if(is_null($parent)){
-            unset( $data->$field );
-        }
-        else{
-            unset( $data->$parent->$field );
+        if (is_null($parent)) {
+            unset($data->$field);
+        } else {
+            unset($data->$parent->$field);
         }
 
-        $ns = new Disable( 'array', $data );
+        $ns = new Disable('array', $data);
     }
 }

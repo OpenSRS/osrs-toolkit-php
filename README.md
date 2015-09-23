@@ -120,7 +120,7 @@ try {
     $request = new Request();
     $osrsHandler = $request->process('array', $data);
 
-} catch (\OpenSRS\Exception $e){
+} catch (\opensrs\Exception $e){
     // handle exception(s)
 }
 ```
@@ -130,7 +130,7 @@ try {
 require_once('vendor/autoload.php');
 require_once('config/openSRS_config.php');
 
-use OpenSRS\domain\LookupDomain;
+use opensrs\domain\LookupDomain;
 
 $data = (object) array (
     'func' => 'lookupDomain',
@@ -142,7 +142,7 @@ $data = (object) array (
 try {
     $lookupDomain = new LookupDomain('array', $data);
 
-} catch (\OpenSRS\Exception $e){
+} catch (\opensrs\Exception $e){
     // handle exception(s)
 }
 
@@ -299,7 +299,7 @@ $request->process($data_type, $call_string);
 
 #### Method 3 (Specific Request)
 ```php
-$lookupDomain = new OpenSRS\domains\lookup\LookupDomain($data_type, $call_string)
+$lookupDomain = new opensrs\domains\lookup\LookupDomain($data_type, $call_string)
 ```
 
 The returnedResult variable will be an object that has the result in a string using
@@ -363,7 +363,7 @@ require_once('vendor/autoload.php');
 require_once('config/openSRS_config.php');
 
 try {
-    $request = new OpenSRS\Request;
+    $request = new opensrs\Request;
     $lookupDomain = $requeest->process("json",'
 	{
 		"func": "lookupDomain",
@@ -376,7 +376,7 @@ try {
 
     echo $lookupDomain->resultFormatted . "\n";
 
-} catch (OpenSRS\Exception $e) {
+} catch (opensrs\Exception $e) {
     echo $e->getMessage() . "\n";
 }
 ```
@@ -388,7 +388,7 @@ require_once('vendor/autoload.php');
 require_once('config/openSRS_config.php');
 
 try {
-    $lookupDomain = new OpenSRS\domains\lookup\LookupDomain("json",'
+    $lookupDomain = new opensrs\domains\lookup\LookupDomain("json",'
 	{
 		"func": "lookupDomain",
 		"data": {
@@ -400,7 +400,7 @@ try {
 
     echo $lookupDomain->resultFormatted . "\n";
 
-} catch (OpenSRS\Exception $e) {
+} catch (opensrs\Exception $e) {
     echo $e->getMessage() . "\n";
 }
 ```

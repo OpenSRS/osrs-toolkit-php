@@ -1,9 +1,8 @@
 <?php
 
-namespace OpenSRS\trust;
+namespace opensrs\trust;
 
-use OpenSRS\Base;
-use OpenSRS\Exception;
+use opensrs\Base;
 
 class CancelOrder extends Base
 {
@@ -18,7 +17,7 @@ class CancelOrder extends Base
 
     public $requiredFields = array(
         'attributes' => array(
-            'order_id'
+            'order_id',
             ),
         );
 
@@ -28,7 +27,7 @@ class CancelOrder extends Base
 
         $this->_formatHolder = $formatString;
 
-        $this->_validateObject( $dataObject );
+        $this->_validateObject($dataObject);
 
         $this->send($dataObject, $returnFullResponse);
     }

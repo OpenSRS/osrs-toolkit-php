@@ -1,6 +1,6 @@
 <?php
 
-use OpenSRS\backwardcompatibility\dataconversion\domains\subuser\SubuserModify;
+use opensrs\backwardcompatibility\dataconversion\domains\subuser\SubuserModify;
 
 /**
  * @group backwardcompatibility
@@ -11,40 +11,40 @@ use OpenSRS\backwardcompatibility\dataconversion\domains\subuser\SubuserModify;
 class BC_SubuserModifyTest extends PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
-        "data" => array(
-			'cookie' => '',
-			'username' => '',
+        'data' => array(
+            'cookie' => '',
+            'username' => '',
 
-			'domain' => '',
+            'domain' => '',
             'sub_id' => '',
             'sub_username' => '',
-			'sub_password' => '',
-			'sub_permission' => '',
+            'sub_password' => '',
+            'sub_permission' => '',
             ),
         );
 
     /**
      * Valid conversion should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validconversion
      */
-    public function testValidDataConversion() {
-        $data = json_decode( json_encode ($this->validSubmission) );
+    public function testValidDataConversion()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
         $data->data->cookie = md5(time());
-        $data->data->username = "phptestuser";
+        $data->data->username = 'phptestuser';
 
-        $data->data->domain = "phptest" . time() . '.com';
+        $data->data->domain = 'phptest'.time().'.com';
         $data->data->sub_id = time();
-        $data->data->sub_username = "subusername2";
-        $data->data->sub_password = "password1234";
-        $data->data->sub_permission = "1";
+        $data->data->sub_username = 'subusername2';
+        $data->data->sub_password = 'password1234';
+        $data->data->sub_permission = '1';
 
-        $shouldMatchNewDataObject = new \stdClass;
-        $shouldMatchNewDataObject->attributes = new \stdClass;
+        $shouldMatchNewDataObject = new \stdClass();
+        $shouldMatchNewDataObject->attributes = new \stdClass();
 
         $shouldMatchNewDataObject->cookie = $data->data->cookie;
         $shouldMatchNewDataObject->username = $data->data->username;
@@ -56,8 +56,8 @@ class BC_SubuserModifyTest extends PHPUnit_Framework_TestCase
         $shouldMatchNewDataObject->attributes->sub_permission = $data->data->sub_permission;
 
         $ns = new SubuserModify();
-        $newDataObject = $ns->convertDataObject( $data );
+        $newDataObject = $ns->convertDataObject($data);
 
-        $this->assertTrue( $newDataObject == $shouldMatchNewDataObject );
+        $this->assertTrue($newDataObject == $shouldMatchNewDataObject);
     }
 }

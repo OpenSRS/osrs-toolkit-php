@@ -1,43 +1,45 @@
 <?php
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__.'/../../vendor/autoload.php';
 
-use OpenSRS\Request;
-
+use opensrs\Request;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-	// require_once dirname(__FILE__) . "/../../opensrs/spyc.php";
+    // require_once dirname(__FILE__) . "/../../opensrs/spyc.php";
 
-	// Form data capture - ONLY FOR TESTING PURPOSE!!!
-	$formSelectedDomainArray = array ();
-	$allDomainArray = array(".co.uk",".me",".org",".asia",".org.uk",".net",".tel",".com",".mobi",".biz",".info",".ca");
-	$formFormat = $_POST["format"];
-	$formFunction = $_POST["function"];
-	$formSearchWord = $_POST["domain"];
+    // Form data capture - ONLY FOR TESTING PURPOSE!!!
+    $formSelectedDomainArray = array();
+    $allDomainArray = array('.co.uk','.me','.org','.asia','.org.uk','.net','.tel','.com','.mobi','.biz','.info','.ca');
+    $formFormat = $_POST['format'];
+    $formFunction = $_POST['function'];
+    $formSearchWord = $_POST['domain'];
 
-	if(isset($_POST["tld"])){
-		$tld = $_POST["tld"];
-		$size = count($tld);
-		for($i=0; $i < $size; $i++) {
-      		array_push($formSelectedDomainArray, $tld[$i]);
-    	}
-	}
+    if (isset($_POST['tld'])) {
+        $tld = $_POST['tld'];
+        $size = count($tld);
+        for ($i = 0; $i < $size; ++$i) {
+            array_push($formSelectedDomainArray, $tld[$i]);
+        }
+    }
 
-	// Put the data to the proper form - ONLY FOR TESTING PURPOSE!!!
-	$callstring = "";
-	$callArray = array (
-		"func" => $formFunction,
-		"data" => array (
-			"domain" => $formSearchWord,
-			"selected" => implode (";", $formSelectedDomainArray),
-			"alldomains" => implode (";", $allDomainArray)
-		)
-	);
+    // Put the data to the proper form - ONLY FOR TESTING PURPOSE!!!
+    $callstring = '';
+    $callArray = array(
+        'func' => $formFunction,
+        'data' => array(
+            'domain' => $formSearchWord,
+            'selected' => implode(';', $formSelectedDomainArray),
+            'alldomains' => implode(';', $allDomainArray),
+        ),
+    );
 
-	if ($formFormat == "json") $callstring = json_encode($callArray);
-	if ($formFormat == "yaml") $callstring = Spyc::YAMLDump($callArray);
-
+    if ($formFormat == 'json') {
+        $callstring = json_encode($callArray);
+    }
+    if ($formFormat == 'yaml') {
+        $callstring = Spyc::YAMLDump($callArray);
+    }
 
     try {
         $request = new Request();
@@ -45,36 +47,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // var_dump($osrsHandler->resultRaw);
         echo $osrsHandler->resultFormatted;
-
-    }
-    catch(\OpenSRS\Exception $e) {
+    } catch (\opensrs\Exception $e) {
         var_dump($e->getMessage());
     }
 
-	// Open SRS Call -> Result
-	// require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
-	// $osrsHandler = processOpenSRS ($formFormat, $callstring);
+    // Open SRS Call -> Result
+    // require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
+    // $osrsHandler = processOpenSRS ($formFormat, $callstring);
     //
     //
-	// // Print out the results
-	// echo (" In: ". $callstring ."<br>");
-	// echo ("Out: ". $osrsHandler->resultFormatted);
+    // // Print out the results
+    // echo (" In: ". $callstring ."<br>");
+    // echo ("Out: ". $osrsHandler->resultFormatted);
     //
     //
-	} else {
-		// Format
-		if (isSet($_GET['format'])) {
-			$tf = $_GET['format'];
-		} else {
-			$tf = "json";
-		}
-?>
+} else {
+    // Format
+        if (isset($_GET['format'])) {
+            $tf = $_GET['format'];
+        } else {
+            $tf = 'json';
+        }
+    ?>
 
-<?php include("header.inc") ?>
+<?php include('header.inc') ?>
 
 <div class="container">
 <form action="" method="post" class="form-horizontal">
-	<input type="hidden" name="format" value="<?php echo($tf); ?>">
+	<input type="hidden" name="format" value="<?php echo($tf);
+    ?>">
 	<input type="hidden" name="function" value="fastDomainLookup">
 	
 	<div class="row">

@@ -1,6 +1,7 @@
 <?php
 
-use OpenSRS\domains\nameserver\NameserverCreate;
+use opensrs\domains\nameserver\NameserverCreate;
+
 /**
  * @group nameserver
  * @group NameserverCreate
@@ -8,12 +9,12 @@ use OpenSRS\domains\nameserver\NameserverCreate;
 class NameserverCreateTest extends PHPUnit_Framework_TestCase
 {
     protected $func = 'nsCreate';
-    
+
     protected $validSubmission = array(
-        "cookie" => "",
-        
-        "attributes" => array(
-            /**
+        'cookie' => '',
+
+        'attributes' => array(
+            /*
              * Required
              *
              * domain: relevant domain, required
@@ -27,32 +28,32 @@ class NameserverCreateTest extends PHPUnit_Framework_TestCase
              * name: fully qualified domain name
              *   for the nameserver
              */
-            "domain" => "",
-            "ipaddress" => "",
-            "ipv6" => "",
-            "name" => "",
+            'domain' => '',
+            'ipaddress' => '',
+            'ipv6' => '',
+            'name' => '',
 
-            /**
+            /*
              * Optional
              *
              * add_to_all_registry: adds nameserver
              *   to other registries so it can be used
              *   on other TLDs
              */
-            "add_to_all_registry" => "",
-            )
+            'add_to_all_registry' => '',
+            ),
         );
 
     /**
      * Valid submission should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validsubmission
      */
-    public function testValidSubmission() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testValidSubmission()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
         // assign_ns request
         $data->cookie = md5(time());
@@ -62,17 +63,18 @@ class NameserverCreateTest extends PHPUnit_Framework_TestCase
 
         // generate a random (fake) IPv6
         $data->attributes->ipv6 = implode(':', str_split(sha1(dechex(mt_rand(0, 2147483647))), 4));
-        $data->attributes->name = "ns1.phptest" . time() . ".com";
+        $data->attributes->name = 'ns1.phptest'.time().'.com';
 
-        $ns = new NameserverCreate( 'array', $data );
+        $ns = new NameserverCreate('array', $data);
 
-        $this->assertTrue( $ns instanceof NameserverCreate );
+        $this->assertTrue($ns instanceof NameserverCreate);
     }
 
     /**
-     * Data Provider for Invalid Submission test
+     * Data Provider for Invalid Submission test.
      */
-    function submissionFields() {
+    public function submissionFields()
+    {
         return array(
             'missing ipaddress' => array('ipaddress'),
             'missing name' => array('name'),
@@ -80,15 +82,15 @@ class NameserverCreateTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Invalid submission should throw an exception
+     * Invalid submission should throw an exception.
      *
-     * @return void
      *
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testInvalidSubmissionFieldsMissing($field, $parent = 'attributes', $message = null)
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
         // assign_ns request
         $data->cookie = md5(time());
@@ -98,85 +100,81 @@ class NameserverCreateTest extends PHPUnit_Framework_TestCase
 
         // generate a random (fake) IPv6
         $data->attributes->ipv6 = implode(':', str_split(sha1(dechex(mt_rand(0, 2147483647))), 4));
-        $data->attributes->name = "ns1.phptest" . time() . ".com";
+        $data->attributes->name = 'ns1.phptest'.time().'.com';
 
-        if(is_null($message)){
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
+        if (is_null($message)) {
+            $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
               "/$field.*not defined/"
               );
-        }
-        else {
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
+        } else {
+            $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
               "/$message/"
               );
         }
 
-
-
         // clear field being tested
-        if(is_null($parent)){
-            unset( $data->$field );
-        }
-        else{
-            unset( $data->$parent->$field );
+        if (is_null($parent)) {
+            unset($data->$field);
+        } else {
+            unset($data->$parent->$field);
         }
 
-        $ns = new NameserverCreate( 'array', $data );
+        $ns = new NameserverCreate('array', $data);
     }
 
     /**
-     * Invalid submission should throw an exception
+     * Invalid submission should throw an exception.
      *
-     * @return void
      *
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsCookieAndDomainSent() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testInvalidSubmissionFieldsCookieAndDomainSent()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
         // assign_ns request
         $data->cookie = md5(time());
-        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->domain = 'phptest'.time().'.com';
 
         // generate a random IPv4
         $data->attributes->ipaddress = long2ip(mt_rand());
 
         // generate a random (fake) IPv6
         $data->attributes->ipv6 = implode(':', str_split(sha1(dechex(mt_rand(0, 2147483647))), 4));
-        $data->attributes->name = "ns1." . $data->attributes->domain;
+        $data->attributes->name = 'ns1.'.$data->attributes->domain;
 
         $this->setExpectedExceptionRegExp(
-            'OpenSRS\Exception',
-            "/(cookie|domain).*cannot.*one.*call.*/"
+            'opensrs\Exception',
+            '/(cookie|domain).*cannot.*one.*call.*/'
             );
 
-        $ns = new NameserverCreate( 'array', $data );
+        $ns = new NameserverCreate('array', $data);
     }
 
     /**
-     * Invalid submission should throw an exception
+     * Invalid submission should throw an exception.
      *
-     * @return void
      *
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsNoCookieOrDomainSent() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testInvalidSubmissionFieldsNoCookieOrDomainSent()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
         // generate a random IPv4
         $data->attributes->ipaddress = long2ip(mt_rand());
 
         // generate a random (fake) IPv6
         $data->attributes->ipv6 = implode(':', str_split(sha1(dechex(mt_rand(0, 2147483647))), 4));
-        $data->attributes->name = "ns1.phptest" . time() . ".com";
+        $data->attributes->name = 'ns1.phptest'.time().'.com';
 
         $this->setExpectedExceptionRegExp(
-            'OpenSRS\Exception',
-            "/(cookie|domain).*not.*defined/"
+            'opensrs\Exception',
+            '/(cookie|domain).*not.*defined/'
             );
 
-        $ns = new NameserverCreate( 'array', $data );
+        $ns = new NameserverCreate('array', $data);
     }
 }

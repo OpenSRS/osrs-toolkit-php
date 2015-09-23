@@ -1,9 +1,8 @@
 <?php
 
-namespace OpenSRS\trust;
+namespace opensrs\trust;
 
-use OpenSRS\Base;
-use OpenSRS\Exception;
+use opensrs\Base;
 
 class GetOrderInfo extends Base
 {
@@ -18,7 +17,7 @@ class GetOrderInfo extends Base
 
     public $requiredFields = array(
         'attributes' => array(
-            'order_id'
+            'order_id',
             ),
         );
 

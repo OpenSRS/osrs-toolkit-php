@@ -1,6 +1,7 @@
 <?php
 
-use OpenSRS\domains\nameserver\NameserverRegistryAdd;
+use opensrs\domains\nameserver\NameserverRegistryAdd;
+
 /**
  * @group nameserver
  * @group NameserverRegistryAdd
@@ -10,8 +11,8 @@ class NameserverRegistryAddTest extends PHPUnit_Framework_TestCase
     protected $func = 'nsRegistryAdd';
 
     protected $validSubmission = array(
-        "attributes" => array(
-            /**
+        'attributes' => array(
+            /*
              * Required
              *
              * all: specify whether to add nameserver
@@ -30,36 +31,37 @@ class NameserverRegistryAddTest extends PHPUnit_Framework_TestCase
              *     the value must be a valid tld,
              *     otherwise the command will fail
              */
-            "all" => "",
-            "fqdn" => "",
-            "tld" => "",
-            )
+            'all' => '',
+            'fqdn' => '',
+            'tld' => '',
+            ),
         );
 
     /**
      * Valid submission should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validsubmission
      */
-    public function testValidSubmission() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testValidSubmission()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->attributes->all = "0";
-        $data->attributes->fqdn = "ns1." . "phptest" . time() . ".com";
-        $data->attributes->tld = ".com";
+        $data->attributes->all = '0';
+        $data->attributes->fqdn = 'ns1.'.'phptest'.time().'.com';
+        $data->attributes->tld = '.com';
 
-        $ns = new NameserverRegistryAdd( 'array', $data );
+        $ns = new NameserverRegistryAdd('array', $data);
 
-        $this->assertTrue( $ns instanceof NameserverRegistryAdd );
+        $this->assertTrue($ns instanceof NameserverRegistryAdd);
     }
 
     /**
-     * Data Provider for Invalid Submission test
+     * Data Provider for Invalid Submission test.
      */
-    function submissionFields() {
+    public function submissionFields()
+    {
         return array(
             'missing all' => array('all'),
             'missing fqdn' => array('fqdn'),
@@ -68,43 +70,39 @@ class NameserverRegistryAddTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Invalid submission should throw an exception
+     * Invalid submission should throw an exception.
      *
-     * @return void
      *
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testInvalidSubmissionFieldsMissing($field, $parent = 'attributes', $message = null)
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->attributes->all = "0";
-        $data->attributes->fqdn = "ns1." . "phptest" . time() . ".com";
-        $data->attributes->tld = ".com";
+        $data->attributes->all = '0';
+        $data->attributes->fqdn = 'ns1.'.'phptest'.time().'.com';
+        $data->attributes->tld = '.com';
 
-        if(is_null($message)){
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
+        if (is_null($message)) {
+            $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
               "/$field.*not defined/"
               );
-        }
-        else {
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
+        } else {
+            $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
               "/$message/"
               );
         }
 
-
-
         // clear field being tested
-        if(is_null($parent)){
-            unset( $data->$field );
-        }
-        else{
-            unset( $data->$parent->$field );
+        if (is_null($parent)) {
+            unset($data->$field);
+        } else {
+            unset($data->$parent->$field);
         }
 
-        $ns = new NameserverRegistryAdd( 'array', $data );
+        $ns = new NameserverRegistryAdd('array', $data);
     }
 }

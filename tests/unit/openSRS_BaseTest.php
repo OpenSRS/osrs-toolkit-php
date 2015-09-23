@@ -1,16 +1,13 @@
 <?php
 
-require_once(__DIR__ . '/../../opensrs/openSRS_loader.php');
-require_once(__DIR__ . '/../../opensrs/openSRS_base.php');
-require_once(__DIR__ . '/../../opensrs/openSRS_ops.php');
-
+require_once __DIR__.'/../../opensrs/openSRS_loader.php';
+require_once __DIR__.'/../../opensrs/openSRS_base.php';
+require_once __DIR__.'/../../opensrs/openSRS_ops.php';
 
 class openSRS_BaseTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * Should return correct status of OpenSRS Base socket 
-     * 
-     * @return void
+     * Should return correct status of OpenSRS Base socket.
      */
     public function testIsConnected()
     {
@@ -23,17 +20,14 @@ class openSRS_BaseTest extends PHPUnit_Framework_TestCase
 
         // now we should be connected
         $this->assertTrue($base->is_connected());
-
     }
 
     /**
-     * Init socket should either conect to a working host, or report an error 
-     * 
-     * @return void
+     * Init socket should either conect to a working host, or report an error.
      */
     public function testInitSocket()
     {
-        $base = new openSRS_base; 
+        $base = new openSRS_base();
 
         // a working connection should return true
         $this->assertTrue($this->invokeMethod($base, 'init_socket'));
@@ -41,18 +35,16 @@ class openSRS_BaseTest extends PHPUnit_Framework_TestCase
         // a bad connection should produce an error 
         unset($base);
         $this->setExpectedException('PHPUNIT_Framework_Error');
-        $base = new openSRS_base; 
+        $base = new openSRS_base();
         $this->invokeMethod($base, 'init_socket', array('xxxxxx'));
     }
 
     /**
-     * Close socket should close openSRS base socket
-     * 
-     * @return void
+     * Close socket should close openSRS base socket.
      */
     public function testCloseSocket()
     {
-        $base = new openSRS_base;
+        $base = new openSRS_base();
 
         $this->invokeMethod($base, 'close_socket');
 
@@ -60,20 +52,18 @@ class openSRS_BaseTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Call a private method for a class 
+     * Call a private method for a class.
      * 
-     * @param mixed $object object 
+     * @param mixed $object     object 
      * @param mixed $methodName methodName 
      * @param array $parameters parameters 
-     * 
-     * @return void
      */
-    public function invokeMethod(&$object, $methodName, array $parameters = array()) 
+    public function invokeMethod(&$object, $methodName, array $parameters = array())
     {
         $reflection = new \ReflectionClass(get_class($object));
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
-                
+
         return $method->invokeArgs($object, $parameters);
     }
 }

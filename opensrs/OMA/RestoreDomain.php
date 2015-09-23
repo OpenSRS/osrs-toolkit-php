@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenSRS\OMA;
+namespace opensrs\OMA;
 
-use OpenSRS\OMA;
-use OpenSRS\Exception;
+use opensrs\OMA;
+use opensrs\Exception;
 
 class RestoreDomain
 {
@@ -17,7 +17,7 @@ class RestoreDomain
     public static function validate($data)
     {
         if (empty($data['domain']) || empty($data['id']) || empty($data['new_name'])) {
-            throw new Exception("oSRS Error - Domain/ID/New Namerequired");
+            throw new Exception('oSRS Error - Domain/ID/New Namerequired');
         } else {
             return true;
         }

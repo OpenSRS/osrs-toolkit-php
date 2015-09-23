@@ -1,67 +1,69 @@
 <?php 
 
-if (isSet($_POST['function'])) {
-	require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
+if (isset($_POST['function'])) {
+    require_once dirname(__FILE__).'/../..//opensrs/openSRS_loader.php';
 
-	// Form data capture
-	$formFormat = $_POST["format"];
+    // Form data capture
+    $formFormat = $_POST['format'];
 
-	// Put the data to the Formatted array
-	$callstring = "";
-	$callArray = array (
-		"func" => $_POST["function"],
-		"personal" => array (
-			"first_name" => $_POST['first_name'],
-			"last_name" => $_POST['last_name'],
-			"org_name" => $_POST['org_name'],
-			"address1" => $_POST['address1'],
-			"address2" => $_POST['address2'],
-			"address3" => $_POST['address3'],
-			"city" => $_POST['city'],
-			"state" => $_POST['state'],
-			"postal_code" => $_POST['postal_code'],
-			"country" => $_POST['country'],
-			"phone" => $_POST['phone'],
-			"fax" => $_POST['fax'],
-			"email" => $_POST['email'],
-			"url" => $_POST['url'],
-			"lang_pref" => $_POST['lang_pref']
-		),
-		"data" => array (
-			"ccp_enabled" => $_POST['ccp_enabled'],
-			"low_balance_email" => $_POST['low_balance_email'],
-			"username" => $_POST['username'],
-			"password" => $_POST['password'],
-			"pricing_plan" => $_POST['pricing_plan'],
-			"status" => $_POST['status'],
-			"system_status_email" => $_POST['system_status_email'],
-			"payment_email" => $_POST['payment_email'],
-			"payment_email" => $_POST['payment_email'],
-			"url" => $_POST['url'],
-			"nameservers" => $_POST['nameservers'],
-			"storefront_rwi" => $_POST['storefront_rwi']
-		)
-	);
+    // Put the data to the Formatted array
+    $callstring = '';
+    $callArray = array(
+        'func' => $_POST['function'],
+        'personal' => array(
+            'first_name' => $_POST['first_name'],
+            'last_name' => $_POST['last_name'],
+            'org_name' => $_POST['org_name'],
+            'address1' => $_POST['address1'],
+            'address2' => $_POST['address2'],
+            'address3' => $_POST['address3'],
+            'city' => $_POST['city'],
+            'state' => $_POST['state'],
+            'postal_code' => $_POST['postal_code'],
+            'country' => $_POST['country'],
+            'phone' => $_POST['phone'],
+            'fax' => $_POST['fax'],
+            'email' => $_POST['email'],
+            'url' => $_POST['url'],
+            'lang_pref' => $_POST['lang_pref'],
+        ),
+        'data' => array(
+            'ccp_enabled' => $_POST['ccp_enabled'],
+            'low_balance_email' => $_POST['low_balance_email'],
+            'username' => $_POST['username'],
+            'password' => $_POST['password'],
+            'pricing_plan' => $_POST['pricing_plan'],
+            'status' => $_POST['status'],
+            'system_status_email' => $_POST['system_status_email'],
+            'payment_email' => $_POST['payment_email'],
+            'payment_email' => $_POST['payment_email'],
+            'url' => $_POST['url'],
+            'nameservers' => $_POST['nameservers'],
+            'storefront_rwi' => $_POST['storefront_rwi'],
+        ),
+    );
 
-	if ($formFormat == "json") $callstring = json_encode($callArray);
-	if ($formFormat == "yaml") $callstring = Spyc::YAMLDump($callArray);
+    if ($formFormat == 'json') {
+        $callstring = json_encode($callArray);
+    }
+    if ($formFormat == 'yaml') {
+        $callstring = Spyc::YAMLDump($callArray);
+    }
 
+    // Open SRS Call -> Result
+    $osrsHandler = processOpenSRS($formFormat, $callstring);
 
-	// Open SRS Call -> Result
-	$osrsHandler = processOpenSRS ($formFormat, $callstring);
-
-	// Print out the results
-	echo (" In: ". $callstring ."<br>");
-	echo ("Out: ". $osrsHandler->resultFormatted);
-
+    // Print out the results
+    echo(' In: '.$callstring.'<br>');
+    echo('Out: '.$osrsHandler->resultFormatted);
 } else {
-	// Format
-	if (isSet($_GET['format'])) {
-		$tf = $_GET['format'];
-	} else {
-		$tf = "json";
-	}
-?>
+    // Format
+    if (isset($_GET['format'])) {
+        $tf = $_GET['format'];
+    } else {
+        $tf = 'json';
+    }
+    ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
@@ -74,7 +76,8 @@ if (isSet($_POST['function'])) {
 <body>
 
 <form action="test-subresModify.php" method="post">
-	<input type="hidden" name="format" value="<?php echo($tf); ?>">
+	<input type="hidden" name="format" value="<?php echo($tf);
+    ?>">
 	<input type="hidden" name="function" value="subresModify">
 
 	<table cellpadding="0" cellspacing="0" border="0" width="100%">

@@ -1,6 +1,7 @@
 <?php
 
-use OpenSRS\domains\subreseller\SubresellerModify;
+use opensrs\domains\subreseller\SubresellerModify;
+
 /**
  * @group subreseller
  * @group SubresellerModify
@@ -10,8 +11,8 @@ class SubresellerModifyTest extends PHPUnit_Framework_TestCase
     protected $func = 'subresModify';
 
     protected $validSubmission = array(
-        "attributes" => array(
-            /**
+        'attributes' => array(
+            /*
              * Required
              *
              * cpp_enabled: indicates if credit card
@@ -41,94 +42,94 @@ class SubresellerModifyTest extends PHPUnit_Framework_TestCase
              *         emergency contact, not domain
              *         admin contact
              */
-            "ccp_enabled" => "",
-            "low_balance_email" => "",
-            "username" => "",
-            "password" => "",
-            "pricing_plan" => "",
-            "status" => "",
-            "system_status_email" => "",
+            'ccp_enabled' => '',
+            'low_balance_email' => '',
+            'username' => '',
+            'password' => '',
+            'pricing_plan' => '',
+            'status' => '',
+            'system_status_email' => '',
 
-            "contact_set" => array(
-                "owner" => array(
-                    "first_name" => "",
-                    "last_name" => "",
-                    "org_name" => "",
-                    "address1" => "",
+            'contact_set' => array(
+                'owner' => array(
+                    'first_name' => '',
+                    'last_name' => '',
+                    'org_name' => '',
+                    'address1' => '',
                     // address2 optional
-                    "address2" => "",
+                    'address2' => '',
                     // address3 optional
-                    "address3" => "",
-                    "city" => "",
-                    "state" => "",
-                    "country" => "",
-                    "postal_code" => "",
-                    "phone" => "",
-                    "fax" => "",
-                    "email" => "",
-                    "url" => "",
-                    "lang_pref" => ""
+                    'address3' => '',
+                    'city' => '',
+                    'state' => '',
+                    'country' => '',
+                    'postal_code' => '',
+                    'phone' => '',
+                    'fax' => '',
+                    'email' => '',
+                    'url' => '',
+                    'lang_pref' => '',
                     ),
-                "admin" => array(
-                    "first_name" => "",
-                    "last_name" => "",
-                    "org_name" => "",
-                    "address1" => "",
+                'admin' => array(
+                    'first_name' => '',
+                    'last_name' => '',
+                    'org_name' => '',
+                    'address1' => '',
                     // address2 optional
-                    "address2" => "",
+                    'address2' => '',
                     // address3 optional
-                    "address3" => "",
-                    "city" => "",
-                    "state" => "",
-                    "country" => "",
-                    "postal_code" => "",
-                    "phone" => "",
-                    "fax" => "",
-                    "email" => "",
-                    "url" => "",
-                    "lang_pref" => ""
+                    'address3' => '',
+                    'city' => '',
+                    'state' => '',
+                    'country' => '',
+                    'postal_code' => '',
+                    'phone' => '',
+                    'fax' => '',
+                    'email' => '',
+                    'url' => '',
+                    'lang_pref' => '',
                     ),
-                "billing" => array(
-                    "first_name" => "",
-                    "last_name" => "",
-                    "org_name" => "",
-                    "address1" => "",
+                'billing' => array(
+                    'first_name' => '',
+                    'last_name' => '',
+                    'org_name' => '',
+                    'address1' => '',
                     // address2 optional
-                    "address2" => "",
+                    'address2' => '',
                     // address3 optional
-                    "address3" => "",
-                    "city" => "",
-                    "state" => "",
-                    "country" => "",
-                    "postal_code" => "",
-                    "phone" => "",
-                    "fax" => "",
-                    "email" => "",
-                    "url" => "",
-                    "lang_pref" => ""
+                    'address3' => '',
+                    'city' => '',
+                    'state' => '',
+                    'country' => '',
+                    'postal_code' => '',
+                    'phone' => '',
+                    'fax' => '',
+                    'email' => '',
+                    'url' => '',
+                    'lang_pref' => '',
                     ),
-                "tech" => array(
-                    "first_name" => "",
-                    "last_name" => "",
-                    "org_name" => "",
-                    "address1" => "",
+                'tech' => array(
+                    'first_name' => '',
+                    'last_name' => '',
+                    'org_name' => '',
+                    'address1' => '',
                     // address2 optional
-                    "address2" => "",
+                    'address2' => '',
                     // address3 optional
-                    "address3" => "",
-                    "city" => "",
-                    "state" => "",
-                    "country" => "",
-                    "postal_code" => "",
-                    "phone" => "",
-                    "fax" => "",
-                    "email" => "",
-                    "url" => "",
-                    "lang_pref" => ""
+                    'address3' => '',
+                    'city' => '',
+                    'state' => '',
+                    'country' => '',
+                    'postal_code' => '',
+                    'phone' => '',
+                    'fax' => '',
+                    'email' => '',
+                    'url' => '',
+                    'lang_pref' => '',
                     ),
                 ),
 
-            /**
+            /*
              * Optional
              *
              * url: web address of the account
@@ -146,56 +147,57 @@ class SubresellerModifyTest extends PHPUnit_Framework_TestCase
              * allowed_tld_list: list of TLDs sub-
              *   reseller is allowed to sell
              */
-            "url" => "",
-            "nameservers" => "",
-            "storefront_rwi" => "",
-            "payment_email" => "",
-            "allowed_tld_list" => "",
+            'url' => '',
+            'nameservers' => '',
+            'storefront_rwi' => '',
+            'payment_email' => '',
+            'allowed_tld_list' => '',
             ),
         );
 
     /**
      * Valid submission should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validsubmission
      */
-    public function testValidSubmission() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testValidSubmission()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->attributes->username = "subreseller" . time();
-        $data->attributes->password = "password1234";
-        $data->attributes->ccp_enabled = "Y";
-        $data->attributes->pricing_plan = "1";
-        $data->attributes->status = "onhold";
-        $data->attributes->low_balance_email = "phptoolkit@tucows.com";
-        $data->attributes->system_status_email = "phptoolkit@tucows.com";
+        $data->attributes->username = 'subreseller'.time();
+        $data->attributes->password = 'password1234';
+        $data->attributes->ccp_enabled = 'Y';
+        $data->attributes->pricing_plan = '1';
+        $data->attributes->status = 'onhold';
+        $data->attributes->low_balance_email = 'phptoolkit@tucows.com';
+        $data->attributes->system_status_email = 'phptoolkit@tucows.com';
 
-        $data->attributes->contact_set->owner->first_name = "John";
-        $data->attributes->contact_set->owner->last_name = "Smith";
-        $data->attributes->contact_set->owner->org_name = "Tucows";
-        $data->attributes->contact_set->owner->address1 = "96 Mowat Avenue";
-        $data->attributes->contact_set->owner->address2 = "";
-        $data->attributes->contact_set->owner->address3 = "";
-        $data->attributes->contact_set->owner->city = "Toronto";
-        $data->attributes->contact_set->owner->state = "ON";
-        $data->attributes->contact_set->owner->country = "CA";
-        $data->attributes->contact_set->owner->postal_code = "M6K 3M1";
-        $data->attributes->contact_set->owner->phone = "+1.4165350123";
-        $data->attributes->contact_set->owner->email = "phptoolkit@tucows.com";
-        $data->attributes->contact_set->owner->lang_pref = "EN";
+        $data->attributes->contact_set->owner->first_name = 'John';
+        $data->attributes->contact_set->owner->last_name = 'Smith';
+        $data->attributes->contact_set->owner->org_name = 'Tucows';
+        $data->attributes->contact_set->owner->address1 = '96 Mowat Avenue';
+        $data->attributes->contact_set->owner->address2 = '';
+        $data->attributes->contact_set->owner->address3 = '';
+        $data->attributes->contact_set->owner->city = 'Toronto';
+        $data->attributes->contact_set->owner->state = 'ON';
+        $data->attributes->contact_set->owner->country = 'CA';
+        $data->attributes->contact_set->owner->postal_code = 'M6K 3M1';
+        $data->attributes->contact_set->owner->phone = '+1.4165350123';
+        $data->attributes->contact_set->owner->email = 'phptoolkit@tucows.com';
+        $data->attributes->contact_set->owner->lang_pref = 'EN';
 
-        $ns = new SubresellerModify( 'array', $data );
+        $ns = new SubresellerModify('array', $data);
 
-        $this->assertTrue( $ns instanceof SubresellerModify );
+        $this->assertTrue($ns instanceof SubresellerModify);
     }
 
     /**
-     * Data Provider for Invalid Submission test
+     * Data Provider for Invalid Submission test.
      */
-    function submissionFields() {
+    public function submissionFields()
+    {
         return array(
             'missing ccp_enabled' => array('ccp_enabled'),
             'missing low_balance_email' => array('low_balance_email'),
@@ -208,53 +210,50 @@ class SubresellerModifyTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Invalid submission should throw an exception
+     * Invalid submission should throw an exception.
      *
-     * @return void
      *
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes' ) {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testInvalidSubmissionFieldsMissing($field, $parent = 'attributes')
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->attributes->username = "subreseller" . time();
-        $data->attributes->password = "password1234";
-        $data->attributes->ccp_enabled = "Y";
-        $data->attributes->pricing_plan = "1";
-        $data->attributes->status = "onhold";
-        $data->attributes->low_balance_email = "phptoolkit@tucows.com";
-        $data->attributes->system_status_email = "phptoolkit@tucows.com";
+        $data->attributes->username = 'subreseller'.time();
+        $data->attributes->password = 'password1234';
+        $data->attributes->ccp_enabled = 'Y';
+        $data->attributes->pricing_plan = '1';
+        $data->attributes->status = 'onhold';
+        $data->attributes->low_balance_email = 'phptoolkit@tucows.com';
+        $data->attributes->system_status_email = 'phptoolkit@tucows.com';
 
-        $data->attributes->contact_set->owner->first_name = "John";
-        $data->attributes->contact_set->owner->last_name = "Smith";
-        $data->attributes->contact_set->owner->org_name = "Tucows";
-        $data->attributes->contact_set->owner->address1 = "96 Mowat Avenue";
-        $data->attributes->contact_set->owner->address2 = "";
-        $data->attributes->contact_set->owner->address3 = "";
-        $data->attributes->contact_set->owner->city = "Toronto";
-        $data->attributes->contact_set->owner->state = "ON";
-        $data->attributes->contact_set->owner->country = "CA";
-        $data->attributes->contact_set->owner->postal_code = "M6K 3M1";
-        $data->attributes->contact_set->owner->phone = "+1.4165350123";
-        $data->attributes->contact_set->owner->email = "phptoolkit@tucows.com";
-        $data->attributes->contact_set->owner->lang_pref = "EN";
+        $data->attributes->contact_set->owner->first_name = 'John';
+        $data->attributes->contact_set->owner->last_name = 'Smith';
+        $data->attributes->contact_set->owner->org_name = 'Tucows';
+        $data->attributes->contact_set->owner->address1 = '96 Mowat Avenue';
+        $data->attributes->contact_set->owner->address2 = '';
+        $data->attributes->contact_set->owner->address3 = '';
+        $data->attributes->contact_set->owner->city = 'Toronto';
+        $data->attributes->contact_set->owner->state = 'ON';
+        $data->attributes->contact_set->owner->country = 'CA';
+        $data->attributes->contact_set->owner->postal_code = 'M6K 3M1';
+        $data->attributes->contact_set->owner->phone = '+1.4165350123';
+        $data->attributes->contact_set->owner->email = 'phptoolkit@tucows.com';
+        $data->attributes->contact_set->owner->lang_pref = 'EN';
 
         $this->setExpectedExceptionRegExp(
-            'OpenSRS\Exception',
+            'opensrs\Exception',
             "/$field.*not defined/"
             );
 
-
-
         // clear field being tested
-        if(is_null($parent)){
-            unset( $data->$field );
-        }
-        else{
-            unset( $data->$parent->$field );
+        if (is_null($parent)) {
+            unset($data->$field);
+        } else {
+            unset($data->$parent->$field);
         }
 
-        $ns = new SubresellerModify( 'array', $data );
-     }
+        $ns = new SubresellerModify('array', $data);
+    }
 }

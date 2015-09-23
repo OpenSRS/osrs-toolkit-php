@@ -2,10 +2,10 @@
 
 namespace opensrs\fastlookup;
 
-use OpenSRS\FastLookup;
-use OpenSRS\Exception;
+use opensrs\FastLookup;
+use opensrs\Exception;
 
-class FastDomainLookup extends FastLookup 
+class FastDomainLookup extends FastLookup
 {
     private $_domain = '';
     private $_tldSelect = array();
@@ -30,28 +30,28 @@ class FastDomainLookup extends FastLookup
     private function _validateObject($dataObject)
     {
         $domain = '';
-        
+
         // search domain must be definded
         if (!isset($dataObject->data->domain)) {
-            Exception::notDefined( 'domain' );
+            Exception::notDefined('domain');
         }
 
         // Grab domain name
         $domain = $this->getDomain();
 
         if (!isset($dataObject->data->selected)) {
-            Exception::notDefined( 'selected' );
+            Exception::notDefined('selected');
         }
 
         if (!isset($dataObject->data->alldomains)) {
-            Exception::notDefined( 'alldomains' );
+            Exception::notDefined('alldomains');
         }
 
         $selected = $this->getSelected();
         $this->tlds = $this->getAllDomains();
 
         if (count(array_filter($selected)) >= 1) {
-            $this->tlds = $selected; 
+            $this->tlds = $selected;
         }
     }
 }

@@ -1,7 +1,8 @@
 <?php
 
-use OpenSRS\domains\lookup\GetDomain;
-use OpenSRS\Request;
+use opensrs\domains\lookup\GetDomain;
+use opensrs\Request;
+
 /**
  * @group lookup
  * @group GetDomain
@@ -11,46 +12,46 @@ class GetDomainTest extends PHPUnit_Framework_TestCase
     protected $func = 'lookupGetDomain';
 
     protected $validSubmission = array(
-        "attributes" => array(
-            "domain" => "",
-            "type" => "",
-            )
+        'attributes' => array(
+            'domain' => '',
+            'type' => '',
+            ),
         );
 
     /**
      * Valid submission should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validsubmission
      */
-    public function testValidSubmission() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testValidSubmission()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->attributes->domain = 'phptest' . time() . '.com';
-        $data->attributes->type = "all_info";
+        $data->attributes->domain = 'phptest'.time().'.com';
+        $data->attributes->type = 'all_info';
         $data->attributes->as_subreseller = 'katkinson';
 
-        $ns = new GetDomain( 'array', $data );
+        $ns = new GetDomain('array', $data);
 
-        $this->assertTrue( $ns instanceof GetDomain );
+        $this->assertTrue($ns instanceof GetDomain);
     }
 
     /**
      * Valid submission should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validsubmission
      */
-    public function testValidLiveSubmission() {
+    public function testValidLiveSubmission()
+    {
         $data = array(
-            'func' => "lookupGetDomain",
+            'func' => 'lookupGetDomain',
 
-            "attributes" => array(
-                'domain' => 'phptest' . time() . '.com',
+            'attributes' => array(
+                'domain' => 'phptest'.time().'.com',
                 'type' => 'all_info',
                 ),
             );
@@ -58,7 +59,7 @@ class GetDomainTest extends PHPUnit_Framework_TestCase
         $request = new Request();
         $ns = $request->process('array', $data);
 
-        $this->assertTrue( $ns instanceof GetDomain );
-        $this->assertTrue( $ns->resultRaw['is_success'] == 1 );
+        $this->assertTrue($ns instanceof GetDomain);
+        $this->assertTrue($ns->resultRaw['is_success'] == 1);
     }
 }

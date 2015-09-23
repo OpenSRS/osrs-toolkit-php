@@ -1,22 +1,21 @@
 <?php
 
-$callArray = array (
-	'func' => 'premiumDomain',
-	//"func" => "allinone",
+$callArray = array(
+    'func' => 'premiumDomain',
+    //"func" => "allinone",
         //"func" => "premiumDomain",
 
-        'data' => array (
+        'data' => array(
                 'domain' => 'hockey.com',
-		// These are optional
+        // These are optional
                 'selected' => '.com;.net;.org',
-                'alldomains' => '.com;.net;.org', 
+                'alldomains' => '.com;.net;.org',
         ),
 );
 
 // require_once '../opensrs/openSRS_loader.php';
-require __DIR__ . '/../vendor/autoload.php';
-use OpenSRS\Request;
-
+require __DIR__.'/../vendor/autoload.php';
+use opensrs\Request;
 
 //JSON
 // $callstring = json_encode($callArray);
@@ -44,7 +43,6 @@ try {
     // $variable = var_dump($osrsHandler->resultRaw, true);
     // $variable = str_replace ("\n", "<br>\n",  $variable);
     // echo ('Out Results Formatted: '.$variable);
-}
-catch(\OpenSRS\Exception $e) {
+} catch (\opensrs\Exception $e) {
     var_dump($e->getMessage());
 }

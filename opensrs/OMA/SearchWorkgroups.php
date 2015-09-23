@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenSRS\OMA;
+namespace opensrs\OMA;
 
-use OpenSRS\OMA;
-use OpenSRS\Exception;
+use opensrs\OMA;
+use opensrs\Exception;
 
 // command: search_workgroup
 // Retrieve a list of workgroups in a domain. 	
@@ -21,7 +21,7 @@ class SearchWorkgroups
     public static function validate($data)
     {
         if (empty($data['criteria']['domain'])) {
-            throw new Exception("oSRS Error - Domain required");
+            throw new Exception('oSRS Error - Domain required');
         } else {
             return true;
         }

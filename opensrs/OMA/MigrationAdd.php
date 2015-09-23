@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenSRS\OMA;
+namespace opensrs\OMA;
 
-use OpenSRS\OMA;
+use opensrs\OMA;
 
 // command: migration_add
 // Create a bulk migration job, to copy email from many remote accounts to many local accounts. 	

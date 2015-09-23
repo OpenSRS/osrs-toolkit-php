@@ -1,15 +1,14 @@
 <?php
 
-namespace OpenSRS\trust;
+namespace opensrs\trust;
 
-use OpenSRS\Base;
-use OpenSRS\Exception;
+use opensrs\Base;
 
 class ResendCertEmail extends Base
 {
     protected $action = 'resend_cert_email';
     protected $object = 'trust_service';
-    
+
     private $_formatHolder = '';
     public $resultFullRaw;
     public $resultRaw;

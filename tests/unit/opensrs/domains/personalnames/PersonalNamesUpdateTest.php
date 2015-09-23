@@ -1,6 +1,7 @@
 <?php
 
-use OpenSRS\domains\personalnames\PersonalNamesUpdate;
+use opensrs\domains\personalnames\PersonalNamesUpdate;
+
 /**
  * @group personalnames
  * @group PersonalNamesUpdate
@@ -10,15 +11,15 @@ class PersonalNamesUpdateTest extends PHPUnit_Framework_TestCase
     protected $func = 'persUpdate';
 
     protected $validSubmission = array(
-        "attributes" => array(
-            /**
+        'attributes' => array(
+            /*
              * Required
              *
              * domain: domain name to register
              */
-            "domain" => "",
+            'domain' => '',
 
-            /**
+            /*
              * Optional
              * 
              * Values used for email account
@@ -35,12 +36,12 @@ class PersonalNamesUpdateTest extends PHPUnit_Framework_TestCase
              * password: registrant's new email
              *   password
              */
-            "disable_forward_email" => "",
-            "forward_email" => "",
-            "mailbox_type" => "",
-            "password" => "",
+            'disable_forward_email' => '',
+            'forward_email' => '',
+            'mailbox_type' => '',
+            'password' => '',
 
-            /**
+            /*
              * Optional
              *
              * Values used for DNS record associated
@@ -58,75 +59,72 @@ class PersonalNamesUpdateTest extends PHPUnit_Framework_TestCase
              *   must provide a full list of records.
              *   any committed records will be deleted.
              */
-            "content" => "",
-            "name" => "",
-            "type" => ""
-            )
+            'content' => '',
+            'name' => '',
+            'type' => '',
+            ),
         );
 
     /**
      * Valid submission should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validsubmission
      */
-    public function testValidSubmission() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testValidSubmission()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->attributes->domain = "john.smith.net";
+        $data->attributes->domain = 'john.smith.net';
 
-        $ns = new PersonalNamesUpdate( 'array', $data );
+        $ns = new PersonalNamesUpdate('array', $data);
 
-        $this->assertTrue( $ns instanceof PersonalNamesUpdate );
+        $this->assertTrue($ns instanceof PersonalNamesUpdate);
     }
 
     /**
-     * Data Provider for Invalid Submission test
+     * Data Provider for Invalid Submission test.
      */
-    function submissionFields() {
+    public function submissionFields()
+    {
         return array(
             'missing domain' => array('domain'),
             );
     }
 
     /**
-     * Invalid submission should throw an exception
+     * Invalid submission should throw an exception.
      *
-     * @return void
      *
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testInvalidSubmissionFieldsMissing($field, $parent = 'attributes', $message = null)
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->attributes->domain = "john.smith.net";
+        $data->attributes->domain = 'john.smith.net';
 
-        if(is_null($message)){
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
+        if (is_null($message)) {
+            $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
               "/$field.*not defined/"
               );
-        }
-        else {
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
+        } else {
+            $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
               "/$message/"
               );
         }
 
-
-
         // clear field being tested
-        if(is_null($parent)){
-            unset( $data->$field );
-        }
-        else{
-            unset( $data->$parent->$field );
+        if (is_null($parent)) {
+            unset($data->$field);
+        } else {
+            unset($data->$parent->$field);
         }
 
-        $ns = new PersonalNamesUpdate( 'array', $data );
+        $ns = new PersonalNamesUpdate('array', $data);
     }
 }

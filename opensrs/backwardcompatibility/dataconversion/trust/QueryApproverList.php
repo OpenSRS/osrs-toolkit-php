@@ -1,11 +1,11 @@
 <?php
 
-namespace OpenSRS\backwardcompatibility\dataconversion\trust;
+namespace opensrs\backwardcompatibility\dataconversion\trust;
 
-use OpenSRS\backwardcompatibility\dataconversion\DataConversion;
-use OpenSRS\Exception;
+use opensrs\backwardcompatibility\dataconversion\DataConversion;
 
-class QueryApproverList extends DataConversion {
+class QueryApproverList extends DataConversion
+{
     // New structure for API calls handled by
     // the toolkit.
     //
@@ -26,11 +26,11 @@ class QueryApproverList extends DataConversion {
     protected $newStructure = array(
         'attributes' => array(
             'product_type' => 'data->product_type',
-            'domain' => 'data->domain'
+            'domain' => 'data->domain',
         ),
     );
 
-    public function convertDataObject( $dataObject, $newStructure = null ) 
+    public function convertDataObject($dataObject, $newStructure = null)
     {
         $p = new parent();
 
@@ -38,7 +38,7 @@ class QueryApproverList extends DataConversion {
             $newStructure = $this->newStructure;
         }
 
-        $newDataObject = $p->convertDataObject( $dataObject, $newStructure );
+        $newDataObject = $p->convertDataObject($dataObject, $newStructure);
 
         return $newDataObject;
     }

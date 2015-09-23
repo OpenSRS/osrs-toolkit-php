@@ -1,9 +1,8 @@
 <?php
 
-namespace OpenSRS\trust;
+namespace opensrs\trust;
 
-use OpenSRS\Base;
-use OpenSRS\Exception;
+use opensrs\Base;
 
 class ParseCSR extends Base
 {
@@ -15,7 +14,6 @@ class ParseCSR extends Base
     public $resultRaw;
     public $resultFullFormatted;
     public $resultFormatted;
-
 
     public $requiredFields = array(
         'attributes' => array(

@@ -2,18 +2,18 @@
 
 namespace opensrs\domains\provisioning;
 
-use OpenSRS\Base;
-use OpenSRS\Exception;
+use opensrs\Base;
 
-class ProvisioningRenew extends Base {
-	public $action = "renew";
-	public $object = "domain";
+class ProvisioningRenew extends Base
+{
+    public $action = 'renew';
+    public $object = 'domain';
 
-	public $_formatHolder = "";
-	public $resultFullRaw;
-	public $resultRaw;
-	public $resultFullFormatted;
-	public $resultFormatted;
+    public $_formatHolder = '';
+    public $resultFullRaw;
+    public $resultRaw;
+    public $resultFullFormatted;
+    public $resultFormatted;
 
     public $requiredFields = array(
         'attributes' => array(
@@ -25,13 +25,14 @@ class ProvisioningRenew extends Base {
             ),
         );
 
-	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
-		parent::__construct();
+    public function __construct($formatString, $dataObject, $returnFullResponse = true)
+    {
+        parent::__construct();
 
-		$this->_formatHolder = $formatString;
+        $this->_formatHolder = $formatString;
 
-		$this->_validateObject( $dataObject );
+        $this->_validateObject($dataObject);
 
-		$this->send( $dataObject, $returnFullResponse );
-	}
+        $this->send($dataObject, $returnFullResponse);
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 
-use OpenSRS\domains\cookie\CookieDelete;
+use opensrs\domains\cookie\CookieDelete;
 
 /**
  * @group cookie
@@ -8,17 +8,17 @@ use OpenSRS\domains\cookie\CookieDelete;
  */
 class CookieDeleteTest extends PHPUnit_Framework_TestCase
 {
-    protected $fund = "cookieDelete";
+    protected $fund = 'cookieDelete';
 
     protected $validSubmission = array(
-        /**
+        /*
          * Required
          *
          * cookie: cookie to be deleted
          */
-        "cookie" => "",
+        'cookie' => '',
 
-        "attributes" => array(
+        'attributes' => array(
             'cookie' => '',
             'domain' => '',
             ),
@@ -26,28 +26,29 @@ class CookieDeleteTest extends PHPUnit_Framework_TestCase
 
     /**
      * Valid submission should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validsubmission
      */
-    public function testValidSubmission() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testValidSubmission()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
         $data->cookie = md5(time());
         $data->attributes->cookie = $data->cookie;
-        $data->attributes->domain = 'phptest' . time() . '.com';
+        $data->attributes->domain = 'phptest'.time().'.com';
 
-        $ns = new CookieDelete( 'array', $data );
+        $ns = new CookieDelete('array', $data);
 
-        $this->assertTrue( $ns instanceof CookieDelete );
+        $this->assertTrue($ns instanceof CookieDelete);
     }
 
     /**
-     * Data Provider for Invalid Submission test
+     * Data Provider for Invalid Submission test.
      */
-    function submissionFields() {
+    public function submissionFields()
+    {
         return array(
             'missing root cookie' => array('cookie', null),
             'missing cookie' => array('cookie'),
@@ -56,41 +57,39 @@ class CookieDeleteTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Invalid submission should throw an exception
+     * Invalid submission should throw an exception.
      *
-     * @return void
      *
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testInvalidSubmissionFieldsMissing($field, $parent = 'attributes', $message = null)
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
         $data->cookie = md5(time());
         $data->attributes->cookie = $data->cookie;
-        $data->attributes->domain = 'phptest' . time() . '.com';
+        $data->attributes->domain = 'phptest'.time().'.com';
 
-        if(is_null($message)){
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
+        if (is_null($message)) {
+            $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
               "/$field.*not defined/"
               );
-        }
-        else {
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
+        } else {
+            $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
               "/$message/"
               );
         }
 
         // clear field being tested
-        if(is_null($parent)){
-            unset( $data->$field );
-        }
-        else{
-            unset( $data->$parent->$field );
+        if (is_null($parent)) {
+            unset($data->$field);
+        } else {
+            unset($data->$parent->$field);
         }
 
-        $ns = new CookieDelete( 'array', $data );
+        $ns = new CookieDelete('array', $data);
     }
 }

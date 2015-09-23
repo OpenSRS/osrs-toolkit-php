@@ -1,104 +1,119 @@
 <?php 
 
-if (isSet($_POST['function'])) {
-	// Open SRS Call -> Result
-	require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
+if (isset($_POST['function'])) {
+    // Open SRS Call -> Result
+    require_once dirname(__FILE__).'/../..//opensrs/openSRS_loader.php';
 
-	// Form data capture
-	$formFormat = $_POST["format"];
-	$a = $_POST["a"];
-	$aaaa = $_POST["aaaa"];
-	$cname = $_POST["cname"];
-	$mx = $_POST["mx"];
-	$srv = $_POST["srv"];
-	$txt = $_POST["txt"];
+    // Form data capture
+    $formFormat = $_POST['format'];
+    $a = $_POST['a'];
+    $aaaa = $_POST['aaaa'];
+    $cname = $_POST['cname'];
+    $mx = $_POST['mx'];
+    $srv = $_POST['srv'];
+    $txt = $_POST['txt'];
 
-	$callstring = "";
-	$callArray = array (
-		"func" => $_POST["function"],
-		"data" => array (
-	 		"domain" => $_POST["domain"],
-	 		"DNS_template" => $_POST["dns_template"],
- 		)
-	);
-	
-	if (isSet($a)) {
-		$as = array();
-		for ($i = 0; $i < count($a); $i++) {
-			if(!empty($a["ip_address"][$i]) && !empty($a["subdomain"][$i]) ) {
-	    		array_push($as, array("ip_address" => $a["ip_address"][$i], "subdomain" => $a["subdomain"][$i]));
-	    	}
-		}
-		if (count($as)> 0) $callArray["data"]["a"] = $as;
-	}
+    $callstring = '';
+    $callArray = array(
+        'func' => $_POST['function'],
+        'data' => array(
+            'domain' => $_POST['domain'],
+            'DNS_template' => $_POST['dns_template'],
+        ),
+    );
 
-	if (isSet($aaaa)) {
-		$aaaas = array();
-		for ($i = 0; $i < count($aaaa); $i++) {
-			if(!empty($aaaa["ipv6_address"][$i]) && !empty($aaaa["subdomain"][$i]) ) {
-				array_push($aaaas, array("ipv6_address" => $aaaa["ipv6_address"][$i], "subdomain" => $aaaa["subdomain"][$i]));	
-			}
-		}
-		if (count($aaaas)> 0) $callArray["data"]["aaaa"] = $aaaas;
-	}
+    if (isset($a)) {
+        $as = array();
+        for ($i = 0; $i < count($a); ++$i) {
+            if (!empty($a['ip_address'][$i]) && !empty($a['subdomain'][$i])) {
+                array_push($as, array('ip_address' => $a['ip_address'][$i], 'subdomain' => $a['subdomain'][$i]));
+            }
+        }
+        if (count($as) > 0) {
+            $callArray['data']['a'] = $as;
+        }
+    }
 
-	if (isSet($cname)) {
-		$cnames = array();
-		for ($i = 0; $i < count($cname); $i++) {
-			if(!empty($cname["subdomain"][$i]) && !empty($cname["hostname"][$i]) ) {
-	    		array_push($cnames, array("subdomain" => $cname["subdomain"][$i], "hostname" => $cname["hostname"][$i]));
-	    	}
-		}
-		if (count($cnames)> 0) $callArray["data"]["cname"] = $cnames;
-	}
+    if (isset($aaaa)) {
+        $aaaas = array();
+        for ($i = 0; $i < count($aaaa); ++$i) {
+            if (!empty($aaaa['ipv6_address'][$i]) && !empty($aaaa['subdomain'][$i])) {
+                array_push($aaaas, array('ipv6_address' => $aaaa['ipv6_address'][$i], 'subdomain' => $aaaa['subdomain'][$i]));
+            }
+        }
+        if (count($aaaas) > 0) {
+            $callArray['data']['aaaa'] = $aaaas;
+        }
+    }
 
-	if (isSet($mx)) {
-		$mxs = array();
-		for ($i = 0; $i < count($mx); $i++) {
-			if(!empty($mx["priority"][$i]) && !empty($mx["subdomain"][$i]) && !empty($mx["hostname"][$i]) ) {
-	    		array_push($mxs, array("priority" => $mx["priority"][$i], "subdomain" => $mx["subdomain"][$i], "hostname" => $mx["hostname"][$i]));
-	    	}
-		}
-		if (count($mxs) > 0) $callArray["data"]["mx"] = $mxs;
-	}
+    if (isset($cname)) {
+        $cnames = array();
+        for ($i = 0; $i < count($cname); ++$i) {
+            if (!empty($cname['subdomain'][$i]) && !empty($cname['hostname'][$i])) {
+                array_push($cnames, array('subdomain' => $cname['subdomain'][$i], 'hostname' => $cname['hostname'][$i]));
+            }
+        }
+        if (count($cnames) > 0) {
+            $callArray['data']['cname'] = $cnames;
+        }
+    }
 
-	if (!empty($srv)) {
-		$srvs = array();
-		for ($i = 0; $i < count($srv); $i++) {
-			if(!empty($srv["subdomain"][$i]) && !empty($srv["hostname"][$i]) ) {
-	    		array_push($srvs, array("port" => $srv["port"][$i], "priority" => $srv["priority"][$i], "subdomain" => $srv["subdomain"][$i], "hostname" => $srv["hostname"][$i], "weight" => $srv["weight"][$i]));
-	  		}
-		}
-		if (count($srvs)> 0) $callArray["data"]["srv"] = $srvs;
-	}
+    if (isset($mx)) {
+        $mxs = array();
+        for ($i = 0; $i < count($mx); ++$i) {
+            if (!empty($mx['priority'][$i]) && !empty($mx['subdomain'][$i]) && !empty($mx['hostname'][$i])) {
+                array_push($mxs, array('priority' => $mx['priority'][$i], 'subdomain' => $mx['subdomain'][$i], 'hostname' => $mx['hostname'][$i]));
+            }
+        }
+        if (count($mxs) > 0) {
+            $callArray['data']['mx'] = $mxs;
+        }
+    }
 
-	if (isSet($txt)) {
-		$txts = array();
-		for ($i = 0; $i < count($txt); $i++) {
-			if(!empty($txt["text"][$i])) {
-				array_push($txts, array("subdomain" => $txt["subdomain"][$i], "text" => $txt["text"][$i]));	
-			}
-		}
-		if (count($txts)> 0) $callArray["data"]["txt"] = $txts;
-	}
-		
-	if ($formFormat == "json") $callstring = json_encode($callArray);
-	if ($formFormat == "yaml") $callstring = Spyc::YAMLDump($callArray);
+    if (!empty($srv)) {
+        $srvs = array();
+        for ($i = 0; $i < count($srv); ++$i) {
+            if (!empty($srv['subdomain'][$i]) && !empty($srv['hostname'][$i])) {
+                array_push($srvs, array('port' => $srv['port'][$i], 'priority' => $srv['priority'][$i], 'subdomain' => $srv['subdomain'][$i], 'hostname' => $srv['hostname'][$i], 'weight' => $srv['weight'][$i]));
+            }
+        }
+        if (count($srvs) > 0) {
+            $callArray['data']['srv'] = $srvs;
+        }
+    }
 
-	$osrsHandler = processOpenSRS ($formFormat, $callstring);
+    if (isset($txt)) {
+        $txts = array();
+        for ($i = 0; $i < count($txt); ++$i) {
+            if (!empty($txt['text'][$i])) {
+                array_push($txts, array('subdomain' => $txt['subdomain'][$i], 'text' => $txt['text'][$i]));
+            }
+        }
+        if (count($txts) > 0) {
+            $callArray['data']['txt'] = $txts;
+        }
+    }
 
-	// Print out the results
-	echo (" In: ". $callstring ."<br>");
-	echo ("Out: ". $osrsHandler->resultFormatted);
+    if ($formFormat == 'json') {
+        $callstring = json_encode($callArray);
+    }
+    if ($formFormat == 'yaml') {
+        $callstring = Spyc::YAMLDump($callArray);
+    }
 
+    $osrsHandler = processOpenSRS($formFormat, $callstring);
+
+    // Print out the results
+    echo(' In: '.$callstring.'<br>');
+    echo('Out: '.$osrsHandler->resultFormatted);
 } else {
-	// Format
-	if (isSet($_GET['format'])) {
-		$tf = $_GET['format'];
-	} else {
-		$tf = "json";
-	}
-?>
+    // Format
+    if (isset($_GET['format'])) {
+        $tf = $_GET['format'];
+    } else {
+        $tf = 'json';
+    }
+    ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
@@ -111,7 +126,8 @@ if (isSet($_POST['function'])) {
 <body>
 
 <form action="test-dnsCreate.php" method="post">
-	<input type="hidden" name="format" value="<?php echo($tf); ?>">
+	<input type="hidden" name="format" value="<?php echo($tf);
+    ?>">
 	<input type="hidden" name="function" value="DnsCreate">
 
 	<table cellpadding="0" cellspacing="10" border="0" width="100%">

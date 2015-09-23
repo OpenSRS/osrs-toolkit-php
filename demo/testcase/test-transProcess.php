@@ -1,40 +1,42 @@
 <?php 
 
-if (isSet($_POST['function'])) {
-	require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
+if (isset($_POST['function'])) {
+    require_once dirname(__FILE__).'/../..//opensrs/openSRS_loader.php';
 
-	// Form data capture
-	$formFormat = $_POST["format"];
+    // Form data capture
+    $formFormat = $_POST['format'];
 
-	// Put the data to the Formatted array
-	$callstring = "";
-	$callArray = array (
-		"func" => $_POST["function"],
-		"data" => array (
-			"order_id" => $_POST["order_id"],
-			"reseller" => $_POST["reseller"]
-		)
-	);
-	
-	if ($formFormat == "json") $callstring = json_encode($callArray);
-	if ($formFormat == "yaml") $callstring = Spyc::YAMLDump($callArray);
+    // Put the data to the Formatted array
+    $callstring = '';
+    $callArray = array(
+        'func' => $_POST['function'],
+        'data' => array(
+            'order_id' => $_POST['order_id'],
+            'reseller' => $_POST['reseller'],
+        ),
+    );
 
+    if ($formFormat == 'json') {
+        $callstring = json_encode($callArray);
+    }
+    if ($formFormat == 'yaml') {
+        $callstring = Spyc::YAMLDump($callArray);
+    }
 
-	// Open SRS Call -> Result
-	$osrsHandler = processOpenSRS ($formFormat, $callstring);
+    // Open SRS Call -> Result
+    $osrsHandler = processOpenSRS($formFormat, $callstring);
 
-	// Print out the results
-	echo (" In: ". $callstring ."<br>");
-	echo ("Out: ". $osrsHandler->resultFormatted);
-
+    // Print out the results
+    echo(' In: '.$callstring.'<br>');
+    echo('Out: '.$osrsHandler->resultFormatted);
 } else {
-	// Format
-	if (isSet($_GET['format'])) {
-		$tf = $_GET['format'];
-	} else {
-		$tf = "json";
-	}
-?>
+    // Format
+    if (isset($_GET['format'])) {
+        $tf = $_GET['format'];
+    } else {
+        $tf = 'json';
+    }
+    ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
@@ -47,7 +49,8 @@ if (isSet($_POST['function'])) {
 <body>
 
 <form action="test-transProcess.php" method="post">
-	<input type="hidden" name="format" value="<?php echo($tf); ?>">
+	<input type="hidden" name="format" value="<?php echo($tf);
+    ?>">
 	<input type="hidden" name="function" value="transProcess">
 
 	<table cellpadding="0" cellspacing="0" border="0" width="100%">

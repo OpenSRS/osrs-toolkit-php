@@ -1,27 +1,27 @@
 <?php
 
-namespace OpenSRS;
+namespace opensrs;
+
 use Spyc;
 
-defined ('OPENSRSURI') or require_once dirname(__FILE__).'/openSRS_config.php';
+defined('OPENSRSURI') or require_once dirname(__FILE__).'/openSRS_config.php';
 
 class Request
 {
     /**
-     * Process an OpenSRS Request
+     * Process an OpenSRS Request.
      * 
      * @param string $format input format (xml, json, array)
-     * @param string $data data 
-     * 
-     * @return void
+     * @param string $data   data 
      */
     public function process($format = '', $data = '')
     {
         if (empty($data)) {
             throw new Exception('OSRS Error - No data found.');
+
             return;
-        } 
-        
+        }
+
         $dataArray = array();
         switch (strtolower($format)) {
             case 'array':
@@ -42,21 +42,22 @@ class Request
         $classCall = null;
 
         $classCall = RequestFactory::build($dataObject->func, $format, $dataObject);
+
         return $classCall;
     }
 
     /**
-    * Method to convert Array -> Object -> Array.
-    *
-    * @param hash $data Containing array object
-    * 
-    * @return stdClass Object $object   Containing stdClass object
-    *
-    * @since    3.4
-    */
+     * Method to convert Array -> Object -> Array.
+     *
+     * @param hash $data Containing array object
+     * 
+     * @return stdClass Object $object   Containing stdClass object
+     *
+     * @since    3.4
+     */
     public function array2object($data)
     {
-        if(is_array($data)){
+        if (is_array($data)) {
             $data = json_decode(json_encode($data));
         }
 

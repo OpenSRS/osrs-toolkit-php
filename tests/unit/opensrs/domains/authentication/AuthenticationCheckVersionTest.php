@@ -1,6 +1,6 @@
 <?php
 
-use OpenSRS\domains\authentication\AuthenticationCheckVersion;
+use opensrs\domains\authentication\AuthenticationCheckVersion;
 
 /**
  * @group authentication
@@ -14,17 +14,17 @@ class AuthenticationCheckVersionTest extends PHPUnit_Framework_TestCase
 
     /**
      * Valid submission should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validsubmission
      */
-    public function testValidSubmission() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testValidSubmission()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $ns = new AuthenticationCheckVersion( 'array', $data );
+        $ns = new AuthenticationCheckVersion('array', $data);
 
-        $this->assertTrue( $ns instanceof AuthenticationCheckVersion );
+        $this->assertTrue($ns instanceof AuthenticationCheckVersion);
     }
 }

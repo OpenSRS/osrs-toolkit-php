@@ -1,14 +1,13 @@
 <?php
 
-namespace OpenSRS\trust;
+namespace opensrs\trust;
 
-use OpenSRS\Base;
-use OpenSRS\Exception;
+use opensrs\Base;
 
-class CreateToken extends Base 
+class CreateToken extends Base
 {
-    protected $action = "create_token";
-    protected $object = "trust_service";
+    protected $action = 'create_token';
+    protected $object = 'trust_service';
 
     private $_formatHolder = '';
     public $resultFullRaw;
@@ -18,7 +17,7 @@ class CreateToken extends Base
 
     public $requiredFields = array(
         'attributes' => array(
-            'order_id'
+            'order_id',
             ),
         );
 
@@ -28,7 +27,7 @@ class CreateToken extends Base
 
         $this->_formatHolder = $formatString;
 
-        $this->_validateObject( $dataObject );
+        $this->_validateObject($dataObject);
 
         $this->send($dataObject, $returnFullResponse);
     }

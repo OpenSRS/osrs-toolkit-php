@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenSRS\trust;
+namespace opensrs\trust;
 
-use OpenSRS\Base;
-use OpenSRS\Exception;
+use opensrs\Base;
+use opensrs\Exception;
 
 class RequestOnDemandScan extends Base
 {
@@ -33,14 +33,14 @@ class RequestOnDemandScan extends Base
     }
 
     // Validate the object
-    public function _validateObject( $dataObject, $requiredFields = null )
+    public function _validateObject($dataObject, $requiredFields = null)
     {
         if (!isset($dataObject->attributes->order_id) and !isset($dataObject->attributes->product_id)) {
-            Exception::notDefined( 'order_id or product_id' );
+            Exception::notDefined('order_id or product_id');
         }
-    
+
         $parent = new parent();
 
-        $parent->_validateObject( $dataObject, $this->requiredFields );
+        $parent->_validateObject($dataObject, $this->requiredFields);
     }
 }

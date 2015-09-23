@@ -1,49 +1,50 @@
 <?php
 
-namespace OpenSRS\backwardcompatibility\dataconversion\domains\lookup;
+namespace opensrs\backwardcompatibility\dataconversion\domains\lookup;
 
-use OpenSRS\backwardcompatibility\dataconversion\DataConversion;
-use OpenSRS\Exception;
+use opensrs\backwardcompatibility\dataconversion\DataConversion;
 
-class GetOrdersByDomain extends DataConversion {
-	// New structure for API calls handled by
-	// the toolkit.
-	//
-	// index: field name
-	// value: location of data to map to this
-	//		  field from the original structure
-	//
-	// example 1:
-	//    "cookie" => 'data->cookie'
-	//	this will map ->data->cookie in the
-	//	original object to ->cookie in the
-	//  new format
-	//
-	// example 2:
-	//	  ['attributes']['domain'] = 'data->domain'
-	//  this will map ->data->domain in the original
-	//  to ->attributes->domain in the new format
-	protected $newStructure = array(
-		'attributes' => array(
-			'domain' => 'data->domain',
-			'page' => 'data->page',
-			'order_from' => 'data->order_from',
-			'status' => 'data->status',
-			'type' => 'data->type',
-			'limit' => 'data->limit',
-			'order_to' => 'data->order_to',
-			),
-		);
+class GetOrdersByDomain extends DataConversion
+{
+    // New structure for API calls handled by
+    // the toolkit.
+    //
+    // index: field name
+    // value: location of data to map to this
+    //		  field from the original structure
+    //
+    // example 1:
+    //    "cookie" => 'data->cookie'
+    //	this will map ->data->cookie in the
+    //	original object to ->cookie in the
+    //  new format
+    //
+    // example 2:
+    //	  ['attributes']['domain'] = 'data->domain'
+    //  this will map ->data->domain in the original
+    //  to ->attributes->domain in the new format
+    protected $newStructure = array(
+        'attributes' => array(
+            'domain' => 'data->domain',
+            'page' => 'data->page',
+            'order_from' => 'data->order_from',
+            'status' => 'data->status',
+            'type' => 'data->type',
+            'limit' => 'data->limit',
+            'order_to' => 'data->order_to',
+            ),
+        );
 
-	public function convertDataObject( $dataObject, $newStructure = null ) {
-		$p = new parent();
+    public function convertDataObject($dataObject, $newStructure = null)
+    {
+        $p = new parent();
 
-		if(is_null($newStructure)){
-			$newStructure = $this->newStructure;
-		}
+        if (is_null($newStructure)) {
+            $newStructure = $this->newStructure;
+        }
 
-		$newDataObject = $p->convertDataObject( $dataObject, $newStructure );
+        $newDataObject = $p->convertDataObject($dataObject, $newStructure);
 
-		return $newDataObject;
-	}
+        return $newDataObject;
+    }
 }

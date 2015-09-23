@@ -2,14 +2,14 @@
 
 namespace opensrs\domains\lookup;
 
-use OpenSRS\Base;
-use OpenSRS\Exception;
+use opensrs\Base;
 
-class PremiumDomain extends Base {
-    public $action = "name_suggest";
-    public $object = "domain";
+class PremiumDomain extends Base
+{
+    public $action = 'name_suggest';
+    public $object = 'domain';
 
-    public $_formatHolder = "";
+    public $_formatHolder = '';
     public $resultFullRaw;
     public $resultRaw;
     public $resultFullFormatted;
@@ -21,14 +21,15 @@ class PremiumDomain extends Base {
             ),
         );
 
-    public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
+    public function __construct($formatString, $dataObject, $returnFullResponse = true)
+    {
         parent::__construct();
 
         $this->_formatHolder = $formatString;
 
-        $this->_validateObject( $dataObject );
+        $this->_validateObject($dataObject);
 
-        $this->send( $dataObject, $returnFullResponse );
+        $this->send($dataObject, $returnFullResponse);
     }
 
     public function __destruct()
@@ -36,12 +37,13 @@ class PremiumDomain extends Base {
         parent::__destruct();
     }
 
-    public function customResponseHandling( $arrayResult, $returnFullResponse = true ){
-        if( !$returnFullResponse ){
-            if (isset($arrayResult['attributes'])){
+    public function customResponseHandling($arrayResult, $returnFullResponse = true)
+    {
+        if (!$returnFullResponse) {
+            if (isset($arrayResult['attributes'])) {
                 $resultRaw = array();
 
-                if(isset($arrayResult['attributes']['premium']['items'])){
+                if (isset($arrayResult['attributes']['premium']['items'])) {
                     $resultRaw['premium'] = $arrayResult['attributes']['premium']['items'];
                 }
 

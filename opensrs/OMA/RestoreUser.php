@@ -1,12 +1,11 @@
 <?php
 
-namespace OpenSRS\OMA;
+namespace opensrs\OMA;
 
-use OpenSRS\OMA;
-
+use opensrs\OMA;
 // command: restore_user
 // Restore a deleted user 
-use OpenSRS\Exception;
+use opensrs\Exception;
 
 class RestoreUser
 {
@@ -20,7 +19,7 @@ class RestoreUser
     public static function validate($data)
     {
         if (empty($data['user']) || empty($data['id']) || empty($data['new_name'])) {
-            throw new Exception("oSRS Error - User/ID/New Namerequired");
+            throw new Exception('oSRS Error - User/ID/New Namerequired');
         } else {
             return true;
         }

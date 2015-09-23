@@ -1,6 +1,6 @@
 <?php
 
-use OpenSRS\backwardcompatibility\dataconversion\domains\personalnames\PersonalNamesNameSuggest;
+use opensrs\backwardcompatibility\dataconversion\domains\personalnames\PersonalNamesNameSuggest;
 
 /**
  * @group backwardcompatibility
@@ -11,32 +11,32 @@ use OpenSRS\backwardcompatibility\dataconversion\domains\personalnames\PersonalN
 class BC_PersonalNamesNameSuggestTest extends PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
-        "data" => array(
-            "searchstring" => "",
+        'data' => array(
+            'searchstring' => '',
             ),
         );
 
     /**
      * Valid conversion should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validconversion
      */
-    public function testValidDataConversion() {
-        $data = json_decode( json_encode ($this->validSubmission) );
+    public function testValidDataConversion()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->data->searchstring = "john smith";
+        $data->data->searchstring = 'john smith';
 
-        $shouldMatchNewDataObject = new \stdClass;
-        $shouldMatchNewDataObject->attributes = new \stdClass;
+        $shouldMatchNewDataObject = new \stdClass();
+        $shouldMatchNewDataObject->attributes = new \stdClass();
 
         $shouldMatchNewDataObject->attributes->searchstring = $data->data->searchstring;
 
         $ns = new PersonalNamesNameSuggest();
-        $newDataObject = $ns->convertDataObject( $data );
+        $newDataObject = $ns->convertDataObject($data);
 
-        $this->assertTrue( $newDataObject == $shouldMatchNewDataObject );
+        $this->assertTrue($newDataObject == $shouldMatchNewDataObject);
     }
 }

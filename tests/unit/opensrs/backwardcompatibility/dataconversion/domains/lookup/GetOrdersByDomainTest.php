@@ -1,6 +1,6 @@
 <?php
 
-use OpenSRS\backwardcompatibility\dataconversion\domains\lookup\GetOrdersByDomain;
+use opensrs\backwardcompatibility\dataconversion\domains\lookup\GetOrdersByDomain;
 
 /**
  * @group backwardcompatibility
@@ -11,7 +11,7 @@ use OpenSRS\backwardcompatibility\dataconversion\domains\lookup\GetOrdersByDomai
 class BC_GetOrdersByDomainTest extends PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
-        "data" => array(
+        'data' => array(
             'domain' => '',
             'type' => '',
             'page' => '',
@@ -24,25 +24,25 @@ class BC_GetOrdersByDomainTest extends PHPUnit_Framework_TestCase
 
     /**
      * Valid conversion should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validconversion
      */
-    public function testValidDataConversion() {
-        $data = json_decode( json_encode ($this->validSubmission) );
+    public function testValidDataConversion()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->data->domain = "phptest" . time() . ".com";
-        $data->data->type = "test";
-        $data->data->page = "10";
-        $data->data->limit = "100";
+        $data->data->domain = 'phptest'.time().'.com';
+        $data->data->type = 'test';
+        $data->data->page = '10';
+        $data->data->limit = '100';
         $data->data->status = time();
-        $data->data->order_to = strtotime("+1 week");
-        $data->data->order_from = strtotime("-1 year");
+        $data->data->order_to = strtotime('+1 week');
+        $data->data->order_from = strtotime('-1 year');
 
-        $shouldMatchNewDataObject = new \stdClass;
-        $shouldMatchNewDataObject->attributes = new \stdClass;
+        $shouldMatchNewDataObject = new \stdClass();
+        $shouldMatchNewDataObject->attributes = new \stdClass();
 
         $shouldMatchNewDataObject->attributes->domain = $data->data->domain;
         $shouldMatchNewDataObject->attributes->type = $data->data->type;
@@ -54,8 +54,8 @@ class BC_GetOrdersByDomainTest extends PHPUnit_Framework_TestCase
 
         $ns = new GetOrdersByDomain();
 
-        $newDataObject = $ns->convertDataObject( $data );
+        $newDataObject = $ns->convertDataObject($data);
 
-        $this->assertTrue( $newDataObject == $shouldMatchNewDataObject );
+        $this->assertTrue($newDataObject == $shouldMatchNewDataObject);
     }
 }

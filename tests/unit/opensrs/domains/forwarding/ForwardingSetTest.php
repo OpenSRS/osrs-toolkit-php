@@ -1,6 +1,7 @@
 <?php
 
-use OpenSRS\domains\forwarding\ForwardingSet;
+use opensrs\domains\forwarding\ForwardingSet;
+
 /**
  * @group forwarding
  * @group ForwardingSet
@@ -10,18 +11,18 @@ class ForwardingSetTest extends PHPUnit_Framework_TestCase
     protected $func = 'fwdSet';
 
     protected $validSubmission = array(
-        "attributes" => array(
-            /**
+        'attributes' => array(
+            /*
              * Required: 1 of 2
              *
              * cookie: cookie to be deleted
              * domain: relevant domain, required
              *   only if cookie is not sent
              */
-            "cookie" => "",
-            "domain" => "",
+            'cookie' => '',
+            'domain' => '',
 
-            /**
+            /*
              * Required
              *
              * subdomain: third level domain such as
@@ -31,9 +32,9 @@ class ForwardingSetTest extends PHPUnit_Framework_TestCase
              *   * note: although this parameter is required,
              *           its value can be null
              */
-            "subdomain" => "",
+            'subdomain' => '',
 
-            /**
+            /*
              * Optional
              *
              * description: short description of
@@ -58,105 +59,102 @@ class ForwardingSetTest extends PHPUnit_Framework_TestCase
              *   the browser title bar, max 255 chars,
              *   only takes effect if masked=1
              */
-            "description" => "",
-            "destination_url" => "",
-            "enabled" => "",
-            "keywords" => "",
-            "masked" => "",
-            "title" => ""
-            )
+            'description' => '',
+            'destination_url' => '',
+            'enabled' => '',
+            'keywords' => '',
+            'masked' => '',
+            'title' => '',
+            ),
         );
 
     /**
      * Valid submission should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validsubmission
      */
-    public function testValidSubmission() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testValidSubmission()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
         $data->cookie = md5(time());
-        $data->attributes->subdomain = "null";
+        $data->attributes->subdomain = 'null';
 
-        $ns = new ForwardingSet( 'array', $data );
+        $ns = new ForwardingSet('array', $data);
 
-        $this->assertTrue( $ns instanceof ForwardingSet );
+        $this->assertTrue($ns instanceof ForwardingSet);
     }
 
     /**
-     * Data Provider for Invalid Submission test
+     * Data Provider for Invalid Submission test.
      */
-    function submissionFields() {
+    public function submissionFields()
+    {
         return array(
             'missing subdomain' => array('subdomain'),
             );
     }
 
     /**
-     * Invalid submission should throw an exception
+     * Invalid submission should throw an exception.
      *
-     * @return void
      *
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testInvalidSubmissionFieldsMissing($field, $parent = 'attributes', $message = null)
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
         $data->cookie = md5(time());
-        $data->attributes->subdomain = "null";
+        $data->attributes->subdomain = 'null';
 
-        $this->setExpectedException( 'OpenSRS\Exception' );
+        $this->setExpectedException('opensrs\Exception');
 
-        if(is_null($message)){
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
+        if (is_null($message)) {
+            $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
               "/$field.*not defined/"
               );
-        }
-        else {
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
+        } else {
+            $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
               "/$message/"
               );
         }
 
-
-
         // clear field being tested
-        if(is_null($parent)){
-            unset( $data->$field );
-        }
-        else{
-            unset( $data->$parent->$field );
+        if (is_null($parent)) {
+            unset($data->$field);
+        } else {
+            unset($data->$parent->$field);
         }
 
-        $ns = new ForwardingSet( 'array', $data );
-     }
+        $ns = new ForwardingSet('array', $data);
+    }
 
     /**
-     * Invalid submission should throw an exception
+     * Invalid submission should throw an exception.
      *
-     * @return void
      *
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsCookieAndBypassSent() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testInvalidSubmissionFieldsCookieAndBypassSent()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
         // assign_ns request
         $data->cookie = md5(time());
-        $data->attributes->domain = "phptest" . time() . ".com";
-        $data->attributes->subdomain = "null";
+        $data->attributes->domain = 'phptest'.time().'.com';
+        $data->attributes->subdomain = 'null';
 
         $this->setExpectedExceptionRegExp(
-            'OpenSRS\Exception',
-            "/.*cookie.*domain.*cannot.*one.*call.*/"
+            'opensrs\Exception',
+            '/.*cookie.*domain.*cannot.*one.*call.*/'
             );
 
-        $ns = new ForwardingSet( 'array', $data );
+        $ns = new ForwardingSet('array', $data);
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenSRS\OMA;
+namespace opensrs\OMA;
 
-use OpenSRS\OMA;
-use OpenSRS\Exception;
+use opensrs\OMA;
+use opensrs\Exception;
 
 // command: search_domains
 // Retrieve a list of domains in a company. 
@@ -21,7 +21,7 @@ class SearchDomains
     public static function validate($data)
     {
         if (empty($data['criteria']['company'])) {
-            throw new Exception("oSRS Error - Company required");
+            throw new Exception('oSRS Error - Company required');
         } else {
             return true;
         }

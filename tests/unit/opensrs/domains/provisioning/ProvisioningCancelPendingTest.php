@@ -1,6 +1,7 @@
 <?php
 
-use OpenSRS\domains\provisioning\ProvisioningCancelPending;
+use opensrs\domains\provisioning\ProvisioningCancelPending;
+
 /**
  * @group provisioning
  * @group ProvisioningCancelPending
@@ -10,8 +11,8 @@ class ProvisioningCancelPendingTest extends PHPUnit_Framework_TestCase
     protected $func = 'provCancelPending';
 
     protected $validSubmission = array(
-        "attributes" => array(
-            /**
+        'attributes' => array(
+            /*
              * Required
              *
              * to_date: specify the date, in UNIX
@@ -20,9 +21,9 @@ class ProvisioningCancelPendingTest extends PHPUnit_Framework_TestCase
              *   or declined state on this date and
              *   earlier are cancelled
              */
-            "to_date" => "",
+            'to_date' => '',
 
-            /**
+            /*
              * Optional
              *
              * status: lists the status for which to
@@ -31,29 +32,26 @@ class ProvisioningCancelPendingTest extends PHPUnit_Framework_TestCase
              *     - declined
              *   default: pending
              */
-            "status" => "",
-            )
+            'status' => '',
+            ),
         );
 
     /**
      * Valid submission should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validsubmission
      */
-    public function testValidSubmission() {
-        $data = json_decode( json_encode($this->validSubmission) );
-
-
+    public function testValidSubmission()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
         // sending request with order_id only
         $data->attributes->to_date = time();
-        $ns = new ProvisioningCancelPending( 'array', $data );
+        $ns = new ProvisioningCancelPending('array', $data);
 
-        $this->assertTrue( $ns instanceof ProvisioningCancelPending );
-
+        $this->assertTrue($ns instanceof ProvisioningCancelPending);
 
         // // sending request with domain only -- CLASS NOT SET UP TO ACCEPT THIS AS VALID
         // $data->attributes->domain = "phptest" . time() . ".com";
@@ -61,42 +59,40 @@ class ProvisioningCancelPendingTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Data Provider for Invalid Submission test
+     * Data Provider for Invalid Submission test.
      */
-    function submissionFields() {
+    public function submissionFields()
+    {
         return array(
             'missing to_date' => array('to_date'),
             );
     }
 
     /**
-     * Invalid submission should throw an exception
+     * Invalid submission should throw an exception.
      *
-     * @return void
      *
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes' ) {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testInvalidSubmissionFieldsMissing($field, $parent = 'attributes')
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
         $data->attributes->to_date = time();
 
         $this->setExpectedExceptionRegExp(
-            'OpenSRS\Exception',
+            'opensrs\Exception',
             "/$field.*not defined/"
             );
 
-
-
         // clear field being tested
-        if(is_null($parent)){
-            unset( $data->$field );
-        }
-        else{
-            unset( $data->$parent->$field );
+        if (is_null($parent)) {
+            unset($data->$field);
+        } else {
+            unset($data->$parent->$field);
         }
 
-        $ns = new ProvisioningCancelPending( 'array', $data );
-     }
+        $ns = new ProvisioningCancelPending('array', $data);
+    }
 }

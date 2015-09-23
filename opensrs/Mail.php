@@ -1,9 +1,8 @@
 <?php
 
-namespace OpenSRS;
-use OpenSRS\Exception;
+namespace opensrs;
 
-defined ('OPENSRSURI') or require_once dirname(__FILE__).'/openSRS_config.php';
+defined('OPENSRSURI') or require_once dirname(__FILE__).'/openSRS_config.php';
 
 class Mail
 {
@@ -11,12 +10,10 @@ class Mail
 
     public function __construct()
     {
-    
     }
 
     public function __destruct()
     {
-    
     }
 
     // Class functions
@@ -29,8 +26,8 @@ class Mail
 
         if (!$fp) {
             throw new Exception("oSRS Error - $errstr ($errno)");            // Something went wrong
-        } 
-        
+        }
+
         // Send commands to APP server
         for ($i = 0; $i < count($sequence); ++$i) {
             $servCatch = '';
@@ -149,43 +146,40 @@ class Mail
         return $result;
     }
 
-    public function getCommand( $dataObject, $fields = null, $required = false ) {
+    public function getCommand($dataObject, $fields = null, $required = false)
+    {
         $command = '';
 
-        if( is_null($fields) ){
-            if( isset($dataObject->attributes) ){
-                if( isset($this->requiredFields['attributes']) ) {
-                    $command .= $this->getCommand( $dataObject->attributes, $this->requiredFields['attributes'], true );
+        if (is_null($fields)) {
+            if (isset($dataObject->attributes)) {
+                if (isset($this->requiredFields['attributes'])) {
+                    $command .= $this->getCommand($dataObject->attributes, $this->requiredFields['attributes'], true);
                 }
 
-                if( isset($this->optionalFields['attributes']) ) {
-                    $command .= $this->getCommand( $dataObject->attributes, $this->optionalFields['attributes'], false );
+                if (isset($this->optionalFields['attributes'])) {
+                    $command .= $this->getCommand($dataObject->attributes, $this->optionalFields['attributes'], false);
                 }
             }
-        }
-        else {
+        } else {
             // check required fields
-            if( !empty($fields) ) {
-                foreach($fields as $i => $field) {
-                    if( is_array($field) ){
-                        if(!isset($dataObject->$i)){
-                            if($required) {
-                                Exception::notDefined( $i );
+            if (!empty($fields)) {
+                foreach ($fields as $i => $field) {
+                    if (is_array($field)) {
+                        if (!isset($dataObject->$i)) {
+                            if ($required) {
+                                Exception::notDefined($i);
                             }
                         }
-                        $command .= $this->getCommand( $dataObject->$i, $field, $required );
-                    }
-                    else{
-                        if( !isset($dataObject->$field) || $dataObject->$field == "" ) {
-                            if( $required) {
-                                Exception::notDefined( $field );
+                        $command .= $this->getCommand($dataObject->$i, $field, $required);
+                    } else {
+                        if (!isset($dataObject->$field) || $dataObject->$field == '') {
+                            if ($required) {
+                                Exception::notDefined($field);
                             }
-                        }
-                        else{
-                            if( is_array($dataObject->$field) ){
+                        } else {
+                            if (is_array($dataObject->$field)) {
                                 $value = json_encode($dataObject->$field);
-                            }
-                            else {
+                            } else {
                                 $value = $dataObject->$field;
                             }
 
@@ -199,10 +193,11 @@ class Mail
         return $command;
     }
 
-    public function send( $dataObject, $command = null ) {
-        $dataObject = $this->addAuthenticationInfo( $dataObject );
+    public function send($dataObject, $command = null)
+    {
+        $dataObject = $this->addAuthenticationInfo($dataObject);
 
-        if( $command && $this->command ) {
+        if ($command && $this->command) {
             $sequence = array(
                 0 => 'ver ver="3.4"',
                 1 => 'login user="'.$dataObject->attributes->admin_username.'" domain="'.$dataObject->attributes->admin_domain.'" password="'.$dataObject->attributes->admin_password.'"',
@@ -229,10 +224,11 @@ class Mail
         $this->resultFormatted = $base->convertArray2Formatted($this->_formatHolder, $this->resultRaw);
     }
 
-    public function addAuthenticationInfo( $dataObject ) {
+    public function addAuthenticationInfo($dataObject)
+    {
         if (!isset($dataObject->attributes->admin_username) || $dataObject->attributes->admin_username == '') {
             if (APP_MAIL_USERNAME == '') {
-                Exception::notDefined( "admin_username" );
+                Exception::notDefined('admin_username');
             } else {
                 $dataObject->attributes->admin_username = APP_MAIL_USERNAME;
             }
@@ -240,7 +236,7 @@ class Mail
 
         if (!isset($dataObject->attributes->admin_password) || $dataObject->attributes->admin_password == '') {
             if (APP_MAIL_PASSWORD == '') {
-                Exception::notDefined( "admin_password" );
+                Exception::notDefined('admin_password');
             } else {
                 $dataObject->attributes->admin_password = APP_MAIL_PASSWORD;
             }
@@ -248,7 +244,7 @@ class Mail
 
         if (!isset($dataObject->attributes->admin_domain) || $dataObject->attributes->admin_domain == '') {
             if (APP_MAIL_DOMAIN == '') {
-                Exception::notDefined( "admin_domain" );
+                Exception::notDefined('admin_domain');
             } else {
                 $dataObject->attributes->admin_domain = APP_MAIL_DOMAIN;
             }

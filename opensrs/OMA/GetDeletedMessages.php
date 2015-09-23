@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenSRS\OMA;
+namespace opensrs\OMA;
 
-use OpenSRS\OMA;
+use opensrs\OMA;
 
 // command: get_deleted_messages
 // Retrieve a list of recoverable deleted emails belonging to a user  	
@@ -20,9 +20,9 @@ class GetDeletedMessages
     public static function validate($data)
     {
         if (empty($data['user'])) {
-            throw new Exception("oSRS Error - User required");
+            throw new Exception('oSRS Error - User required');
         }
-        
+
         return true;
     }
 }

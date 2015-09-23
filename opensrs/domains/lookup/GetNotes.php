@@ -2,37 +2,39 @@
 
 namespace opensrs\domains\lookup;
 
-use OpenSRS\Base;
-use OpenSRS\Exception;
+use opensrs\Base;
 
-class GetNotes extends Base {
-	public $action = "get_notes";
-	public $object = "domain";
+class GetNotes extends Base
+{
+    public $action = 'get_notes';
+    public $object = 'domain';
 
-	public $_formatHolder = "";
-	public $resultFullRaw;
-	public $resultRaw;
-	public $resultFullFormatted;
-	public $resultFormatted;
+    public $_formatHolder = '';
+    public $resultFullRaw;
+    public $resultRaw;
+    public $resultFullFormatted;
+    public $resultFormatted;
 
     public $requiredFields = array(
-    	'attributes' => array(
-    		'domain',
-    		'type',
-    		),
-    	);
+        'attributes' => array(
+            'domain',
+            'type',
+            ),
+        );
 
-	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
-		parent::__construct();
+    public function __construct($formatString, $dataObject, $returnFullResponse = true)
+    {
+        parent::__construct();
 
-		$this->_formatHolder = $formatString;
+        $this->_formatHolder = $formatString;
 
-		$this->_validateObject( $dataObject );
+        $this->_validateObject($dataObject);
 
-		$this->send( $dataObject, $returnFullResponse );
-	}
+        $this->send($dataObject, $returnFullResponse);
+    }
 
-	public function __destruct() {
-		parent::__destruct();
-	}
+    public function __destruct()
+    {
+        parent::__destruct();
+    }
 }

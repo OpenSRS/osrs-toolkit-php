@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenSRS\OMA;
+namespace opensrs\OMA;
 
-use OpenSRS\OMA;
+use opensrs\OMA;
 
 // command: get_domain
 // Retrieve settings and other information for a domain 
@@ -19,9 +19,9 @@ class GetDomain
     public static function validate($data)
     {
         if (empty($data['domain'])) {
-            throw new Exception("oSRS Error - Domain required");
+            throw new Exception('oSRS Error - Domain required');
         }
-        
+
         return true;
     }
 }

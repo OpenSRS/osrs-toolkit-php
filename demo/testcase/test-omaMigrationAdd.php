@@ -1,61 +1,59 @@
 <?php 
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__.'/../../vendor/autoload.php';
 
-use OpenSRS\OMA\MigrationAdd;
+use opensrs\OMA\MigrationAdd;
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    require_once dirname(__FILE__).'/../../opensrs/openSRS_loader.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-	require_once dirname(__FILE__) . "/../../opensrs/openSRS_loader.php";
+    // Put the data to the Formatted array
+    $callArray = array(
+        'job' => $_POST['job'],
+        'users' => array(
+            array(
+                'local' => $_POST['local'],
+                'remote' => $_POST['remote'],
+                'password' => $_POST['password'],
+                'server' => $_POST['server'],
+                'method' => $_POST['method'],
+            ),
+        ),
+    );
 
-	// Put the data to the Formatted array
-	$callArray = array(
-		"job" => $_POST["job"],
-		"users" => array(
-			array(
-				"local" => $_POST["local"],
-				"remote" => $_POST["remote"],
-				"password" => $_POST["password"],
-				"server" => $_POST["server"],
-				"method" => $_POST["method"]
-			)
-		),
-	);
+    if (!empty($_POST['token'])) {
+        $callArray['token'] = $_POST['token'];
+    }
 
-	if(!empty($_POST["token"])){
-		$callArray["token"] = $_POST["token"];
-	}
+    if (!empty($_POST['skip'])) {
+        $callArray['users'][0]['skip'] = explode(',', $_POST['skip']);
+    }
+    if (!empty($_POST['translate'])) {
+        $folder_arr = explode(',', $_POST['translate']);
+        foreach ($folder_arr as $folder => $line) {
+            list($key, $value) = explode('=', $line);
+            $callArray['users'][0]['translate'][$key] = $value;
+        }
+    }
+    $callArray['users'] = array_filter($callArray['users']);
+    $callArray = array_filter($callArray);
 
-	if(! empty($_POST["skip"])){
-		$callArray["users"][0]["skip"] = explode(",", $_POST["skip"]);
-	}
-	if(! empty($_POST["translate"])){
-		$folder_arr = explode(",", $_POST["translate"]);
-		foreach ($folder_arr as $folder => $line) {
-			list($key, $value) = explode("=", $line);
-			$callArray["users"][0]["translate"][$key] = $value;
-		}
-	}
-	$callArray["users"] = array_filter($callArray["users"]);
-	$callArray = array_filter($callArray);
-	
-	// Open SRS Call -> Result
-	$response = MigrationAdd::call($callArray);
+    // Open SRS Call -> Result
+    $response = MigrationAdd::call($callArray);
 
-	// Print out the results
-	echo (" In: ". json_encode($callArray) ."<br>");
-	echo ("Out: ". $response);
-
+    // Print out the results
+    echo(' In: '.json_encode($callArray).'<br>');
+    echo('Out: '.$response);
 } else {
-	// Format
-	if (isSet($_GET['format'])) {
-		$tf = $_GET['format'];
-	} else {
-		$tf = "json";
-	}
-?>
+    // Format
+    if (isset($_GET['format'])) {
+        $tf = $_GET['format'];
+    } else {
+        $tf = 'json';
+    }
+    ?>
 
-<?php include("header.inc") ?>
+<?php include('header.inc') ?>
 <div class="container">
 
 <h3>migration_add</h3>

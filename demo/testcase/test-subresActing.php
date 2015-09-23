@@ -1,87 +1,88 @@
 <?php 
 
-if (isSet($_POST['function'])) {
-
-require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
+if (isset($_POST['function'])) {
+    require_once dirname(__FILE__).'/../..//opensrs/openSRS_loader.php';
 
 // !!!!!!!! ---  Proper form values verification  --- !!!!!!!!!
 
 // Put the data to the proper form - ONLY FOR TESTING PURPOSE!!!
-$formFormat = $_POST["format"];
-$formFunction = $_POST["function"];
+$formFormat = $_POST['format'];
+    $formFunction = $_POST['function'];
 
-$callstring = "";
-$callArray = array (
-	"func" => $_POST["function"],
-	"personal" => array (
-		"first_name" => $_POST['first_name'],
-		"last_name" => $_POST['last_name'],
-		"org_name" => $_POST['org_name'],
-		"address1" => $_POST['address1'],
-		"address2" => $_POST['address2'],
-		"address3" => $_POST['address3'],
-		"city" => $_POST['city'],
-		"state" => $_POST['state'],
-		"postal_code" => $_POST['postal_code'],
-		"country" => $_POST['country'],
-		"phone" => $_POST['phone'],
-		"fax" => $_POST['fax'],
-		"email" => $_POST['email'],
-		"url" => $_POST['url'],
-		"lang_pref" => $_POST['lang_pref']
-	),
-	"data" => array (
-		"reg_username" => $_POST['reg_username'],
-		"reg_password" => $_POST['reg_password'],
-		"reg_domain" => $_POST['reg_domain'],
-		"affiliate_id" => $_POST['affiliate_id'],
-		"auto_renew" => $_POST['auto_renew'],
-		"domain" => $_POST['domain'],
-		"f_parkp" => $_POST['f_parkp'],
-		"f_whois_privacy" => $_POST['f_whois_privacy'],
-		"f_lock_domain" => $_POST['f_lock_domain'],
-		"period" => $_POST['period'],
-		"link_domains" => $_POST['link_domains'],
-		"custom_nameservers" => $_POST['custom_nameservers'],
-		"name1" => $_POST['name1'],
-		"sortorder1" => $_POST['sortorder1'],
-		"name2" => $_POST['name2'],
-		"sortorder2" => $_POST['sortorder2'],
-		"name3" => $_POST['name3'],
-		"sortorder3" => $_POST['sortorder3'],
-		"name4" => $_POST['name4'],
-		"sortorder4" => $_POST['sortorder4'],
-		"name5" => $_POST['name5'],
-		"sortorder5" => $_POST['sortorder5'],
-		"encoding_type" => $_POST['encoding_type'],
-		"custom_tech_contact" => $_POST['custom_tech_contact'],
-		"as_subreseller" => $_POST['as_subreseller'],
-		"bulk_order" => $_POST['bulk_order']
-	)
+    $callstring = '';
+    $callArray = array(
+    'func' => $_POST['function'],
+    'personal' => array(
+        'first_name' => $_POST['first_name'],
+        'last_name' => $_POST['last_name'],
+        'org_name' => $_POST['org_name'],
+        'address1' => $_POST['address1'],
+        'address2' => $_POST['address2'],
+        'address3' => $_POST['address3'],
+        'city' => $_POST['city'],
+        'state' => $_POST['state'],
+        'postal_code' => $_POST['postal_code'],
+        'country' => $_POST['country'],
+        'phone' => $_POST['phone'],
+        'fax' => $_POST['fax'],
+        'email' => $_POST['email'],
+        'url' => $_POST['url'],
+        'lang_pref' => $_POST['lang_pref'],
+    ),
+    'data' => array(
+        'reg_username' => $_POST['reg_username'],
+        'reg_password' => $_POST['reg_password'],
+        'reg_domain' => $_POST['reg_domain'],
+        'affiliate_id' => $_POST['affiliate_id'],
+        'auto_renew' => $_POST['auto_renew'],
+        'domain' => $_POST['domain'],
+        'f_parkp' => $_POST['f_parkp'],
+        'f_whois_privacy' => $_POST['f_whois_privacy'],
+        'f_lock_domain' => $_POST['f_lock_domain'],
+        'period' => $_POST['period'],
+        'link_domains' => $_POST['link_domains'],
+        'custom_nameservers' => $_POST['custom_nameservers'],
+        'name1' => $_POST['name1'],
+        'sortorder1' => $_POST['sortorder1'],
+        'name2' => $_POST['name2'],
+        'sortorder2' => $_POST['sortorder2'],
+        'name3' => $_POST['name3'],
+        'sortorder3' => $_POST['sortorder3'],
+        'name4' => $_POST['name4'],
+        'sortorder4' => $_POST['sortorder4'],
+        'name5' => $_POST['name5'],
+        'sortorder5' => $_POST['sortorder5'],
+        'encoding_type' => $_POST['encoding_type'],
+        'custom_tech_contact' => $_POST['custom_tech_contact'],
+        'as_subreseller' => $_POST['as_subreseller'],
+        'bulk_order' => $_POST['bulk_order'],
+    ),
 );
 
-if ($formFormat == "array") $callstring = $callArray;
-if ($formFormat == "json") $callstring = json_encode($callArray);
-if ($formFormat == "yaml") $callstring = Spyc::YAMLDump($callArray);
-
-
+    if ($formFormat == 'array') {
+        $callstring = $callArray;
+    }
+    if ($formFormat == 'json') {
+        $callstring = json_encode($callArray);
+    }
+    if ($formFormat == 'yaml') {
+        $callstring = Spyc::YAMLDump($callArray);
+    }
 
 // Open SRS Call -> Result
-$osrsHandler = processOpenSRS ($formFormat, $callstring);
-
+$osrsHandler = processOpenSRS($formFormat, $callstring);
 
 // Print out the results
-echo (" In: ". $callstring ."<br>");
-echo ("Out: ". $osrsHandler->resultFormatted);
-
+echo(' In: '.$callstring.'<br>');
+    echo('Out: '.$osrsHandler->resultFormatted);
 } else {
-	// Format
-	if (isSet($_GET['format'])) {
-		$tf = $_GET['format'];
-	} else {
-		$tf = "json";
-	}
-?>
+    // Format
+    if (isset($_GET['format'])) {
+        $tf = $_GET['format'];
+    } else {
+        $tf = 'json';
+    }
+    ?>
 
 
 
@@ -97,7 +98,8 @@ echo ("Out: ". $osrsHandler->resultFormatted);
 
 
 <form action="test-subresActing.php" method="post">
-	<input type="hidden" name="format" value="<?php echo($tf); ?>">
+	<input type="hidden" name="format" value="<?php echo($tf);
+    ?>">
 	<input type="hidden" name="function" value="subresActing">
 
 <table cellpadding="0" cellspacing="0" border="0" width="100%">

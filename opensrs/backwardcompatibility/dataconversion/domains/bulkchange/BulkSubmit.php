@@ -1,54 +1,55 @@
 <?php
 
-namespace OpenSRS\backwardcompatibility\dataconversion\domains\bulkchange;
+namespace opensrs\backwardcompatibility\dataconversion\domains\bulkchange;
 
-use OpenSRS\backwardcompatibility\dataconversion\DataConversion;
-use OpenSRS\Exception;
+use opensrs\backwardcompatibility\dataconversion\DataConversion;
 
-class BulkSubmit extends DataConversion {
-	// New structure for API calls handled by
-	// the toolkit.
-	//
-	// index: field name
-	// value: location of data to map to this
-	//		  field from the original structure
-	//
-	// example 1:
-	//    "cookie" => 'data->cookie'
-	//	this will map ->data->cookie in the
-	//	original object to ->cookie in the
-	//  new format
-	//
-	// example 2:
-	//	  ['attributes']['domain'] = 'data->domain'
-	//  this will map ->data->domain in the original
-	//  to ->attributes->domain in the new format
-	protected $newStructure = array(
-		'attributes' => array(
-			'change_items' => 'data->change_items',
-			'change_type' => 'data->change_type',
-			'op_type' => 'data->op_type',
+class BulkSubmit extends DataConversion
+{
+    // New structure for API calls handled by
+    // the toolkit.
+    //
+    // index: field name
+    // value: location of data to map to this
+    //		  field from the original structure
+    //
+    // example 1:
+    //    "cookie" => 'data->cookie'
+    //	this will map ->data->cookie in the
+    //	original object to ->cookie in the
+    //  new format
+    //
+    // example 2:
+    //	  ['attributes']['domain'] = 'data->domain'
+    //  this will map ->data->domain in the original
+    //  to ->attributes->domain in the new format
+    protected $newStructure = array(
+        'attributes' => array(
+            'change_items' => 'data->change_items',
+            'change_type' => 'data->change_type',
+            'op_type' => 'data->op_type',
 
-			'contact_email' => 'data->contact_email',
-			'apply_to_locked_domains' => 'data->apply_to_locked_domains',
-			),
-		);
+            'contact_email' => 'data->contact_email',
+            'apply_to_locked_domains' => 'data->apply_to_locked_domains',
+            ),
+        );
 
-	public function convertDataObject( $dataObject, $newStructure = null ) {
-		$p = new parent();
+    public function convertDataObject($dataObject, $newStructure = null)
+    {
+        $p = new parent();
 
-		if(is_null($newStructure)){
-			$newStructure = $this->newStructure;
-		}
+        if (is_null($newStructure)) {
+            $newStructure = $this->newStructure;
+        }
 
-		$newDataObject = $p->convertDataObject( $dataObject, $newStructure );
+        $newDataObject = $p->convertDataObject($dataObject, $newStructure);
 
-		if(!is_array($newDataObject->attributes->change_items)){
-			$newDataObject->attributes->change_items = explode(
-				",", $newDataObject->attributes->change_items
-				);
-		}
+        if (!is_array($newDataObject->attributes->change_items)) {
+            $newDataObject->attributes->change_items = explode(
+                ',', $newDataObject->attributes->change_items
+                );
+        }
 
-		return $newDataObject;
-	}
+        return $newDataObject;
+    }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenSRS\OMA;
+namespace opensrs\OMA;
 
-use OpenSRS\OMA;
+use opensrs\OMA;
 
 // command: get_user_attribute_history
 // Get historical values for an attribute for a user. 
@@ -19,7 +19,7 @@ class GetUserAttributeHistory
     public static function validate($data)
     {
         if (empty($data['user']) || empty($data['attribute'])) {
-            throw new Exception("oSRS Error - User/Attribute required");
+            throw new Exception('oSRS Error - User/Attribute required');
         }
 
         return true;

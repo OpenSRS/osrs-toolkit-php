@@ -1,6 +1,6 @@
 <?php
 
-use OpenSRS\backwardcompatibility\dataconversion\domains\cookie\CookieQuit;
+use opensrs\backwardcompatibility\dataconversion\domains\cookie\CookieQuit;
 
 /**
  * @group backwardcompatibility
@@ -11,27 +11,26 @@ use OpenSRS\backwardcompatibility\dataconversion\domains\cookie\CookieQuit;
 class BC_CookieQuitTest extends PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
-        "data" => array()
+        'data' => array(),
         );
 
     /**
      * Valid conversion should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validconversion
      */
-    public function testValidDataConversion() {
-        $data = json_decode( json_encode ($this->validSubmission) );
+    public function testValidDataConversion()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-
-        $shouldMatchNewDataObject = new \stdClass;
+        $shouldMatchNewDataObject = new \stdClass();
         $shouldMatchNewDataObject->attributes = array();
 
         $ns = new CookieQuit();
-        $newDataObject = $ns->convertDataObject( $data );
+        $newDataObject = $ns->convertDataObject($data);
 
-        $this->assertTrue( $newDataObject == $shouldMatchNewDataObject );
+        $this->assertTrue($newDataObject == $shouldMatchNewDataObject);
     }
 }

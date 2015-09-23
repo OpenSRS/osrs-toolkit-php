@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenSRS\OMA;
+namespace opensrs\OMA;
 
-use OpenSRS\OMA;
+use opensrs\OMA;
 
 // command: migration_status
 // Get detailed information about the progress and results of a migration job.  	
@@ -19,7 +19,7 @@ class MigrationStatus
     public static function validate($data)
     {
         if (empty($data['job'])) {
-            throw new Exception("oSRS Error - Job required");
+            throw new Exception('oSRS Error - Job required');
         }
 
         return true;

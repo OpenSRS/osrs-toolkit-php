@@ -1,9 +1,8 @@
 <?php
 
-namespace OpenSRS\trust;
+namespace opensrs\trust;
 
-use OpenSRS\Base;
-use OpenSRS\Exception;
+use opensrs\Base;
 
 class UpdateProduct extends Base
 {
@@ -27,7 +26,7 @@ class UpdateProduct extends Base
         parent::__construct();
 
         $this->_formatHolder = $formatString;
-        
+
         $this->_validateObject($dataObject);
 
         $this->send($dataObject, $returnFullResponse);

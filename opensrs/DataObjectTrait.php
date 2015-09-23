@@ -1,12 +1,11 @@
 <?php
 
-namespace OpenSRS;
+namespace opensrs;
 
 /**
- * DataObjectTrait
+ * DataObjectTrait.
  *
  * OpenSRS request DataObjectTrait shares common dataObject functionality
- *
  */
 trait DataObjectTrait
 {
@@ -14,12 +13,10 @@ trait DataObjectTrait
     protected $dataFormat;
 
     /**
-     * Set the data object and the format 
+     * Set the data object and the format.
      * 
-     * @param string $format format 
+     * @param string   $format     format 
      * @param sdtClass $dataObject dataObject 
-     * 
-     * @return void
      */
     public function setDataObject($format, $dataObject)
     {
@@ -30,7 +27,7 @@ trait DataObjectTrait
     /**
      * Does the dataObject have a domain set?
      * 
-     * @return bool 
+     * @return bool
      */
     public function hasDomain()
     {
@@ -38,19 +35,15 @@ trait DataObjectTrait
     }
 
     /**
-     * Get the domain from the dataObject
-     * 
-     * @return void
+     * Get the domain from the dataObject.
      */
     public function getDomain()
     {
-        return $this->dataObject->data->domain; 
+        return $this->dataObject->data->domain;
     }
 
     /**
      * Does the dataObject have selected tlds set?
-     * 
-     * @return void
      */
     public function hasSelected()
     {
@@ -58,7 +51,7 @@ trait DataObjectTrait
     }
 
     /**
-     * Get dataObject selected tlds 
+     * Get dataObject selected tlds.
      * 
      * @return array selected tlds 
      */
@@ -69,19 +62,14 @@ trait DataObjectTrait
 
     /**
      * Does the dataObject have allDomains set?
-     * 
-     * 
-     * @return void
      */
     public function hasAllDomains()
     {
-        return isset($this->dataObject->data->alldomains); 
+        return isset($this->dataObject->data->alldomains);
     }
 
     /**
-     * Get dataObject alldomains tlds
-     * 
-     * @return void
+     * Get dataObject alldomains tlds.
      */
     public function getAllDomains()
     {

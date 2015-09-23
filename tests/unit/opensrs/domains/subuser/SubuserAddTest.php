@@ -1,6 +1,7 @@
 <?php
 
-use OpenSRS\domains\subuser\SubuserAdd;
+use opensrs\domains\subuser\SubuserAdd;
+
 /**
  * @group subuser
  * @group SubuserAdd
@@ -10,18 +11,18 @@ class SubuserAddTest extends PHPUnit_Framework_TestCase
     protected $func = 'subuserAdd';
 
     protected $validSubmission = array(
-        "attributes" => array(
-            /**
+        'attributes' => array(
+            /*
              * Required: 1 of 2
              *
              * cookie: domain auth cookie
              * domain: relevant domain, required
              *   only if cookie is not sent
              */
-            "cookie" => "",
-            "domain" => "",
+            'cookie' => '',
+            'domain' => '',
 
-            /**
+            /*
              * Required
              *
              * username: parent user's username
@@ -38,40 +39,41 @@ class SubuserAddTest extends PHPUnit_Framework_TestCase
              *     - 32 = Rsp_whois_info
              * sub_password: password for the sub-user
              */
-            "username" => "",
-            "sub_username" => "",
-            "sub_permission" => "",
-            "sub_password" => "",
+            'username' => '',
+            'sub_username' => '',
+            'sub_permission' => '',
+            'sub_password' => '',
             ),
         );
 
     /**
      * Valid submission should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validsubmission
      */
-    public function testValidSubmission() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testValidSubmission()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
         $data->cookie = md5(time());
 
-        $data->attributes->username = "phptest" . time();
-        $data->attributes->sub_username = "phptestuser";
-        $data->attributes->sub_permission = "2";
-        $data->attributes->sub_password = "password1234";
+        $data->attributes->username = 'phptest'.time();
+        $data->attributes->sub_username = 'phptestuser';
+        $data->attributes->sub_permission = '2';
+        $data->attributes->sub_password = 'password1234';
 
-        $ns = new SubuserAdd( 'array', $data );
+        $ns = new SubuserAdd('array', $data);
 
-        $this->assertTrue( $ns instanceof SubuserAdd );
+        $this->assertTrue($ns instanceof SubuserAdd);
     }
 
     /**
-     * Data Provider for Invalid Submission test
+     * Data Provider for Invalid Submission test.
      */
-    function submissionFields() {
+    public function submissionFields()
+    {
         return array(
             'missing cookie' => array('cookie', null),
             'missing username' => array('username'),
@@ -82,72 +84,68 @@ class SubuserAddTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Invalid submission should throw an exception
+     * Invalid submission should throw an exception.
      *
-     * @return void
      *
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testInvalidSubmissionFieldsMissing($field, $parent = 'attributes', $message = null)
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
         $data->cookie = md5(time());
 
-        $data->attributes->username = "phptest" . time();
-        $data->attributes->sub_username = "phptestuser" . time();
-        $data->attributes->sub_permission = "2";
-        $data->attributes->sub_password = "password1234";
+        $data->attributes->username = 'phptest'.time();
+        $data->attributes->sub_username = 'phptestuser'.time();
+        $data->attributes->sub_permission = '2';
+        $data->attributes->sub_password = 'password1234';
 
-        if(is_null($message)){
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
+        if (is_null($message)) {
+            $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
               "/$field.*not defined/"
               );
-        }
-        else {
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
+        } else {
+            $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
               "/$message/"
               );
         }
 
-
-
         // clear field being tested
-        if(is_null($parent)){
-            unset( $data->$field );
-        }
-        else{
-            unset( $data->$parent->$field );
+        if (is_null($parent)) {
+            unset($data->$field);
+        } else {
+            unset($data->$parent->$field);
         }
 
-        $ns = new SubuserAdd( 'array', $data );
+        $ns = new SubuserAdd('array', $data);
     }
 
     /**
-     * Invalid submission should throw an exception
+     * Invalid submission should throw an exception.
      *
-     * @return void
      *
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionCookieAndDomainSent() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testInvalidSubmissionCookieAndDomainSent()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
         $data->cookie = md5(time());
-        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->domain = 'phptest'.time().'.com';
 
-        $data->attributes->username = "phptest" . time();
-        $data->attributes->sub_username = "phptestuser" . time();
-        $data->attributes->sub_permission = "2";
-        $data->attributes->sub_password = "password1234";
+        $data->attributes->username = 'phptest'.time();
+        $data->attributes->sub_username = 'phptestuser'.time();
+        $data->attributes->sub_permission = '2';
+        $data->attributes->sub_password = 'password1234';
 
         $this->setExpectedExceptionRegExp(
-            'OpenSRS\Exception',
-            "/.*cookie.*domain.*cannot.*one.*call.*/"
+            'opensrs\Exception',
+            '/.*cookie.*domain.*cannot.*one.*call.*/'
             );
 
-        $ns = new SubuserAdd( 'array', $data );
+        $ns = new SubuserAdd('array', $data);
     }
 }

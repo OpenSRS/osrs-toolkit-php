@@ -1,29 +1,30 @@
 <?php
 
-use OpenSRS\domains\lookup\GetDeletedDomains;
+use opensrs\domains\lookup\GetDeletedDomains;
+
 /**
  * @group lookup
  * @group GetDeletedDomains
  */
 class GetDeletedDomainsTest extends PHPUnit_Framework_TestCase
 {
-    protected $func = "lookupGetDeletedDomains";
+    protected $func = 'lookupGetDeletedDomains';
 
     protected $validSubmission = array();
 
     /**
      * Valid submission should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validsubmission
      */
-    public function testValidSubmission() {
-        $data = json_decode( json_encode ($this->validSubmission) );
+    public function testValidSubmission()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $ns = new GetDeletedDomains( 'array', $data );
+        $ns = new GetDeletedDomains('array', $data);
 
-        $this->assertTrue( $ns instanceof GetDeletedDomains );
+        $this->assertTrue($ns instanceof GetDeletedDomains);
     }
 }

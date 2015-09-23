@@ -1,9 +1,8 @@
 <?php
 
-namespace OpenSRS\trust;
+namespace opensrs\trust;
 
-use OpenSRS\Base;
-use OpenSRS\Exception;
+use opensrs\Base;
 
 class GetProductInfo extends Base
 {
@@ -18,7 +17,7 @@ class GetProductInfo extends Base
 
     public $requiredFields = array(
         'attributes' => array(
-            'product_id'
+            'product_id',
             ),
         );
 

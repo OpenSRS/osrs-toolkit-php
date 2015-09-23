@@ -1,7 +1,7 @@
 <?php
 
-use OpenSRS\domains\cookie\CookieQuit;
-use OpenSRS\Request;
+use opensrs\domains\cookie\CookieQuit;
+use opensrs\Request;
 
 /**
  * @group cookie
@@ -17,35 +17,36 @@ class CookieQuitTest extends PHPUnit_Framework_TestCase
 
     /**
      * Valid submission should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validsubmission
      */
-    public function testValidSubmission() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testValidSubmission()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
         $data['func'] = $this->func;
 
-        $ns = new CookieQuit( 'array', $data );
+        $ns = new CookieQuit('array', $data);
 
-        $this->assertTrue( $ns instanceof CookieQuit );
+        $this->assertTrue($ns instanceof CookieQuit);
     }
 
     /**
      * Valid submission should complete with no
      * exception thrown. This test runs the call
-     * through the RequestFactory
+     * through the RequestFactory.
      */
-    public function testValidSubmissionRequestFatory() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testValidSubmissionRequestFatory()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
         $data['func'] = $this->func;
 
         $request = new Request();
         $ns = $request->process('array', $data);
 
-        $this->assertTrue( $ns instanceof CookieQuit );
+        $this->assertTrue($ns instanceof CookieQuit);
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenSRS\OMA;
+namespace opensrs\OMA;
 
-use OpenSRS\OMA;
-use OpenSRS\Exception;
+use opensrs\OMA;
+use opensrs\Exception;
 
 // command: search_brands
 // Retrieve a list of brands in a company matching a given criteria 	
@@ -21,7 +21,7 @@ class SearchBrands
     public static function validate($data)
     {
         if (empty($data['criteria']['company'])) {
-            throw new Exception("oSRS Error - Company required");
+            throw new Exception('oSRS Error - Company required');
         } else {
             return true;
         }

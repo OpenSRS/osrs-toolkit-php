@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenSRS\OMA;
+namespace opensrs\OMA;
 
-use OpenSRS\OMA;
+use opensrs\OMA;
 
 // command: move_user_messages
 // Move user messages to a different folder. 
@@ -19,9 +19,9 @@ class MoveUserMessages
     public static function validate($data)
     {
         if (empty($data['user']) || empty($data['ids'])) {
-            throw new Exception("oSRS Error - User/IDs required");
+            throw new Exception('oSRS Error - User/IDs required');
         }
-        
+
         return true;
     }
 }

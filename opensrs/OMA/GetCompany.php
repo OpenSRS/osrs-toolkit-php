@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenSRS\OMA;
+namespace opensrs\OMA;
 
-use OpenSRS\OMA;
+use opensrs\OMA;
 
 // command: get_company
 // Retrieve settings and other information for a company 
@@ -19,7 +19,7 @@ class GetCompany
     public static function validate($data)
     {
         if (empty($data['company'])) {
-            throw new Exception("oSRS Error - Company required");
+            throw new Exception('oSRS Error - Company required');
         } else {
             return true;
         }

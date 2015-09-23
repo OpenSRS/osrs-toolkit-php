@@ -1,6 +1,6 @@
 <?php
 
-use OpenSRS\backwardcompatibility\dataconversion\domains\nameserver\NameserverGet;
+use opensrs\backwardcompatibility\dataconversion\domains\nameserver\NameserverGet;
 
 /**
  * @group backwardcompatibility
@@ -11,39 +11,38 @@ use OpenSRS\backwardcompatibility\dataconversion\domains\nameserver\NameserverGe
 class BC_NameserverGetTest extends PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
-        "data" => array(
-            "cookie" => "",
-            "domain" => "",
-            "name" => "",
+        'data' => array(
+            'cookie' => '',
+            'domain' => '',
+            'name' => '',
             ),
         );
 
     /**
      * Valid conversion should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validconversion
      */
-    public function testValidDataConversion() {
-        $data = json_decode( json_encode ($this->validSubmission) );
+    public function testValidDataConversion()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->data->domain = 'phptest' . time() . '.com';
-        $data->data->cookie = md5( time() );
-        $data->data->name = "testname";
+        $data->data->domain = 'phptest'.time().'.com';
+        $data->data->cookie = md5(time());
+        $data->data->name = 'testname';
 
-        $shouldMatchNewDataObject = new \stdClass;
+        $shouldMatchNewDataObject = new \stdClass();
         $shouldMatchNewDataObject->cookie = $data->data->cookie;
 
-        $shouldMatchNewDataObject->attributes = new \stdClass;
+        $shouldMatchNewDataObject->attributes = new \stdClass();
         $shouldMatchNewDataObject->attributes->domain = $data->data->domain;
         $shouldMatchNewDataObject->attributes->name = $data->data->name;
 
-
         $ns = new NameserverGet();
-        $newDataObject = $ns->convertDataObject( $data );
+        $newDataObject = $ns->convertDataObject($data);
 
-        $this->assertTrue( $newDataObject == $shouldMatchNewDataObject );
+        $this->assertTrue($newDataObject == $shouldMatchNewDataObject);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
-use OpenSRS\domains\provisioning\ProvisioningActivate;
+use opensrs\domains\provisioning\ProvisioningActivate;
+
 /**
  * @group provisioning
  * @group ProvisioningActivate
@@ -10,10 +11,10 @@ class ProvisioningActivateTest extends PHPUnit_Framework_TestCase
     protected $func = 'provActivate';
 
     protected $validSubmission = array(
-        "cookie" => "",
+        'cookie' => '',
 
-        "attributes" => array(
-            /**
+        'attributes' => array(
+            /*
              * Required: 1 of 2
              *
              * cookie: cookie to be deleted
@@ -21,71 +22,69 @@ class ProvisioningActivateTest extends PHPUnit_Framework_TestCase
              *   to activate, required only if
              *   cookie is not sent
              */
-            "domain" => "",
-            )
+            'domain' => '',
+            ),
         );
 
     /**
      * Valid submission should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validsubmission
      */
-    public function testValidSubmission() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testValidSubmission()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
         $data->cookie = md5(time());
 
-        $ns = new ProvisioningActivate( 'array', $data );
+        $ns = new ProvisioningActivate('array', $data);
 
-        $this->assertTrue( $ns instanceof ProvisioningActivate );
+        $this->assertTrue($ns instanceof ProvisioningActivate);
     }
 
     /**
-     * Invalid submission should throw an exception
+     * Invalid submission should throw an exception.
      *
-     * @return void
      *
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testInvalidSubmissionFieldsMissing()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
         $this->setExpectedExceptionRegExp(
-            'OpenSRS\Exception',
-            "/(cookie|domain).*not.*defined/"
+            'opensrs\Exception',
+            '/(cookie|domain).*not.*defined/'
             );
 
-        $ns = new ProvisioningActivate( 'array', $data );
-     }
+        $ns = new ProvisioningActivate('array', $data);
+    }
 
     /**
-     * Invalid submission should throw an exception
+     * Invalid submission should throw an exception.
      *
-     * @return void
      *
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsDomainAndCookieSent() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testInvalidSubmissionFieldsDomainAndCookieSent()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
         $data->cookie = md5(time());
-        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->domain = 'phptest'.time().'.com';
 
         $this->setExpectedExceptionRegExp(
-            'OpenSRS\Exception',
-            "/cookie and domain.*one call/"
+            'opensrs\Exception',
+            '/cookie and domain.*one call/'
             );
-
-
 
         // setting cookie and domain in the
         // same request
         $data->attributes->domain = $data->cookie;
-        $ns = new ProvisioningActivate( 'array', $data );
+        $ns = new ProvisioningActivate('array', $data);
         // removing domain
-        unset( $data->attributes->domain );
-     }
+        unset($data->attributes->domain);
+    }
 }

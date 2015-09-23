@@ -1,152 +1,153 @@
 <?php 
 
-use OpenSRS\Request;
+use opensrs\Request;
 
 error_reporting(-1);
 
 if (isset($_POST['function'])) {
+    $formFormat = $_POST['format'];
+    $formFunction = $_POST['function'];
 
-	$formFormat = $_POST["format"];
-	$formFunction = $_POST["function"];
+    $callstring = '';
+    $callArray = array(
+        'func' => $_POST['function'],
+        'personal' => array(
+            'first_name' => $_POST['first_name'],
+            'last_name' => $_POST['last_name'],
+            'org_name' => $_POST['org_name'],
+            'address1' => $_POST['address1'],
+            'address2' => $_POST['address2'],
+            'address3' => $_POST['address3'],
+            'city' => $_POST['city'],
+            'state' => $_POST['state'],
+            'postal_code' => $_POST['postal_code'],
+            'country' => $_POST['country'],
+            'phone' => $_POST['phone'],
+            'fax' => $_POST['fax'],
+            'email' => $_POST['email'],
+            'url' => $_POST['url'],
+            'lang_pref' => $_POST['lang_pref'],
+            ),
+        'cedinfo' => array(
+            'contact_type' => $_POST['contact_type'],
+            'id_number' => $_POST['id_number'],
+            'id_type' => $_POST['id_type'],
+            'id_type_info' => $_POST['id_type_info'],
+            'legal_entity_type' => $_POST['legal_entity_type'],
+            'legal_entity_type_info' => $_POST['legal_entity_type_info'],
+            'locality_city' => $_POST['locality_city'],
+            'locality_country' => $_POST['locality_country'],
+            'locality_state_prov' => $_POST['locality_state_prov'],
+            ),
+        'nexus' => array(
+            'app_purpose' => $_POST['app_purpose'],
+            'category' => $_POST['category'],
+            'validator' => $_POST['validator'],
+            ),
+        'it_registrant_info' => array(
+            'nationality_code' => $_POST['nationality_code'],
+            'reg_code' => $_POST['reg_code'],
+            'entity_type' => $_POST['entity_type'],
+            ),
 
-	$callstring = "";
-	$callArray = array (
-		"func" => $_POST["function"],
-		"personal" => array (
-			"first_name" => $_POST['first_name'],
-			"last_name" => $_POST['last_name'],
-			"org_name" => $_POST['org_name'],
-			"address1" => $_POST['address1'],
-			"address2" => $_POST['address2'],
-			"address3" => $_POST['address3'],
-			"city" => $_POST['city'],
-			"state" => $_POST['state'],
-			"postal_code" => $_POST['postal_code'],
-			"country" => $_POST['country'],
-			"phone" => $_POST['phone'],
-			"fax" => $_POST['fax'],
-			"email" => $_POST['email'],
-			"url" => $_POST['url'],
-			"lang_pref" => $_POST['lang_pref']
-			),
-		"cedinfo" => array (
-			"contact_type" => $_POST['contact_type'],
-			"id_number" => $_POST['id_number'],
-			"id_type" => $_POST['id_type'],
-			"id_type_info" => $_POST['id_type_info'],
-			"legal_entity_type" => $_POST['legal_entity_type'],
-			"legal_entity_type_info" => $_POST['legal_entity_type_info'],
-			"locality_city" => $_POST['locality_city'],
-			"locality_country" => $_POST['locality_country'],
-			"locality_state_prov" => $_POST['locality_state_prov']
-			),
-		"nexus" => array (
-			"app_purpose" => $_POST['app_purpose'],
-			"category" => $_POST['category'],
-			"validator" => $_POST['validator']
-			),
-		"it_registrant_info" => array (
-			"nationality_code" => $_POST['nationality_code'],
-			"reg_code" => $_POST['reg_code'],
-			"entity_type" => $_POST['entity_type']
-			),
+        'au_registrant_info' => array(
+            'registrant_name' => $_POST['registrant_name'],
+            'registrant_id' => $_POST['registrant_id'],
+            'registrant_id_type' => $_POST['registrant_id_type'],
+            'eligibility_type' => $_POST['eligibility_type'],
+            'eligibility_id' => $_POST['eligibility_id'],
+            'eligibility_id_type' => $_POST['eligibility_id_type'],
+            'eligibility_name' => $_POST['eligibility_name'],
 
-		"au_registrant_info" => array (
-			"registrant_name" => $_POST['registrant_name'],
-			"registrant_id" => $_POST['registrant_id'],
-			"registrant_id_type" => $_POST['registrant_id_type'],
-			"eligibility_type" => $_POST['eligibility_type'],
-			"eligibility_id" => $_POST['eligibility_id'],
-			"eligibility_id_type" => $_POST['eligibility_id_type'],
-			"eligibility_name" => $_POST['eligibility_name'],
+            ),
 
-			),
+        'professional_data' => array(
+            'authority' => $_POST['authority'],
+            'authority_website' => $_POST['authority_website'],
+            'license_number' => $_POST['license_number'],
+            'profession' => $_POST['profession'],
+            ),
 
-		"professional_data" => array (
-			"authority" => $_POST['authority'],
-			"authority_website" => $_POST['authority_website'],
-			"license_number" => $_POST['license_number'],
-			"profession" => $_POST['profession'],
-			),
+        'br_registrant_info' => array(
+            'br_register_number' => $_POST['br_register_number'],
+            ),
 
-		"br_registrant_info" => array(
-			"br_register_number" => $_POST['br_register_number']
-			),
-
-		"data" => array (
-			"affiliate_id" => $_POST['affiliate_id'],
-			"auto_renew" => $_POST['auto_renew'],
-			"ca_link_domain" => $_POST['ca_link_domain'],
-			"change_contact" => $_POST['change_contact'],
-			"custom_nameservers" => $_POST['custom_nameservers'],
-			"custom_tech_contact" => $_POST['custom_tech_contact'],
-			"custom_transfer_nameservers" => $_POST['custom_transfer_nameservers'],
-			"cwa" => $_POST['cwa'],
-			"dns_template" => $_POST['dns_template'],
-			"domain" => $_POST['domain'],
-			"domain_description" => $_POST['domain_description'],
-			"encoding_type" => $_POST['encoding_type'],
-			"eu_country" => $_POST['eu_country'],
-			"f_lock_domain" => $_POST['f_lock_domain'],
-			"f_parkp" => $_POST['f_parkp'],
-			"f_whois_privacy" => $_POST['f_whois_privacy'],
-			"forwarding_email" => $_POST['forwarding_email'],
-			"handle" => $_POST['handle'],
-			"isa_trademark" => $_POST['isa_trademark'],
-			"lang" => $_POST['lang'],
-			"lang_pref" => $_POST['lang_pref'],
-			"legal_type" => $_POST['legal_type'],
-			"link_domains" => $_POST['link_domains'],
-			"master_order_id" => $_POST['master_order_id'],
-			"name1" => $_POST['name1'],
-			"name2" => $_POST['name2'],
-			"name3" => $_POST['name3'],
-			"name4" => $_POST['name4'],
-			"name5" => $_POST['name5'],
-			"owner_confirm_address" => $_POST['owner_confirm_address'],
-			"period" => $_POST['period'],
-			"premium_price_to_verify" => $_POST['premium_price_to_verify'],
-			"rant_agrees" => $_POST['rant_agrees'],
-			"rant_no" => $_POST['rant_no'],
-			"reg_domain" => $_POST['reg_domain'],
-			"reg_password" => $_POST['reg_password'],
-			"reg_type" => $_POST['reg_type'],
-			"reg_username" => $_POST['reg_username'],
-			"sortorder1" => $_POST['sortorder1'],
-			"sortorder2" => $_POST['sortorder2'],
-			"sortorder3" => $_POST['sortorder3'],
-			"sortorder4" => $_POST['sortorder4'],
-			"sortorder5" => $_POST['sortorder5'],
-			)
+        'data' => array(
+            'affiliate_id' => $_POST['affiliate_id'],
+            'auto_renew' => $_POST['auto_renew'],
+            'ca_link_domain' => $_POST['ca_link_domain'],
+            'change_contact' => $_POST['change_contact'],
+            'custom_nameservers' => $_POST['custom_nameservers'],
+            'custom_tech_contact' => $_POST['custom_tech_contact'],
+            'custom_transfer_nameservers' => $_POST['custom_transfer_nameservers'],
+            'cwa' => $_POST['cwa'],
+            'dns_template' => $_POST['dns_template'],
+            'domain' => $_POST['domain'],
+            'domain_description' => $_POST['domain_description'],
+            'encoding_type' => $_POST['encoding_type'],
+            'eu_country' => $_POST['eu_country'],
+            'f_lock_domain' => $_POST['f_lock_domain'],
+            'f_parkp' => $_POST['f_parkp'],
+            'f_whois_privacy' => $_POST['f_whois_privacy'],
+            'forwarding_email' => $_POST['forwarding_email'],
+            'handle' => $_POST['handle'],
+            'isa_trademark' => $_POST['isa_trademark'],
+            'lang' => $_POST['lang'],
+            'lang_pref' => $_POST['lang_pref'],
+            'legal_type' => $_POST['legal_type'],
+            'link_domains' => $_POST['link_domains'],
+            'master_order_id' => $_POST['master_order_id'],
+            'name1' => $_POST['name1'],
+            'name2' => $_POST['name2'],
+            'name3' => $_POST['name3'],
+            'name4' => $_POST['name4'],
+            'name5' => $_POST['name5'],
+            'owner_confirm_address' => $_POST['owner_confirm_address'],
+            'period' => $_POST['period'],
+            'premium_price_to_verify' => $_POST['premium_price_to_verify'],
+            'rant_agrees' => $_POST['rant_agrees'],
+            'rant_no' => $_POST['rant_no'],
+            'reg_domain' => $_POST['reg_domain'],
+            'reg_password' => $_POST['reg_password'],
+            'reg_type' => $_POST['reg_type'],
+            'reg_username' => $_POST['reg_username'],
+            'sortorder1' => $_POST['sortorder1'],
+            'sortorder2' => $_POST['sortorder2'],
+            'sortorder3' => $_POST['sortorder3'],
+            'sortorder4' => $_POST['sortorder4'],
+            'sortorder5' => $_POST['sortorder5'],
+            ),
 );
 
-if ($formFormat == "array") $callstring = $callArray;
-if ($formFormat == "json") $callstring = json_encode($callArray);
-if ($formFormat == "yaml") $callstring = Spyc::YAMLDump($callArray);
-
-
+    if ($formFormat == 'array') {
+        $callstring = $callArray;
+    }
+    if ($formFormat == 'json') {
+        $callstring = json_encode($callArray);
+    }
+    if ($formFormat == 'yaml') {
+        $callstring = Spyc::YAMLDump($callArray);
+    }
 
 // Open SRS Call -> Result
-require_once dirname(__FILE__) . "/../../vendor/autoload.php";
+require_once dirname(__FILE__).'/../../vendor/autoload.php';
 
 // $osrsHandler = processOpenSRS ($formFormat, $callstring);
 
 $request = new Request();
-$osrsHandler = $request->process('array', $callArray);
-
+    $osrsHandler = $request->process('array', $callArray);
 
 // Print out the results
-echo ("{\"in\":". $callstring . "},");
-echo ("{\"out\":". json_encode($osrsHandler->resultRaw)."}");
-
+echo('{"in":'.$callstring.'},');
+    echo('{"out":'.json_encode($osrsHandler->resultRaw).'}');
 } else {
-	// Format
-	if (isSet($_GET['format'])) {
-		$tf = $_GET['format'];
-	} else {
-		$tf = "json";
-	}
-	?>
+    // Format
+    if (isset($_GET['format'])) {
+        $tf = $_GET['format'];
+    } else {
+        $tf = 'json';
+    }
+    ?>
 
 
 
@@ -162,7 +163,8 @@ echo ("{\"out\":". json_encode($osrsHandler->resultRaw)."}");
 
 
 		<form action="test-provSWregister.php" method="post">
-			<input type="hidden" name="format" value="<?php echo($tf); ?>">
+			<input type="hidden" name="format" value="<?php echo($tf);
+    ?>">
 			<input type="hidden" name="function" value="provSWregister">
 
 			<table cellpadding="0" cellspacing="20" border="0" width="100%">
@@ -195,7 +197,8 @@ echo ("{\"out\":". json_encode($osrsHandler->resultRaw)."}");
 					<td>
 						<b>Required at all time</b><br>
 
-						<?php echo("domain: <input type=\"text\" name=\"domain\" value=\"phptest" . time() . ".com\"><br>"); ?>
+						<?php echo('domain: <input type="text" name="domain" value="phptest'.time().'.com"><br>');
+    ?>
 						period: <input type="text" name="period" value="1">year(s)<br>
 						reg_username: <input type="text" name="reg_username" value="phptest"><br>
 						reg_password: <input type="text" name="reg_password" value="abc123"><br>
