@@ -1,11 +1,11 @@
 <?php
 
-namespace OpenSRS\backwardcompatibility\dataconversion\trust;
+namespace opensrs\backwardcompatibility\dataconversion\trust;
 
-use OpenSRS\backwardcompatibility\dataconversion\DataConversion;
-use OpenSRS\Exception;
+use opensrs\backwardcompatibility\dataconversion\DataConversion;
 
-class ResendCertEmail extends DataConversion {
+class ResendCertEmail extends DataConversion
+{
     // New structure for API calls handled by
     // the toolkit.
     //
@@ -29,7 +29,7 @@ class ResendCertEmail extends DataConversion {
         ),
     );
 
-    public function convertDataObject( $dataObject, $newStructure = null ) 
+    public function convertDataObject($dataObject, $newStructure = null)
     {
         $p = new parent();
 
@@ -37,7 +37,7 @@ class ResendCertEmail extends DataConversion {
             $newStructure = $this->newStructure;
         }
 
-        $newDataObject = $p->convertDataObject( $dataObject, $newStructure );
+        $newDataObject = $p->convertDataObject($dataObject, $newStructure);
 
         return $newDataObject;
     }

@@ -1,33 +1,31 @@
 <?php 
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__.'/../../vendor/autoload.php';
 
-use OpenSRS\OMA\Authenticate;
+use opensrs\OMA\Authenticate;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-	require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    require_once dirname(__FILE__).'/../..//opensrs/openSRS_loader.php';
 
-	$callArray = array(
-		"token" => $_POST["token"],
-		"session_token_duration" => $_POST["session_token_duration"],
-		"fetch_extra_info" => $_POST["fetch_extra_info"] ? true : false,
-		"generate_session_token" => $_POST["generate_session_token"] ? true : false
-	);
+    $callArray = array(
+        'token' => $_POST['token'],
+        'session_token_duration' => $_POST['session_token_duration'],
+        'fetch_extra_info' => $_POST['fetch_extra_info'] ? true : false,
+        'generate_session_token' => $_POST['generate_session_token'] ? true : false,
+    );
 
-	$callArray = array_filter($callArray);
+    $callArray = array_filter($callArray);
 
-	// Open SRS Call -> Result
-	$response = Authenticate::call($callArray);
+    // Open SRS Call -> Result
+    $response = Authenticate::call($callArray);
 
-	// Print out the results
-	echo (" In: ". json_encode($callArray) ."<br>");
-	echo ("Out: ". $response);
-
+    // Print out the results
+    echo(' In: '.json_encode($callArray).'<br>');
+    echo('Out: '.$response);
 } else {
-	
-?>
+    ?>
 
-<?php include("header.inc") ?>
+<?php include('header.inc') ?>
 <div class="container">
 <h3>authenticate</h3>
 <form action="" method="post" class="form-horizontal" >

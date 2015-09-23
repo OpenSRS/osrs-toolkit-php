@@ -1,17 +1,15 @@
 <?php
 
-use OpenSRS\Ops;
+use opensrs\Ops;
 
 class OpsTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * Should convert specials chars, & encode in utf8
-     * 
-     * @return void
+     * Should convert specials chars, & encode in utf8.
      */
     public function testQuoteXMLChars()
     {
-        $ops = new Ops;
+        $ops = new Ops();
         $data = 'This is my & < > \' " string';
         $result = $ops->_quoteXMLChars($data);
 
@@ -23,13 +21,11 @@ class OpsTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Should return true for associative, and false for plain
-     * 
-     * @return void
+     * Should return true for associative, and false for plain.
      */
     public function testIsAssoc()
     {
-        $ops = new Ops;
+        $ops = new Ops();
         $no = array(1, 2, 3, 4);
         $yes = array('this' => 'is', 'associative');
 
@@ -38,27 +34,23 @@ class OpsTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Should convert php array to formmated xml
-     * 
-     * @return void
+     * Should convert php array to formmated xml.
      */
     public function testPhp2Xml()
     {
-        $ops = new Ops;
+        $ops = new Ops();
         $data = array('convert' => 'this');
         $result = $ops->PHP2XML($data);
-       
-        $this->assertEquals($result, "  <data_block>\n   <dt_assoc>\n   <item key=\"convert\">this</item>\n   </dt_assoc>\n  </data_block>"); 
+
+        $this->assertEquals($result, "  <data_block>\n   <dt_assoc>\n   <item key=\"convert\">this</item>\n   </dt_assoc>\n  </data_block>");
     }
 
     /**
-     * Should convert php arrays to valid xml recursivly
-     * 
-     * @return void
+     * Should convert php arrays to valid xml recursivly.
      */
     public function testConvertData()
     {
-        $ops = new Ops;
+        $ops = new Ops();
         $data = array('please' => 'convert', 'me');
 
         $result = $ops->_convertData($data);
@@ -74,13 +66,11 @@ class OpsTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Should convert php arrays to valid xml
-     * 
-     * @return void
+     * Should convert php arrays to valid xml.
      */
     public function testEncode()
     {
-        $ops = new Ops;
+        $ops = new Ops();
         $data = array('protocol' => '', 'action' => '', 'object' => '');
 
         $result = $ops->encode($data);
@@ -96,18 +86,16 @@ class OpsTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * should convert xml to php array
-     * 
-     * @return void
+     * should convert xml to php array.
      */
     public function testXml2Php()
     {
-        $ops = new Ops;
+        $ops = new Ops();
         $data = array('convert' => 'this');
 
         // use our built in php to xml to test
         $result = $ops->PHP2XML($data);
-    
+
         // converting back, they should be the same
         $this->assertSame($data, $ops->XML2PHP($result));
     }

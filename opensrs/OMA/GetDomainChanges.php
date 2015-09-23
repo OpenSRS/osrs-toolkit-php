@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenSRS\OMA;
+namespace opensrs\OMA;
 
-use OpenSRS\OMA;
+use opensrs\OMA;
 
 // command: get_domain_changes
 // Retrieve a summary of changes to a domain 
@@ -19,7 +19,7 @@ class GetDomainChanges
     public static function validate($data)
     {
         if (empty($data['domain'])) {
-            throw new Exception("oSRS Error - Domain required");
+            throw new Exception('oSRS Error - Domain required');
         }
 
         return true;

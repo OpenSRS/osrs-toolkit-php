@@ -1,6 +1,7 @@
 <?php
 
-use OpenSRS\domains\dnszone\DnsSet;
+use opensrs\domains\dnszone\DnsSet;
+
 /**
  * @group dnszone
  * @group DnsSet
@@ -11,7 +12,7 @@ class DnsSetTest extends PHPUnit_Framework_TestCase
 
     protected $validSubmission = array(
         'attributes' => array(
-            /**
+            /*
              * Required
              *
              * domain: the domain for which you want
@@ -19,7 +20,7 @@ class DnsSetTest extends PHPUnit_Framework_TestCase
              */
             'domain' => '',
 
-            /**
+            /*
              * Optional
              *
              * dns_template: specify the name of the
@@ -28,7 +29,7 @@ class DnsSetTest extends PHPUnit_Framework_TestCase
              */
             'dns_template' => '',
 
-            /**
+            /*
              * Required: DNS records
              *
              * List of record types defined for the
@@ -47,7 +48,7 @@ class DnsSetTest extends PHPUnit_Framework_TestCase
                     // IPv4 address to point the
                     // above subdomain to
                     'ip_address' => '',
-                    )
+                    ),
                 ),
 
             // array of 'AAAA' (IPv6) records
@@ -91,7 +92,7 @@ class DnsSetTest extends PHPUnit_Framework_TestCase
                     // priority of the target host,
                     // lower value means more preferred
                     'priority' => '',
-                    )
+                    ),
                 ),
 
             // array of SRV records to add
@@ -136,67 +137,64 @@ class DnsSetTest extends PHPUnit_Framework_TestCase
 
     /**
      * Valid submission should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validsubmission
      */
-    public function testValidSubmission() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testValidSubmission()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
         $data->attributes->domain = 'phptest'.time().'.com';
 
-        $ns = new DnsSet( 'array', $data );
+        $ns = new DnsSet('array', $data);
 
-        $this->assertTrue( $ns instanceof DnsSet );
+        $this->assertTrue($ns instanceof DnsSet);
     }
 
     /**
-     * Data Provider for Invalid Submission test
+     * Data Provider for Invalid Submission test.
      */
-    function submissionFields() {
+    public function submissionFields()
+    {
         return array(
             'missing domain' => array('domain'),
             );
     }
 
     /**
-     * Invalid submission should throw an exception
+     * Invalid submission should throw an exception.
      *
-     * @return void
      *
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testInvalidSubmissionFieldsMissing($field, $parent = 'attributes', $message = null)
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
         $data->attributes->domain = 'phptest'.time().'.com';
 
-        if(is_null($message)){
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
+        if (is_null($message)) {
+            $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
               "/$field.*not defined/"
               );
-        }
-        else {
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
+        } else {
+            $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
               "/$message/"
               );
         }
 
-
-
         // clear field being tested
-        if(is_null($parent)){
-            unset( $data->$field );
-        }
-        else{
-            unset( $data->$parent->$field );
+        if (is_null($parent)) {
+            unset($data->$field);
+        } else {
+            unset($data->$parent->$field);
         }
 
-        $ns = new DnsSet( 'array', $data );
+        $ns = new DnsSet('array', $data);
     }
 }

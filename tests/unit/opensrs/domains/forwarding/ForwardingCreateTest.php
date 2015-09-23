@@ -1,6 +1,7 @@
 <?php
 
-use OpenSRS\domains\forwarding\ForwardingCreate;
+use opensrs\domains\forwarding\ForwardingCreate;
+
 /**
  * @group forwarding
  * @group ForwardingCreate
@@ -10,32 +11,32 @@ class ForwardingCreateTest extends PHPUnit_Framework_TestCase
     protected $func = 'fwdCreate';
 
     protected $validSubmission = array(
-        "attributes" => array(
-            /**
+        'attributes' => array(
+            /*
              * Optional
              *
              * domain: domain for which you want
              *   to enable forwarding
              */
-            "domain" => ""
-            )
+            'domain' => '',
+            ),
         );
 
     /**
      * Valid submission should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validsubmission
      */
-    public function testValidSubmission() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testValidSubmission()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->domain = 'phptest'.time().'.com';
 
-        $ns = new ForwardingCreate( 'array', $data );
+        $ns = new ForwardingCreate('array', $data);
 
-        $this->assertTrue( $ns instanceof ForwardingCreate );
+        $this->assertTrue($ns instanceof ForwardingCreate);
     }
 }

@@ -1,17 +1,8 @@
 <?php
 
-namespace OpenSRS\trust;
+namespace opensrs\trust;
 
-use OpenSRS\Base;
-use OpenSRS\Exception;
-
-/*
- *  Required object values:
- *  - none -
- *
- *  Optional Data:
- *  data - owner_email, admin_email, billing_email, tech_email, del_from, del_to, exp_from, exp_to, page, limit
- */
+use opensrs\Base;
 
 class ParseCSR extends Base
 {
@@ -24,6 +15,12 @@ class ParseCSR extends Base
     public $resultFullFormatted;
     public $resultFormatted;
 
+    public $requiredFields = array(
+        'attributes' => array(
+            'csr',
+            'product_type',
+            ),
+        );
     public function __construct($formatString, $dataObject, $returnFullResults = null)
     {
         parent::__construct();
@@ -38,17 +35,5 @@ class ParseCSR extends Base
     public function __destruct()
     {
         parent::__destruct();
-    }
-
-    // Validate the object
-    public function _validateObject($dataObject)
-    {
-        if (!isset($dataObject->data->csr)) {
-            throw new Exception('oSRS Error - csr is not defined.');
-        }
-
-        if (!isset($dataObject->data->product_type)) {
-            throw new Exception('oSRS Error - product_type is not defined.');
-        }
     }
 }

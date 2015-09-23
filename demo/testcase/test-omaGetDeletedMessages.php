@@ -1,46 +1,45 @@
 <?php 
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__.'/../../vendor/autoload.php';
 
-use OpenSRS\OMA\GetDeletedMessages;
+use opensrs\OMA\GetDeletedMessages;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-	require_once dirname(__FILE__) . "/../../opensrs/openSRS_loader.php";
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    require_once dirname(__FILE__).'/../../opensrs/openSRS_loader.php';
 
-	// Put the data to the Formatted array
-	$callArray = array(
-		"user" => $_POST["user"],
-		"attributes" => array(
-			"folder" => $_POST["folder"],
-			"headers" => $_POST["headers"],
-			"job" => $_POST["job"]
-		)
-	);
+    // Put the data to the Formatted array
+    $callArray = array(
+        'user' => $_POST['user'],
+        'attributes' => array(
+            'folder' => $_POST['folder'],
+            'headers' => $_POST['headers'],
+            'job' => $_POST['job'],
+        ),
+    );
 
-	if(!empty($_POST["poll"])){
-		$callArray["attributes"]["poll"] = $_POST["poll"];
-	}
-	
-	if(!empty($_POST["token"])){
-		$callArray["token"] = $_POST["token"];
-	}
-	// Open SRS Call -> Result
-	$response = GetDeletedMessages::call(array_filter_recursive($callArray));
+    if (!empty($_POST['poll'])) {
+        $callArray['attributes']['poll'] = $_POST['poll'];
+    }
 
-	// Print out the results
-	echo (" In: ". json_encode($callArray) ."<br>");
-	echo ("Out: ". $response);
+    if (!empty($_POST['token'])) {
+        $callArray['token'] = $_POST['token'];
+    }
+    // Open SRS Call -> Result
+    $response = GetDeletedMessages::call(array_filter_recursive($callArray));
 
+    // Print out the results
+    echo(' In: '.json_encode($callArray).'<br>');
+    echo('Out: '.$response);
 } else {
-	// Format
-	if (isSet($_GET['format'])) {
-		$tf = $_GET['format'];
-	} else {
-		$tf = "json";
-	}
-?>
+    // Format
+    if (isset($_GET['format'])) {
+        $tf = $_GET['format'];
+    } else {
+        $tf = 'json';
+    }
+    ?>
 
-<?php include("header.inc") ?>
+<?php include('header.inc') ?>
 <div class="container">
 
 <h3>get_deleted_messages</h3>

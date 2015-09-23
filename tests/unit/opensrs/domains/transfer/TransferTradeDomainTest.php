@@ -1,6 +1,7 @@
 <?php
 
-use OpenSRS\domains\transfer\TransferTradeDomain;
+use opensrs\domains\transfer\TransferTradeDomain;
+
 /**
  * @group transfer
  * @group TransferTradeDomain
@@ -10,8 +11,8 @@ class TransferTradeDomainTest extends PHPUnit_Framework_TestCase
     protected $func = 'transferTradeDomain';
 
     protected $validSubmission = array(
-        "attributes" => array(
-            /**
+        'attributes' => array(
+            /*
              * Required
              *
              * domain: domain that is being traded
@@ -21,13 +22,13 @@ class TransferTradeDomainTest extends PHPUnit_Framework_TestCase
              * org_name: name of the new owner's
              *   organization
              */
-            "domain" => "",
-            "email" => "",
-            "first_name" => "",
-            "last_name" => "",
-            "org_name" => "",
+            'domain' => '',
+            'email' => '',
+            'first_name' => '',
+            'last_name' => '',
+            'org_name' => '',
 
-            /**
+            /*
              * Required for all except .BE domains
              *
              * address1: street address of new owner
@@ -40,15 +41,15 @@ class TransferTradeDomainTest extends PHPUnit_Framework_TestCase
              *   any additional fields required by
              *   various domain registries
              */
-            "address1" => "",
-            "city" => "",
-            "country" => "",
-            "phone" => "",
-            "postal_code" => "",
-            "state" => "",
-            "tld_data" => "",
+            'address1' => '',
+            'city' => '',
+            'country' => '',
+            'phone' => '',
+            'postal_code' => '',
+            'state' => '',
+            'tld_data' => '',
 
-            /**
+            /*
              * Required only for .BE domains
              *
              * domain_auth_info: domain Authcode, to
@@ -56,37 +57,38 @@ class TransferTradeDomainTest extends PHPUnit_Framework_TestCase
              *   API call; Authcode is sent to domain's
              *   admin contact
              */
-            "domain_auth_info" => "",
+            'domain_auth_info' => '',
             ),
         );
 
     /**
      * Valid submission should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validsubmission
      */
-    public function testValidSubmission() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testValidSubmission()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->attributes->domain = "phptest" . time() . ".be";
+        $data->attributes->domain = 'phptest'.time().'.be';
 
-        $data->attributes->email = "phptoolkit@tucows.com";
-        $data->attributes->first_name = "Php";
-        $data->attributes->last_name = "Toolkit";
-        $data->attributes->org_name = "Tikloot Php";
+        $data->attributes->email = 'phptoolkit@tucows.com';
+        $data->attributes->first_name = 'Php';
+        $data->attributes->last_name = 'Toolkit';
+        $data->attributes->org_name = 'Tikloot Php';
 
-        $ns = new TransferTradeDomain( 'array', $data );
+        $ns = new TransferTradeDomain('array', $data);
 
-        $this->assertTrue( $ns instanceof TransferTradeDomain );
+        $this->assertTrue($ns instanceof TransferTradeDomain);
     }
 
     /**
-     * Data Provider for Invalid Submission test
+     * Data Provider for Invalid Submission test.
      */
-    function submissionFields() {
+    public function submissionFields()
+    {
         return array(
             'missing domain' => array('domain'),
             'missing email' => array('email'),
@@ -97,46 +99,42 @@ class TransferTradeDomainTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Invalid submission should throw an exception
+     * Invalid submission should throw an exception.
      *
-     * @return void
      *
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testInvalidSubmissionFieldsMissing($field, $parent = 'attributes', $message = null)
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->attributes->domain = "phptest" . time() . ".be";
+        $data->attributes->domain = 'phptest'.time().'.be';
 
-        $data->attributes->email = "phptoolkit@tucows.com";
-        $data->attributes->first_name = "Php";
-        $data->attributes->last_name = "Toolkit";
-        $data->attributes->org_name = "Tikloot Php";
+        $data->attributes->email = 'phptoolkit@tucows.com';
+        $data->attributes->first_name = 'Php';
+        $data->attributes->last_name = 'Toolkit';
+        $data->attributes->org_name = 'Tikloot Php';
 
-        if(is_null($message)){
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
+        if (is_null($message)) {
+            $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
               "/$field.*not defined/"
               );
-        }
-        else {
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
+        } else {
+            $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
               "/$message/"
               );
         }
 
-
-
         // clear field being tested
-        if(is_null($parent)){
-            unset( $data->$field );
-        }
-        else{
-            unset( $data->$parent->$field );
+        if (is_null($parent)) {
+            unset($data->$field);
+        } else {
+            unset($data->$parent->$field);
         }
 
-        $ns = new TransferTradeDomain( 'array', $data );
+        $ns = new TransferTradeDomain('array', $data);
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenSRS\OMA;
+namespace opensrs\OMA;
 
-use OpenSRS\OMA;
+use opensrs\OMA;
 
 // command: logout_user
 // Terminate all IMAP and POP sessions the user has active 
@@ -19,7 +19,7 @@ class LogoutUser
     public static function validate($data)
     {
         if (empty($data['user'])) {
-            throw new Exception("oSRS Error - User required");
+            throw new Exception('oSRS Error - User required');
         }
 
         return true;

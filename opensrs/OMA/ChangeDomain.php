@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenSRS\OMA;
+namespace opensrs\OMA;
 
-use OpenSRS\OMA;
+use opensrs\OMA;
 
 // command: change_domain
 // Create a new domain or change the attributes of an existing domain. 	
@@ -20,7 +20,7 @@ class ChangeDomain
     public static function validate($data)
     {
         if (empty($data['domain'])) {
-            throw new Exception("oSRS Error - Domain required");
+            throw new Exception('oSRS Error - Domain required');
         } else {
             return true;
         }

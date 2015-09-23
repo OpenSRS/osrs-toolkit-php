@@ -22,7 +22,7 @@
     },
     "autoload": {
         "psr-4": {
-            "OpenSRS\\": "opensrs"
+            "opensrs\\": "opensrs"
         }
     },
     "minimum-stability" : "dev",

@@ -1,13 +1,14 @@
 <?php
 
-use OpenSRS\domains\lookup\AllInOneDomain;
+use opensrs\domains\lookup\AllInOneDomain;
+
 /**
  * @group lookup
  * @group AllInOneDomain
  */
 class AllInOneDomainTest extends PHPUnit_Framework_TestCase
 {
-    protected $func = "lookupAllInOneDomain";
+    protected $func = 'lookupAllInOneDomain';
 
     protected $validSubmission = array(
         'attributes' => array(
@@ -17,69 +18,66 @@ class AllInOneDomainTest extends PHPUnit_Framework_TestCase
 
     /**
      * Valid submission should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validsubmission
      */
-    public function testValidSubmission() {
-        $data = json_decode( json_encode ($this->validSubmission) );
+    public function testValidSubmission()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->attributes->searchstring = 'phptest' . time() . '.com';
+        $data->attributes->searchstring = 'phptest'.time().'.com';
 
-        $ns = new AllInOneDomain( 'array', $data );
+        $ns = new AllInOneDomain('array', $data);
 
-        $this->assertTrue( $ns instanceof AllInOneDomain );
+        $this->assertTrue($ns instanceof AllInOneDomain);
     }
 
     /**
-     * Data Provider for Invalid Submission test
+     * Data Provider for Invalid Submission test.
      */
-    function submissionFields() {
+    public function submissionFields()
+    {
         return array(
             'missing searchstring' => array('searchstring'),
             );
     }
 
     /**
-     * Invalid submission should throw an exception
+     * Invalid submission should throw an exception.
      *
-     * @return void
      *
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testInvalidSubmissionFieldsMissing($field, $parent = 'attributes', $message = null)
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->attributes->searchstring = 'phptest' . time() . '.com';
+        $data->attributes->searchstring = 'phptest'.time().'.com';
 
-        $this->setExpectedException( 'OpenSRS\Exception' );
+        $this->setExpectedException('opensrs\Exception');
 
-        if(is_null($message)){
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
+        if (is_null($message)) {
+            $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
               "/$field.*not defined/"
               );
-        }
-        else {
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
+        } else {
+            $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
               "/$message/"
               );
         }
 
-
-
         // clear field being tested
-        if(is_null($parent)){
-            unset( $data->$field );
-        }
-        else{
-            unset( $data->$parent->$field );
+        if (is_null($parent)) {
+            unset($data->$field);
+        } else {
+            unset($data->$parent->$field);
         }
 
-        $ns = new AllInOneDomain( 'array', $data );
-     }
+        $ns = new AllInOneDomain('array', $data);
+    }
 }

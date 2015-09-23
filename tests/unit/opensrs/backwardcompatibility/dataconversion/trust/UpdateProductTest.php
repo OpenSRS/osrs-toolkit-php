@@ -1,6 +1,6 @@
 <?php
 
-use OpenSRS\backwardcompatibility\dataconversion\trust\UpdateProduct;
+use opensrs\backwardcompatibility\dataconversion\trust\UpdateProduct;
 
 /**
  * @group backwardcompatibility
@@ -11,33 +11,33 @@ use OpenSRS\backwardcompatibility\dataconversion\trust\UpdateProduct;
 class BC_UpdateProductTest extends PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
-        "data" => array(
-            'product_id' => ''
+        'data' => array(
+            'product_id' => '',
         ),
     );
 
     /**
      * Valid conversion should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validconversion
      */
-    public function testValidDataConversion() {
-        $data = json_decode( json_encode ($this->validSubmission) );
+    public function testValidDataConversion()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
         $data->data->product_id = '123';
 
-        $shouldMatchNewDataObject = new \stdClass;
-        $shouldMatchNewDataObject->attributes = new \stdClass;
+        $shouldMatchNewDataObject = new \stdClass();
+        $shouldMatchNewDataObject->attributes = new \stdClass();
 
         $shouldMatchNewDataObject->attributes->product_id = $data->data->product_id;
 
-        $pc = new UpdateProduct;
+        $pc = new UpdateProduct();
 
-        $newDataObject = $pc->convertDataObject( $data );
+        $newDataObject = $pc->convertDataObject($data);
 
-        $this->assertTrue( $newDataObject == $shouldMatchNewDataObject );
+        $this->assertTrue($newDataObject == $shouldMatchNewDataObject);
     }
 }

@@ -1,35 +1,33 @@
 <?php 
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__.'/../../vendor/autoload.php';
 
-use OpenSRS\OMA\MigrationTrace;
+use opensrs\OMA\MigrationTrace;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-	require_once dirname(__FILE__) . "/../../opensrs/openSRS_loader.php";
-	
-	// Put the data to the Formatted array
-	$callArray = array(
-		"job" => $_POST["job"],
-		"user" => $_POST["user"]
-	);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    require_once dirname(__FILE__).'/../../opensrs/openSRS_loader.php';
 
-	if(!empty($_POST["token"])){
-		$callArray["token"] = $_POST["token"];
-	}
-	$callArray = array_filter($callArray);
+    // Put the data to the Formatted array
+    $callArray = array(
+        'job' => $_POST['job'],
+        'user' => $_POST['user'],
+    );
 
-	// Open SRS Call -> Result
-	$response = MigrationTrace::call($callArray);
+    if (!empty($_POST['token'])) {
+        $callArray['token'] = $_POST['token'];
+    }
+    $callArray = array_filter($callArray);
 
-	// Print out the results
-	echo (" In: ". json_encode($callArray) ."<br>");
-	echo ("Out: ". $response);
+    // Open SRS Call -> Result
+    $response = MigrationTrace::call($callArray);
 
+    // Print out the results
+    echo(' In: '.json_encode($callArray).'<br>');
+    echo('Out: '.$response);
 } else {
+    ?>
 
-?>
-
-<?php include("header.inc") ?>
+<?php include('header.inc') ?>
 <div class="container">
 
 <h3>migration_jobs</h3>

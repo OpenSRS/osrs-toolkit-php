@@ -1,29 +1,29 @@
 <?php
-	$callArray = array (
-		//"func" => "suggestDomain",
-		//"func" => "allinone",
-		"func" => "lookupDomain",
-		"data" => array (
-			"domain" => "example.on.ca",
-			// These are optional
-			"selected" => ".com;.net",
-			"alldomains" => ".com;.net" 
-		)
-	);
+    $callArray = array(
+        //"func" => "suggestDomain",
+        //"func" => "allinone",
+        'func' => 'lookupDomain',
+        'data' => array(
+            'domain' => 'example.on.ca',
+            // These are optional
+            'selected' => '.com;.net',
+            'alldomains' => '.com;.net',
+        ),
+    );
 
-	require_once ("../opensrs/openSRS_loader.php");
-	$callstring = json_encode($callArray);
-	$osrsHandler = processOpenSRS ("json", $callstring);
+    require_once '../opensrs/openSRS_loader.php';
+    $callstring = json_encode($callArray);
+    $osrsHandler = processOpenSRS('json', $callstring);
 
-	// $callstring = Spyc::YAMLDump($callArray);
-	// $osrsHandler = processOpenSRS ("yaml", $callstring);
-	
-	// $callstring = XML($callArray);
-	// $osrsHandler = processOpenSRS ("xml", $callstring);
+    // $callstring = Spyc::YAMLDump($callArray);
+    // $osrsHandler = processOpenSRS ("yaml", $callstring);
 
-	$serverResult = $osrsHandler->resultFullFormatted;
-	$serverResShort = $osrsHandler->resultFormatted;
-	$serverResArray = $osrsHandler->resultRaw;
+    // $callstring = XML($callArray);
+    // $osrsHandler = processOpenSRS ("xml", $callstring);
+
+    $serverResult = $osrsHandler->resultFullFormatted;
+    $serverResShort = $osrsHandler->resultFormatted;
+    $serverResArray = $osrsHandler->resultRaw;
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -62,16 +62,16 @@
 <body>
 	<table cellpadding="10" cellspacing="0" border="1" width="900" align="center">
 		<tr>
-			<td><b>JSON call:</b><br /> <?php echo ($callstring);?></td>
+			<td><b>JSON call:</b><br /> <?php echo($callstring);?></td>
 		</tr>
 		<tr>
-			<td><b>JSON response:</b><br /> <?php echo ($serverResult);?></td>
+			<td><b>JSON response:</b><br /> <?php echo($serverResult);?></td>
 		</tr>
 		<tr>
-			<td><b>Array call:</b><br /> <?php print_r ($callArray);?></td>
+			<td><b>Array call:</b><br /> <?php print_r($callArray);?></td>
 		</tr>
 		<tr>
-			<td><b>Array response:</b><br /> <?php print_r ($serverResArray);?></td>
+			<td><b>Array response:</b><br /> <?php print_r($serverResArray);?></td>
 		</tr>
 	</table>
 
@@ -82,14 +82,16 @@
 			<td colspan="2"><h2>HTML generated from PHP</h2></td>
 		</tr>
 <?php 
-	for ($i=0; $i < count ($serverResArray); $i ++){
-?>		
+    for ($i = 0; $i < count($serverResArray); ++$i) {
+        ?>		
 		<tr>
-			<td><?php echo ($serverResArray[$i]['domain']); ?></td>
-			<td><?php echo ($serverResArray[$i]['status']); ?></td>
+			<td><?php echo($serverResArray[$i]['domain']);
+        ?></td>
+			<td><?php echo($serverResArray[$i]['status']);
+        ?></td>
 		</tr>
 <?php 
-	}
+    }
 ?>
 	</table>
 

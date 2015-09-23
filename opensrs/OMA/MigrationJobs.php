@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenSRS\OMA;
+namespace opensrs\OMA;
 
-use OpenSRS\OMA;
+use opensrs\OMA;
 
 // command: migration_jobs
 // Retrieve a list of a user's current and historical migration jobs.  	
@@ -19,7 +19,7 @@ class MigrationJobs
     public static function validate($data)
     {
         if (empty($data['user'])) {
-            throw new Exception("oSRS Error - User required");
+            throw new Exception('oSRS Error - User required');
         }
 
         return true;

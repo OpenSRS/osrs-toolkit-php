@@ -1,6 +1,7 @@
 <?php
 
-use OpenSRS\domains\provisioning\ProvisioningRenew;
+use opensrs\domains\provisioning\ProvisioningRenew;
+
 /**
  * @group provisioning
  * @group ProvisioningRenew
@@ -10,8 +11,8 @@ class ProvisioningRenewTest extends PHPUnit_Framework_TestCase
     protected $func = 'provRenew';
 
     protected $validSubmission = array(
-        "attributes" => array(
-            /**
+        'attributes' => array(
+            /*
              * Required
              *
              * auto_renew: flag indicating whether the
@@ -33,13 +34,13 @@ class ProvisioningRenewTest extends PHPUnit_Framework_TestCase
              * period: renewal period, from 1 to 10 years,
              *   may not exceed 10 years
              */
-            "auto_renew" => "",
-            "currentexpirationyear" => "",
-            "domain" => "",
-            "handle" => "",
-            "period" => "",
+            'auto_renew' => '',
+            'currentexpirationyear' => '',
+            'domain' => '',
+            'handle' => '',
+            'period' => '',
 
-            /**
+            /*
              * Optional
              *
              * affiliate_id: ID that allows RSPs to track
@@ -56,37 +57,38 @@ class ProvisioningRenewTest extends PHPUnit_Framework_TestCase
              *     .EU, .IN, .ME, .NL, .TV, .UK, .US,
              *     .WS, .XXX
              */
-             "affiliate_id" => "",
-             "f_parkp" => "",
-            )
+             'affiliate_id' => '',
+             'f_parkp' => '',
+            ),
         );
 
     /**
      * Valid submission should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validsubmission
      */
-    public function testValidSubmission() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testValidSubmission()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->attributes->auto_renew = "Y";
-        $data->attributes->currentexpirationyear = date("Y");
-        $data->attributes->domain = "phptest" . time() . ".com";
-        $data->attributes->handle = "save";
-        $data->attributes->period = "1";
+        $data->attributes->auto_renew = 'Y';
+        $data->attributes->currentexpirationyear = date('Y');
+        $data->attributes->domain = 'phptest'.time().'.com';
+        $data->attributes->handle = 'save';
+        $data->attributes->period = '1';
 
-        $ns = new ProvisioningRenew( 'array', $data );
+        $ns = new ProvisioningRenew('array', $data);
 
-        $this->assertTrue( $ns instanceof ProvisioningRenew );
+        $this->assertTrue($ns instanceof ProvisioningRenew);
     }
 
     /**
-     * Data Provider for Invalid Submission test
+     * Data Provider for Invalid Submission test.
      */
-    function submissionFields() {
+    public function submissionFields()
+    {
         return array(
             'missing period' => array('domain'),
             'missing handle' => array('handle'),
@@ -97,37 +99,34 @@ class ProvisioningRenewTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Invalid submission should throw an exception
+     * Invalid submission should throw an exception.
      *
-     * @return void
      *
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes' ) {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testInvalidSubmissionFieldsMissing($field, $parent = 'attributes')
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->attributes->auto_renew = "Y";
-        $data->attributes->currentexpirationyear = date("Y");
-        $data->attributes->domain = "phptest" . time() . ".com";
-        $data->attributes->handle = "save";
-        $data->attributes->period = "1";
+        $data->attributes->auto_renew = 'Y';
+        $data->attributes->currentexpirationyear = date('Y');
+        $data->attributes->domain = 'phptest'.time().'.com';
+        $data->attributes->handle = 'save';
+        $data->attributes->period = '1';
 
         $this->setExpectedExceptionRegExp(
-            'OpenSRS\Exception',
+            'opensrs\Exception',
             "/$field.*not defined/"
             );
 
-
-
         // clear field being tested
-        if(is_null($parent)){
-            unset( $data->$field );
-        }
-        else{
-            unset( $data->$parent->$field );
+        if (is_null($parent)) {
+            unset($data->$field);
+        } else {
+            unset($data->$parent->$field);
         }
 
-        $ns = new ProvisioningRenew( 'array', $data );
-     }
+        $ns = new ProvisioningRenew('array', $data);
+    }
 }

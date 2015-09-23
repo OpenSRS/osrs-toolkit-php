@@ -2,18 +2,18 @@
 
 namespace opensrs\domains\provisioning;
 
-use OpenSRS\Base;
-use OpenSRS\Exception;
+use opensrs\Base;
 
-class ProvisioningCancelPending extends Base {
-	public $action = "cancel_pending_orders";
-	public $object = "order";
+class ProvisioningCancelPending extends Base
+{
+    public $action = 'cancel_pending_orders';
+    public $object = 'order';
 
-	public $_formatHolder = "";
-	public $resultFullRaw;
-	public $resultRaw;
-	public $resultFullFormatted;
-	public $resultFormatted;
+    public $_formatHolder = '';
+    public $resultFullRaw;
+    public $resultRaw;
+    public $resultFullFormatted;
+    public $resultFormatted;
 
     public $requiredFields = array(
         'attributes' => array(
@@ -21,17 +21,19 @@ class ProvisioningCancelPending extends Base {
             ),
         );
 
-	public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
-		parent::__construct();
+    public function __construct($formatString, $dataObject, $returnFullResponse = true)
+    {
+        parent::__construct();
 
-		$this->_formatHolder = $formatString;
+        $this->_formatHolder = $formatString;
 
-		$this->_validateObject( $dataObject );
+        $this->_validateObject($dataObject);
 
-		$this->send( $dataObject, $returnFullResponse );
-	}
+        $this->send($dataObject, $returnFullResponse);
+    }
 
-	public function __destruct() {
-		parent::__destruct();
-	}
+    public function __destruct()
+    {
+        parent::__destruct();
+    }
 }

@@ -1,9 +1,9 @@
 <?php
 
 require dirname(__FILE__).'/../vendor/autoload.php';
-defined ('OPENSRSURI') or require_once dirname(__FILE__).'/openSRS_config.php';
+defined('OPENSRSURI') or require_once dirname(__FILE__).'/openSRS_config.php';
 
-use OpenSRS\Request;
+use opensrs\Request;
 
 /**
  * Method to convert Array -> Object -> Array.
@@ -48,10 +48,9 @@ function processOpenSRS($type = '', $data = '')
 {
     try {
         $request = new Request();
-        return $request->process($type, $data);
 
-    }
-    catch(Exception $e) {
+        return $request->process($type, $data);
+    } catch (Exception $e) {
         return ($e->getMessage());
     }
 }

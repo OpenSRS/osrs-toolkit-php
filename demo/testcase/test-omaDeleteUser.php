@@ -1,36 +1,35 @@
 <?php 
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__.'/../../vendor/autoload.php';
 
-use OpenSRS\OMA\DeleteUser;
+use opensrs\OMA\DeleteUser;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-	require_once dirname(__FILE__) . "/../../opensrs/openSRS_loader.php";
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    require_once dirname(__FILE__).'/../../opensrs/openSRS_loader.php';
 
-	// Put the data to the Formatted array
-	$callArray = array(
-		"user" => $_POST["user"],
-	);
-	if(!empty($_POST["token"])){
-		$callArray["token"] = $_POST["token"];
-	}
-	// Open SRS Call -> Result
-	$response = DeleteUser::call($callArray);
+    // Put the data to the Formatted array
+    $callArray = array(
+        'user' => $_POST['user'],
+    );
+    if (!empty($_POST['token'])) {
+        $callArray['token'] = $_POST['token'];
+    }
+    // Open SRS Call -> Result
+    $response = DeleteUser::call($callArray);
 
-	// Print out the results
-	echo (" In: ". json_encode($callArray) ."<br>");
-	echo ("Out: ". $response);
-
+    // Print out the results
+    echo(' In: '.json_encode($callArray).'<br>');
+    echo('Out: '.$response);
 } else {
-	// Format
-	if (isSet($_GET['format'])) {
-		$tf = $_GET['format'];
-	} else {
-		$tf = "json";
-	}
-?>
+    // Format
+    if (isset($_GET['format'])) {
+        $tf = $_GET['format'];
+    } else {
+        $tf = 'json';
+    }
+    ?>
 
-<?php include("header.inc") ?>
+<?php include('header.inc') ?>
 <div class="container">
 <h3>delete_user</h3>
 <form action="" method="post" class="form-horizontal" >

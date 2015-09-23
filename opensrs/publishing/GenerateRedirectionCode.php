@@ -1,16 +1,15 @@
 <?php
 
-namespace OpenSRS\publishing;
+namespace opensrs\publishing;
 
-use OpenSRS\Base;
-use OpenSRS\Exception;
+use opensrs\Base;
 
 class GenerateRedirectionCode extends Base
 {
-    public $action = "generate_redirection_code";
-    public $object = "publishing";
+    public $action = 'generate_redirection_code';
+    public $object = 'publishing';
 
-    public $_formatHolder = "";
+    public $_formatHolder = '';
     public $resultFullRaw;
     public $resultRaw;
     public $resultFullFormatted;
@@ -24,14 +23,15 @@ class GenerateRedirectionCode extends Base
             ),
         );
 
-    public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
+    public function __construct($formatString, $dataObject, $returnFullResponse = true)
+    {
         parent::__construct();
 
         $this->_formatHolder = $formatString;
 
-        $this->_validateObject( $dataObject );
+        $this->_validateObject($dataObject);
 
-        $this->send( $dataObject, $returnFullResponse );
+        $this->send($dataObject, $returnFullResponse);
     }
 
     public function __destruct()

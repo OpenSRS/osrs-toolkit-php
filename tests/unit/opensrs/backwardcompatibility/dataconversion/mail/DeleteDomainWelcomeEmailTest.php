@@ -1,6 +1,6 @@
 <?php
 
-use OpenSRS\backwardcompatibility\dataconversion\mail\DeleteDomainWelcomeEmail;
+use opensrs\backwardcompatibility\dataconversion\mail\DeleteDomainWelcomeEmail;
 
 /**
  * @group backwardcompatibility
@@ -11,34 +11,34 @@ use OpenSRS\backwardcompatibility\dataconversion\mail\DeleteDomainWelcomeEmail;
 class BC_DeleteDomainWelcomeEmailTest extends PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
-        "data" => array(
-            "admin_username" => "",
-            "admin_password" => "",
-            "admin_domain" => "",
-            )
+        'data' => array(
+            'admin_username' => '',
+            'admin_password' => '',
+            'admin_domain' => '',
+            ),
         );
 
     /**
      * Valid conversion should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validconversion
      */
-    public function testValidDataConversion() {
-        $data = json_decode( json_encode ($this->validSubmission) );
+    public function testValidDataConversion()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->data->admin_username = 'phptest' . time();
+        $data->data->admin_username = 'phptest'.time();
         $data->data->admin_password = 'password1234';
-        $data->data->admin_domain = 'mail.phptest' . time() . '.com';
+        $data->data->admin_domain = 'mail.phptest'.time().'.com';
 
-        $shouldMatchNewDataObject = new \stdClass;
+        $shouldMatchNewDataObject = new \stdClass();
         $shouldMatchNewDataObject->attributes = $data->data;
 
         $ns = new DeleteDomainWelcomeEmail();
-        $newDataObject = $ns->convertDataObject( $data );
+        $newDataObject = $ns->convertDataObject($data);
 
-        $this->assertTrue( $newDataObject == $shouldMatchNewDataObject );
+        $this->assertTrue($newDataObject == $shouldMatchNewDataObject);
     }
 }

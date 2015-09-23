@@ -5,7 +5,8 @@ of the OpenSRS API.  Not only does it give a starting point in developing an
 application to allow for quick integration, but also incorporates new
 communication markup languages such as JSON and YAML.  
 
-## Requirements
+Requirements
+------------
 
 This PHP library currently supports data being passed in JSON and YAML (it is
 also being extended to pass data in XML and Array format as well).
@@ -50,15 +51,6 @@ require_once('config/openSRS_config.php');
 ```php
 require_once('vendor/autoload.php');
 require_once('config/openSRS_config.php');
-
-use OpenSRS\Request;
-
-$data = array(
-    "func" => "lookupDomain",
-    "attributes" => array(
-        "domain" => "google.com",
-    )
-);
 
 try {
     $request = new Request();

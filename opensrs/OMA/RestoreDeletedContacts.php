@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenSRS\OMA;
+namespace opensrs\OMA;
 
-use OpenSRS\OMA;
-use OpenSRS\Exception;
+use opensrs\OMA;
+use opensrs\Exception;
 
 // command: restore_deleted_contact
 // Restore deleted contacts for a user 
@@ -20,7 +20,7 @@ class RestoreDeletedContacts
     public static function validate($data)
     {
         if (empty($data['user']) || empty($data['ids'])) {
-            throw new Exception("oSRS Error - User/IDs required");
+            throw new Exception('oSRS Error - User/IDs required');
         } else {
             return true;
         }

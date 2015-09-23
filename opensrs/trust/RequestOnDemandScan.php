@@ -1,17 +1,9 @@
 <?php
 
-namespace OpenSRS\trust;
+namespace opensrs\trust;
 
-use OpenSRS\Base;
-use OpenSRS\Exception;
-
-/*
- *  Required object values:
- *  - none -
- *
- *  Optional Data:
- *  data - owner_email, admin_email, billing_email, tech_email, del_from, del_to, exp_from, exp_to, page, limit
- */
+use opensrs\Base;
+use opensrs\Exception;
 
 class RequestOnDemandScan extends Base
 {
@@ -41,10 +33,14 @@ class RequestOnDemandScan extends Base
     }
 
     // Validate the object
-    private function _validateObject()
+    public function _validateObject($dataObject, $requiredFields = null)
     {
-        if (!isset($this->_dataObject->data->order_id) and !isset($this->_dataObject->data->product_id)) {
-            throw new Exception('oSRS Error - order_id or product_id is not defined.');
+        if (!isset($dataObject->attributes->order_id) and !isset($dataObject->attributes->product_id)) {
+            Exception::notDefined('order_id or product_id');
         }
+
+        $parent = new parent();
+
+        $parent->_validateObject($dataObject, $this->requiredFields);
     }
 }

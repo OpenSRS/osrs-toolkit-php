@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenSRS\OMA;
+namespace opensrs\OMA;
 
-use OpenSRS\OMA;
+use opensrs\OMA;
 
 // command: delete_workgroup
 // Remove a workgroup from a domain 
@@ -20,9 +20,9 @@ class DeleteWorkgroup
     public static function validate($data)
     {
         if (empty($data['domain']) || empty($data['workgroup'])) {
-            throw new Exception("oSRS Error - Domain/Workgroup required");
+            throw new Exception('oSRS Error - Domain/Workgroup required');
         }
-        
+
         return true;
     }
 }

@@ -1,42 +1,41 @@
 <?php 
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__.'/../../vendor/autoload.php';
 
-use OpenSRS\OMA\MoveUserMessages;
+use opensrs\OMA\MoveUserMessages;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-	require_once dirname(__FILE__) . "/../../opensrs/openSRS_loader.php";
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    require_once dirname(__FILE__).'/../../opensrs/openSRS_loader.php';
 
-	// Put the data to the Formatted array
-	$callArray = array(
-		"user" => $_POST["user"],
-		"ids" => explode(",", $_POST["ids"]),
-		"folder" => $_POST["folder"]
-	);
+    // Put the data to the Formatted array
+    $callArray = array(
+        'user' => $_POST['user'],
+        'ids' => explode(',', $_POST['ids']),
+        'folder' => $_POST['folder'],
+    );
 
-	if(!empty($_POST["token"])){
-		$callArray["token"] = $_POST["token"];
-	}
+    if (!empty($_POST['token'])) {
+        $callArray['token'] = $_POST['token'];
+    }
 
-	$callArray = array_filter($callArray);
+    $callArray = array_filter($callArray);
 
-	// Open SRS Call -> Result
-	$response = MoveUserMessages::call($callArray);
+    // Open SRS Call -> Result
+    $response = MoveUserMessages::call($callArray);
 
-	// Print out the results
-	echo (" In: ". json_encode($callArray) ."<br>");
-	echo ("Out: ". $response);
-
+    // Print out the results
+    echo(' In: '.json_encode($callArray).'<br>');
+    echo('Out: '.$response);
 } else {
-	// Format
-	if (isSet($_GET['format'])) {
-		$tf = $_GET['format'];
-	} else {
-		$tf = "json";
-	}
-?>
+    // Format
+    if (isset($_GET['format'])) {
+        $tf = $_GET['format'];
+    } else {
+        $tf = 'json';
+    }
+    ?>
 
-<?php include("header.inc") ?>
+<?php include('header.inc') ?>
 <div class="container">
 <h3>move_user_messages</h3>
 <form action="" method="post" class="form-horizontal" >

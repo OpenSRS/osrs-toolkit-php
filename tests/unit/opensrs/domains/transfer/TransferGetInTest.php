@@ -1,6 +1,7 @@
 <?php
 
-use OpenSRS\domains\transfer\TransferGetIn;
+use opensrs\domains\transfer\TransferGetIn;
+
 /**
  * @group transfer
  * @group TransferGetIn
@@ -10,8 +11,8 @@ class TransferGetInTest extends PHPUnit_Framework_TestCase
     protected $func = 'transferGetIn';
 
     protected $validSubmission = array(
-        "attributes" => array(
-            /**
+        'attributes' => array(
+            /*
              * Optional
              *
              * domain: submit only if you
@@ -62,43 +63,43 @@ class TransferGetInTest extends PHPUnit_Framework_TestCase
              *     - cancelled
              * transfer_id: ID of the transfer
              */
-            "domain" => "",
-            "gaining_registrar" => "",
-            "limit" => "",
-            "losing_registrar" => "",
-            "completed_from" => "",
-            "completed_to" => "",
-            "order_id" => "",
-            "order_to" => "",
-            "order_from" => "",
-            "owner_confirm_ip" => "",
-            "owner_confirm_from" => "",
-            "owner_confirm_to" => "",
-            "owner_request_from" => "",
-            "owner_request_to" => "",
-            "page" => "",
-            "req_from" => "",
-            "req_to" => "",
-            "transfer_id" => "",
+            'domain' => '',
+            'gaining_registrar' => '',
+            'limit' => '',
+            'losing_registrar' => '',
+            'completed_from' => '',
+            'completed_to' => '',
+            'order_id' => '',
+            'order_to' => '',
+            'order_from' => '',
+            'owner_confirm_ip' => '',
+            'owner_confirm_from' => '',
+            'owner_confirm_to' => '',
+            'owner_request_from' => '',
+            'owner_request_to' => '',
+            'page' => '',
+            'req_from' => '',
+            'req_to' => '',
+            'transfer_id' => '',
 
-            "request_address" => "",
-            "status" => "",
+            'request_address' => '',
+            'status' => '',
             ),
         );
 
     /**
      * Valid submission should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validsubmission
      */
-    public function testValidSubmission() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testValidSubmission()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $ns = new TransferGetIn( 'array', $data );
+        $ns = new TransferGetIn('array', $data);
 
-        $this->assertTrue( $ns instanceof TransferGetIn );
+        $this->assertTrue($ns instanceof TransferGetIn);
     }
 }

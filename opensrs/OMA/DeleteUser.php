@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenSRS\OMA;
+namespace opensrs\OMA;
 
-use OpenSRS\OMA;
+use opensrs\OMA;
 
 // command: delete_user
 // Delete a user. Once a user is deleted this user will no longer be able to receive mail or access the system in any way. 
@@ -19,7 +19,7 @@ class DeleteUser
     public static function validate($data)
     {
         if (empty($data['user'])) {
-            throw new Exception("oSRS Error - User required");
+            throw new Exception('oSRS Error - User required');
         }
 
         return true;

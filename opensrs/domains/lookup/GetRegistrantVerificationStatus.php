@@ -2,15 +2,14 @@
 
 namespace opensrs\domains\lookup;
 
-use OpenSRS\Base;
-use OpenSRS\Exception;
+use opensrs\Base;
 
-class GetRegistrantVerificationStatus extends Base 
+class GetRegistrantVerificationStatus extends Base
 {
-    public $action = "get_registrant_verification_status";
-    public $object = "domain";
+    public $action = 'get_registrant_verification_status';
+    public $object = 'domain';
 
-    public $_formatHolder = "";
+    public $_formatHolder = '';
     public $resultFullRaw;
     public $resultRaw;
     public $resultFullFormatted;
@@ -22,14 +21,15 @@ class GetRegistrantVerificationStatus extends Base
             ),
         );
 
-    public function __construct( $formatString, $dataObject, $returnFullResponse = true ) {
+    public function __construct($formatString, $dataObject, $returnFullResponse = true)
+    {
         parent::__construct();
 
         $this->_formatHolder = $formatString;
-        
-        $this->_validateObject( $dataObject );
 
-        $this->send( $dataObject, $returnFullResponse );
+        $this->_validateObject($dataObject);
+
+        $this->send($dataObject, $returnFullResponse);
     }
 
     public function __destruct()

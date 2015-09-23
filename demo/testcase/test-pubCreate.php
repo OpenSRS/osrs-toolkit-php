@@ -1,46 +1,46 @@
 <?php 
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__.'/../../vendor/autoload.php';
 
-use OpenSRS\Request;
+if (isset($_POST['function'])) {
+    require_once dirname(__FILE__).'/../..//opensrs/openSRS_loader.php';
 
-if (isSet($_POST['function'])) {
-	require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
+    // Form data capture
+    $formFormat = $_POST['format'];
 
-	// Form data capture
-	$formFormat = $_POST["format"];
+    // Put the data to the Formatted array
+    $callstring = '';
+    $callArray = array(
+        'func' => $_POST['function'],
+        'data' => array(
+            'domain' => $_POST['domain'],
+            'service_type' => $_POST['service_type'],
+            'end_user_auth_info' => $_POST['end_user_auth_info'],
+            'source_domain' => $_POST['source_domain'],
+        ),
+    );
 
-	// Put the data to the Formatted array
-	$callstring = "";
-	$callArray = array (
-		"func" => $_POST["function"],
-		"data" => array (
-			"domain" => $_POST["domain"],
-			"service_type" => $_POST["service_type"],
-			"end_user_auth_info" => $_POST["end_user_auth_info"],
-			"source_domain" => $_POST["source_domain"]
-		)
-	);
-	
-	if ($formFormat == "json") $callstring = json_encode($callArray);
-	if ($formFormat == "yaml") $callstring = Spyc::YAMLDump($callArray);
+    if ($formFormat == 'json') {
+        $callstring = json_encode($callArray);
+    }
+    if ($formFormat == 'yaml') {
+        $callstring = Spyc::YAMLDump($callArray);
+    }
 
+    // Open SRS Call -> Result
+    $osrsHandler = processOpenSRS($formFormat, $callstring);
 
-	// Open SRS Call -> Result
-	$osrsHandler = processOpenSRS ($formFormat, $callstring);
-
-	// Print out the results
-	echo (" In: ". $callstring ."<br>");
-	echo ("Out: ". $osrsHandler->resultFormatted);
-
+    // Print out the results
+    echo(' In: '.$callstring.'<br>');
+    echo('Out: '.$osrsHandler->resultFormatted);
 } else {
-	// Format
-	if (isSet($_GET['format'])) {
-		$tf = $_GET['format'];
-	} else {
-		$tf = "json";
-	}
-?>
+    // Format
+    if (isset($_GET['format'])) {
+        $tf = $_GET['format'];
+    } else {
+        $tf = 'json';
+    }
+    ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
@@ -53,7 +53,8 @@ if (isSet($_POST['function'])) {
 <body>
 
 <form action="test-pubCreate.php" method="post">
-	<input type="hidden" name="format" value="<?php echo($tf); ?>">
+	<input type="hidden" name="format" value="<?php echo($tf);
+    ?>">
 	<input type="hidden" name="function" value="pubCreate">
 
 	<table cellpadding="0" cellspacing="0" border="0" width="100%">

@@ -1,48 +1,51 @@
 <?php 
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__.'/../../vendor/autoload.php';
 
-if (isSet($_POST['function'])) {
-	require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
+if (isset($_POST['function'])) {
+    require_once dirname(__FILE__).'/../..//opensrs/openSRS_loader.php';
 
-	// Form data capture
-	$formFormat = $_POST["format"];
+    // Form data capture
+    $formFormat = $_POST['format'];
 
-	// Put the data to the Formatted array
-	$callstring = "";
-	$callArray = array (
-		"func" => $_POST["function"],
-		"data" => array (
-			"admin_username" => $_POST["admin_username"],
-			"admin_password" => $_POST["admin_password"],
-			"admin_domain" => $_POST["admin_domain"],
-		)
-	);
-	
-	if ($formFormat == "json") $callstring = json_encode($callArray);
-	if ($formFormat == "yaml") $callstring = Spyc::YAMLDump($callArray);
+    // Put the data to the Formatted array
+    $callstring = '';
+    $callArray = array(
+        'func' => $_POST['function'],
+        'data' => array(
+            'admin_username' => $_POST['admin_username'],
+            'admin_password' => $_POST['admin_password'],
+            'admin_domain' => $_POST['admin_domain'],
+        ),
+    );
 
+    if ($formFormat == 'json') {
+        $callstring = json_encode($callArray);
+    }
+    if ($formFormat == 'yaml') {
+        $callstring = Spyc::YAMLDump($callArray);
+    }
 
-	// Open SRS Call -> Result
-	$osrsHandler = processOpenSRS ($formFormat, $callstring);
+    // Open SRS Call -> Result
+    $osrsHandler = processOpenSRS($formFormat, $callstring);
 
-	// Print out the results
-	echo (" In: ". $callstring ."<br>");
-	echo ("Out: ". $osrsHandler->resultFormatted);
-
+    // Print out the results
+    echo(' In: '.$callstring.'<br>');
+    echo('Out: '.$osrsHandler->resultFormatted);
 } else {
-	// Format
-	if (isSet($_GET['format'])) {
-		$tf = $_GET['format'];
-	} else {
-		$tf = "json";
-	}
-?>
+    // Format
+    if (isset($_GET['format'])) {
+        $tf = $_GET['format'];
+    } else {
+        $tf = 'json';
+    }
+    ?>
 
-<?php include("header.inc") ?>
+<?php include('header.inc') ?>
 <div class="container">
 <form action="test-mailAuthentication.php" method="post" class="form-horizontal" >
-	<input type="hidden" name="format" value="<?php echo($tf); ?>">
+	<input type="hidden" name="format" value="<?php echo($tf);
+    ?>">
 	<input type="hidden" name="function" value="mailAuthentication">
 	<h4>Authentication</h4>
 	  

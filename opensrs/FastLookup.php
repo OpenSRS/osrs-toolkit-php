@@ -1,10 +1,6 @@
 <?php
 
-namespace OpenSrs;
-
-use OpenSRS\DataObjectTrait;
-use OpenSRS\Exception;
-use OpenSRS\APIException;
+namespace opensrs;
 
 class FastLookup
 {

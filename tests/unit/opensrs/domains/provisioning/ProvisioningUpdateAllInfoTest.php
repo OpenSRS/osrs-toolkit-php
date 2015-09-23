@@ -1,6 +1,7 @@
 <?php
 
-use OpenSRS\domains\provisioning\ProvisioningUpdateAllInfo;
+use opensrs\domains\provisioning\ProvisioningUpdateAllInfo;
+
 /**
  * @group provisioning
  * @group ProvisioningUpdateAllInfo
@@ -10,19 +11,19 @@ class ProvisioningUpdateAllInfoTest extends PHPUnit_Framework_TestCase
     protected $func = 'provUpdateAllInfo';
 
     protected $validSubmission = array(
-        "cookie" => "",
+        'cookie' => '',
 
-        "attributes" => array(
-            /**
+        'attributes' => array(
+            /*
              * Required: 1 of 2
              *
              * cookie: cookie to be deleted
              * domain: relevant domain, required
              *   only if cookie is not sent
              */
-            "domain" => "",
+            'domain' => '',
 
-            /**
+            /*
              * Required
              *
              * owner_contact: associative array
@@ -44,111 +45,111 @@ class ProvisioningUpdateAllInfoTest extends PHPUnit_Framework_TestCase
              *   nameservers being sent, must be in
              *   the same order as nameserver_names
              */
-            "contact_set" => array(
-              "owner_contact" => array(
-                  "first_name" => "",
-                  "last_name" => "",
-                  "org_name" => "",
-                  "address1" => "",
+            'contact_set' => array(
+              'owner_contact' => array(
+                  'first_name' => '',
+                  'last_name' => '',
+                  'org_name' => '',
+                  'address1' => '',
                   // address2 optional
-                  "address2" => "",
+                  'address2' => '',
                   // address3 optional
-                  "address3" => "",
-                  "city" => "",
-                  "state" => "",
-                  "country" => "",
-                  "postal_code" => "",
-                  "phone" => "",
-                  "fax" => "",
-                  "email" => "",
-                  "lang_pref" => ""
+                  'address3' => '',
+                  'city' => '',
+                  'state' => '',
+                  'country' => '',
+                  'postal_code' => '',
+                  'phone' => '',
+                  'fax' => '',
+                  'email' => '',
+                  'lang_pref' => '',
                   ),
-              "admin_contact" => array(
-                  "first_name" => "",
-                  "last_name" => "",
-                  "org_name" => "",
-                  "address1" => "",
+              'admin_contact' => array(
+                  'first_name' => '',
+                  'last_name' => '',
+                  'org_name' => '',
+                  'address1' => '',
                   // address2 optional
-                  "address2" => "",
+                  'address2' => '',
                   // address3 optional
-                  "address3" => "",
-                  "city" => "",
-                  "state" => "",
-                  "country" => "",
-                  "postal_code" => "",
-                  "phone" => "",
-                  "fax" => "",
-                  "email" => "",
-                  "lang_pref" => ""
+                  'address3' => '',
+                  'city' => '',
+                  'state' => '',
+                  'country' => '',
+                  'postal_code' => '',
+                  'phone' => '',
+                  'fax' => '',
+                  'email' => '',
+                  'lang_pref' => '',
                   ),
-              "tech_contact" => array(
-                  "first_name" => "",
-                  "last_name" => "",
-                  "org_name" => "",
-                  "address1" => "",
+              'tech_contact' => array(
+                  'first_name' => '',
+                  'last_name' => '',
+                  'org_name' => '',
+                  'address1' => '',
                   // address2 optional
-                  "address2" => "",
+                  'address2' => '',
                   // address3 optional
-                  "address3" => "",
-                  "city" => "",
-                  "state" => "",
-                  "country" => "",
-                  "postal_code" => "",
-                  "phone" => "",
-                  "fax" => "",
-                  "email" => "",
-                  "lang_pref" => ""
+                  'address3' => '',
+                  'city' => '',
+                  'state' => '',
+                  'country' => '',
+                  'postal_code' => '',
+                  'phone' => '',
+                  'fax' => '',
+                  'email' => '',
+                  'lang_pref' => '',
                   ),
-              "billing_contact" => array(
-                  "first_name" => "",
-                  "last_name" => "",
-                  "org_name" => "",
-                  "address1" => "",
+              'billing_contact' => array(
+                  'first_name' => '',
+                  'last_name' => '',
+                  'org_name' => '',
+                  'address1' => '',
                   // address2 optional
-                  "address2" => "",
+                  'address2' => '',
                   // address3 optional
-                  "address3" => "",
-                  "city" => "",
-                  "state" => "",
-                  "country" => "",
-                  "postal_code" => "",
-                  "phone" => "",
-                  "fax" => "",
-                  "email" => "",
-                  "lang_pref" => ""
+                  'address3' => '',
+                  'city' => '',
+                  'state' => '',
+                  'country' => '',
+                  'postal_code' => '',
+                  'phone' => '',
+                  'fax' => '',
+                  'email' => '',
+                  'lang_pref' => '',
                   ),
                 ),
-            "nameserver_names" => "",
-            "nameserver_ips" => "",
+            'nameserver_names' => '',
+            'nameserver_ips' => '',
             ),
         );
 
     /**
      * Valid submission should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validsubmission
      */
-    public function testValidSubmission() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testValidSubmission()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->domain = 'phptest'.time().'.com';
 
-        $data->attributes->contact_set->owner_contact->first_name = "John";
-        $data->attributes->contact_set->owner_contact->last_name = "Smith";
-        $data->attributes->contact_set->owner_contact->org_name = "Tucows";
-        $data->attributes->contact_set->owner_contact->address1 = "96 Mowat Avenue";
-        $data->attributes->contact_set->owner_contact->address2 = "";
-        $data->attributes->contact_set->owner_contact->address3 = "";
-        $data->attributes->contact_set->owner_contact->city = "Toronto";
-        $data->attributes->contact_set->owner_contact->state = "ON";
-        $data->attributes->contact_set->owner_contact->country = "CA";
-        $data->attributes->contact_set->owner_contact->postal_code = "M6K 3M1";
-        $data->attributes->contact_set->owner_contact->phone = "+1.4165350123";
-        $data->attributes->contact_set->owner_contact->email = "phptoolkit@tucows.com";
-        $data->attributes->contact_set->owner_contact->lang_pref = "EN";
+        $data->attributes->contact_set->owner_contact->first_name = 'John';
+        $data->attributes->contact_set->owner_contact->last_name = 'Smith';
+        $data->attributes->contact_set->owner_contact->org_name = 'Tucows';
+        $data->attributes->contact_set->owner_contact->address1 = '96 Mowat Avenue';
+        $data->attributes->contact_set->owner_contact->address2 = '';
+        $data->attributes->contact_set->owner_contact->address3 = '';
+        $data->attributes->contact_set->owner_contact->city = 'Toronto';
+        $data->attributes->contact_set->owner_contact->state = 'ON';
+        $data->attributes->contact_set->owner_contact->country = 'CA';
+        $data->attributes->contact_set->owner_contact->postal_code = 'M6K 3M1';
+        $data->attributes->contact_set->owner_contact->phone = '+1.4165350123';
+        $data->attributes->contact_set->owner_contact->email = 'phptoolkit@tucows.com';
+        $data->attributes->contact_set->owner_contact->lang_pref = 'EN';
 
         // We're going to use the same contact for all 4
         // contact types, but we still need to assign
@@ -157,31 +158,33 @@ class ProvisioningUpdateAllInfoTest extends PHPUnit_Framework_TestCase
         $data->attributes->contact_set->tech_contact = $data->attributes->contact_set->owner_contact;
         $data->attributes->contact_set->billing_contact = $data->attributes->contact_set->owner_contact;
 
-        $data->attributes->nameserver_names = "ns1." . $data->attributes->domain . "," .
-                                        "ns2." . $data->attributes->domain;
+        $data->attributes->nameserver_names = 'ns1.'.$data->attributes->domain.','.
+                                        'ns2.'.$data->attributes->domain;
 
-        $data->attributes->nameserver_ips = long2ip(mt_rand()) . "," .
+        $data->attributes->nameserver_ips = long2ip(mt_rand()).','.
                                       long2ip(mt_rand());
 
-        $ns = new ProvisioningUpdateAllInfo( 'array', $data );
+        $ns = new ProvisioningUpdateAllInfo('array', $data);
 
-        $this->assertTrue( $ns instanceof ProvisioningUpdateAllInfo );
+        $this->assertTrue($ns instanceof ProvisioningUpdateAllInfo);
     }
 
     /**
-     * Data Provider for Invalid Submission test
+     * Data Provider for Invalid Submission test.
      */
-    function submissionFields() {
+    public function submissionFields()
+    {
         return array(
-            'missing nameserver_names' => array('nameserver_names', 'attributes', "requires.*nameserver"),
+            'missing nameserver_names' => array('nameserver_names', 'attributes', 'requires.*nameserver'),
             'missing domain' => array('domain'),
             );
     }
 
     /**
-     * Data Provider for Invalid Contact Submission test
+     * Data Provider for Invalid Contact Submission test.
      */
-    function submissionContactsFields() {
+    public function submissionContactsFields()
+    {
         return array(
             'missing owner_contact' => array('owner_contact', null),
             'missing admin_contact' => array('admin_contact', null),
@@ -239,31 +242,31 @@ class ProvisioningUpdateAllInfoTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Invalid submission should throw an exception
+     * Invalid submission should throw an exception.
      *
-     * @return void
      *
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testInvalidSubmissionFieldsMissing($field, $parent = 'attributes', $message = null)
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->domain = 'phptest'.time().'.com';
 
-        $data->attributes->contact_set->owner_contact->first_name = "John";
-        $data->attributes->contact_set->owner_contact->last_name = "Smith";
-        $data->attributes->contact_set->owner_contact->org_name = "Tucows";
-        $data->attributes->contact_set->owner_contact->address1 = "96 Mowat Avenue";
-        $data->attributes->contact_set->owner_contact->address2 = "";
-        $data->attributes->contact_set->owner_contact->address3 = "";
-        $data->attributes->contact_set->owner_contact->city = "Toronto";
-        $data->attributes->contact_set->owner_contact->state = "ON";
-        $data->attributes->contact_set->owner_contact->country = "CA";
-        $data->attributes->contact_set->owner_contact->postal_code = "M6K 3M1";
-        $data->attributes->contact_set->owner_contact->phone = "+1.4165350123";
-        $data->attributes->contact_set->owner_contact->email = "phptoolkit@tucows.com";
-        $data->attributes->contact_set->owner_contact->lang_pref = "EN";
+        $data->attributes->contact_set->owner_contact->first_name = 'John';
+        $data->attributes->contact_set->owner_contact->last_name = 'Smith';
+        $data->attributes->contact_set->owner_contact->org_name = 'Tucows';
+        $data->attributes->contact_set->owner_contact->address1 = '96 Mowat Avenue';
+        $data->attributes->contact_set->owner_contact->address2 = '';
+        $data->attributes->contact_set->owner_contact->address3 = '';
+        $data->attributes->contact_set->owner_contact->city = 'Toronto';
+        $data->attributes->contact_set->owner_contact->state = 'ON';
+        $data->attributes->contact_set->owner_contact->country = 'CA';
+        $data->attributes->contact_set->owner_contact->postal_code = 'M6K 3M1';
+        $data->attributes->contact_set->owner_contact->phone = '+1.4165350123';
+        $data->attributes->contact_set->owner_contact->email = 'phptoolkit@tucows.com';
+        $data->attributes->contact_set->owner_contact->lang_pref = 'EN';
 
         // We're going to use the same contact for all 4
         // contact types, but we still need to assign
@@ -272,64 +275,60 @@ class ProvisioningUpdateAllInfoTest extends PHPUnit_Framework_TestCase
         $data->attributes->contact_set->tech_contact = $data->attributes->contact_set->owner_contact;
         $data->attributes->contact_set->billing_contact = $data->attributes->contact_set->owner_contact;
 
-        $data->attributes->nameserver_names = "ns1." . $data->attributes->domain . "," .
-                                        "ns2." . $data->attributes->domain;
+        $data->attributes->nameserver_names = 'ns1.'.$data->attributes->domain.','.
+                                        'ns2.'.$data->attributes->domain;
 
-        $data->attributes->nameserver_ips = long2ip(mt_rand()) . "," .
+        $data->attributes->nameserver_ips = long2ip(mt_rand()).','.
                                       long2ip(mt_rand());
 
-        if(is_null($message)){
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
+        if (is_null($message)) {
+            $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
               "/$field.*not defined/"
               );
-        }
-        else {
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
+        } else {
+            $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
               "/$message/"
               );
         }
 
-
-
         // clear field being tested
-        if(is_null($parent)){
-            unset( $data->$field );
-        }
-        else{
-            unset( $data->$parent->$field );
+        if (is_null($parent)) {
+            unset($data->$field);
+        } else {
+            unset($data->$parent->$field);
         }
 
-        $ns = new ProvisioningUpdateAllInfo( 'array', $data );
+        $ns = new ProvisioningUpdateAllInfo('array', $data);
     }
 
     /**
-     * Invalid submission should throw an exception
+     * Invalid submission should throw an exception.
      *
-     * @return void
      *
      * @dataProvider submissionContactsFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionContactsFields( $field, $parent = 'attributes', $message = null ) {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testInvalidSubmissionContactsFields($field, $parent = 'attributes', $message = null)
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->domain = 'phptest'.time().'.com';
 
-        $data->attributes->contact_set->owner_contact->first_name = "John";
-        $data->attributes->contact_set->owner_contact->last_name = "Smith";
-        $data->attributes->contact_set->owner_contact->org_name = "Tucows";
-        $data->attributes->contact_set->owner_contact->address1 = "96 Mowat Avenue";
-        $data->attributes->contact_set->owner_contact->address2 = "";
-        $data->attributes->contact_set->owner_contact->address3 = "";
-        $data->attributes->contact_set->owner_contact->city = "Toronto";
-        $data->attributes->contact_set->owner_contact->state = "ON";
-        $data->attributes->contact_set->owner_contact->country = "CA";
-        $data->attributes->contact_set->owner_contact->postal_code = "M6K 3M1";
-        $data->attributes->contact_set->owner_contact->phone = "+1.4165350123";
-        $data->attributes->contact_set->owner_contact->email = "phptoolkit@tucows.com";
-        $data->attributes->contact_set->owner_contact->lang_pref = "EN";
+        $data->attributes->contact_set->owner_contact->first_name = 'John';
+        $data->attributes->contact_set->owner_contact->last_name = 'Smith';
+        $data->attributes->contact_set->owner_contact->org_name = 'Tucows';
+        $data->attributes->contact_set->owner_contact->address1 = '96 Mowat Avenue';
+        $data->attributes->contact_set->owner_contact->address2 = '';
+        $data->attributes->contact_set->owner_contact->address3 = '';
+        $data->attributes->contact_set->owner_contact->city = 'Toronto';
+        $data->attributes->contact_set->owner_contact->state = 'ON';
+        $data->attributes->contact_set->owner_contact->country = 'CA';
+        $data->attributes->contact_set->owner_contact->postal_code = 'M6K 3M1';
+        $data->attributes->contact_set->owner_contact->phone = '+1.4165350123';
+        $data->attributes->contact_set->owner_contact->email = 'phptoolkit@tucows.com';
+        $data->attributes->contact_set->owner_contact->lang_pref = 'EN';
 
         // We're going to use the same contact for all 4
         // contact types, but we still need to assign
@@ -338,56 +337,53 @@ class ProvisioningUpdateAllInfoTest extends PHPUnit_Framework_TestCase
         $data->attributes->contact_set->tech_contact = $data->attributes->contact_set->owner_contact;
         $data->attributes->contact_set->billing_contact = $data->attributes->contact_set->owner_contact;
 
-        $data->attributes->nameserver_names = "ns1." . $data->attributes->domain . "," .
-                                        "ns2." . $data->attributes->domain;
+        $data->attributes->nameserver_names = 'ns1.'.$data->attributes->domain.','.
+                                        'ns2.'.$data->attributes->domain;
 
-        $data->attributes->nameserver_ips = long2ip(mt_rand()) . "," .
+        $data->attributes->nameserver_ips = long2ip(mt_rand()).','.
                                       long2ip(mt_rand());
 
-        if(is_null($message)){
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
+        if (is_null($message)) {
+            $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
               "/$field.*not defined/"
               );
-        }
-        else {
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
+        } else {
+            $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
               "/$message/"
               );
         }
 
-
-
         // clear field being tested
-        if(is_null($parent)){
-            unset( $data->attributes->contact_set->$field );
-        }
-        else{
-            unset( $data->attributes->contact_set->$parent->$field );
+        if (is_null($parent)) {
+            unset($data->attributes->contact_set->$field);
+        } else {
+            unset($data->attributes->contact_set->$parent->$field);
         }
 
-        $ns = new ProvisioningUpdateAllInfo( 'array', $data );
+        $ns = new ProvisioningUpdateAllInfo('array', $data);
     }
 
-    public function testInvalidSubmissionFieldsNameserverIPCountMismatch() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testInvalidSubmissionFieldsNameserverIPCountMismatch()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->domain = 'phptest'.time().'.com';
 
-        $data->attributes->contact_set->owner_contact->first_name = "John";
-        $data->attributes->contact_set->owner_contact->last_name = "Smith";
-        $data->attributes->contact_set->owner_contact->org_name = "Tucows";
-        $data->attributes->contact_set->owner_contact->address1 = "96 Mowat Avenue";
-        $data->attributes->contact_set->owner_contact->address2 = "";
-        $data->attributes->contact_set->owner_contact->address3 = "";
-        $data->attributes->contact_set->owner_contact->city = "Toronto";
-        $data->attributes->contact_set->owner_contact->state = "ON";
-        $data->attributes->contact_set->owner_contact->country = "CA";
-        $data->attributes->contact_set->owner_contact->postal_code = "M6K 3M1";
-        $data->attributes->contact_set->owner_contact->phone = "+1.4165350123";
-        $data->attributes->contact_set->owner_contact->email = "phptoolkit@tucows.com";
-        $data->attributes->contact_set->owner_contact->lang_pref = "EN";
+        $data->attributes->contact_set->owner_contact->first_name = 'John';
+        $data->attributes->contact_set->owner_contact->last_name = 'Smith';
+        $data->attributes->contact_set->owner_contact->org_name = 'Tucows';
+        $data->attributes->contact_set->owner_contact->address1 = '96 Mowat Avenue';
+        $data->attributes->contact_set->owner_contact->address2 = '';
+        $data->attributes->contact_set->owner_contact->address3 = '';
+        $data->attributes->contact_set->owner_contact->city = 'Toronto';
+        $data->attributes->contact_set->owner_contact->state = 'ON';
+        $data->attributes->contact_set->owner_contact->country = 'CA';
+        $data->attributes->contact_set->owner_contact->postal_code = 'M6K 3M1';
+        $data->attributes->contact_set->owner_contact->phone = '+1.4165350123';
+        $data->attributes->contact_set->owner_contact->email = 'phptoolkit@tucows.com';
+        $data->attributes->contact_set->owner_contact->lang_pref = 'EN';
 
         // We're going to use the same contact for all 4
         // contact types, but we still need to assign
@@ -396,23 +392,21 @@ class ProvisioningUpdateAllInfoTest extends PHPUnit_Framework_TestCase
         $data->attributes->contact_set->tech_contact = $data->attributes->contact_set->owner_contact;
         $data->attributes->contact_set->billing_contact = $data->attributes->contact_set->owner_contact;
 
-        $data->attributes->nameserver_names = "ns1." . $data->attributes->domain . "," .
-                                        "ns2." . $data->attributes->domain;
+        $data->attributes->nameserver_names = 'ns1.'.$data->attributes->domain.','.
+                                        'ns2.'.$data->attributes->domain;
 
-        $data->attributes->nameserver_ips = long2ip(mt_rand()) . "," .
+        $data->attributes->nameserver_ips = long2ip(mt_rand()).','.
                                       long2ip(mt_rand());
 
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
-              "/same number of.*Nameserver IP.*Nameserver names/"
+        $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
+              '/same number of.*Nameserver IP.*Nameserver names/'
               );
-
-
 
         // sending only one nameserver IP to trigger
         // error when sending different number of
         // nameserver_names and _ips
         $data->attributes->nameserver_ips = long2ip(mt_rand());
-        $ns = new ProvisioningUpdateAllInfo( 'array', $data );
-     }
+        $ns = new ProvisioningUpdateAllInfo('array', $data);
+    }
 }

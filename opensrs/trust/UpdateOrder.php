@@ -1,14 +1,8 @@
 <?php
 
-namespace OpenSRS\trust;
+namespace opensrs\trust;
 
-use OpenSRS\Base;
-use OpenSRS\Exception;
-
-/*
- *  Required object values:
- *  data - 
- */
+use opensrs\Base;
 
 class UpdateOrder extends Base
 {
@@ -20,6 +14,12 @@ class UpdateOrder extends Base
     public $resultRaw;
     public $resultFullFormatted;
     public $resultFormatted;
+
+    public $requiredFields = array(
+        'attributes' => array(
+            'order_id',
+            ),
+        );
 
     public function __construct($formatString, $dataObject, $returnFullResponse = false)
     {
@@ -35,12 +35,5 @@ class UpdateOrder extends Base
     public function __destruct()
     {
         parent::__destruct();
-    }
-
-    public function _validateObject($dataObject)
-    {
-        if (!isset($this->_dataObject->data->order_id)) {
-            throw new Exception('oSRS Error - order_id is not defined.');
-        }
     }
 }

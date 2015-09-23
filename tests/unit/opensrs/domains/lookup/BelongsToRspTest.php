@@ -1,13 +1,14 @@
 <?php
 
-use OpenSRS\domains\lookup\BelongsToRsp;
+use opensrs\domains\lookup\BelongsToRsp;
+
 /**
  * @group lookup
  * @group BelongsToRsp
  */
 class BelongsToRspTest extends PHPUnit_Framework_TestCase
 {
-    protected $func = "lookupBelongsToRsp";
+    protected $func = 'lookupBelongsToRsp';
 
     protected $validSubmission = array(
         'attributes' => array(
@@ -17,69 +18,66 @@ class BelongsToRspTest extends PHPUnit_Framework_TestCase
 
     /**
      * Valid submission should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validsubmission
      */
-    public function testValidSubmission() {
-        $data = json_decode( json_encode ($this->validSubmission) );
+    public function testValidSubmission()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->attributes->domain = 'phptest' . time() . '.com';
+        $data->attributes->domain = 'phptest'.time().'.com';
 
-        $ns = new BelongsToRsp( 'array', $data );
+        $ns = new BelongsToRsp('array', $data);
 
-        $this->assertTrue( $ns instanceof BelongsToRsp );
+        $this->assertTrue($ns instanceof BelongsToRsp);
     }
 
     /**
-     * Data Provider for Invalid Submission test
+     * Data Provider for Invalid Submission test.
      */
-    function submissionFields() {
+    public function submissionFields()
+    {
         return array(
             'missing domain' => array('domain'),
             );
     }
 
     /**
-     * Invalid submission should throw an exception
+     * Invalid submission should throw an exception.
      *
-     * @return void
      *
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testInvalidSubmissionFieldsMissing($field, $parent = 'attributes', $message = null)
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->attributes->domain = 'phptest' . time() . '.com';
+        $data->attributes->domain = 'phptest'.time().'.com';
 
-        $this->setExpectedException( 'OpenSRS\Exception' );
+        $this->setExpectedException('opensrs\Exception');
 
-        if(is_null($message)){
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
+        if (is_null($message)) {
+            $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
               "/$field.*not defined/"
               );
-        }
-        else {
-          $this->setExpectedExceptionRegExp(
-              'OpenSRS\Exception',
+        } else {
+            $this->setExpectedExceptionRegExp(
+              'opensrs\Exception',
               "/$message/"
               );
         }
 
-
-
         // clear field being tested
-        if(is_null($parent)){
-            unset( $data->$field );
-        }
-        else{
-            unset( $data->$parent->$field );
+        if (is_null($parent)) {
+            unset($data->$field);
+        } else {
+            unset($data->$parent->$field);
         }
 
-        $ns = new BelongsToRsp( 'array', $data );
-     }
+        $ns = new BelongsToRsp('array', $data);
+    }
 }

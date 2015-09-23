@@ -1,6 +1,6 @@
 <?php
 
-use OpenSRS\backwardcompatibility\dataconversion\domains\provisioning\ProvisioningModify;
+use opensrs\backwardcompatibility\dataconversion\domains\provisioning\ProvisioningModify;
 
 /**
  * @group backwardcompatibility
@@ -11,38 +11,38 @@ use OpenSRS\backwardcompatibility\dataconversion\domains\provisioning\Provisioni
 class BC_ProvisioningModifyTest extends PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
-        "data" => array(
-            "cookie" => "",
-            "affect_domains" => "",
-            "data" => "",
-            "domain" => "",
-            "tld_data" => "",
-            "display" => "",
+        'data' => array(
+            'cookie' => '',
+            'affect_domains' => '',
+            'data' => '',
+            'domain' => '',
+            'tld_data' => '',
+            'display' => '',
             ),
         );
 
     /**
      * Valid conversion should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validconversion
      */
-    public function testValidDataConversion() {
-        $data = json_decode( json_encode ($this->validSubmission) );
+    public function testValidDataConversion()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
         $data->data->cookie = md5(time());
-        $data->data->affect_domains = "0";
-        $data->data->data = "ca_whois_display_setting";
-        $data->data->domain = "phptest" . time() . ".ca";
+        $data->data->affect_domains = '0';
+        $data->data->data = 'ca_whois_display_setting';
+        $data->data->domain = 'phptest'.time().'.ca';
         $data->data->tld_data = array();
-        $data->data->display = "PRIVATE";
+        $data->data->display = 'PRIVATE';
 
-        $shouldMatchNewDataObject = new \stdClass;
+        $shouldMatchNewDataObject = new \stdClass();
         $shouldMatchNewDataObject->cookie = $data->data->cookie;
 
-        $shouldMatchNewDataObject->attributes = new \stdClass;
+        $shouldMatchNewDataObject->attributes = new \stdClass();
 
         $shouldMatchNewDataObject->attributes->affect_domains = $data->data->affect_domains;
         $shouldMatchNewDataObject->attributes->data = $data->data->data;
@@ -51,8 +51,8 @@ class BC_ProvisioningModifyTest extends PHPUnit_Framework_TestCase
         $shouldMatchNewDataObject->attributes->display = $data->data->display;
 
         $ns = new ProvisioningModify();
-        $newDataObject = $ns->convertDataObject( $data );
+        $newDataObject = $ns->convertDataObject($data);
 
-        $this->assertTrue( $newDataObject == $shouldMatchNewDataObject );
+        $this->assertTrue($newDataObject == $shouldMatchNewDataObject);
     }
 }

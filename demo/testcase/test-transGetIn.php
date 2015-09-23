@@ -1,58 +1,60 @@
 <?php 
 
-if (isSet($_POST['function'])) {
-	require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
+if (isset($_POST['function'])) {
+    require_once dirname(__FILE__).'/../..//opensrs/openSRS_loader.php';
 
-	// Form data capture
-	$formFormat = $_POST["format"];
+    // Form data capture
+    $formFormat = $_POST['format'];
 
-	// Put the data to the Formatted array
-	$callstring = "";
-	$callArray = array (
-		"func" => $_POST["function"],
-		"data" => array (
-			"completed_from" => $_POST["completed_from"],
-			"completed_to" => $_POST["completed_to"],
-			"domain" => $_POST["domain"],
-			"gaining_registrar" => $_POST["gaining_registrar"],
-			"limit" => $_POST["limit"],
-			"order_id" => $_POST["order_id"],
-			"order_from" => $_POST["order_from"],
-			"order_to" => $_POST["order_to"],
-			"owner_confirm_from" => $_POST["owner_confirm_from"],
-			"owner_confirm_ip" => $_POST["owner_confirm_ip"],
-			"owner_confirm_to" => $_POST["owner_confirm_to"],
-			"owner_request_from" => $_POST["owner_request_from"],
-			"owner_request_to" => $_POST["owner_request_to"],
-			"page" => $_POST["page"],
-			"req_from" => $_POST["req_from"],
-			"req_to" => $_POST["req_to"],
-			"request_address" => $_POST["request_address"],
-			"status" => $_POST["status"],
-			"transfer_id" => $_POST["transfer_id"],
-			"losing_registrar" => $_POST["losing_registrar"]
-		)
-	);
-	
-	if ($formFormat == "json") $callstring = json_encode($callArray);
-	if ($formFormat == "yaml") $callstring = Spyc::YAMLDump($callArray);
+    // Put the data to the Formatted array
+    $callstring = '';
+    $callArray = array(
+        'func' => $_POST['function'],
+        'data' => array(
+            'completed_from' => $_POST['completed_from'],
+            'completed_to' => $_POST['completed_to'],
+            'domain' => $_POST['domain'],
+            'gaining_registrar' => $_POST['gaining_registrar'],
+            'limit' => $_POST['limit'],
+            'order_id' => $_POST['order_id'],
+            'order_from' => $_POST['order_from'],
+            'order_to' => $_POST['order_to'],
+            'owner_confirm_from' => $_POST['owner_confirm_from'],
+            'owner_confirm_ip' => $_POST['owner_confirm_ip'],
+            'owner_confirm_to' => $_POST['owner_confirm_to'],
+            'owner_request_from' => $_POST['owner_request_from'],
+            'owner_request_to' => $_POST['owner_request_to'],
+            'page' => $_POST['page'],
+            'req_from' => $_POST['req_from'],
+            'req_to' => $_POST['req_to'],
+            'request_address' => $_POST['request_address'],
+            'status' => $_POST['status'],
+            'transfer_id' => $_POST['transfer_id'],
+            'losing_registrar' => $_POST['losing_registrar'],
+        ),
+    );
 
+    if ($formFormat == 'json') {
+        $callstring = json_encode($callArray);
+    }
+    if ($formFormat == 'yaml') {
+        $callstring = Spyc::YAMLDump($callArray);
+    }
 
-	// Open SRS Call -> Result
-	$osrsHandler = processOpenSRS ($formFormat, $callstring);
+    // Open SRS Call -> Result
+    $osrsHandler = processOpenSRS($formFormat, $callstring);
 
-	// Print out the results
-	echo (" In: ". $callstring ."<br>");
-	echo ("Out: ". $osrsHandler->resultFormatted);
-
+    // Print out the results
+    echo(' In: '.$callstring.'<br>');
+    echo('Out: '.$osrsHandler->resultFormatted);
 } else {
-	// Format
-	if (isSet($_GET['format'])) {
-		$tf = $_GET['format'];
-	} else {
-		$tf = "json";
-	}
-?>
+    // Format
+    if (isset($_GET['format'])) {
+        $tf = $_GET['format'];
+    } else {
+        $tf = 'json';
+    }
+    ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
@@ -65,7 +67,8 @@ if (isSet($_POST['function'])) {
 <body>
 
 <form action="test-transGetIn.php" method="post">
-	<input type="hidden" name="format" value="<?php echo($tf); ?>">
+	<input type="hidden" name="format" value="<?php echo($tf);
+    ?>">
 	<input type="hidden" name="function" value="transGetIn">
 
 	<table cellpadding="0" cellspacing="0" border="0" width="100%">

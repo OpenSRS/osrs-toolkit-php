@@ -1,56 +1,57 @@
 <?php
 
-namespace OpenSRS\backwardcompatibility\dataconversion\domains\authentication;
+namespace opensrs\backwardcompatibility\dataconversion\domains\authentication;
 
-use OpenSRS\backwardcompatibility\dataconversion\DataConversion;
-use OpenSRS\Exception;
+use opensrs\backwardcompatibility\dataconversion\DataConversion;
 
-class AuthenticationChangeOwnership extends DataConversion {
-	// New structure for API calls handled by
-	// the toolkit.
-	//
-	// index: field name
-	// value: location of data to map to this
-	//		  field from the original structure
-	//
-	// example 1:
-	//    "cookie" => 'data->cookie'
-	//	this will map ->data->cookie in the
-	//	original object to ->cookie in the
-	//  new format
-	//
-	// example 2:
-	//	  ['attributes']['domain'] = 'data->domain'
-	//  this will map ->data->domain in the original
-	//  to ->attributes->domain in the new format
-	protected $newStructure = array(
-		'cookie' => 'data->cookie',
+class AuthenticationChangeOwnership extends DataConversion
+{
+    // New structure for API calls handled by
+    // the toolkit.
+    //
+    // index: field name
+    // value: location of data to map to this
+    //		  field from the original structure
+    //
+    // example 1:
+    //    "cookie" => 'data->cookie'
+    //	this will map ->data->cookie in the
+    //	original object to ->cookie in the
+    //  new format
+    //
+    // example 2:
+    //	  ['attributes']['domain'] = 'data->domain'
+    //  this will map ->data->domain in the original
+    //  to ->attributes->domain in the new format
+    protected $newStructure = array(
+        'cookie' => 'data->cookie',
 
-		'attributes' => array(
-			'domain' => 'data->domain',
-			'username' => 'data->username',
-			'password' => 'data->password',
+        'attributes' => array(
+            'domain' => 'data->domain',
+            'username' => 'data->username',
+            'password' => 'data->password',
 
-			'reg_domain' => 'data->reg_domain',
-			'move_all' => 'data->move_all',
-			),
-		);
+            'reg_domain' => 'data->reg_domain',
+            'move_all' => 'data->move_all',
+            ),
+        );
 
-	public function convertDataObject( $dataObject, $newStructure = null ) {
-		$p = new parent();
+    public function convertDataObject($dataObject, $newStructure = null)
+    {
+        $p = new parent();
 
-		if(is_null($newStructure)){
-			$newStructure = $this->newStructure;
-		}
+        if (is_null($newStructure)) {
+            $newStructure = $this->newStructure;
+        }
 
-		$newDataObject = $p->convertDataObject( $dataObject, $newStructure );
+        $newDataObject = $p->convertDataObject($dataObject, $newStructure);
 
-		// make sure attributes->reg_domain is set, even if it's
-		// an empty string
-		if(!isset($newDataObject->attributes->reg_domain)){
-			$newDataObject->attributes->reg_domain = ""; 
-		}
+        // make sure attributes->reg_domain is set, even if it's
+        // an empty string
+        if (!isset($newDataObject->attributes->reg_domain)) {
+            $newDataObject->attributes->reg_domain = '';
+        }
 
-		return $newDataObject;
-	}
+        return $newDataObject;
+    }
 }

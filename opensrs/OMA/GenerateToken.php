@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenSRS\OMA;
+namespace opensrs\OMA;
 
-use OpenSRS\OMA;
+use opensrs\OMA;
 
 // command: generate_token
 // Generate a temporary login token for a user. 
@@ -19,7 +19,7 @@ class GenerateToken
     public static function validate($data)
     {
         if (empty($data['user']) || empty($data['reason'])) {
-            throw new Exception("oSRS Error - User/Reason required");
+            throw new Exception('oSRS Error - User/Reason required');
         }
 
         return true;

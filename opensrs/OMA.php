@@ -1,9 +1,8 @@
 <?php
 
-namespace OpenSRS;
-use OpenSRS\Exception;
+namespace opensrs;
 
-defined ('OPENSRSURI') or require_once dirname(__FILE__).'/openSRS_config.php';
+defined('OPENSRSURI') or require_once dirname(__FILE__).'/openSRS_config.php';
 
 /**
  * OpenSRS OMA (OpenSRS Mail provisioning API) class.

@@ -1,9 +1,8 @@
 <?php
 
-namespace OpenSRS\mail;
+namespace opensrs\mail;
 
-use OpenSRS\Mail;
-use OpenSRS\Exception;
+use opensrs\Mail;
 
 class CreateMailbox extends Mail
 {
@@ -47,9 +46,9 @@ class CreateMailbox extends Mail
 
         $this->_formatHolder = $formatString;
 
-        $command = $this->getCommand( $dataObject );
+        $command = $this->getCommand($dataObject);
 
-        $this->send( $dataObject, $command );
+        $this->send($dataObject, $command);
     }
 
     public function __destruct()

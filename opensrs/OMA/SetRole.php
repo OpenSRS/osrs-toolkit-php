@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenSRS\OMA;
+namespace opensrs\OMA;
 
-use OpenSRS\OMA;
-use OpenSRS\Exception;
+use opensrs\OMA;
+use opensrs\Exception;
 
 // command: set_role
 // Assigns a role to the specified user, removing any previous role. Roles give users administration rights over users, domains, etc. 
@@ -21,7 +21,7 @@ class SetRole
     public static function validate($data)
     {
         if (empty($data['user']) || empty($data['role']) || empty($data['object'])) {
-            throw new Exception("oSRS Error - User/Role/Object required");
+            throw new Exception('oSRS Error - User/Role/Object required');
         } else {
             return true;
         }

@@ -1,6 +1,7 @@
 <?php
 
-use OpenSRS\domains\provisioning\ProvisioningRevoke;
+use opensrs\domains\provisioning\ProvisioningRevoke;
+
 /**
  * @group provisioning
  * @group ProvisioningRevoke
@@ -10,8 +11,8 @@ class ProvisioningRevokeTest extends PHPUnit_Framework_TestCase
     protected $func = 'provRevoke';
 
     protected $validSubmission = array(
-        "attributes" => array(
-            /**
+        'attributes' => array(
+            /*
              * Required
              *
              * domain: domain to be revoked
@@ -19,73 +20,71 @@ class ProvisioningRevokeTest extends PHPUnit_Framework_TestCase
              *   NOTE: reseller not listed in API
              *         documentation
              */
-            "domain" => "",
+            'domain' => '',
 
-            /**
+            /*
              * Optional
              *
              * notes: information relevant to action,
              *   notes are saved to domain notes
              */
-            "notes" => "",
-            )
+            'notes' => '',
+            ),
         );
 
     /**
      * Valid submission should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validsubmission
      */
-    public function testValidSubmission() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testValidSubmission()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->domain = 'phptest'.time().'.com';
 
-        $ns = new ProvisioningRevoke( 'array', $data );
+        $ns = new ProvisioningRevoke('array', $data);
 
-        $this->assertTrue( $ns instanceof ProvisioningRevoke );
+        $this->assertTrue($ns instanceof ProvisioningRevoke);
     }
 
     /**
-     * Data Provider for Invalid Submission test
+     * Data Provider for Invalid Submission test.
      */
-    function submissionFields() {
+    public function submissionFields()
+    {
         return array(
             'missing domain' => array('domain'),
             );
     }
 
     /**
-     * Invalid submission should throw an exception
+     * Invalid submission should throw an exception.
      *
-     * @return void
      *
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes' ) {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testInvalidSubmissionFieldsMissing($field, $parent = 'attributes')
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $data->attributes->domain = "phptest" . time() . ".com";
+        $data->attributes->domain = 'phptest'.time().'.com';
 
         $this->setExpectedExceptionRegExp(
-            'OpenSRS\Exception',
+            'opensrs\Exception',
             "/$field.*not defined/"
             );
 
-
-
         // clear field being tested
-        if(is_null($parent)){
-            unset( $data->$field );
-        }
-        else{
-            unset( $data->$parent->$field );
+        if (is_null($parent)) {
+            unset($data->$field);
+        } else {
+            unset($data->$parent->$field);
         }
 
-        $ns = new ProvisioningRevoke( 'array', $data );
-     }
+        $ns = new ProvisioningRevoke('array', $data);
+    }
 }

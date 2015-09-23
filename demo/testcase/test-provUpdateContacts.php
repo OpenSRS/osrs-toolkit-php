@@ -1,64 +1,64 @@
 <?php 
 
-if (isSet($_POST['function'])) {
-
-
-require_once dirname(__FILE__) . "/../..//opensrs/openSRS_loader.php";
+if (isset($_POST['function'])) {
+    require_once dirname(__FILE__).'/../..//opensrs/openSRS_loader.php';
 
 // !!!!!!!! ---  Proper form values verification  --- !!!!!!!!!
 
 // Put the data to the proper form - ONLY FOR TESTING PURPOSE!!!
-$formFormat = $_POST["format"];
-$formFunction = $_POST["function"];
+$formFormat = $_POST['format'];
+    $formFunction = $_POST['function'];
 
-$callstring = "";
-$callArray = array (
-	"func" => $_POST["function"],
-	"personal" => array (
-		"first_name" => $_POST['first_name'],
-		"last_name" => $_POST['last_name'],
-		"org_name" => $_POST['org_name'],
-		"address1" => $_POST['address1'],
-		"address2" => $_POST['address2'],
-		"address3" => $_POST['address3'],
-		"city" => $_POST['city'],
-		"state" => $_POST['state'],
-		"postal_code" => $_POST['postal_code'],
-		"country" => $_POST['country'],
-		"phone" => $_POST['phone'],
-		"fax" => $_POST['fax'],
-		"email" => $_POST['email'],
-		"url" => $_POST['url'],
-		"lang_pref" => $_POST['lang_pref']
-	),
-	"data" => array (
-		"domain" => $_POST['domain'],
-		"types" => $_POST['types']
-	)
+    $callstring = '';
+    $callArray = array(
+    'func' => $_POST['function'],
+    'personal' => array(
+        'first_name' => $_POST['first_name'],
+        'last_name' => $_POST['last_name'],
+        'org_name' => $_POST['org_name'],
+        'address1' => $_POST['address1'],
+        'address2' => $_POST['address2'],
+        'address3' => $_POST['address3'],
+        'city' => $_POST['city'],
+        'state' => $_POST['state'],
+        'postal_code' => $_POST['postal_code'],
+        'country' => $_POST['country'],
+        'phone' => $_POST['phone'],
+        'fax' => $_POST['fax'],
+        'email' => $_POST['email'],
+        'url' => $_POST['url'],
+        'lang_pref' => $_POST['lang_pref'],
+    ),
+    'data' => array(
+        'domain' => $_POST['domain'],
+        'types' => $_POST['types'],
+    ),
 );
 
-if ($formFormat == "array") $callstring = $callArray;
-if ($formFormat == "json") $callstring = json_encode($callArray);
-if ($formFormat == "yaml") $callstring = Spyc::YAMLDump($callArray);
-
-
+    if ($formFormat == 'array') {
+        $callstring = $callArray;
+    }
+    if ($formFormat == 'json') {
+        $callstring = json_encode($callArray);
+    }
+    if ($formFormat == 'yaml') {
+        $callstring = Spyc::YAMLDump($callArray);
+    }
 
 // Open SRS Call -> Result
-$osrsHandler = processOpenSRS ($formFormat, $callstring);
-
+$osrsHandler = processOpenSRS($formFormat, $callstring);
 
 // Print out the results
-echo (" In: ". $callstring ."<br>");
-echo ("Out: ". $osrsHandler->resultFormatted);
-
+echo(' In: '.$callstring.'<br>');
+    echo('Out: '.$osrsHandler->resultFormatted);
 } else {
-	// Format
-	if (isSet($_GET['format'])) {
-		$tf = $_GET['format'];
-	} else {
-		$tf = "json";
-	}
-?>
+    // Format
+    if (isset($_GET['format'])) {
+        $tf = $_GET['format'];
+    } else {
+        $tf = 'json';
+    }
+    ?>
 
 
 
@@ -74,7 +74,8 @@ echo ("Out: ". $osrsHandler->resultFormatted);
 
 
 <form action="test-provUpdateContacts.php" method="post">
-	<input type="hidden" name="format" value="<?php echo($tf); ?>">
+	<input type="hidden" name="format" value="<?php echo($tf);
+    ?>">
 	<input type="hidden" name="function" value="provUpdateContacts">
 
 <table cellpadding="0" cellspacing="0" border="0" width="100%">

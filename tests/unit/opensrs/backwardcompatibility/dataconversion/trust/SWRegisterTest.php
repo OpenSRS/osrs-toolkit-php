@@ -1,6 +1,6 @@
 <?php
 
-use OpenSRS\backwardcompatibility\dataconversion\trust\SWRegister;
+use opensrs\backwardcompatibility\dataconversion\trust\SWRegister;
 
 /**
  * @group backwardcompatibility
@@ -11,7 +11,7 @@ use OpenSRS\backwardcompatibility\dataconversion\trust\SWRegister;
 class BC_SWRegisterTest extends PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
-        "data" => array(
+        'data' => array(
             'reg_type' => '',
             'product_type' => '',
             'special_instructions' => '',
@@ -33,14 +33,14 @@ class BC_SWRegisterTest extends PHPUnit_Framework_TestCase
 
     /**
      * Valid conversion should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validconversion
      */
-    public function testValidDataConversion() {
-        $data = json_decode( json_encode ($this->validSubmission) );
+    public function testValidDataConversion()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
         $data->data->reg_type = 'new';
         $data->data->product_type = 'domain';
@@ -49,7 +49,7 @@ class BC_SWRegisterTest extends PHPUnit_Framework_TestCase
         $data->data->trust_seal = '1';
         $data->data->period = '5';
         $data->data->approver_email = 'phptoolkit@tucows.com';
-        $data->data->domain = 'phptest' . time() . '.com';
+        $data->data->domain = 'phptest'.time().'.com';
         $data->data->csr = 'test';
         $data->data->server_count = '2';
         $data->data->handle = md5(time());
@@ -57,9 +57,9 @@ class BC_SWRegisterTest extends PHPUnit_Framework_TestCase
         $data->personal->first_name = 'Tikloot';
         $data->personal->last_name = 'Php';
 
-        $shouldMatchNewDataObject = new \stdClass;
-        $shouldMatchNewDataObject->attributes = new \stdClass;
-        $shouldMatchNewDataObject->attributes->contact_set = new \stdClass;
+        $shouldMatchNewDataObject = new \stdClass();
+        $shouldMatchNewDataObject->attributes = new \stdClass();
+        $shouldMatchNewDataObject->attributes->contact_set = new \stdClass();
 
         $shouldMatchNewDataObject->attributes->reg_type = $data->data->reg_type;
         $shouldMatchNewDataObject->attributes->product_type = $data->data->product_type;
@@ -79,10 +79,10 @@ class BC_SWRegisterTest extends PHPUnit_Framework_TestCase
         $shouldMatchNewDataObject->attributes->contact_set->tech = $data->personal;
         $shouldMatchNewDataObject->attributes->contact_set->signer = $data->personal;
 
-        $pc = new SWRegister;
+        $pc = new SWRegister();
 
-        $newDataObject = $pc->convertDataObject( $data );
+        $newDataObject = $pc->convertDataObject($data);
 
-        $this->assertTrue( $newDataObject == $shouldMatchNewDataObject );
+        $this->assertTrue($newDataObject == $shouldMatchNewDataObject);
     }
 }

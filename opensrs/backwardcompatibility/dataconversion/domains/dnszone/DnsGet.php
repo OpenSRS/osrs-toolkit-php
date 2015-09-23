@@ -1,11 +1,11 @@
 <?php
 
-namespace OpenSRS\backwardcompatibility\dataconversion\domains\dnszone;
+namespace opensrs\backwardcompatibility\dataconversion\domains\dnszone;
 
-use OpenSRS\backwardcompatibility\dataconversion\DataConversion;
-use OpenSRS\Exception;
+use opensrs\backwardcompatibility\dataconversion\DataConversion;
 
-class DnsGet extends DataConversion {
+class DnsGet extends DataConversion
+{
     // New structure for API calls handled by
     // the toolkit.
     //
@@ -29,14 +29,15 @@ class DnsGet extends DataConversion {
             ),
         );
 
-    public function convertDataObject( $dataObject, $newStructure = null ) {
+    public function convertDataObject($dataObject, $newStructure = null)
+    {
         $p = new parent();
 
-        if(is_null($newStructure)){
+        if (is_null($newStructure)) {
             $newStructure = $this->newStructure;
         }
 
-        $newDataObject = $p->convertDataObject( $dataObject, $newStructure );
+        $newDataObject = $p->convertDataObject($dataObject, $newStructure);
 
         return $newDataObject;
     }

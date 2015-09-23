@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenSRS\OMA;
+namespace opensrs\OMA;
 
-use OpenSRS\OMA;
+use opensrs\OMA;
 
 // command: change_domain
 // Create a new domain or change the attributes of an existing domain. 	
@@ -20,7 +20,7 @@ class GetDomainBulletin
     public static function validate($data)
     {
         if (empty($data['domain']) || empty($data['bulletin']) || empty($data['type'])) {
-            throw new Exception("oSRS Error - Domain/Bulletin/Type required");
+            throw new Exception('oSRS Error - Domain/Bulletin/Type required');
         }
 
         return true;

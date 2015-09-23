@@ -1,13 +1,15 @@
 <?php 
-	// Domain TLDs
-	$popular = array (".com", ".net", ".ca", ".org", ".me", ".biz", ".info");
-	$domains = array (".mobi", ".tel", ".name", ".tv", ".eu", ".cc", ".at", ".es", ".be", ".co.uk", ".org.uk", ".me.uk");	
-	
-	// Modify the field name
-	function nameFix ($wordIn){
-		$wordOut = str_replace(".", "-", $wordIn);
-		return $wordOut;
-	}
+    // Domain TLDs
+    $popular = array('.com', '.net', '.ca', '.org', '.me', '.biz', '.info');
+    $domains = array('.mobi', '.tel', '.name', '.tv', '.eu', '.cc', '.at', '.es', '.be', '.co.uk', '.org.uk', '.me.uk');
+
+    // Modify the field name
+    function nameFix($wordIn)
+    {
+        $wordOut = str_replace('.', '-', $wordIn);
+
+        return $wordOut;
+    }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us" >
@@ -23,21 +25,21 @@
 	
 	<script type="text/javascript">
 		var popular = [<?php 
-			$out = implode ("', '", $popular);
-			echo ("'". $out ."'");
-		?>];
+            $out = implode("', '", $popular);
+            echo("'".$out."'");
+        ?>];
 		var popularFixed = [<?php 
-			$out = implode ("', '", nameFix ($popular));
-			echo ("'". $out ."'");
-		?>];
+            $out = implode("', '", nameFix($popular));
+            echo("'".$out."'");
+        ?>];
 		var domains = [<?php 
-			$out = implode ("', '", $domains);
-			echo ("'". $out ."'");
-		?>];
+            $out = implode("', '", $domains);
+            echo("'".$out."'");
+        ?>];
 		var domainsFixed = [<?php 
-			$out = implode ("', '", nameFix ($domains));
-			echo ("'". $out ."'");
-		?>];
+            $out = implode("', '", nameFix($domains));
+            echo("'".$out."'");
+        ?>];
 	</script>	
 	
 </head>
@@ -70,18 +72,25 @@
 						<td colspan="5" class="listHeadline">Popular domains</td>
 					</tr>
 <?php
-	for ($i=0; $i<count($popular); $i++){
-		$temp = ($i % 2) + 1;
-		$fixed = nameFix ($popular[$i]);
-?>
-					<tr class="listLine<?php echo ($temp); ?>">
-						<td id="field<?php echo ($fixed);?>">
-							<span id="f<?php echo ($fixed);?>"></span><b><span id="d<?php echo ($fixed);?>"><?php echo ($popular[$i]); ?></span></b>
-							<div id="r<?php echo ($fixed);?>" class="lineResult"></div>
+    for ($i = 0; $i < count($popular); ++$i) {
+        $temp = ($i % 2) + 1;
+        $fixed = nameFix($popular[$i]);
+        ?>
+					<tr class="listLine<?php echo($temp);
+        ?>">
+						<td id="field<?php echo($fixed);
+        ?>">
+							<span id="f<?php echo($fixed);
+        ?>"></span><b><span id="d<?php echo($fixed);
+        ?>"><?php echo($popular[$i]);
+        ?></span></b>
+							<div id="r<?php echo($fixed);
+        ?>" class="lineResult"></div>
 						</td>
 					</tr>
 <?php
-	}
+
+    }
 ?>
 				</table>
 			</div>
@@ -92,18 +101,25 @@
 						<td colspan="5" class="listHeadline">Other domains</td>
 					</tr>
 <?php
-	for ($i=0; $i<count($domains); $i++){
-		$temp = ($i % 2) + 1;
-		$fixed = nameFix ($domains[$i]);
-?>
-					<tr class="listLine<?php echo ($temp); ?>">
-						<td id="field<?php echo ($fixed);?>">
-							<span id="f<?php echo ($fixed);?>"></span><b><span id="d<?php echo ($fixed);?>"><?php echo ($domains[$i]); ?></span></b>
-							<div id="r<?php echo ($fixed);?>" class="lineResult"></div>
+    for ($i = 0; $i < count($domains); ++$i) {
+        $temp = ($i % 2) + 1;
+        $fixed = nameFix($domains[$i]);
+        ?>
+					<tr class="listLine<?php echo($temp);
+        ?>">
+						<td id="field<?php echo($fixed);
+        ?>">
+							<span id="f<?php echo($fixed);
+        ?>"></span><b><span id="d<?php echo($fixed);
+        ?>"><?php echo($domains[$i]);
+        ?></span></b>
+							<div id="r<?php echo($fixed);
+        ?>" class="lineResult"></div>
 						</td>
 					</tr>
 <?php
-	}
+
+    }
 ?>
 				</table>
 			</div>

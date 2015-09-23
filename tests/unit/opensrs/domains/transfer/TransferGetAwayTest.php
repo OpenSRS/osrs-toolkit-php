@@ -1,6 +1,7 @@
 <?php
 
-use OpenSRS\domains\transfer\TransferGetAway;
+use opensrs\domains\transfer\TransferGetAway;
+
 /**
  * @group transfer
  * @group TransferGetAway
@@ -10,8 +11,8 @@ class TransferGetAwayTest extends PHPUnit_Framework_TestCase
     protected $func = 'transferGetAway';
 
     protected $validSubmission = array(
-        "attributes" => array(
-            /**
+        'attributes' => array(
+            /*
              * Optional
              *
              * domain: submit only if you
@@ -52,35 +53,35 @@ class TransferGetAwayTest extends PHPUnit_Framework_TestCase
              *     - completed
              *     - cancelled
              */
-            "domain" => "",
-            "gaining_registrar" => "",
-            "limit" => "",
-            "owner_confirm_from" => "",
-            "owner_confirm_to" => "",
-            "owner_request_from" => "",
-            "owner_request_to" => "",
-            "page" => "",
-            "req_from" => "",
-            "req_to" => "",
+            'domain' => '',
+            'gaining_registrar' => '',
+            'limit' => '',
+            'owner_confirm_from' => '',
+            'owner_confirm_to' => '',
+            'owner_request_from' => '',
+            'owner_request_to' => '',
+            'page' => '',
+            'req_from' => '',
+            'req_to' => '',
 
-            "request_address" => "",
-            "status" => "",
+            'request_address' => '',
+            'status' => '',
             ),
         );
 
     /**
      * Valid submission should complete with no
-     * exception thrown
+     * exception thrown.
      *
-     * @return void
      *
      * @group validsubmission
      */
-    public function testValidSubmission() {
-        $data = json_decode( json_encode($this->validSubmission) );
+    public function testValidSubmission()
+    {
+        $data = json_decode(json_encode($this->validSubmission));
 
-        $ns = new TransferGetAway( 'array', $data );
+        $ns = new TransferGetAway('array', $data);
 
-        $this->assertTrue( $ns instanceof TransferGetAway );
+        $this->assertTrue($ns instanceof TransferGetAway);
     }
 }

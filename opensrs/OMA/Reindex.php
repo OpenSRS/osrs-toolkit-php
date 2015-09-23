@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenSRS\OMA;
+namespace opensrs\OMA;
 
-use OpenSRS\OMA;
-use OpenSRS\Exception;
+use opensrs\OMA;
+use opensrs\Exception;
 
 // command: reindex
 // Reindexes a user's mail folder(s) 
@@ -20,7 +20,7 @@ class Reindex
     public static function validate($data)
     {
         if (empty($data['user']) || empty($data['id']) || empty($data['folder'])) {
-            throw new Exception("oSRS Error - User/IDs required");
+            throw new Exception('oSRS Error - User/IDs required');
         } else {
             return true;
         }
