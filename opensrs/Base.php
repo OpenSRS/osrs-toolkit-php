@@ -433,10 +433,16 @@ class Base
      */
     public function _validateObject( $dataObject, $requiredFields = null ){
     	if( is_null($requiredFields) ){
-    		$requiredFields = $this->requiredFields;
+    		if(isset($this->requiredFields) && !empty($this->requiredFields)){
+	    		$requiredFields = $this->requiredFields;
+    		}
+    		else{
+    			$requiredFields = array();
+    		}
     	}
 
-    	if( !empty($requiredFields) ) {
+
+    	if( is_array($requiredFields) ) {
 	    	foreach($requiredFields as $i => $field) {
 	    		if( is_array($field) ){
 	    			if(!isset($dataObject->$i)){

@@ -2,16 +2,16 @@
 
 namespace OpenSRS\trust;
 
-use OpenSRS\trust;
+use OpenSRS\trust\ParseCSR;
 /**
  * @group trust
- * @group trust\SWRegister
+ * @group trust\ParseCSR
  */
-class SWRegisterTest extends \PHPUnit_Framework_TestCase
+class ParseCSRTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         'attributes' => array(
-            'reg_type' => '',
+            'csr' => '',
             'product_type' => '',
             ),
         );
@@ -27,13 +27,13 @@ class SWRegisterTest extends \PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->attributes->reg_type = "new";
-        $data->attributes->product_type = "domain";
+        $data->attributes->csr = md5(time());
+        $data->attributes->product_type = 'domain';
 
 
-        $ns = new SWRegister( 'array', $data );
+        $ns = new ParseCSR( 'array', $data );
 
-        $this->assertTrue( $ns instanceof SWRegister );
+        $this->assertTrue( $ns instanceof ParseCSR );
     }
 
     /**
@@ -41,7 +41,7 @@ class SWRegisterTest extends \PHPUnit_Framework_TestCase
      */
     function submissionFields() {
         return array(
-            'missing reg_type' => array('reg_type'),
+            'missing csr' => array('csr'),
             'missing product_type' => array('product_type'),
             );
     }
@@ -57,8 +57,8 @@ class SWRegisterTest extends \PHPUnit_Framework_TestCase
     public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->attributes->reg_type = "new";
-        $data->attributes->product_type = "domain";
+        $data->attributes->csr = md5(time());
+        $data->attributes->product_type = 'domain';
 
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(
@@ -83,6 +83,6 @@ class SWRegisterTest extends \PHPUnit_Framework_TestCase
             unset( $data->$parent->$field );
         }
 
-        $ns = new SWRegister( 'array', $data );
+        $ns = new ParseCSR( 'array', $data );
     }
 }

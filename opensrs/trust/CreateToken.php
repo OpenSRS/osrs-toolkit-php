@@ -36,7 +36,7 @@ class CreateToken extends Base
 
         $this->_formatHolder = $formatString;
 
-        $this->_validateObject($datObject, $returnFullResponse);
+        $this->_validateObject( $dataObject );
 
         $this->send($dataObject, $returnFullResponse);
     }

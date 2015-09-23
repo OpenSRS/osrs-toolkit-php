@@ -36,9 +36,9 @@ class CancelOrder extends Base
 
         $this->_formatHolder = $formatString;
 
-        $this->_validateObject( $dataObject, $returnFullResponse);
+        $this->_validateObject( $dataObject );
 
-        $this->send($datObject, $returnFullResponse);
+        $this->send($dataObject, $returnFullResponse);
     }
 
     public function __destruct()

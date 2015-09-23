@@ -41,9 +41,9 @@ class RequestOnDemandScan extends Base
     }
 
     // Validate the object
-    private function _validateObject()
+    public function _validateObject( $dataObject, $requiredFields = null )
     {
-        if (!isset($this->_dataObject->data->order_id) and !isset($this->_dataObject->data->product_id)) {
+        if (!isset($dataObject->attributes->order_id) and !isset($dataObject->attributes->product_id)) {
             Exception::notDefined( 'order_id or product_id' );
         }
     

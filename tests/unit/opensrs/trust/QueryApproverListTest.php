@@ -2,17 +2,17 @@
 
 namespace OpenSRS\trust;
 
-use OpenSRS\trust;
+use OpenSRS\trust\QueryApproverList;
 /**
  * @group trust
- * @group trust\SWRegister
+ * @group trust\QueryApproverList
  */
-class SWRegisterTest extends \PHPUnit_Framework_TestCase
+class QueryApproverListTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         'attributes' => array(
-            'reg_type' => '',
             'product_type' => '',
+            'domain' => '',
             ),
         );
 
@@ -27,13 +27,13 @@ class SWRegisterTest extends \PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->attributes->reg_type = "new";
-        $data->attributes->product_type = "domain";
+        $data->attributes->product_type = 'domain';
+        $data->attributes->domain = 'phptest' . time() . '.com';
 
 
-        $ns = new SWRegister( 'array', $data );
+        $ns = new QueryApproverList( 'array', $data );
 
-        $this->assertTrue( $ns instanceof SWRegister );
+        $this->assertTrue( $ns instanceof QueryApproverList );
     }
 
     /**
@@ -41,8 +41,8 @@ class SWRegisterTest extends \PHPUnit_Framework_TestCase
      */
     function submissionFields() {
         return array(
-            'missing reg_type' => array('reg_type'),
             'missing product_type' => array('product_type'),
+            'missing domain' => array('domain'),
             );
     }
 
@@ -57,8 +57,8 @@ class SWRegisterTest extends \PHPUnit_Framework_TestCase
     public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->attributes->reg_type = "new";
-        $data->attributes->product_type = "domain";
+        $data->attributes->product_type = 'domain';
+        $data->attributes->domain = 'phptest' . time() . '.com';
 
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(
@@ -83,6 +83,6 @@ class SWRegisterTest extends \PHPUnit_Framework_TestCase
             unset( $data->$parent->$field );
         }
 
-        $ns = new SWRegister( 'array', $data );
+        $ns = new QueryApproverList( 'array', $data );
     }
 }
