@@ -5,14 +5,6 @@ namespace OpenSRS\trust;
 use OpenSRS\Base;
 use OpenSRS\Exception;
 
-/*
- *  Required object values:
- *  - none -
- *
- *  Optional Data:
- *  data - owner_email, admin_email, billing_email, tech_email, del_from, del_to, exp_from, exp_to, page, limit
- */
-
 class RequestOnDemandScan extends Base
 {
     protected $action = 'request_on_demand_scan';

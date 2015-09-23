@@ -5,11 +5,6 @@ namespace OpenSRS\trust;
 use OpenSRS\Base;
 use OpenSRS\Exception;
 
-/*
- *  Required object values:
- *  data - 
- */
-
 class UpdateProduct extends Base
 {
     protected $action = 'update_product';

@@ -1,8 +1,4 @@
 <?php
-/*
- *  Required object values:
- *  data - 
- */
  
 class functionTemplate extends openSRS_base {
 	private $_dataObject;

@@ -1,8 +1,4 @@
 <?php
-/*
- *  Required object values:
- *  data - 
- */
  
 class xxx extends openSRS_mail {
 	private $_dataObject;
