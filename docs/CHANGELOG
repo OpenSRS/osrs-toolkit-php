@@ -1,3 +1,13 @@
+Version 4.0.0 (October 2015)
+=====================================
+* First release in over 2 years!
+* Data format consolidation (with backwards compatibility) 
+* Composer support
+* PSR4 namespacing
+* Exception Handling
+* Test coverage
+* Supports PHP7
+
 Version 3.4.1 (June 6, 2013)
 ======================================
 * Fixed DNS related commands to take multiple records on each record type 
