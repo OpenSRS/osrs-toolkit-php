@@ -5,7 +5,7 @@ namespace OpenSRS\backwardcompatibility\dataconversion\publishing;
 use OpenSRS\backwardcompatibility\dataconversion\DataConversion;
 use OpenSRS\Exception;
 
-class Create extends DataConversion {
+class Disable extends DataConversion {
 	// New structure for API calls handled by
 	// the toolkit.
 	//
