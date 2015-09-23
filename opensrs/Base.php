@@ -31,11 +31,6 @@ class Base
     // classes that don't have any fields
     public $requiredFields = array();
 
-    // protected $dataObject;
-    // protected $dataFormat;
-
-    use DataObjectTrait;
-
     /**
      * openSRS_base object constructor.
      *
