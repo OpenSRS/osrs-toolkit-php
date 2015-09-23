@@ -44,7 +44,11 @@ class RequestOnDemandScan extends Base
     private function _validateObject()
     {
         if (!isset($this->_dataObject->data->order_id) and !isset($this->_dataObject->data->product_id)) {
-            throw new Exception('oSRS Error - order_id or product_id is not defined.');
+            Exception::notDefined( 'order_id or product_id' );
         }
+    
+        $parent = new parent();
+
+        $parent->_validateObject( $dataObject, $this->requiredFields );
     }
 }

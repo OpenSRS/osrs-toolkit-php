@@ -24,6 +24,12 @@ class GetProductInfo extends Base
     public $resultFullFormatted;
     public $resultFormatted;
 
+    public $requiredFields = array(
+        'attributes' => array(
+            'product_id'
+            ),
+        );
+
     public function __construct($formatString, $dataObject, $returnFullResponse = null)
     {
         parent::__construct();
@@ -38,13 +44,5 @@ class GetProductInfo extends Base
     public function __destruct()
     {
         parent::__destruct();
-    }
-
-    // Validate the object
-    public function _validateObject($dataObject)
-    {
-        if (!isset($dataObject->data->product_id)) {
-            throw new Exception('oSRS Error - product_id is not defined.');
-        }
     }
 }

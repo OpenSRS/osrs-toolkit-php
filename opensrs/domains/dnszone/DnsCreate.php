@@ -34,14 +34,4 @@ class DnsCreate extends Base {
 	public function __destruct() {
 		parent::__destruct();
 	}
-
-	// Validate the object
-    public function _validateObject( $dataObject, $requiredFields = null ){
-		if(
-			!isset( $dataObject->attributes->domain ) ||
-			$dataObject->attributes->domain == ""
-		) {
-			throw new Exception( "oSRS Error - domain is not defined." );
-		}
-	}
 }

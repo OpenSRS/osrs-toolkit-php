@@ -24,6 +24,13 @@ class QueryApproverList extends Base
     public $resultFullFormatted;
     public $resultFormatted;
 
+    public $requiredFields = array(
+        'attributes' => array(
+            'product_type',
+            'domain',
+            ),
+        );
+
     public function __construct($formatString, $dataObject, $returnFullResponse = true)
     {
         parent::__construct();
@@ -38,18 +45,5 @@ class QueryApproverList extends Base
     public function __destruct()
     {
         parent::__destruct();
-    }
-
-    // Validate the object
-    public function _validateObject($dataObject)
-    {
-        if (!isset($this->_dataObject->data->product_type)) {
-            throw new Exception('oSRS Error - product_type is not defined.');
-            $allPassed = false;
-        }
-        if (!isset($this->_dataObject->data->domain)) {
-            throw new Exception('oSRS Error - domain is not defined.');
-            $allPassed = false;
-        }
     }
 }
