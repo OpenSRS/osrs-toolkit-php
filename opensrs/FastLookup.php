@@ -9,8 +9,6 @@ class FastLookup
     private $_socketErrorMsg = false;
     private $_socketTimeout = 120;                // seconds
 
-    use DataObjectTrait;
-
     //  Send a command to the server
     public function checkDomain($domain)
     {
@@ -135,8 +133,8 @@ class FastLookup
         // Results
         $this->resultFullRaw = $result;
         $this->resultRaw = $result;
-        $this->resultFullFormatted = $this->convertArray2Formatted($this->dataFormat, $this->resultFullRaw);
-        $this->resultFormatted = $this->convertArray2Formatted($this->dataFormat, $this->resultRaw);
+        $this->resultFullFormatted = $this->convertArray2Formatted($this->_formatHolder, $this->resultFullRaw);
+        $this->resultFormatted = $this->convertArray2Formatted($this->_formatHolder, $this->resultRaw);
     }
 
     public function convertArray2Formatted($type = '', $data = '')

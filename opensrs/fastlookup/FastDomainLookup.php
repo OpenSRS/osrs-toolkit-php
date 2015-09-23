@@ -19,7 +19,7 @@ class FastDomainLookup extends FastLookup
 
     public function __construct($formatString, $dataObject)
     {
-        $this->setDataObject($formatString, $dataObject);
+        $this->_formatHolder = $formatString;
 
         $this->_validateObject($dataObject);
 
@@ -37,7 +37,7 @@ class FastDomainLookup extends FastLookup
         }
 
         // Grab domain name
-        $domain = $this->getDomain();
+        $domain = $dataObject->data->domain;
 
         if (!isset($dataObject->data->selected)) {
             Exception::notDefined('selected');
@@ -47,8 +47,8 @@ class FastDomainLookup extends FastLookup
             Exception::notDefined('alldomains');
         }
 
-        $selected = $this->getSelected();
-        $this->tlds = $this->getAllDomains();
+        $selected = explode(';', $dataObject->data->selected);
+        $this->tlds = explode(';', $dataObject->data->alldomains);
 
         if (count(array_filter($selected)) >= 1) {
             $this->tlds = $selected;
