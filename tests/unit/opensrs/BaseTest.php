@@ -69,4 +69,65 @@ class BaseTest extends PHPUnit_Framework_TestCase
         $base->setDataObject('array', $data);
         $this->assertEquals($base->getDomain(), 'domain');
     }
+
+    /**
+     * Should return correct status of OpenSRS Base socket.
+     */
+    public function testIsConnected()
+    {
+        $base = new Base();
+
+        // Should not be connected until we connect
+        $this->assertFalse($base->is_connected());
+
+        $this->invokeMethod($base, 'init_socket');
+
+        // now we should be connected
+        $this->assertTrue($base->is_connected());
+    }
+
+    /**
+     * Init socket should either conect to a working host, or report an error.
+     */
+    // public function testInitSocket()
+    // {
+    //     $base = new Base();
+    //
+    //     // a working connection should return true
+    //     $this->assertTrue($this->invokeMethod($base, 'init_socket'));
+    //
+    //     // a bad connection should produce an error 
+    //     unset($base);
+    //     $this->setExpectedException('PHPUNIT_Framework_Error');
+    //     $base = new Base();
+    //     $this->invokeMethod($base, 'init_socket', array('xxxxxx'));
+    // }
+
+    /**
+     * Close socket should close openSRS base socket.
+     */
+    public function testCloseSocket()
+    {
+        $base = new Base();
+
+        $this->invokeMethod($base, 'close_socket');
+
+        $this->assertFalse($base->is_connected());
+    }
+
+    /**
+     * Call a private method for a class.
+     * 
+     * @param mixed $object     object 
+     * @param mixed $methodName methodName 
+     * @param array $parameters parameters 
+     */
+    public function invokeMethod(&$object, $methodName, array $parameters = array())
+    {
+        $reflection = new \ReflectionClass(get_class($object));
+        $method = $reflection->getMethod($methodName);
+        $method->setAccessible(true);
+
+        return $method->invokeArgs($object, $parameters);
+    }
 }
