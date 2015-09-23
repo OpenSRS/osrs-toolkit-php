@@ -12,7 +12,6 @@ class AddRole
 {
     public static function call($data)
     {
-        var_dump('calling');
         if (self::validate($data)) {
             return OMA::send_cmd('add_role', $data);
         }
