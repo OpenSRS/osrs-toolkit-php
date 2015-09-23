@@ -37,6 +37,9 @@ To configure your OpenSRS API settings, copy the sample config file
 your own OpenSRS API settings.  Be sure to require your config before using.  For more details 
 see the following section on Boostrapping.
 
+For more detailed configuration information refer to 
+(https://github.com/OpenSRS/osrs-toolkit-php/wiki/Configuration)
+
 ## Bootstapping
 You can bootstrap the OpenSRS toolkit by sourcing the composer autoloader, 
 as well as your OpenSRS config file.  For example if you saved your OpenSRS 
@@ -88,3 +91,4 @@ var_dump($osrsHandler);
 ## Documentation
 [OpenSRS API Documentation Page](http://www.opensrs.com/site/resources/documentation/api)
 
+[OpenSRS/osrs-toolkit-php Wiki](https://github.com/OpenSRS/osrs-toolkit-php/wiki)
