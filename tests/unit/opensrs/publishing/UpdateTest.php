@@ -10,7 +10,7 @@ use OpenSRS\publishing\Update;
 class UpdateTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
-        'data' => array(
+        'attributes' => array(
             'domain' => '',
             'service_type' => '',
             'source_domain' => '',
@@ -28,9 +28,9 @@ class UpdateTest extends \PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission ) );
 
-        $data->data->domain = 'phptest' . time() . ".com";
-        $data->data->service_type = "phptest" . time();
-        $data->data->source_domain = 'source.' . $data->data->domain;
+        $data->attributes->domain = 'phptest' . time() . ".com";
+        $data->attributes->service_type = "phptest" . time();
+        $data->attributes->source_domain = 'source.' . $data->attributes->domain;
 
 
         $ns = new Update( 'array', $data );
@@ -57,12 +57,12 @@ class UpdateTest extends \PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission ) );
 
-        $data->data->domain = 'phptest' . time() . ".com";
-        $data->data->service_type = "phptest" . time();
-        $data->data->source_domain = 'source.' . $data->data->domain;
+        $data->attributes->domain = 'phptest' . time() . ".com";
+        $data->attributes->service_type = "phptest" . time();
+        $data->attributes->source_domain = 'source.' . $data->attributes->domain;
         
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(

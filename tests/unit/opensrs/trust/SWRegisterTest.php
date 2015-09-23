@@ -1,18 +1,18 @@
 <?php
 
-namespace OpenSRS\publishing;
+namespace OpenSRS\trust;
 
-use OpenSRS\publishing\Enable;
+use OpenSRS\trust;
 /**
- * @group publishing
- * @group publishing\Enable
+ * @group provisioning
+ * @group trust\SWRegister
  */
-class EnableTest extends \PHPUnit_Framework_TestCase
+class SWRegisterTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
         'attributes' => array(
-            'domain' => '',
-            'service_type' => '',
+            'reg_type' => '',
+            'product_type' => '',
             ),
         );
 
@@ -25,14 +25,15 @@ class EnableTest extends \PHPUnit_Framework_TestCase
      * @group validsubmission
      */
     public function testValidSubmission() {
-        $data = json_decode( json_encode($this->validSubmission ) );
+        $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->attributes->domain = 'phptest' . time() . ".com";
-        $data->attributes->service_type = "phptest" . time();
+        $data->attributes->reg_type = "new";
+        $data->attributes->product_type = "domain";
 
-        $ns = new Enable( 'array', $data );
 
-        $this->assertTrue( $ns instanceof Enable );
+        $ns = new SWRegister( 'array', $data );
+
+        $this->assertTrue( $ns instanceof SWRegister );
     }
 
     /**
@@ -40,8 +41,8 @@ class EnableTest extends \PHPUnit_Framework_TestCase
      */
     function submissionFields() {
         return array(
-            'missing domain' => array('domain'),
-            'missing service_type' => array('service_type'),
+            'missing reg_type' => array('reg_type'),
+            'missing product_type' => array('product_type'),
             );
     }
 
@@ -54,11 +55,11 @@ class EnableTest extends \PHPUnit_Framework_TestCase
      * @group invalidsubmission
      */
     public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
-        $data = json_decode( json_encode($this->validSubmission ) );
+        $data = json_decode( json_encode($this->validSubmission) );
 
-        $data->attributes->domain = 'phptest' . time() . ".com";
-        $data->attributes->service_type = "test-service";
-        
+        $data->attributes->reg_type = "new";
+        $data->attributes->product_type = "domain";
+
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(
               'OpenSRS\Exception',
@@ -82,6 +83,6 @@ class EnableTest extends \PHPUnit_Framework_TestCase
             unset( $data->$parent->$field );
         }
 
-        $ns = new Enable( 'array', $data );
+        $ns = new SWRegister( 'array', $data );
     }
 }

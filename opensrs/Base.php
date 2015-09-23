@@ -17,7 +17,7 @@ defined('OPENSRSURI') or die;
  * @since       3.4
  */
 
-class Base 
+class Base
 {
 	protected $protocol = 'XCP';
 	

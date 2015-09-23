@@ -10,7 +10,7 @@ use OpenSRS\publishing\LetExpire;
 class LetExpireTest extends \PHPUnit_Framework_TestCase
 {
     protected $validSubmission = array(
-        'data' => array(
+        'attributes' => array(
             'domain' => '',
             'service_type' => '',
             ),
@@ -27,8 +27,8 @@ class LetExpireTest extends \PHPUnit_Framework_TestCase
     public function testValidSubmission() {
         $data = json_decode( json_encode($this->validSubmission ) );
 
-        $data->data->domain = 'phptest' . time() . ".com";
-        $data->data->service_type = "phptest" . time();
+        $data->attributes->domain = 'phptest' . time() . ".com";
+        $data->attributes->service_type = "phptest" . time();
 
         $ns = new LetExpire( 'array', $data );
 
@@ -53,11 +53,11 @@ class LetExpireTest extends \PHPUnit_Framework_TestCase
      * @dataProvider submissionFields
      * @group invalidsubmission
      */
-    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'data', $message = null ) {
+    public function testInvalidSubmissionFieldsMissing( $field, $parent = 'attributes', $message = null ) {
         $data = json_decode( json_encode($this->validSubmission ) );
 
-        $data->data->domain = 'phptest' . time() . ".com";
-        $data->data->service_type = "test-service";
+        $data->attributes->domain = 'phptest' . time() . ".com";
+        $data->attributes->service_type = "test-service";
         
         if(is_null($message)){
           $this->setExpectedExceptionRegExp(
