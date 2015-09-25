@@ -40,7 +40,7 @@ see the following section on Boostrapping.
 For more detailed configuration information refer to 
 (https://github.com/OpenSRS/osrs-toolkit-php/wiki/Configuration)
 
-## Bootstapping
+## Bootstrapping
 You can bootstrap the OpenSRS toolkit by sourcing the composer autoloader, 
 as well as your OpenSRS config file.  For example if you saved your OpenSRS 
 config file as config/openSRS_config.php, you would bootstrap by running the
