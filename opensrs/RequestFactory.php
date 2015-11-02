@@ -21,6 +21,7 @@ class RequestFactory
         'lookupbelongstorsp' => 'domains\lookup\BelongsToRsp',
         'allinonedomain' => 'domains\lookup\AllInOneDomain',
         'lookupgetcablockerlist' => 'domains\lookup\GetCaBlockerList',
+        'getregistrantverificationstatus' => 'domains\lookup\GetRegistrantVerificationStatus',
         'provswregister' => 'domains\provisioning\SWRegister',
         'provactivate' => 'domains\provisioning\ProvisioningActivate',
         'provcancelactivate' => 'domains\provisioning\ProvisioningCancelActivate',
