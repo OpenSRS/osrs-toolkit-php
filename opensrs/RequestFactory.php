@@ -33,6 +33,7 @@ class RequestFactory
         'provsendciraapproval' => 'domains\provisioning\ProvisioningSendCIRAApproval',
         'provupdateallinfo' => 'domains\provisioning\ProvisioningUpdateAllInfo',
         'provupdatecontacts' => 'domains\provisioning\ProvisioningUpdateContacts',
+        'sendregistrantverificationemail' => 'domains\provisioning\SendRegistrantVerificationEmail',
         'subrescreate' => 'domains\subreseller\SubresellerCreate',
         'subresget' => 'domains\subreseller\SubresellerGet',
         'subresmodify' => 'domains\subreseller\SubresellerModify',
