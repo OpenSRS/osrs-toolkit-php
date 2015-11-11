@@ -33,7 +33,7 @@ class Ops
             }
         }
 
-        $this->_SESSID = getmypid();
+        $this->_SESSID = uniqid();
         $this->_MSGCNT = 0;
     }
 

@@ -16,7 +16,6 @@ The OpenSRS PHP Tookit requires:
 - PHP 5
 - OpenSSL
 - PEAR: http://pear.php.net/
-- getmypid() enabled
 - cURL: required for OMA
 - php-curl: required for OMA - http://www.php.net/manual/en/book.curl.php 
 
