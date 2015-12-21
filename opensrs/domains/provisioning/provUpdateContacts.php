@@ -36,7 +36,7 @@ class provUpdateContacts extends openSRS_base {
         }
         /* End : To resolve issue for tld .NL  */
 		for ($i = 0; $i < count($reqPers); $i++){
-			if ($this->_dataObject->personal->$reqPers[$i] == "") {
+			if ($this->_dataObject->personal->{$reqPers[$i]} == "") {
 				trigger_error ("oSRS Error - ". $reqPers[$i] ." is not defined.", E_USER_WARNING);
 				$allPassed = false;
 			}
@@ -44,7 +44,7 @@ class provUpdateContacts extends openSRS_base {
 		
 		$reqData = array ("domain", "types");
 		for ($i = 0; $i < count($reqData); $i++){
-			if ($this->_dataObject->data->$reqData[$i] == "") {
+			if ($this->_dataObject->data->{$reqData[$i]} == "") {
 				trigger_error ("oSRS Error - ". $reqData[$i] ." is not defined.", E_USER_WARNING);
 				$allPassed = false;
 			}

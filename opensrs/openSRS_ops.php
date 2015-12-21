@@ -19,7 +19,7 @@ class openSRS_ops {
 	 * @param	array	allows for setting various options (right now, just whether
 	 *					to use compression or not on the generated XML)
 	 */
-	function openSRS_ops($args=false) {
+	function __construct($args=false) {
 		if (is_array($args)) {
 			if ($args['option']=='compress') {
 				$this->_OPT	= 'compress';

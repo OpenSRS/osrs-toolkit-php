@@ -197,7 +197,7 @@ class provModify extends openSRS_base {
 		// Personal information
 		$reqPers = array ("first_name", "last_name", "org_name", "address1", "city", "country", "postal_code", "phone", "email", "lang_pref");
 		for ($i = 0; $i < count($reqPers); $i++){
-			if ($this->_dataObject->personal->$reqPers[$i] == "") {
+			if ($this->_dataObject->personal->{$reqPers[$i]} == "") {
 				trigger_error ("oSRS Error - change type is contact_info but  ". $reqPers[$i] ." is not defined in personal.", E_USER_WARNING);
 				$allContactInfo = false;
 			}

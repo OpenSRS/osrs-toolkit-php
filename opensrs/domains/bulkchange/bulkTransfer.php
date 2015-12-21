@@ -61,7 +61,7 @@ private function _allTimeRequired(){
               $subtest = true;
               $reqPers = array ("first_name", "last_name", "org_name", "address1", "city", "state", "country", "postal_code", "phone", "email", "lang_pref");
               for ($i = 0; $i < count($reqPers); $i++){
-                        if ($this->_dataObject->personal->$reqPers[$i] == "") {
+                        if ($this->_dataObject->personal->{$reqPers[$i]} == "") {
                              trigger_error ("oSRS Error - ". $reqPers[$i] ." is not defined.", E_USER_WARNING);
                              $subtest = false;
                          }
