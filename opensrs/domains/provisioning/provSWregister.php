@@ -1,9 +1,9 @@
 <?php
 /*
  *  Required object values:
- *  data - 
+ *  data -
  */
- 
+
 class provSWregister extends openSRS_base {
 	private $_dataObject;
 	private $_formatHolder = "";
@@ -40,24 +40,24 @@ class provSWregister extends openSRS_base {
 
 			if (in_array($tld, $special_tlds)) {
 				$_ccTLD = "_ccTLD_" . $tld;
-        		$allPassed = $this->$_ccTLD();
+				$allPassed = $this->$_ccTLD();
  			  	/* Changed by BC : NG : 10-9-2014 : To hide notice displayed at register page for tld .asia */
-                /*trigger_error($tld . " needs special requirements.");*/
-                /* Changed by BC : NG : 8-10-2014 : To hide notice displayed at register page for tld .it */
-                /*if($tld != "asia")*/   
-                /* Changed by BC : NG : 11-2-2015 : To resolve issue for tld .EU domain registration */
-                /*if($tld != "asia" && $tld != "it")*/
-                /* Changed by BC : NG : 21-2-2014 : To hide notice displayed at register page for tld .de */ 
-                /*if($tld != "asia" && $tld != "it" && $tld != "eu")*/
-                if($tld != "asia" && $tld != "it" && $tld != "eu" && $tld != "de")
-                {
-                       trigger_error($tld . " needs special requirements.");
-                }
-                /* End: To hide notice displayed at register page for tld .de */
-                /* End : To resolve issue for tld .EU domain registration */
-                /* End : To hide notice displayed at register page for tld .it */
-                /* End : To hide notice displayed at register page for tld .asia */
-      		}
+				/*trigger_error($tld . " needs special requirements.");*/
+				/* Changed by BC : NG : 8-10-2014 : To hide notice displayed at register page for tld .it */
+				/*if($tld != "asia")*/
+				/* Changed by BC : NG : 11-2-2015 : To resolve issue for tld .EU domain registration */
+				/*if($tld != "asia" && $tld != "it")*/
+				/* Changed by BC : NG : 21-2-2014 : To hide notice displayed at register page for tld .de */
+				/*if($tld != "asia" && $tld != "it" && $tld != "eu")*/
+				if($tld != "asia" && $tld != "it" && $tld != "eu" && $tld != "de")
+				{
+					   trigger_error($tld . " needs special requirements.");
+				}
+				/* End: To hide notice displayed at register page for tld .de */
+				/* End : To resolve issue for tld .EU domain registration */
+				/* End : To hide notice displayed at register page for tld .it */
+				/* End : To hide notice displayed at register page for tld .asia */
+	  		}
 
 			// Call the process function
 			if ($allPassed) {
@@ -70,11 +70,11 @@ class provSWregister extends openSRS_base {
 			die();
 		}
 	}
-	
+
 	// Personal Information
 	private function _allTimeRequired(){
 		$subtest = true;
-		
+
 		$reqPers = array("first_name", "last_name", "org_name", "address1", "city", "state", "country", "postal_code", "phone", "email", "lang_pref");
 		foreach ($reqPers as $reqPer) {
 		  if ($this->_dataObject->personal->$reqPer == "") {
@@ -82,7 +82,7 @@ class provSWregister extends openSRS_base {
 				$subtest = false;
 			}
 		}
-		
+
 		$reqDatas = array("reg_type", "reg_username", "reg_password", "domain", "custom_nameservers", "period", "custom_tech_contact", "custom_nameservers");
 		foreach ($reqDatas as $reqData) {
 			if ($this->_dataObject->data->$reqData == "") {
@@ -90,11 +90,11 @@ class provSWregister extends openSRS_base {
 				$subtest = false;
 			}
 		}
-		
+
 		return $subtest;
 	}
-	
-	
+
+
 	// ccTLD specific validation
 	private function _ccTLD_ca () {
 		$subtest = true;
@@ -107,17 +107,17 @@ class provSWregister extends openSRS_base {
 		}
 		return $subtest;
 	}
-	
+
 	// ccTLD specific validation
 	private function _ccTLD_au () {
 		$subtest = true;
 		$reqDatas = array("registrant_name",  "eligibility_type");
-		
+
 		$tld = explode(".", strtolower($this->_dataObject->data->domain), 2);
-				
+
 		if ($tld == "au")
 			$reqDatas = array_merge($reqDatas, array("registrant_id", "registrant_id_type"));
-			
+
 		foreach($reqDatas as $reqData) {
 		  if ($this->_dataObject->au_registrant_info->$reqData == "") {
 				trigger_error ("oSRS Error - ". $reqData ." is not defined.", E_USER_WARNING);
@@ -128,22 +128,22 @@ class provSWregister extends openSRS_base {
 	}
 
 	private function _ccTLD_br () {
-        $subtest = true;
-        if ($this->_dataObject->br_registrant_info->br_register_number == "") {
-            trigger_error ("oSRS Error - Registrer number not defined", E_USER_WARNING);
-            $subtest = false;
-        }
-        return $subtest;
-    }
- 	
+		$subtest = true;
+		if ($this->_dataObject->br_registrant_info->br_register_number == "") {
+			trigger_error ("oSRS Error - Registrer number not defined", E_USER_WARNING);
+			$subtest = false;
+		}
+		return $subtest;
+	}
+
  	private function _ccTLD_pro () {
-        $subtest = true;
-        if ($this->_dataObject->professional_data->profession == "") {
-            trigger_error ("oSRS Error - Profession not defined", E_USER_WARNING);
-            $subtest = false;
-        }
-        return $subtest;
-    }
+		$subtest = true;
+		if ($this->_dataObject->professional_data->profession == "") {
+			trigger_error ("oSRS Error - Profession not defined", E_USER_WARNING);
+			$subtest = false;
+		}
+		return $subtest;
+	}
 
 	private function _ccTLD_it () {
 		$subtest = true;
@@ -156,7 +156,7 @@ class provSWregister extends openSRS_base {
 		}
 		return $subtest;
 	}
-	
+
 	private function _ccTLD_asia () {
 		$subtest = true;
 		$reqDatas = array("contact_type", "id_number", "id_type", "legal_entity_type", "locality_country");
@@ -168,7 +168,7 @@ class provSWregister extends openSRS_base {
 		}
 		return $subtest;
 	}
-	
+
 	private function _ccTLD_be () {
 		$subtest = true;
 		$reqData = array("lang", "owner_confirm_address");
@@ -192,7 +192,7 @@ class provSWregister extends openSRS_base {
 		}
 		return $subtest;
 	}
-	
+
 	private function _ccTLD_eu () {
 		$subtest = true;
 		$reqDatas = array("eu_country", "lang", "owner_confirm_address");
@@ -216,7 +216,7 @@ class provSWregister extends openSRS_base {
 		}
 		return $subtest;
 	}
-	
+
 	private function _ccTLD_name () {
 		$subtest = true;
 		$reqData = array("forwarding_email");
@@ -228,10 +228,10 @@ class provSWregister extends openSRS_base {
 		}
 		return $subtest;
 	}
-	
+
 	// Post validation functions
 	private function _processRequest ($ccTLD){
-		// Compile the command	
+		// Compile the command
 		$cmd = array(
 			'protocol' => 'XCP',
 			'action' => 'SW_REGISTER',
@@ -267,7 +267,7 @@ class provSWregister extends openSRS_base {
 				$cmd['attributes'][$reqData] = $this->_dataObject->data->$reqData;
 		}
 
-	
+
 		// NS records
 		if ($this->_dataObject->data->custom_nameservers == 1){
 			$passArray = array();
@@ -299,35 +299,35 @@ class provSWregister extends openSRS_base {
 			if (isSet($this->_dataObject->data->rant_agrees) && $this->_dataObject->data->rant_agrees != "") $cmd['attributes']['rant_agrees'] = $this->_dataObject->data->rant_agrees;
 			if (isSet($this->_dataObject->data->rant_no) && $this->_dataObject->data->rant_no != "") $cmd['attributes']['rant_no'] = $this->_dataObject->data->rant_no;
 		}
-		
+
 		/* Changed by BC : NG : 9-9-2014 : To resolve issue of tld .asia registration error  */
-        
-        /*if ($ccTLD == "asia") {
-            $reqDatas = array("contact_type", "id_number", "id_type", "legal_entity_type", "locality_country", "id_type_info", 
-                "legal_entity_type_info","locality_city", "locality_state_prov"
-            );
 
-            foreach($reqDatasASIA as $reqData) {
-                if(isSet($this->_dataObject->cedinfo->data->$reqData) && $this->_dataObject->data->$reqData != "")
-                    $cmd['attributes']['tld_data']['ced_info'][$reqData] = $this->_dataObject->data->$reqData;
-            }
-        }*/
-        
-        if ($ccTLD == "asia") {
-            $reqDatasASIA = array("contact_type", "id_number", "id_type", "legal_entity_type", "locality_country", "id_type_info", 
-                "legal_entity_type_info","locality_city", "locality_state_prov"
-            );
+		/*if ($ccTLD == "asia") {
+			$reqDatas = array("contact_type", "id_number", "id_type", "legal_entity_type", "locality_country", "id_type_info",
+				"legal_entity_type_info","locality_city", "locality_state_prov"
+			);
 
-            foreach($reqDatasASIA as $reqData) {
-                if(isSet($this->_dataObject->cedinfo->$reqData) && $this->_dataObject->cedinfo->$reqData != "")
-                    $cmd['attributes']['tld_data']['ced_info'][$reqData] = $this->_dataObject->cedinfo->$reqData;
-            }
-        }
-        
-        /* END : To resolve issue of tld .asia registration error  */
-		
+			foreach($reqDatasASIA as $reqData) {
+				if(isSet($this->_dataObject->cedinfo->data->$reqData) && $this->_dataObject->data->$reqData != "")
+					$cmd['attributes']['tld_data']['ced_info'][$reqData] = $this->_dataObject->data->$reqData;
+			}
+		}*/
+
+		if ($ccTLD == "asia") {
+			$reqDatasASIA = array("contact_type", "id_number", "id_type", "legal_entity_type", "locality_country", "id_type_info",
+				"legal_entity_type_info","locality_city", "locality_state_prov"
+			);
+
+			foreach($reqDatasASIA as $reqData) {
+				if(isSet($this->_dataObject->cedinfo->$reqData) && $this->_dataObject->cedinfo->$reqData != "")
+					$cmd['attributes']['tld_data']['ced_info'][$reqData] = $this->_dataObject->cedinfo->$reqData;
+			}
+		}
+
+		/* END : To resolve issue of tld .asia registration error  */
+
 		if ($ccTLD == "au") {
-			$reqDatasAU = array("registrant_name", "eligibility_type", "registrant_id", "registrant_id_type", "eligibility_name", 
+			$reqDatasAU = array("registrant_name", "eligibility_type", "registrant_id", "registrant_id_type", "eligibility_name",
 				"eligibility_id", "eligibility_id_type", "eligibility_reason"
 			);
 
@@ -343,22 +343,22 @@ class provSWregister extends openSRS_base {
 			$cmd['attributes']['tld_data']['it_registrant_info']['reg_code'] = $this->_dataObject->it_registrant_info->reg_code;
 			$cmd['attributes']['tld_data']['it_registrant_info']['entity_type'] = $this->_dataObject->it_registrant_info->entity_type;
 		}
-		
+
 
 		if ($ccTLD == "eu"){
 			$cmd['attributes']['country'] = strtoupper($this->_dataObject->data->eu_country);
 			$cmd['attributes']['lang'] = $this->_dataObject->data->lang;
 			$cmd['attributes']['owner_confirm_address'] = $this->_dataObject->data->owner_confirm_address;
 		}
-		
+
 		if ($ccTLD == "be"){
 			$cmd['attributes']['lang'] = $this->_dataObject->data->lang;
 			$cmd['attributes']['owner_confirm_address'] = $this->_dataObject->data->owner_confirm_address;
 		}
 
-        if ($ccTLD == "br"){
-            $cmd['attributes']['tld_data']['br_register_number'] = $this->_dataObject->br_registrant_info->br_register_number;
-        }
+		if ($ccTLD == "br"){
+			$cmd['attributes']['tld_data']['br_register_number'] = $this->_dataObject->br_registrant_info->br_register_number;
+		}
 
 		if ($ccTLD == "de"){
 			$cmd['attributes']['owner_confirm_address'] = $this->_dataObject->data->owner_confirm_address;
@@ -374,6 +374,12 @@ class provSWregister extends openSRS_base {
 			if (isSet($this->_dataObject->nexus->validator) && $this->_dataObject->nexus->validator != "") $cmd['attributes']['tld_data']['nexus']['validator'] = $this->_dataObject->nexus->validator;
 		}
 
+		if ($ccTLD == "sg") {
+			$cmd['attributes']['tld_data']['registrant_extra_info']['registrant_type'] = $this->_dataObject->data->tld_data->registrant_extra_info->registrant_type;
+			if (isSet($this->_dataObject->data->tld_data->registrant_extra_info->id_card_number) && $this->_dataObject->data->tld_data->registrant_extra_info->id_card_number != "") $cmd['attributes']['tld_data']['registrant_extra_info']['id_card_number'] = $this->_dataObject->data->tld_data->registrant_extra_info->id_card_number;
+			if (isSet($this->_dataObject->data->tld_data->registrant_extra_info->registration_number) && $this->_dataObject->data->tld_data->registrant_extra_info->registration_number != "") $cmd['attributes']['tld_data']['registrant_extra_info']['registration_number'] = $this->_dataObject->data->tld_data->registrant_extra_info->registration_number;
+		}
+
 		if ($ccTLD == "pro") {
 			$reqDatasPRO = array("authority", "authority_website", "license_number", "profession");
 			foreach($reqDatasPRO as $reqData) {
@@ -381,33 +387,33 @@ class provSWregister extends openSRS_base {
 					$cmd['attributes']['tld_data']['professional_data'][$reqData] = $this->_dataObject->professional_data->$reqData;
 			}
 		}
-		
-		
+
+
 		// Process the call
 		$xmlCMD = $this->_opsHandler->encode($cmd);					// Flip Array to XML
 		$XMLresult = $this->send_cmd($xmlCMD);						// Send XML
 		$arrayResult = $this->_opsHandler->decode($XMLresult);		// Flip XML to Array
-        
-        /* Added by BC : NG : 16-7-2014 : To set error message for Insufficient Funds */
-        if(isset($arrayResult['attributes']['forced_pending']) and $arrayResult['attributes']['forced_pending'] != "" and $arrayResult['is_success'] == 1)
-        {
-            $arrayResult['is_success'] = 0;
-            if($arrayResult['response_text'] == 'Registration successful')    // Get Resonse Text 'Registration successful'  when insufficient fund
-                $arrayResult['response_text'] = "Insufficient Funds";
-        }
-        /* End : To set error message for Insufficient Funds */
+
+		/* Added by BC : NG : 16-7-2014 : To set error message for Insufficient Funds */
+		if(isset($arrayResult['attributes']['forced_pending']) and $arrayResult['attributes']['forced_pending'] != "" and $arrayResult['is_success'] == 1)
+		{
+			$arrayResult['is_success'] = 0;
+			if($arrayResult['response_text'] == 'Registration successful')	// Get Resonse Text 'Registration successful'  when insufficient fund
+				$arrayResult['response_text'] = "Insufficient Funds";
+		}
+		/* End : To set error message for Insufficient Funds */
 
 		// Results
 		$this->resultFullRaw = $arrayResult;
-                if (isSet($arrayResult['attributes'])){
-                    $this->resultRaw = $arrayResult['attributes'];
-                } else {
+				if (isSet($arrayResult['attributes'])){
+					$this->resultRaw = $arrayResult['attributes'];
+				} else {
 			$this->resultRaw = $arrayResult;
 		}
 		$this->resultFullFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultFullRaw);
 		$this->resultFormatted = convertArray2Formatted ($this->_formatHolder, $this->resultRaw);
 	}
-	
+
 	private function _createUserData(){
 		$userArray = array(
 			"first_name" => $this->_dataObject->personal->first_name,
