@@ -407,7 +407,14 @@ class Base
             // code 415
             $arrayResult['response_code'] != 415
         ) {
-            throw new APIException("oSRS Error Code #{$arrayResult['response_code']}: {$arrayResult['response_text']}.");
+            $errorInfo = null;
+            if (array_key_exists('attributes', $arrayResult)) {
+                $errorInfo = $arrayResult['attributes'];
+            }
+            throw new APIException(
+                "oSRS Error Code #{$arrayResult['response_code']}: {$arrayResult['response_text']}.",
+                $errorInfo
+            );
         }
 
         if (method_exists($this, 'customResponseHandling')) {
