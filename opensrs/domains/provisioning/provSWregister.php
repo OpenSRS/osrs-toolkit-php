@@ -83,7 +83,7 @@ class provSWregister extends openSRS_base {
 			}
 		}
 		
-		$reqDatas = array("reg_type", "reg_username", "reg_password", "domain", "custom_nameservers", "period", "custom_tech_contact", "custom_nameservers");
+		$reqDatas = array("reg_type", "reg_username", "reg_password", "domain", "period", "custom_tech_contact", "custom_nameservers");
 		foreach ($reqDatas as $reqData) {
 			if ($this->_dataObject->data->$reqData == "") {
 				trigger_error ("oSRS Error - ". $reqData ." is not defined.", E_USER_WARNING);
@@ -241,7 +241,6 @@ class provSWregister extends openSRS_base {
 				'reg_username' => $this->_dataObject->data->reg_username,
 				'reg_password' => $this->_dataObject->data->reg_password,
 				'domain' => $this->_dataObject->data->domain,
-				'custom_nameservers' => $this->_dataObject->data->custom_nameservers,
 				'period' => $this->_dataObject->data->period,
 				'custom_tech_contact' => $this->_dataObject->data->custom_tech_contact,
 				'custom_nameservers' => $this->_dataObject->data->custom_nameservers,
