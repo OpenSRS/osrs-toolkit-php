@@ -51,7 +51,7 @@ class trustSWregister extends openSRS_base {
 		
 		$reqData = array ("reg_type", "product_type");
 		for ($i = 0; $i < count($reqData); $i++){
-			if ($this->_dataObject->data->$reqData[$i] == "") {
+			if ($this->_dataObject->data->{$reqData[$i]} == "") {
 				trigger_error ("oSRS Error - ". $reqData[$i] ." is not defined.", E_USER_WARNING);
 				$subtest = false;
 			}

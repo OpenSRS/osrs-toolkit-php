@@ -96,7 +96,7 @@ class provUpdateAllInfo extends openSRS_base {
 		// Check Contact information
 		$reqPers = array ("first_name", "last_name", "org_name", "address1", "city", "state", "country", "postal_code", "phone", "email", "lang_pref");
 		for ($i = 0; $i < count($reqPers); $i++){
-			if ($this->_dataObject->data->$contact->$reqPers[$i] == "") {
+			if ($this->_dataObject->data->$contact->{$reqPers[$i]} == "") {
 				trigger_error ("oSRS Error -  ". $reqPers[$i] ." is not defined in $contact contact set.", E_USER_WARNING);
 				$allInfo = false;
 			}

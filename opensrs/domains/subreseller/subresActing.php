@@ -26,7 +26,7 @@ class subresActing extends openSRS_base {
 
 		$reqPers = array ("first_name", "last_name", "org_name", "address1", "city", "state", "country", "postal_code", "phone", "email", "lang_pref");
 		for ($i = 0; $i < count($reqPers); $i++){
-			if ($this->_dataObject->personal->$reqPers[$i] == "") {
+			if ($this->_dataObject->personal->{$reqPers[$i]} == "") {
 				trigger_error ("oSRS Error - ". $reqPers[$i] ." is not defined.", E_USER_WARNING);
 				$allPassed = false;
 			}
@@ -34,7 +34,7 @@ class subresActing extends openSRS_base {
 
 		$reqData = array ("reg_username", "reg_password", "domain", "custom_nameservers", "as_subreseller", "bulk_order");
 		for ($i = 0; $i < count($reqData); $i++){
-			if ($this->_dataObject->data->$reqData[$i] == "") {
+			if ($this->_dataObject->data->{$reqData[$i]} == "") {
 				trigger_error ("oSRS Error - ". $reqData[$i] ." is not defined.", E_USER_WARNING);
 				$allPassed = false;
 			}

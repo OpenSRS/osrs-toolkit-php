@@ -100,7 +100,7 @@ class provSWregister extends openSRS_base {
 		$subtest = true;
 		$reqData = array("isa_trademark", "lang_pref", "legal_type");
 		for ($i = 0; $i < count($reqData); $i++){
-			if ($this->_dataObject->data->$reqData[$i] == "") {
+			if ($this->_dataObject->data->{$reqData[$i]} == "") {
 				trigger_error ("oSRS Error - ". $reqData[$i] ." is not defined.", E_USER_WARNING);
 				$subtest = false;
 			}
@@ -173,7 +173,7 @@ class provSWregister extends openSRS_base {
 		$subtest = true;
 		$reqData = array("lang", "owner_confirm_address");
 		for ($i = 0; $i < count($reqData); $i++){
-			if ($this->_dataObject->data->$reqData[$i] == "") {
+			if ($this->_dataObject->data->{$reqData[$i]} == "") {
 				trigger_error ("oSRS Error - ". $reqData[$i] ." is not defined.", E_USER_WARNING);
 				$subtest = false;
 			}
@@ -185,7 +185,7 @@ class provSWregister extends openSRS_base {
 		$subtest = true;
 		$reqData = array("owner_confirm_address");
 		for ($i = 0; $i < count($reqData); $i++){
-			if ($this->_dataObject->data->$reqData[$i] == "") {
+			if ($this->_dataObject->data->{$reqData[$i]} == "") {
 				trigger_error ("oSRS Error - ". $reqData[$i] ." is not defined.", E_USER_WARNING);
 				$subtest = false;
 			}
@@ -221,7 +221,7 @@ class provSWregister extends openSRS_base {
 		$subtest = true;
 		$reqData = array("forwarding_email");
 		for ($i = 0; $i < count($reqData); $i++){
-			if ($this->_dataObject->data->$reqData[$i] == "") {
+			if ($this->_dataObject->data->{$reqData[$i]} == "") {
 				trigger_error ("oSRS Error - ". $reqData[$i] ." is not defined.", E_USER_WARNING);
 				$subtest = false;
 			}
