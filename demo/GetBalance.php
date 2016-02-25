@@ -1,8 +1,7 @@
 <?php
 
 $callArray = array(
-    'func' => 'lookupGetBalance',
-
+    'func' => 'accountGetBalance',
     'data' => array(),
 );
 

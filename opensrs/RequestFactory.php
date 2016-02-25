@@ -8,7 +8,7 @@ class RequestFactory
         'premiumdomain' => 'domains\lookup\PremiumDomain',
         'lookupdomain' => 'domains\lookup\LookupDomain',
         'lookupgetdomain' => 'domains\lookup\GetDomain',
-        'lookupgetbalance' => 'domains\lookup\GetBalance',
+        'lookupgetbalance' => 'account\GetBalance',
         'lookupgetdeleteddomains' => 'domains\lookup\GetDeletedDomains',
         'lookupgetdomansbyexpiry' => 'domains\lookup\GetDomansByExpiry',
         'lookupgetdomainscontacts' => 'domains\lookup\GetDomainsContacts',
@@ -131,6 +131,7 @@ class RequestFactory
         'mailsetdomainblocklist' => 'mail\SetDomainBlockList',
         'mailsetdomaindisabledstatus' => 'mail\SetDomainDisabledStatus',
         'mailsetdomainmailboxlimits' => 'mail\SetDomainMailboxLimits',
+        'accountgetbalance' => 'account\GetBalance'
         );
 
     public static function build($func, $type, $dataObject)

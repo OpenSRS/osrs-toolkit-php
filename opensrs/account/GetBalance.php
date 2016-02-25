@@ -1,6 +1,6 @@
 <?php
 
-namespace opensrs\domains\lookup;
+namespace opensrs\account;
 
 use opensrs\Base;
 

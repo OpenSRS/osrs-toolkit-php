@@ -315,6 +315,14 @@ class Ops
      */
     public function _is_assoc(&$array)
     {
+        /*
+         * Empty array should default to associative
+         * SRS was having issues with empty attribute arrays
+         */
+        if (empty($array)) {
+            return true;
+        }
+
         if (is_array($array)) {
             foreach ($array as $k => $v) {
                 if (!is_int($k)) {
