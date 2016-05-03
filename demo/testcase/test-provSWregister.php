@@ -314,6 +314,16 @@ echo('{"in":'.$callstring.'},');
 				</tr>
 				<tr>
 					<td>
+						<b>.HU / .NU / .SE</b><br />
+						tld_data >> registrant_extra_info >> <br/>
+						&nbsp; &nbsp;registrant_type: <input type="text" name="registrant_type" value="">individual or organization<br>
+						&nbsp; &nbsp;id_card_number: <input type="text" name="id_card_number" value="">Required if registrant_type = individual<br>
+						&nbsp; &nbsp;registrant_vat_id: <input type="text" name="registrant_vat_id" value="">Required if registrant_type != individual<br>
+						&nbsp; &nbsp;registration_number: <input type="text" name="registration_number" value="">Required if registrant_type != individual<br>
+					</td>
+				</tr>
+				<tr>
+					<td>
 						<b>.NAME</b><br />
 						tld_data >> <br/>
 						&nbsp; &nbsp;forwarding_email: <input type="text" name="forwarding_email" value=""><br>
