@@ -10,7 +10,7 @@ class RequestFactory
         'lookupgetdomain' => 'domains\lookup\GetDomain',
         'lookupgetbalance' => 'account\GetBalance',
         'lookupgetdeleteddomains' => 'domains\lookup\GetDeletedDomains',
-        'lookupgetdomansbyexpiry' => 'domains\lookup\GetDomansByExpiry',
+        'lookupgetdomainsbyexpiry' => 'domains\lookup\GetDomainsByExpiry',
         'lookupgetdomainscontacts' => 'domains\lookup\GetDomainsContacts',
         'lookupgetnotes' => 'domains\lookup\GetNotes',
         'lookupgetorderinfo' => 'domains\lookup\GetOrderInfo',
