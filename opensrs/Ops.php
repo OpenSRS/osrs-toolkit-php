@@ -193,7 +193,7 @@ class Ops
     public function encode($array)
     {
         ++$this->_MSGCNT;
-        $msg_id = $this->_SESSID + $this->_MSGCNT;            /* addition removes the leading zero */
+        $msg_id = ltrim($this->_SESSID.$this->_MSGCNT, '0');
         $msg_type = $this->_MSGTYPE_STD;
 
         if ($array['protocol']) {
