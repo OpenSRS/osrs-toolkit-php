@@ -89,5 +89,9 @@ function array_filter_recursive($input)
         }
     }
 
-    return array_filter($input);
+    return array_filter($input, 'is_not_null');
+}
+
+function is_not_null($value) {
+    return !is_null($value);
 }
