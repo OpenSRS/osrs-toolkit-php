@@ -63,6 +63,7 @@ require_once('config/openSRS_config.php');
 ```php
 require_once('vendor/autoload.php');
 require_once('config/openSRS_config.php');
+use opensrs\Request;
 
 try {
     $request = new Request();
