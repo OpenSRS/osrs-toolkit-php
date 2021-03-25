@@ -5,16 +5,6 @@ of the OpenSRS API.  Not only does it give a starting point in developing an
 application to allow for quick integration, but also incorporates new
 communication markup languages such as JSON and YAML.  
 
-## Support
-Our support team will be able to help with general connectivity issues outlined
-in: (http://domains.opensrs.guide/docs/troubleshooting)
-
-If you find a bug in the sample provided with this toolkit, please contact
-OpenSRS Support with the XML output and response. We will not, however, be able
-to troubleshoot PHP configuration with your web host nor additional PHP code
-that you developed. Should you require assistance on those matters, please work
-with a website developer.
-
 Requirements
 ------------
 
@@ -101,4 +91,3 @@ var_dump($osrsHandler);
 [OpenSRS API Documentation Page](http://www.opensrs.com/site/resources/documentation/api)
 
 [OpenSRS/osrs-toolkit-php Wiki](https://github.com/OpenSRS/osrs-toolkit-php/wiki)
-
