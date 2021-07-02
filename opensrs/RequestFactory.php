@@ -87,6 +87,7 @@ class RequestFactory
         'persquery' => 'domains\personalnames\PersonalNamesQuery',
         'perssuregister' => 'domains\personalnames\PersonalNamesSURegister',
         'persupdate' => 'domains\personalnames\PersonalNamesUpdate',
+        'verifytlddata' => 'domains\verify\VerifyTldData',
         'pubcreate' => 'publishing\Create',
         'pubdelete' => 'publishing\Delete',
         'pubdisable' => 'publishing\Disable',
@@ -132,7 +133,7 @@ class RequestFactory
         'mailsetdomaindisabledstatus' => 'mail\SetDomainDisabledStatus',
         'mailsetdomainmailboxlimits' => 'mail\SetDomainMailboxLimits',
         'accountgetbalance' => 'account\GetBalance'
-        );
+    );
 
     public static function build($func, $type, $dataObject)
     {
@@ -144,11 +145,11 @@ class RequestFactory
             $route = self::$RequestRoutes[$routeKey];
         }
 
-        $class = '\opensrs\\'.$route;
+        $class = '\opensrs\\' . $route;
 
         if (class_exists($class)) {
             if (!isset($dataObject->attributes)) {
-                $dataconversionRoute = '\opensrs\backwardcompatibility\dataconversion\\'.$route;
+                $dataconversionRoute = '\opensrs\backwardcompatibility\dataconversion\\' . $route;
 
                 if (class_exists($dataconversionRoute)) {
                     $dc = new $dataconversionRoute();
