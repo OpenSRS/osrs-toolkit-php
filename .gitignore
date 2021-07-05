@@ -5,3 +5,4 @@ tags
 /vendor/
 composer.lock
 .vagrant
+.DS_Store

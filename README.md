@@ -101,4 +101,3 @@ var_dump($osrsHandler);
 [OpenSRS API Documentation Page](http://www.opensrs.com/site/resources/documentation/api)
 
 [OpenSRS/osrs-toolkit-php Wiki](https://github.com/OpenSRS/osrs-toolkit-php/wiki)
-
