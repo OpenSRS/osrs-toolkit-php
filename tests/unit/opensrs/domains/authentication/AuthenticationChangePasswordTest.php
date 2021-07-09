@@ -31,6 +31,28 @@ class AuthenticationChangePasswordTest extends PHPUnit_Framework_TestCase
             'reg_password' => '',
             ),
         );
+    
+    /**
+     * @link http://www.sitepoint.com/hashing-passwords-php-5-5-password-hashing-api/
+     * @link http://stackoverflow.com/questions/536584/non-random-salt-for-password-hashes/536756#536756
+     * @param string $strPassword the users password
+     * @param int $numAlgo A password algorithm constant denoting the algorithm to use when hashing the password. (http://php.net/manual/en/password.constants.php)
+     * @param array $arrOptions An associative array containing options. See the password algorithm constants (above) for documentation on the supported options for each algorithm. If omitted, a random salt will be created and the default cost will be used.
+     * @return string|bool Returns the hashed password, or FALSE on failure.
+     */
+    public function create_password_hash($strPassword, $numAlgo = 1, $arrOptions = array())
+    {
+        if (function_exists('password_hash')) {
+            // php >= 5.5
+            $hash = password_hash($strPassword, $numAlgo, $arrOptions);
+        } else {
+            $salt = mcrypt_create_iv(22, MCRYPT_DEV_URANDOM);
+            $salt = base64_encode($salt);
+            $salt = str_replace('+', '.', $salt);
+            $hash = crypt($strPassword, '$2y$10$' . $salt . '$');
+        }
+        return $hash;
+    }
 
     /**
      * Valid submission should complete with no
@@ -45,7 +67,7 @@ class AuthenticationChangePasswordTest extends PHPUnit_Framework_TestCase
 
         $data->attributes->cookie = md5(time());
         $data->attributes->domain = 'phptest'.time().'.com';
-        $data->attributes->reg_password = password_hash(md5(time()), PASSWORD_BCRYPT);
+        $data->attributes->reg_password = $this->(md5(time()), PASSWORD_BCRYPT);
 
         $ns = new AuthenticationChangePassword('array', $data);
 
@@ -75,7 +97,7 @@ class AuthenticationChangePasswordTest extends PHPUnit_Framework_TestCase
 
         $data->attributes->cookie = md5(time());
         $data->attributes->domain = 'phptest'.time().'.com';
-        $data->attributes->reg_password = password_hash(md5(time()), PASSWORD_BCRYPT);
+        $data->attributes->reg_password = $this->create_password_hash(md5(time()), PASSWORD_BCRYPT);
 
         if (is_null($message)) {
             $this->setExpectedExceptionRegExp(
