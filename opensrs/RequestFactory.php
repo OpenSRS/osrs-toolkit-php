@@ -88,6 +88,7 @@ class RequestFactory
         'perssuregister' => 'domains\personalnames\PersonalNamesSURegister',
         'persupdate' => 'domains\personalnames\PersonalNamesUpdate',
         'verifytlddata' => 'domains\verify\VerifyTldData',
+        'dnssecset' => 'domains\dnssec\DnsSecSet',
         'pubcreate' => 'publishing\Create',
         'pubdelete' => 'publishing\Delete',
         'pubdisable' => 'publishing\Disable',
