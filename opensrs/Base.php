@@ -390,6 +390,8 @@ class Base
         // Flip Array to XML
         $xmlCMD = $this->_opsHandler->encode(json_decode(json_encode($dataObject), true));
 
+        $xmlCMD = $this->modifyXml($xmlCMD);
+
         // Send XML
         $XMLresult = $this->send_cmd($xmlCMD);
 
@@ -495,5 +497,15 @@ class Base
         }
 
         return $isValid;
+    }
+
+    /**
+     * Use this to customise the XML sent to the API
+     *
+     * @param string $xml
+     * @return string
+     */
+    protected function modifyXml($xml) {
+        return $xml;
     }
 }
