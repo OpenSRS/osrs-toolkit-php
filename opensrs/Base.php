@@ -35,7 +35,7 @@ class Base
      * openSRS_base object constructor.
      *
      * Closes an existing socket connection, if we have one
-     * 
+     *
      * @since   3.1
      */
     public function __construct()
@@ -66,7 +66,7 @@ class Base
     private function _verifySystemProperties()
     {
         if (!function_exists('version_compare') || version_compare('4.3', phpversion(), '>=')) {
-            $error_message = 'PHP version must be v4.3+ (current version is '.phpversion().') to use "SSL" encryption';
+            $error_message = 'PHP version must be v4.3+ (current version is ' . phpversion() . ') to use "SSL" encryption';
             throw new Exception($error_message);
         } elseif (!function_exists('openssl_open')) {
             $error_message = 'PHP must be compiled using --with-openssl to use "SSL" encryption';
@@ -79,15 +79,15 @@ class Base
      *
      * @param string $request Raw XML request
      *
-     * @return string $data 	Raw XML response
-     *                 
+     * @return string $data    Raw XML response
+     *
      * @since   3.1
      */
     public function send_cmd($request)
     {
         // make or get the socket filehandle
         if (!$this->init_socket()) {
-            throw new Exception('oSRS Error - Unable to establish socket: ('.$this->_socketErrorNum.') '.$this->_socketErrorMsg);
+            throw new Exception('oSRS Error - Unable to establish socket: (' . $this->_socketErrorNum . ') ' . $this->_socketErrorMsg);
         }
 
         $this->send_data($request);
@@ -106,7 +106,7 @@ class Base
      * Method to initialize a socket connection to the OpenSRS server.
      *
      * @return bool True if connected
-     *               
+     *
      * @since   3.1
      */
     private function init_socket()
@@ -114,7 +114,7 @@ class Base
         if ($this->is_connected()) {
             return true;
         }
-        $this->_socket = fsockopen(CRYPT_TYPE.'://'.OSRS_HOST, OSRS_SSL_PORT, $this->_socketErrorNum, $this->_socketErrorMsg, $this->_socketTimeout);
+        $this->_socket = fsockopen(CRYPT_TYPE . '://' . OSRS_HOST, OSRS_SSL_PORT, $this->_socketErrorNum, $this->_socketErrorMsg, $this->_socketTimeout);
         if (!$this->_socket) {
             return false;
         } else {
@@ -126,7 +126,7 @@ class Base
      * Method to check if a socket connection exists.
      *
      * @return bool True if connected
-     *               
+     *
      * @since   3.4
      */
     public function is_connected()
@@ -136,7 +136,7 @@ class Base
 
     /**
      * Method to close the socket connection.
-     *  
+     *
      * @since   3.4
      */
     private function close_socket()
@@ -148,7 +148,7 @@ class Base
 
     /**
      * Method to read data from the buffer stream.
-     *  
+     *
      * @return string XML response
      *
      * @since   3.1
@@ -163,7 +163,7 @@ class Base
             $data = $buf;
         }
         if (!empty($this->osrs_debug)) {
-            print_r('<pre>'.htmlentities($data).'</pre>');
+            print_r('<pre>' . htmlentities($data) . '</pre>');
         }
 
         return $data;
@@ -171,17 +171,17 @@ class Base
 
     /**
      * Method to send data.
-     *  
+     *
      * @param string $message XML request
      *
-     * @return string $message	XML response
+     * @return string $message    XML response
      *
      * @since   3.1
      */
     private function send_data($message)
     {
         if (!empty($this->osrs_debug)) {
-            print_r('<pre>'.htmlentities($message).'</pre>');
+            print_r('<pre>' . htmlentities($message) . '</pre>');
         }
 
         return $this->writeData($this->_socket, $message);
@@ -198,12 +198,12 @@ class Base
         $header = '';
         $len = strlen($msg);
 
-        $signature = md5(md5($msg.OSRS_KEY).OSRS_KEY);
-        $header .= 'POST / HTTP/1.0'.CRLF;
-        $header .= 'Content-Type: text/xml'.CRLF;
-        $header .= 'X-Username: '.OSRS_USERNAME.CRLF;
-        $header .= 'X-Signature: '.$signature.CRLF;
-        $header .= 'Content-Length: '.$len.CRLF.CRLF;
+        $signature = md5(md5($msg . OSRS_KEY) . OSRS_KEY);
+        $header .= 'POST / HTTP/1.0' . CRLF;
+        $header .= 'Content-Type: text/xml' . CRLF;
+        $header .= 'X-Username: ' . OSRS_USERNAME . CRLF;
+        $header .= 'X-Signature: ' . $signature . CRLF;
+        $header .= 'Content-Length: ' . $len . CRLF . CRLF;
 
         fputs($fh, $header);
         fputs($fh, $msg, $len);
@@ -212,8 +212,8 @@ class Base
     /**
      * Reads header data.
      *
-     * @param	int 	socket handle
-     * @param	int 	timeout for read
+     * @param int    socket handle
+     * @param int    timeout for read
      *
      * @return hash hash containing header key/value pairs
      */
@@ -253,8 +253,8 @@ class Base
     /**
      * Reads data from a socket.
      *
-     * @param	int 	socket handle
-     * @param	int 	timeout for read
+     * @param int    socket handle
+     * @param int    timeout for read
      *
      * @return mixed buffer with data, or an error for a short read
      */
@@ -264,11 +264,11 @@ class Base
         /* PHP doesn't have timeout for fread ... we just set the timeout for the socket */
         socket_set_timeout($fh, $timeout);
         $header = $this->readHeader($fh, $timeout);
-        if (!$header || !isset($header{'content-length'}) || (empty($header{'content-length'}))) {
+        if (!$header || !isset($header['content-length']) || (empty($header['content-length']))) {
             throw new Exception('oSRS Error - UNEXPECTED ERROR: No Content-Length header provided! Please make sure IP is whitelisted in RWI.');
         }
 
-        $len = (int) $header{'content-length'};
+        $len = (int)$header['content-length'];
         $line = '';
         while (strlen($line) < $len) {
             $line .= fread($fh, $len);
@@ -302,13 +302,13 @@ class Base
     }
 
     /**
-     * Get configured tlds for domain call 
-     * Will use (in order of preference)... 
-     * 1. selected tlds 
-     * 2. supplied default tlds 
+     * Get configured tlds for domain call
+     * Will use (in order of preference)...
+     * 1. selected tlds
+     * 2. supplied default tlds
      * 3. included default tlds.
-     * 
-     * @return array tlds 
+     *
+     * @return array tlds
      */
     public function getConfiguredTlds()
     {
@@ -345,7 +345,7 @@ class Base
 
     /**
      * Does the dataObject have a domain set?
-     * 
+     *
      * @return bool
      */
     public function hasDomain()
@@ -389,6 +389,8 @@ class Base
 
         // Flip Array to XML
         $xmlCMD = $this->_opsHandler->encode(json_decode(json_encode($dataObject), true));
+
+        $xmlCMD = $this->modifyXml($xmlCMD);
 
         // Send XML
         $XMLresult = $this->send_cmd($xmlCMD);
@@ -495,5 +497,15 @@ class Base
         }
 
         return $isValid;
+    }
+
+    /**
+     * Use this to customise the XML sent to the API
+     *
+     * @param string $xml
+     * @return string
+     */
+    protected function modifyXml($xml) {
+        return $xml;
     }
 }
