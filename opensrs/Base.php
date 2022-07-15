@@ -264,11 +264,11 @@ class Base
         /* PHP doesn't have timeout for fread ... we just set the timeout for the socket */
         socket_set_timeout($fh, $timeout);
         $header = $this->readHeader($fh, $timeout);
-        if (!$header || !isset($header{'content-length'}) || (empty($header{'content-length'}))) {
+        if (!$header || !isset($header['content-length']) || (empty($header['content-length']))) {
             throw new Exception('oSRS Error - UNEXPECTED ERROR: No Content-Length header provided! Please make sure IP is whitelisted in RWI.');
         }
 
-        $len = (int) $header{'content-length'};
+        $len = (int) $header['content-length'];
         $line = '';
         while (strlen($line) < $len) {
             $line .= fread($fh, $len);
