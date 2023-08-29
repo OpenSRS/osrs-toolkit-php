@@ -35,7 +35,7 @@ class Base
      * openSRS_base object constructor.
      *
      * Closes an existing socket connection, if we have one
-     * 
+     *
      * @since   3.1
      */
     public function __construct()
@@ -80,7 +80,7 @@ class Base
      * @param string $request Raw XML request
      *
      * @return string $data 	Raw XML response
-     *                 
+     *
      * @since   3.1
      */
     public function send_cmd($request)
@@ -106,7 +106,7 @@ class Base
      * Method to initialize a socket connection to the OpenSRS server.
      *
      * @return bool True if connected
-     *               
+     *
      * @since   3.1
      */
     private function init_socket()
@@ -126,7 +126,7 @@ class Base
      * Method to check if a socket connection exists.
      *
      * @return bool True if connected
-     *               
+     *
      * @since   3.4
      */
     public function is_connected()
@@ -136,7 +136,7 @@ class Base
 
     /**
      * Method to close the socket connection.
-     *  
+     *
      * @since   3.4
      */
     private function close_socket()
@@ -148,7 +148,7 @@ class Base
 
     /**
      * Method to read data from the buffer stream.
-     *  
+     *
      * @return string XML response
      *
      * @since   3.1
@@ -171,7 +171,7 @@ class Base
 
     /**
      * Method to send data.
-     *  
+     *
      * @param string $message XML request
      *
      * @return string $message	XML response
@@ -264,11 +264,11 @@ class Base
         /* PHP doesn't have timeout for fread ... we just set the timeout for the socket */
         socket_set_timeout($fh, $timeout);
         $header = $this->readHeader($fh, $timeout);
-        if (!$header || !isset($header{'content-length'}) || (empty($header{'content-length'}))) {
+        if (!$header || !isset($header['content-length']) || (empty($header['content-length']))) {
             throw new Exception('oSRS Error - UNEXPECTED ERROR: No Content-Length header provided! Please make sure IP is whitelisted in RWI.');
         }
 
-        $len = (int) $header{'content-length'};
+        $len = (int) $header['content-length'];
         $line = '';
         while (strlen($line) < $len) {
             $line .= fread($fh, $len);
@@ -302,13 +302,13 @@ class Base
     }
 
     /**
-     * Get configured tlds for domain call 
-     * Will use (in order of preference)... 
-     * 1. selected tlds 
-     * 2. supplied default tlds 
+     * Get configured tlds for domain call
+     * Will use (in order of preference)...
+     * 1. selected tlds
+     * 2. supplied default tlds
      * 3. included default tlds.
-     * 
-     * @return array tlds 
+     *
+     * @return array tlds
      */
     public function getConfiguredTlds()
     {
@@ -345,7 +345,7 @@ class Base
 
     /**
      * Does the dataObject have a domain set?
-     * 
+     *
      * @return bool
      */
     public function hasDomain()
