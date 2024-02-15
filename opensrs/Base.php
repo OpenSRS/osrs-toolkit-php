@@ -2,6 +2,8 @@
 
 namespace opensrs;
 
+use stdClass;
+
 defined('OPENSRSURI') or die;
 
 /**
@@ -18,6 +20,21 @@ class Base
     private $_socketErrorMsg = false;
     private $_socketTimeout = 120;                // seconds
     private $_socketReadTimeout = 120;            // seconds
+
+    private $osrs_debug = false;
+
+    private stdClass $dataObject;
+
+    public $action;
+    public $object;
+
+    public $_formatHolder;
+    public $resultFullRaw;
+    public $resultRaw;
+    public $resultFullFormatted;
+    public $resultFormatted;
+
+    protected $dataFormat;
 
     protected $_opsHandler;
 
@@ -66,7 +83,7 @@ class Base
     private function _verifySystemProperties()
     {
         if (!function_exists('version_compare') || version_compare('4.3', phpversion(), '>=')) {
-            $error_message = 'PHP version must be v4.3+ (current version is '.phpversion().') to use "SSL" encryption';
+            $error_message = 'PHP version must be v4.3+ (current version is ' . phpversion() . ') to use "SSL" encryption';
             throw new Exception($error_message);
         } elseif (!function_exists('openssl_open')) {
             $error_message = 'PHP must be compiled using --with-openssl to use "SSL" encryption';
@@ -87,7 +104,7 @@ class Base
     {
         // make or get the socket filehandle
         if (!$this->init_socket()) {
-            throw new Exception('oSRS Error - Unable to establish socket: ('.$this->_socketErrorNum.') '.$this->_socketErrorMsg);
+            throw new Exception('oSRS Error - Unable to establish socket: (' . $this->_socketErrorNum . ') ' . $this->_socketErrorMsg);
         }
 
         $this->send_data($request);
@@ -114,7 +131,7 @@ class Base
         if ($this->is_connected()) {
             return true;
         }
-        $this->_socket = fsockopen(CRYPT_TYPE.'://'.OSRS_HOST, OSRS_SSL_PORT, $this->_socketErrorNum, $this->_socketErrorMsg, $this->_socketTimeout);
+        $this->_socket = fsockopen(CRYPT_TYPE . '://' . OSRS_HOST, OSRS_SSL_PORT, $this->_socketErrorNum, $this->_socketErrorMsg, $this->_socketTimeout);
         if (!$this->_socket) {
             return false;
         } else {
@@ -162,8 +179,8 @@ class Base
         } else {
             $data = $buf;
         }
-        if (!empty($this->osrs_debug)) {
-            print_r('<pre>'.htmlentities($data).'</pre>');
+        if ($this->osrs_debug) {
+            print_r('<pre>' . htmlentities($data) . '</pre>');
         }
 
         return $data;
@@ -180,8 +197,8 @@ class Base
      */
     private function send_data($message)
     {
-        if (!empty($this->osrs_debug)) {
-            print_r('<pre>'.htmlentities($message).'</pre>');
+        if ($this->osrs_debug) {
+            print_r('<pre>' . htmlentities($message) . '</pre>');
         }
 
         return $this->writeData($this->_socket, $message);
@@ -198,12 +215,12 @@ class Base
         $header = '';
         $len = strlen($msg);
 
-        $signature = md5(md5($msg.OSRS_KEY).OSRS_KEY);
-        $header .= 'POST / HTTP/1.0'.CRLF;
-        $header .= 'Content-Type: text/xml'.CRLF;
-        $header .= 'X-Username: '.OSRS_USERNAME.CRLF;
-        $header .= 'X-Signature: '.$signature.CRLF;
-        $header .= 'Content-Length: '.$len.CRLF.CRLF;
+        $signature = md5(md5($msg . OSRS_KEY) . OSRS_KEY);
+        $header .= 'POST / HTTP/1.0' . CRLF;
+        $header .= 'Content-Type: text/xml' . CRLF;
+        $header .= 'X-Username: ' . OSRS_USERNAME . CRLF;
+        $header .= 'X-Signature: ' . $signature . CRLF;
+        $header .= 'Content-Length: ' . $len . CRLF . CRLF;
 
         fputs($fh, $header);
         fputs($fh, $msg, $len);
@@ -264,11 +281,11 @@ class Base
         /* PHP doesn't have timeout for fread ... we just set the timeout for the socket */
         socket_set_timeout($fh, $timeout);
         $header = $this->readHeader($fh, $timeout);
-        if (!$header || !isset($header{'content-length'}) || (empty($header{'content-length'}))) {
+        if (!$header || !isset($header['content-length']) || (empty($header['content-length']))) {
             throw new Exception('oSRS Error - UNEXPECTED ERROR: No Content-Length header provided! Please make sure IP is whitelisted in RWI.');
         }
 
-        $len = (int) $header{'content-length'};
+        $len = (int) $header['content-length'];
         $line = '';
         while (strlen($line) < $len) {
             $line .= fread($fh, $len);
@@ -295,7 +312,7 @@ class Base
             $resultString = json_encode($data);
         }
         if ($type == 'yaml') {
-            $resultString = Spyc::YAMLDump($data);
+            $resultString = \Spyc::YAMLDump($data);
         }
 
         return $resultString;
@@ -337,7 +354,7 @@ class Base
         return $this->defaultTlds;
     }
 
-    public function setDataObject($format, $dataObject)
+    public function setDataObject($format, stdClass $dataObject)
     {
         $this->dataObject = $dataObject;
         $this->dataFormat = $format;
@@ -417,9 +434,7 @@ class Base
             );
         }
 
-        if (method_exists($this, 'customResponseHandling')) {
-            $arrayResult = $this->customResponseHandling($arrayResult, $returnFullResponse);
-        }
+        $arrayResult = $this->customResponseHandling($arrayResult, $returnFullResponse);
 
         // Results
         $this->resultFullRaw = $arrayResult;
@@ -438,6 +453,12 @@ class Base
 
         $this->resultFullFormatted = $this->convertArray2Formatted($this->_formatHolder, $this->resultFullRaw);
         $this->resultFormatted = $this->convertArray2Formatted($this->_formatHolder, $this->resultRaw);
+    }
+
+    // method which may be implemented by child classes
+    protected function customResponseHandling(array $arrayResult, bool $returnFullResponse = true): array
+    {
+        return $arrayResult;
     }
 
     /**

@@ -43,7 +43,7 @@ class SWRegister extends Base
         parent::__destruct();
     }
 
-    public function customResponseHandling($arrayResult, $returnFullResponse = true)
+    public function customResponseHandling( array $arrayResult, bool $returnFullResponse = true): array
     {
         /* Added by BC : NG : 16-7-2014 : To set error message for Insufficient Funds */
         if (isset($arrayResult['attributes']['forced_pending']) and $arrayResult['attributes']['forced_pending'] != '' and $arrayResult['is_success'] == 1) {

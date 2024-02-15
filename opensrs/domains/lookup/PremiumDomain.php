@@ -37,7 +37,7 @@ class PremiumDomain extends Base
         parent::__destruct();
     }
 
-    public function customResponseHandling($arrayResult, $returnFullResponse = true)
+    public function customResponseHandling( array $arrayResult, bool $returnFullResponse = true): array
     {
         if (!$returnFullResponse) {
             if (isset($arrayResult['attributes'])) {
